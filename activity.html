@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>活动详情 · 水韵农青大学生科技志愿服务队</title>
+<meta name="description" content="水韵农青大学生科技志愿服务队活动与精品课程详情，包含图文介绍、实拍照片画廊、视频记录与相关推文报道。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23019aaa'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='36' font-weight='bold' text-anchor='middle' fill='%23fbf7ef'%3E水%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:   oklch(0.965 0.01 92);
+  --paper-2: oklch(0.936 0.014 90);
+  --white:   #ffffff;
+  --ink:     oklch(0.29 0.03 255);
+  --ink-2:   oklch(0.45 0.028 255);
+  --ink-3:   oklch(0.58 0.02 255);
+  --sea:     oklch(0.58 0.105 200);
+  --sea-ink: oklch(0.42 0.09 205);
+  --sea-deep:oklch(0.32 0.075 208);
+  --sea-dark:oklch(0.26 0.06 212);
+  --mist:    oklch(0.905 0.032 195);
+  --leaf:    oklch(0.54 0.11 148);
+  --seal:    oklch(0.55 0.15 27);
+  --gold:    oklch(0.72 0.14 75);
+  --line:    1px solid oklch(0.29 0.03 255 / 0.14);
+  --radius:  8px;
+  --shadow:  0 10px 30px oklch(0.2 0.03 240 / 0.08);
+  --ease:    cubic-bezier(0.22, 0.61, 0.36, 1);
+  --font-kai: "Ma Shan Zheng", "KaiTi", "STKaiti", serif;
+  --font-song:"Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+  --font-sans:"Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.8;
+  font-size: 15.5px;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; border: none; }
+
+/* 顶部导航 */
+.hdr {
+  position: sticky; top: 0; z-index: 100;
+  background: oklch(0.965 0.01 92 / 0.94);
+  backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: var(--line);
+  box-shadow: 0 4px 20px oklch(0.2 0.03 240 / 0.04);
+}
+.hdr-in {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand img { height: 38px; width: auto; }
+.brand .word {
+  font-family: var(--font-kai); font-size: 24px; letter-spacing: 0.12em;
+  color: var(--sea-ink); line-height: 1;
+}
+.brand .word b { color: var(--leaf); font-weight: 400; }
+.nav-actions { display: flex; align-items: center; gap: 14px; }
+.nav-btn {
+  font-size: 13.5px; font-weight: 500; color: var(--sea-ink);
+  padding: 6px 14px; border-radius: 4px; border: 1px solid oklch(0.58 0.105 200 / 0.4);
+  background: var(--white); transition: all .25s var(--ease);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.nav-btn:hover { background: var(--mist); border-color: var(--sea); transform: translateY(-1px); }
+.nav-btn.primary {
+  background: var(--sea-ink); color: var(--white); border-color: var(--sea-ink);
+}
+.nav-btn.primary:hover { background: var(--sea-deep); }
+
+/* 面包屑导航 */
+.crumb-wrap {
+  max-width: 1200px; margin: 0 auto; padding: 14px 24px 0;
+  display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--ink-3);
+}
+.crumb-wrap a { color: var(--sea-ink); }
+.crumb-wrap a:hover { text-decoration: underline; }
+.crumb-wrap span.sep { color: var(--ink-3); }
+
+/* 主视觉 Hero */
+.hero {
+  background:
+    radial-gradient(1000px 500px at 80% -20%, oklch(0.42 0.1 190 / 0.4), transparent 60%),
+    linear-gradient(175deg, var(--sea-dark) 0%, var(--sea-ink) 65%, var(--sea-deep) 100%);
+  color: var(--white);
+  padding: 44px 24px 50px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 30px;
+  background: linear-gradient(to top, var(--paper), transparent);
+  pointer-events: none;
+}
+.hero-in { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+.hero-badges { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 16px; }
+.hero-badge {
+  font-size: 11.5px; letter-spacing: 0.12em; padding: 3px 10px; border-radius: 3px;
+  background: oklch(1 0 0 / 0.15); border: 1px solid oklch(1 0 0 / 0.25); color: oklch(0.96 0.02 180);
+}
+.hero-badge.tag { background: var(--leaf); border-color: var(--leaf); color: #fff; font-weight: 500; }
+.hero-badge.seal { background: var(--seal); border-color: var(--seal); color: #fff; }
+.hero-title {
+  font-family: var(--font-song); font-size: clamp(28px, 4vw, 42px);
+  font-weight: 900; letter-spacing: 0.06em; line-height: 1.3; margin-bottom: 12px;
+}
+.hero-sub {
+  font-size: 16px; color: oklch(0.93 0.03 190 / 0.9);
+  max-width: 800px; letter-spacing: 0.08em; line-height: 1.6;
+}
+.hero-stats {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
+  padding: 6px 14px; background: oklch(0 0 0 / 0.2); border-radius: 4px;
+  border-left: 3px solid var(--gold); font-size: 13px; color: oklch(0.96 0.04 85);
+}
+
+/* 主容器 2列栅格布局 */
+.main-wrap {
+  max-width: 1200px; margin: -20px auto 60px; padding: 0 24px;
+  position: relative; z-index: 10;
+  display: grid; grid-template-columns: 1fr 340px; gap: 32px;
+}
+
+/* 左侧主体内容区 */
+.content-area { display: flex; flex-direction: column; gap: 32px; min-width: 0; }
+.card-sec {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: var(--line);
+  box-shadow: var(--shadow);
+  padding: 30px 32px;
+}
+.sec-title {
+  font-family: var(--font-song); font-size: 20px; font-weight: 700;
+  letter-spacing: 0.1em; color: var(--sea-ink);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  padding-bottom: 12px; border-bottom: 1px solid oklch(0.29 0.03 255 / 0.1);
+}
+.sec-title::before {
+  content: ""; width: 5px; height: 18px; background: var(--leaf); border-radius: 2px;
+}
+
+/* 详细图文与亮点 */
+.prose { font-size: 15.5px; color: var(--ink); line-height: 1.9; margin-bottom: 22px; }
+.prose p { margin-bottom: 14px; }
+.hl-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+.hl-tag {
+  font-size: 12.5px; color: var(--sea-ink); background: var(--mist);
+  border: 1px solid oklch(0.58 0.105 200 / 0.3); padding: 4px 12px; border-radius: 4px;
+}
+
+/* 照片画廊 */
+.gallery-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-top: 10px;
+}
+.photo-item {
+  position: relative; border-radius: 6px; overflow: hidden;
+  background: var(--paper-2); aspect-ratio: 4/3; cursor: pointer;
+  border: 1px solid oklch(0.29 0.03 255 / 0.1);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.photo-item:hover { transform: translateY(-3px); box-shadow: 0 12px 28px oklch(0.2 0.03 240 / 0.14); }
+.photo-item img {
+  width: 100%; height: 100%; object-fit: cover; transition: transform .4s var(--ease);
+}
+.photo-item:hover img { transform: scale(1.05); }
+.photo-overlay {
+  position: absolute; inset: auto 0 0 0; padding: 24px 12px 8px;
+  background: linear-gradient(to top, oklch(0 0 0 / 0.8) 0%, transparent 100%);
+  color: #fff; font-size: 12.5px; pointer-events: none;
+}
+.photo-overlay .pt { font-weight: 600; line-height: 1.4; }
+.photo-overlay .pd { font-size: 11px; opacity: 0.85; margin-top: 2px; }
+.photo-zoom-hint {
+  position: absolute; top: 10px; right: 10px;
+  background: oklch(0 0 0 / 0.6); color: #fff; width: 28px; height: 28px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; opacity: 0; transition: opacity .25s;
+}
+.photo-item:hover .photo-zoom-hint { opacity: 1; }
+
+/* 视频专区 */
+.video-wrap {
+  position: relative; border-radius: 6px; overflow: hidden;
+  background: #000; aspect-ratio: 16/9; margin-top: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.video-wrap iframe, .video-wrap video { width: 100%; height: 100%; border: none; }
+.video-empty {
+  color: oklch(0.9 0.02 180 / 0.8); text-align: center; padding: 20px;
+}
+.video-empty b { display: block; font-size: 16px; margin-bottom: 6px; color: var(--gold); }
+
+/* 微信推文卡片 */
+.tweets-list { display: flex; flex-direction: column; gap: 16px; }
+.tweet-card {
+  display: grid; grid-template-columns: 160px 1fr; gap: 18px;
+  border: 1px solid oklch(0.29 0.03 255 / 0.12); border-radius: 6px;
+  padding: 14px; background: var(--paper); transition: all .25s var(--ease);
+}
+.tweet-card:hover {
+  background: var(--white); border-color: var(--sea); transform: translateY(-2px);
+  box-shadow: 0 8px 24px oklch(0.2 0.03 240 / 0.08);
+}
+.tweet-thumb { border-radius: 4px; overflow: hidden; aspect-ratio: 16/10; background: var(--mist); }
+.tweet-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.tweet-info { display: flex; flex-direction: column; justify-content: space-between; gap: 6px; }
+.tweet-meta { font-size: 12px; color: var(--ink-3); display: flex; gap: 12px; align-items: center; }
+.tweet-meta .platform { color: var(--leaf); font-weight: 500; }
+.tweet-title { font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+.tweet-desc { font-size: 13px; color: var(--ink-2); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.tweet-act {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12.5px; font-weight: 500; color: var(--sea-ink); align-self: flex-start;
+}
+
+/* 课程大纲与步骤 */
+.steps-list { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+.step-item {
+  display: grid; grid-template-columns: 44px 1fr; gap: 16px;
+  padding: 16px; background: var(--paper); border-radius: 6px; border: var(--line);
+}
+.step-no {
+  width: 44px; height: 44px; background: var(--sea-ink); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-song); font-size: 18px; font-weight: 700;
+}
+.step-text h4 { font-size: 15px; font-weight: 600; color: var(--sea-ink); margin-bottom: 4px; }
+.step-text p { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
+.materials-box {
+  margin-top: 18px; padding: 14px 18px; background: var(--mist);
+  border-left: 3px solid var(--sea); border-radius: 4px; font-size: 13.5px;
+}
+.materials-box b { color: var(--sea-ink); margin-right: 8px; }
+
+/* 右侧侧边栏 */
+.sidebar { display: flex; flex-direction: column; gap: 24px; }
+.side-card {
+  background: var(--white); border-radius: var(--radius);
+  border: var(--line); box-shadow: var(--shadow); padding: 24px;
+}
+.side-card h3 {
+  font-family: var(--font-song); font-size: 17px; font-weight: 700;
+  color: var(--sea-ink); margin-bottom: 16px; padding-bottom: 8px; border-bottom: var(--line);
+}
+.info-row { display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 10px; }
+.info-row .k { color: var(--ink-3); }
+.info-row .v { font-weight: 500; color: var(--ink); text-align: right; }
+
+.side-cta { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.btn-block {
+  width: 100%; padding: 12px; border-radius: 4px; text-align: center;
+  font-size: 14.5px; font-weight: 500; letter-spacing: 0.08em;
+  transition: all .25s var(--ease); display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-order { background: var(--sea-ink); color: #fff; }
+.btn-order:hover { background: var(--sea-deep); transform: translateY(-2px); }
+.btn-order.picked { background: var(--leaf); }
+.btn-reserve { background: var(--seal); color: #fff; }
+.btn-reserve:hover { background: oklch(0.48 0.16 27); transform: translateY(-2px); }
+.btn-share { background: var(--paper); color: var(--ink-2); border: var(--line); }
+.btn-share:hover { background: var(--mist); color: var(--sea-ink); }
+
+/* 相邻活动导航卡 */
+.nav-card-list { display: flex; flex-direction: column; gap: 12px; }
+.nav-act-link {
+  display: block; padding: 12px 14px; border-radius: 6px;
+  background: var(--paper); border: var(--line); transition: all .25s;
+}
+.nav-act-link:hover { background: var(--mist); border-color: var(--sea); transform: translateX(3px); }
+.nav-act-link .dir { font-size: 11px; letter-spacing: 0.1em; color: var(--leaf); font-weight: 600; }
+.nav-act-link .title { font-size: 13.5px; font-weight: 600; color: var(--ink); margin-top: 2px; }
+
+/* 全屏灯箱 Modal */
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; flex-direction: column;
+  padding: 20px;
+}
+.lightbox.open { display: flex; animation: fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.lb-img-wrap { max-width: 90vw; max-height: 80vh; position: relative; }
+.lb-img-wrap img { max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 4px; }
+.lb-caption {
+  margin-top: 14px; color: #fff; text-align: center; max-width: 700px;
+}
+.lb-caption h4 { font-size: 16px; font-weight: 600; }
+.lb-caption p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+.lb-close {
+  position: absolute; top: 20px; right: 24px; font-size: 32px; color: #fff;
+  background: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+}
+.lb-prev, .lb-next {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.15); color: #fff; width: 48px; height: 48px;
+  border-radius: 50%; font-size: 24px; display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.lb-prev { left: 24px; }
+.lb-next { right: 24px; }
+.lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,0.3); }
+
+/* 预约弹窗 Modal */
+.modal {
+  position: fixed; inset: 0; z-index: 999;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.modal.open { display: flex; animation: fadeIn .25s ease; }
+.modal-box {
+  background: var(--white); border-radius: 8px; width: 100%; max-width: 540px;
+  padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative;
+}
+.modal-close { position: absolute; top: 16px; right: 20px; font-size: 24px; color: var(--ink-3); background: none; }
+.modal-box h3 { font-family: var(--font-song); font-size: 20px; color: var(--sea-ink); margin-bottom: 12px; }
+.modal-box p.sub { font-size: 13.5px; color: var(--ink-2); margin-bottom: 20px; line-height: 1.6; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%; padding: 10px 12px; border: var(--line); border-radius: 4px;
+  font-family: inherit; font-size: 14px; background: var(--paper);
+}
+.form-group textarea { height: 80px; resize: vertical; }
+.contact-fast {
+  margin-top: 16px; padding: 12px; background: var(--mist); border-radius: 4px;
+  font-size: 12.5px; color: var(--sea-ink); line-height: 1.6;
+}
+
+/* 页脚 */
+.foot {
+  background: var(--sea-dark); color: #fff; padding: 40px 24px 30px; margin-top: 60px;
+}
+.foot-in { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+.foot-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid oklch(1 0 0 / 0.1); padding-bottom: 20px; }
+.foot-brand { display: flex; align-items: center; gap: 10px; }
+.foot-brand img { height: 32px; filter: brightness(0) invert(1); }
+.foot-brand span { font-family: var(--font-kai); font-size: 20px; letter-spacing: 0.1em; }
+.foot-links { display: flex; gap: 20px; font-size: 13px; }
+.foot-links a { opacity: 0.85; }
+.foot-links a:hover { opacity: 1; color: var(--gold); }
+.foot-btm { display: flex; justify-content: space-between; font-size: 12px; opacity: 0.6; flex-wrap: wrap; gap: 10px; }
+
+/* 响应式适配 */
+@media (max-width: 900px) {
+  .main-wrap { grid-template-columns: 1fr; margin-top: 0; }
+  .tweet-card { grid-template-columns: 1fr; }
+  .tweet-thumb { aspect-ratio: 16/9; }
+  .hero { padding: 32px 18px 40px; }
+  .card-sec { padding: 20px 18px; }
+  .lb-prev { left: 8px; }
+  .lb-next { right: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="brand" href="index.html">
+      <img src="logo-mark.png" alt="水韵农青标志">
+      <span class="word">水韵<b>农</b>青</span>
+    </a>
+    <div class="nav-actions">
+      <a class="nav-btn" href="index.html">← 返回首页</a>
+      <a class="nav-btn" href="activities/index.html">活动总览</a>
+      <a class="nav-btn primary" href="index.html#menu">特色课程点单</a>
+    </div>
+  </div>
+</header>
+
+<!-- 面包屑 -->
+<div class="crumb-wrap">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <a href="activities/index.html">活动总览</a>
+  <span class="sep">/</span>
+  <span id="crumbCat">服务活动</span>
+  <span class="sep">/</span>
+  <span id="crumbTitle" style="color:var(--ink);">加载中...</span>
+</div>
+
+<!-- 主视觉 Hero -->
+<section class="hero" id="heroSec">
+  <div class="hero-in">
+    <div class="hero-badges">
+      <span class="hero-badge tag" id="heroBadgeType">服务篇章</span>
+      <span class="hero-badge seal" id="heroBadgeCat">科研绘科普 · 01</span>
+      <span class="hero-badge" id="heroBadgeAge">适合 8-12 岁</span>
+    </div>
+    <h1 class="hero-title" id="heroTitle">「土壤医生」低碳科普</h1>
+    <p class="hero-sub" id="heroSub">科研项目进课堂 · 重金属土壤治理与双碳科普体验</p>
+    <div class="hero-stats" id="heroStats">
+      <span>✦ 活动成效：已开展 2 期 · 覆盖 120+ 青少年</span>
+    </div>
+  </div>
+</section>
+
+<!-- 主体两列布局 -->
+<main class="main-wrap">
+  <!-- 左侧主体详情 -->
+  <div class="content-area">
+    <!-- 01 图文详情与亮点 -->
+    <article class="card-sec" id="secIntro">
+      <h2 class="sec-title">活动介绍与亮点</h2>
+      <div class="hl-tags" id="hlTags"></div>
+      <div class="prose" id="actDesc"></div>
+    </article>
+
+    <!-- 02 现场照片画廊 -->
+    <section class="card-sec" id="secPhotos">
+      <h2 class="sec-title">现场实拍精彩画廊</h2>
+      <div class="gallery-grid" id="photoGallery"></div>
+    </section>
+
+    <!-- 03 视频记录专区 -->
+    <section class="card-sec" id="secVideo">
+      <h2 class="sec-title">活动视频记录</h2>
+      <div class="video-wrap" id="videoContainer"></div>
+    </section>
+
+    <!-- 04 相关微信推文与报道 -->
+    <section class="card-sec" id="secTweets">
+      <h2 class="sec-title">相关报道与精选推文</h2>
+      <div class="tweets-list" id="tweetsList"></div>
+    </section>
+
+    <!-- 05 教学流程与物资 -->
+    <section class="card-sec" id="secCurriculum">
+      <h2 class="sec-title">教学流程与器材</h2>
+      <div class="steps-list" id="stepsList"></div>
+      <div class="materials-box" id="materialsBox"></div>
+    </section>
+  </div>
+
+  <!-- 右侧侧边栏 -->
+  <aside class="sidebar">
+    <!-- 课程属性卡片 -->
+    <div class="side-card">
+      <h3>课程与活动名片</h3>
+      <div class="info-row"><span class="k">活动类型</span><span class="v" id="sideType">服务篇章活动</span></div>
+      <div class="info-row"><span class="k">所属系列</span><span class="v" id="sideCat">科研绘科普</span></div>
+      <div class="info-row"><span class="k">建议学段</span><span class="v" id="sideAge">8-12 岁</span></div>
+      <div class="info-row"><span class="k">服务形式</span><span class="v">讲解 + 动手实验 + 互动</span></div>
+      <div class="info-row"><span class="k">开课状态</span><span class="v" style="color:var(--leaf); font-weight:700;">● 开放点单预约</span></div>
+
+      <div class="side-cta">
+        <button class="btn-block btn-order" id="btnSideOrder" type="button">🛒 加入服务点单清单</button>
+        <button class="btn-block btn-reserve" id="btnSideReserve" type="button">📝 预约该课程 / 洽谈合作</button>
+        <button class="btn-block btn-share" id="btnSideShare" type="button">🔗 复制分享链接</button>
+      </div>
+    </div>
+
+    <!-- 相邻活动推荐 -->
+    <div class="side-card">
+      <h3>相邻课程与活动</h3>
+      <div class="nav-card-list" id="navActList"></div>
+    </div>
+
+    <!-- 快捷联系卡片 -->
+    <div class="side-card" style="background:var(--mist); border-color:oklch(0.58 0.105 200 / 0.3);">
+      <h3>合作咨询与加入</h3>
+      <p style="font-size:13px; color:var(--sea-ink); line-height:1.7;">
+        <b>水韵农青大学生科技志愿服务队</b><br>
+        欢迎各中小学校、科技场馆、社区街道及校内青年志愿者对接交流。
+      </p>
+      <div style="margin-top:12px;">
+        <button class="btn-block" id="btnCopyQQ" style="background:var(--sea-ink); color:#fff; font-size:13px;" type="button">
+          复制招新 QQ 群 1108743305
+        </button>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<!-- 全屏图片灯箱 Modal -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lb-close" id="lbClose" type="button" aria-label="关闭">&times;</button>
+  <button class="lb-prev" id="lbPrev" type="button" aria-label="上一张">&lsaquo;</button>
+  <button class="lb-next" id="lbNext" type="button" aria-label="下一张">&rsaquo;</button>
+  <div class="lb-img-wrap">
+    <img id="lbImg" src="" alt="放大照片">
+  </div>
+  <div class="lb-caption">
+    <h4 id="lbTitle"></h4>
+    <p id="lbDesc"></p>
+  </div>
+</div>
+
+<!-- 预约咨询 Modal -->
+<div class="modal" id="reserveModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" type="button">&times;</button>
+    <h3>课程预约与合作意向</h3>
+    <p class="sub">向「水韵农青」提出课程进校、场馆联展或社区科普定制需求。</p>
+    
+    <form id="reserveForm">
+      <div class="form-group">
+        <label>意向课程名称</label>
+        <input type="text" id="resActTitle" readonly>
+      </div>
+      <div class="form-group">
+        <label>合作单位 / 学校名称 *</label>
+        <input type="text" id="resOrg" placeholder="例如：南京市白云园小学 / 江苏科技馆" required>
+      </div>
+      <div class="form-group">
+        <label>联系人姓名与手机 / 微信 *</label>
+        <input type="text" id="resContact" placeholder="例如：张老师 138xxxxxxxx" required>
+      </div>
+      <div class="form-group">
+        <label>预计受众学段与人数</label>
+        <input type="text" id="resAudience" placeholder="例如：四年级 2 个班，约 80 人">
+      </div>
+      <div class="form-group">
+        <label>具体需求与期望时间</label>
+        <textarea id="resNotes" placeholder="例如：希望在 5 月科技节期间安排 2 场授课，需协助准备实验耗材..."></textarea>
+      </div>
+      <button class="btn-block btn-order" type="submit">生成预约意向文本并复制</button>
+    </form>
+    
+    <div class="contact-fast">
+      💡 提交后将自动为您复制意向单，请添加负责人 QQ 招新群 <b>1108743305</b> 发送，我们将第一时间为您排期对接！
+    </div>
+  </div>
+</div>
+
+<!-- 页脚 -->
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <img src="logo-mark.png" alt="水韵农青">
+        <span>水韵农青大学生科技志愿服务队</span>
+      </div>
+      <div class="foot-links">
+        <a href="index.html">返回首页</a>
+        <a href="activities/index.html">活动总览</a>
+        <a href="index.html#menu">服务菜单</a>
+        <a href="index.html#partner">单位合作</a>
+      </div>
+    </div>
+    <div class="foot-btm">
+      <span>© 2026 「水韵农青」大学生科技志愿服务队 · 全国大学生科技志愿服务示范团队</span>
+      <span>胸怀青衿志 · 科普水韵行</span>
+    </div>
+  </div>
+</footer>
+
+<script src="activities-data.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  // 隐藏后台快捷键 Ctrl+Shift+A
+  window.addEventListener('keydown', function (e) {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+      window.open('admin.html', '_blank');
+    }
+  });
+
+  // 获取 URL 参数 id
+  var params = new URLSearchParams(window.location.search);
+  var actId = params.get('id') || 'act-01';
+
+  var act = window.WaterYouthData ? window.WaterYouthData.getById(actId) : null;
+  if (!act && window.WaterYouthData) {
+    var all = window.WaterYouthData.getAll();
+    act = all[0];
+    actId = act ? act.id : 'act-01';
+  }
+
+  if (!act) {
+    alert('未找到该活动数据！');
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // 1. 渲染页面基础信息
+  document.title = act.title + ' · 水韵农青活动详情';
+  document.getElementById('crumbCat').textContent = act.category || '服务活动';
+  document.getElementById('crumbTitle').textContent = act.title;
+
+  document.getElementById('heroBadgeType').textContent = act.type === 'chapter' ? '服务篇章' : '特色课程菜单';
+  document.getElementById('heroBadgeCat').textContent = (act.category || '') + (act.categoryNo ? (' · ' + act.categoryNo) : '');
+  document.getElementById('heroBadgeAge').textContent = act.targetAge || '全龄适合';
+  document.getElementById('heroTitle').textContent = act.title;
+  document.getElementById('heroSub').textContent = act.subtitle || '';
+  document.getElementById('heroStats').innerHTML = '<span>✦ ' + (act.stats || '精品打磨课程 · 随时开放点单') + '</span>';
+
+  // 侧边栏属性
+  document.getElementById('sideType').textContent = act.type === 'chapter' ? '服务篇章活动' : '特色菜单课程';
+  document.getElementById('sideCat').textContent = act.category || '综合科普';
+  document.getElementById('sideAge').textContent = act.targetAge || '全龄适配';
+
+  // 2. 亮点与详细介绍
+  var hlBox = document.getElementById('hlTags');
+  if (act.highlights && act.highlights.length) {
+    hlBox.innerHTML = act.highlights.map(function (h) {
+      return '<span class="hl-tag">🏷 ' + h + '</span>';
+    }).join('');
+  } else {
+    hlBox.style.display = 'none';
+  }
+
+  var descBox = document.getElementById('actDesc');
+  var paragraphs = (act.desc || '').split('\n').filter(function (p) { return p.trim().length > 0; });
+  if (paragraphs.length) {
+    descBox.innerHTML = paragraphs.map(function (p) { return '<p>' + p + '</p>'; }).join('');
+  } else {
+    descBox.innerHTML = '<p>' + (act.desc || '暂无详细介绍') + '</p>';
+  }
+
+  // 3. 照片画廊
+  var photos = act.photos || [];
+  var galleryBox = document.getElementById('photoGallery');
+  var secPhotos = document.getElementById('secPhotos');
+  if (photos.length > 0) {
+    galleryBox.innerHTML = photos.map(function (ph, idx) {
+      return '<div class="photo-item" data-idx="' + idx + '">' +
+        '<img src="' + (ph.url || act.cover || 'photos/IMG_5612.JPG') + '" alt="' + (ph.title || act.title) + '" loading="lazy">' +
+        '<div class="photo-overlay"><p class="pt">' + (ph.title || '活动现场实拍') + '</p>' +
+        (ph.desc ? ('<p class="pd">' + ph.desc + '</p>') : '') + '</div>' +
+        '<div class="photo-zoom-hint">🔍</div>' +
+        '</div>';
+    }).join('');
+  } else if (act.cover) {
+    galleryBox.innerHTML = '<div class="photo-item" data-idx="0">' +
+      '<img src="' + act.cover + '" alt="' + act.title + '">' +
+      '<div class="photo-overlay"><p class="pt">' + act.title + '</p></div>' +
+      '<div class="photo-zoom-hint">🔍</div></div>';
+    photos = [{ url: act.cover, title: act.title, desc: '活动封面展示' }];
+  } else {
+    secPhotos.style.display = 'none';
+  }
+
+  // 灯箱逻辑
+  var curPhotoIdx = 0;
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lbImg');
+  var lbTitle = document.getElementById('lbTitle');
+  var lbDesc = document.getElementById('lbDesc');
+
+  function openLightbox(idx) {
+    if (!photos[idx]) return;
+    curPhotoIdx = idx;
+    var p = photos[idx];
+    lbImg.src = p.url || act.cover;
+    lbTitle.textContent = p.title || act.title;
+    lbDesc.textContent = p.desc || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  galleryBox.addEventListener('click', function (e) {
+    var item = e.target.closest('.photo-item');
+    if (!item) return;
+    openLightbox(Number(item.getAttribute('data-idx')));
+  });
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  document.getElementById('lbPrev').addEventListener('click', function () {
+    if (photos.length === 0) return;
+    openLightbox((curPhotoIdx - 1 + photos.length) % photos.length);
+  });
+  document.getElementById('lbNext').addEventListener('click', function () {
+    if (photos.length === 0) return;
+    openLightbox((curPhotoIdx + 1) % photos.length);
+  });
+  window.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
+    else if (e.key === 'ArrowRight') document.getElementById('lbNext').click();
+  });
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb) closeLightbox();
+  });
+
+  // 4. 视频记录
+  var vBox = document.getElementById('videoContainer');
+  var secVideo = document.getElementById('secVideo');
+  if (act.video && act.video.embed) {
+    vBox.innerHTML = act.video.embed;
+    if (act.video.title) {
+      document.querySelector('#secVideo .sec-title').innerHTML = '活动实录视频：<span style="font-size:16px; font-weight:500; color:var(--ink-2);">' + act.video.title + '</span>';
+    }
+  } else if (act.video && act.video.url) {
+    var vTitle = act.video.title || '活动现场实录视频';
+    document.querySelector('#secVideo .sec-title').innerHTML = '现场视频记录：<span style="font-size:16px; font-weight:600; color:var(--sea-ink);">' + vTitle + '</span>';
+    vBox.innerHTML = '<video controls preload="metadata" poster="' + (act.cover || '') + '" style="width:100%; height:100%; border-radius:6px; background:#000;"><source src="' + act.video.url + '" type="video/mp4">您的浏览器不支持视频播放，请升级浏览器后观看。</video>';
+  } else {
+    secVideo.style.display = 'none';
+  }
+
+  // 5. 微信推文与相关报道
+  var tweetsList = document.getElementById('tweetsList');
+  var secTweets = document.getElementById('secTweets');
+  var tweets = act.tweets || [];
+  if (tweets.length > 0) {
+    tweetsList.innerHTML = tweets.map(function (tw) {
+      return '<article class="tweet-card">' +
+        '<div class="tweet-thumb"><img src="' + (tw.cover || act.cover || 'photos/IMG_5614.JPG') + '" alt="' + tw.title + '"></div>' +
+        '<div class="tweet-info">' +
+          '<div class="tweet-meta"><span class="platform">📰 ' + (tw.platform || '河海水韵农青') + '</span><span>' + (tw.date || '官方报道') + '</span></div>' +
+          '<h3 class="tweet-title">' + tw.title + '</h3>' +
+          '<p class="tweet-desc">' + (tw.summary || '') + '</p>' +
+          '<a class="tweet-act" href="' + (tw.url || '#') + '" target="_blank" rel="noopener">阅读推文原文 ↗</a>' +
+        '</div>' +
+        '</article>';
+    }).join('');
+  } else {
+    secTweets.style.display = 'none';
+  }
+
+  // 6. 教学流程与器材
+  var stepsList = document.getElementById('stepsList');
+  var matBox = document.getElementById('materialsBox');
+  var secCurr = document.getElementById('secCurriculum');
+  var curr = act.curriculum || [];
+  if (curr.length > 0) {
+    stepsList.innerHTML = curr.map(function (c, i) {
+      return '<div class="step-item">' +
+        '<div class="step-no">' + (c.step || (i + 1)) + '</div>' +
+        '<div class="step-text"><h4>' + c.title + '</h4><p>' + c.content + '</p></div>' +
+        '</div>';
+    }).join('');
+  } else {
+    stepsList.innerHTML = '<p style="color:var(--ink-3); font-size:13.5px;">标准三段式授课法：现象引入与微观解密 → 动手实操与实验探究 → 总结分享与拓展作业。</p>';
+  }
+  if (act.materials && act.materials.length) {
+    matBox.innerHTML = '<b>📦 配套教具与物资清单：</b><span>' + act.materials.join(' · ') + '</span>';
+  } else {
+    matBox.style.display = 'none';
+  }
+
+  // 7. 相邻活动卡片
+  var allActs = window.WaterYouthData.getAll();
+  var actIdx = allActs.findIndex(function (x) { return x.id === act.id; });
+  var navBox = document.getElementById('navActList');
+  if (actIdx >= 0) {
+    var prevAct = allActs[(actIdx - 1 + allActs.length) % allActs.length];
+    var nextAct = allActs[(actIdx + 1) % allActs.length];
+    navBox.innerHTML =
+      '<a class="nav-act-link" href="activity.html?id=' + prevAct.id + '">' +
+        '<span class="dir">← 上一个活动 (' + (prevAct.category || '') + ')</span>' +
+        '<div class="title">' + prevAct.title + '</div>' +
+      '</a>' +
+      '<a class="nav-act-link" href="activity.html?id=' + nextAct.id + '">' +
+        '<span class="dir">下一个活动 (' + (nextAct.category || '') + ') →</span>' +
+        '<div class="title">' + nextAct.title + '</div>' +
+      '</a>';
+  }
+
+  // 8. 点单与预约交互
+  var btnOrder = document.getElementById('btnSideOrder');
+  var orderStorageKey = 'water_youth_picked_menu';
+  var pickedMap = {};
+  try {
+    var rawPicked = localStorage.getItem(orderStorageKey);
+    if (rawPicked) pickedMap = JSON.parse(rawPicked);
+  } catch (e) {}
+
+  function updateOrderBtn() {
+    if (pickedMap[act.id]) {
+      btnOrder.textContent = '✓ 已在待客清单中 (点击取消)';
+      btnOrder.classList.add('picked');
+    } else {
+      btnOrder.textContent = '🛒 加入服务点单清单';
+      btnOrder.classList.remove('picked');
+    }
+  }
+  updateOrderBtn();
+
+  btnOrder.addEventListener('click', function () {
+    if (pickedMap[act.id]) {
+      delete pickedMap[act.id];
+    } else {
+      pickedMap[act.id] = { id: act.id, title: act.title, category: act.category };
+    }
+    try {
+      localStorage.setItem(orderStorageKey, JSON.stringify(pickedMap));
+    } catch (e) {}
+    updateOrderBtn();
+  });
+
+  // 预约弹窗
+  var modal = document.getElementById('reserveModal');
+  var resTitle = document.getElementById('resActTitle');
+  document.getElementById('btnSideReserve').addEventListener('click', function () {
+    resTitle.value = act.title + ' (' + (act.category || '') + ')';
+    modal.classList.add('open');
+  });
+  document.getElementById('modalClose').addEventListener('click', function () {
+    modal.classList.remove('open');
+  });
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) modal.classList.remove('open');
+  });
+
+  document.getElementById('reserveForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var org = document.getElementById('resOrg').value.trim();
+    var contact = document.getElementById('resContact').value.trim();
+    var audience = document.getElementById('resAudience').value.trim();
+    var notes = document.getElementById('resNotes').value.trim();
+
+    var text = '【水韵农青服务预约意向单】\n' +
+      '・意向课程：' + act.title + '\n' +
+      '・合作单位：' + org + '\n' +
+      '・联系人员：' + contact + '\n' +
+      (audience ? ('・受众规模：' + audience + '\n') : '') +
+      (notes ? ('・具体需求：' + notes + '\n') : '') +
+      '・提交时间：' + new Date().toLocaleString();
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        alert('🎉 预约意向单已成功复制到剪贴板！\n请将内容发送至招新QQ群 1108743305 或与团队负责人对接。');
+        modal.classList.remove('open');
+      });
+    } else {
+      prompt('请复制以下预约意向单文本发给负责人：', text);
+      modal.classList.remove('open');
+    }
+  });
+
+  // 分享链接复制
+  document.getElementById('btnSideShare').addEventListener('click', function () {
+    var url = window.location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () {
+        alert('已复制该活动专属链接，可直接分享给微信/QQ好友！');
+      });
+    } else {
+      prompt('请复制链接：', url);
+    }
+  });
+
+  // 复制 QQ 群
+  document.getElementById('btnCopyQQ').addEventListener('click', function () {
+    var g = '1108743305';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(g).then(function () {
+        alert('已复制 QQ 群号：1108743305');
+      });
+    } else {
+      prompt('QQ 群号：', g);
+    }
+  });
+
+})();
+</script>
+</body>
+</html>
