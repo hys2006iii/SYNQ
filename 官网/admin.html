@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>活动管理后台 · 水韵农青大学生科技志愿服务队</title>
+<meta name="description" content="水韵农青大学生科技志愿服务队官网后台管理系统，支持活动与课程的增删改查、图文照片编辑、推文链接与视频管理。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23019aaa'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='36' font-weight='bold' text-anchor='middle' fill='%23fbf7ef'%3E水%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:   #f4f6f8;
+  --white:   #ffffff;
+  --ink:     #1e293b;
+  --ink-2:   #475569;
+  --ink-3:   #94a3b8;
+  --primary: #019aaa;
+  --primary-deep: #0b7285;
+  --leaf:    #2b8a3e;
+  --seal:    #c92a2a;
+  --gold:    #e67700;
+  --line:    1px solid #e2e8f0;
+  --radius:  8px;
+  --shadow:  0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--paper); color: var(--ink); line-height: 1.6; font-size: 15px;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; }
+
+/* 顶栏 */
+.topbar {
+  background: #0f172a; color: #fff; height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.brand-box { display: flex; align-items: center; gap: 14px; }
+.brand-box img { height: 36px; }
+.brand-box h1 { font-size: 19px; font-weight: 700; letter-spacing: 0.06em; }
+.brand-box span.badge {
+  font-size: 12px; background: var(--primary); color: #fff; padding: 3px 10px; border-radius: 4px;
+}
+.top-links { display: flex; align-items: center; gap: 14px; }
+.btn-nav {
+  font-size: 14px; color: #cbd5e1; background: rgba(255,255,255,0.1);
+  padding: 7px 14px; border-radius: 6px; transition: all .2s;
+}
+.btn-nav:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.btn-nav.active { background: var(--primary); color: #fff; }
+
+/* 容器布局 */
+.layout { max-width: 1340px; margin: 28px auto 60px; padding: 0 24px; }
+
+/* 统计卡片栅格 */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--white); padding: 22px; border-radius: var(--radius);
+  border: var(--line); box-shadow: var(--shadow); display: flex; align-items: center; gap: 18px;
+}
+.stat-icon {
+  width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center;
+  justify-content: center; font-size: 24px; color: #fff;
+}
+.stat-icon.c1 { background: linear-gradient(135deg, #019aaa, #0b7285); }
+.stat-icon.c2 { background: linear-gradient(135deg, #2b8a3e, #2f9e44); }
+.stat-icon.c3 { background: linear-gradient(135deg, #e67700, #f59f00); }
+.stat-icon.c4 { background: linear-gradient(135deg, #7048e8, #5f3dc4); }
+.stat-text h3 { font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.stat-text p { font-size: 13.5px; color: var(--ink-3); margin-top: 3px; }
+
+/* 操控工具栏 */
+.toolbar-card {
+  background: var(--white); padding: 20px 24px; border-radius: var(--radius);
+  border: var(--line); box-shadow: var(--shadow); margin-bottom: 24px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+}
+.filter-group { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.search-input {
+  padding: 9px 14px; border: var(--line); border-radius: 6px; width: 240px;
+  font-size: 14px; background: var(--paper); outline: none;
+}
+.search-input:focus { border-color: var(--primary); background: #fff; }
+.select-input {
+  padding: 9px 12px; border: var(--line); border-radius: 6px;
+  font-size: 14px; background: var(--paper); outline: none;
+}
+.action-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.btn {
+  padding: 9px 18px; border-radius: 6px; font-size: 14px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px; transition: all .2s;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-deep); }
+.btn-outline { background: #fff; border: var(--line); color: var(--ink-2); }
+.btn-outline:hover { background: var(--paper); color: var(--ink); }
+.btn-danger { background: #fff; border: 1px solid #ffc9c9; color: var(--seal); }
+.btn-danger:hover { background: #ffe3e3; }
+
+/* 表格卡片 */
+.table-card {
+  background: var(--white); border-radius: var(--radius);
+  border: var(--line); box-shadow: var(--shadow); overflow: hidden;
+}
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+th {
+  background: #f8fafc; padding: 14px 18px; font-size: 13.5px; font-weight: 600;
+  color: var(--ink-2); border-bottom: var(--line); white-space: nowrap;
+}
+td {
+  padding: 16px 18px; border-bottom: var(--line); font-size: 14.5px; vertical-align: middle;
+}
+tr:hover td { background: #f8fafc; }
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;
+}
+.badge-chapter { background: #e0f2fe; color: #0369a1; }
+.badge-menu { background: #dcfce7; color: #15803d; }
+.act-thumb { width: 64px; height: 44px; border-radius: 4px; object-fit: cover; background: #e2e8f0; }
+.act-title-box h4 { font-size: 15.5px; font-weight: 600; color: var(--ink); }
+.act-title-box p { font-size: 13px; color: var(--ink-3); margin-top: 3px; }
+.row-actions { display: flex; gap: 8px; }
+.btn-sm {
+  padding: 5px 12px; border-radius: 4px; font-size: 13px; font-weight: 500;
+}
+
+/* 模态弹窗 Modal */
+.modal {
+  position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal.open { display: flex; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-box {
+  background: var(--white); border-radius: 10px; width: 100%; max-width: 860px;
+  max-height: 90vh; display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.modal-head {
+  padding: 18px 24px; border-bottom: var(--line); display: flex;
+  justify-content: space-between; align-items: center; background: #f8fafc;
+}
+.modal-head h3 { font-size: 18px; font-weight: 700; color: var(--ink); }
+.modal-close { font-size: 24px; color: var(--ink-3); background: none; }
+.modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+.modal-foot {
+  padding: 16px 24px; border-top: var(--line); background: #f8fafc;
+  display: flex; justify-content: flex-end; gap: 12px;
+}
+
+/* 表单组件 */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { margin-bottom: 16px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-2); margin-bottom: 6px; }
+.form-control {
+  width: 100%; padding: 9px 12px; border: var(--line); border-radius: 6px;
+  font-family: inherit; font-size: 14px; background: #fff; outline: none; transition: border-color .2s;
+}
+.form-control:focus { border-color: var(--primary); }
+textarea.form-control { resize: vertical; min-height: 80px; }
+
+/* 选项卡导航 */
+.form-tabs {
+  display: flex; gap: 8px; border-bottom: var(--line); margin-bottom: 20px;
+}
+.form-tab {
+  padding: 8px 16px; font-size: 13.5px; font-weight: 500; color: var(--ink-2);
+  background: none; border-bottom: 2px solid transparent; cursor: pointer;
+}
+.form-tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* 动态列表（照片/推文/步骤） */
+.item-card {
+  background: #f8fafc; border: var(--line); border-radius: 6px;
+  padding: 12px; margin-bottom: 12px; position: relative;
+}
+.item-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.item-card-head b { font-size: 13px; color: var(--ink); }
+.item-del-btn { color: var(--seal); background: none; font-size: 12px; font-weight: 500; }
+
+.img-preview-box { display: flex; gap: 12px; align-items: center; margin-top: 8px; }
+.img-preview { width: 70px; height: 50px; border-radius: 4px; object-fit: cover; border: var(--line); background: #eee; }
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .toolbar-card { flex-direction: column; align-items: stretch; }
+  .action-group { justify-content: stretch; }
+  .action-group .btn { flex: 1; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- 顶栏 -->
+<header class="topbar">
+  <div class="brand-box">
+    <img src="logo-mark.png" alt="水韵农青">
+    <h1>水韵农青 · 活动后台管理系统</h1>
+    <span class="badge">V1.0</span>
+  </div>
+  <div class="top-links">
+    <a class="btn-nav" href="index.html" target="_blank">🌐 预览官网首页</a>
+    <a class="btn-nav" href="activities/index.html" target="_blank">📚 活动总览</a>
+    <a class="btn-nav active" href="admin.html">⚙ 管理中心</a>
+  </div>
+</header>
+
+<main class="layout">
+  <!-- 统计卡片 -->
+  <section class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon c1">📊</div>
+      <div class="stat-text">
+        <h3 id="statTotal">0</h3>
+        <p>全站活动与课程总数</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon c2">📖</div>
+      <div class="stat-text">
+        <h3 id="statChapters">0</h3>
+        <p>服务篇章核心活动</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon c3">🥗</div>
+      <div class="stat-text">
+        <h3 id="statMenus">0</h3>
+        <p>特色服务菜单课程</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon c4">📸</div>
+      <div class="stat-text">
+        <h3 id="statPhotos">0</h3>
+        <p>现场实拍照片收录</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工具栏 -->
+  <section class="toolbar-card">
+    <div class="filter-group">
+      <input type="text" class="search-input" id="filterSearch" placeholder="🔍 搜索活动标题 / 分类 / 亮点...">
+      <select class="select-input" id="filterType">
+        <option value="">全部类型 (篇章 + 菜单)</option>
+        <option value="chapter">服务篇章活动</option>
+        <option value="menu">特色服务菜单课程</option>
+      </select>
+      <select class="select-input" id="filterCat">
+        <option value="">全部分类系列</option>
+      </select>
+    </div>
+    <div class="action-group">
+      <button class="btn btn-primary" id="btnAddNew" type="button">➕ 新增活动 / 课程</button>
+      <button class="btn btn-outline" id="btnExport" type="button">💾 导出备份 JSON</button>
+      <button class="btn btn-outline" id="btnImport" type="button">📂 导入数据 JSON</button>
+      <button class="btn btn-danger" id="btnReset" type="button">🔄 恢复官方默认数据</button>
+      <input type="file" id="importFileInput" accept=".json" style="display:none;">
+    </div>
+  </section>
+
+  <!-- 活动数据表格 -->
+  <section class="table-card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 70px;">封面</th>
+            <th>ID / 编号</th>
+            <th>活动标题与副标题</th>
+            <th>类型</th>
+            <th>所属分类系列</th>
+            <th>适合学段</th>
+            <th>照片 / 推文</th>
+            <th style="width: 160px; text-align: right;">操作管理</th>
+          </tr>
+        </thead>
+        <tbody id="actTableBody">
+          <!-- 动态渲染 -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<!-- 新增/编辑活动弹窗 Modal -->
+<div class="modal" id="editModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modalTitle">编辑活动详情</h3>
+      <button class="modal-close" id="modalClose" type="button">&times;</button>
+    </div>
+
+    <!-- 弹窗标签导航 -->
+    <div style="padding: 12px 24px 0;">
+      <nav class="form-tabs">
+        <button class="form-tab active" data-tab="tabBasic" type="button">1. 基础属性</button>
+        <button class="form-tab" data-tab="tabIntro" type="button">2. 详细图文与亮点</button>
+        <button class="form-tab" data-tab="tabPhotos" type="button">3. 照片画廊 (<span id="tabPhotoCount">0</span>)</button>
+        <button class="form-tab" data-tab="tabVideo" type="button">4. 视频记录</button>
+        <button class="form-tab" data-tab="tabTweets" type="button">5. 微信推文报道 (<span id="tabTweetCount">0</span>)</button>
+        <button class="form-tab" data-tab="tabSteps" type="button">6. 教学流程与物资</button>
+      </nav>
+    </div>
+
+    <form class="modal-body" id="actForm">
+      <!-- 隐藏域 ID -->
+      <input type="hidden" id="fId">
+
+      <!-- TAB 1: 基础属性 -->
+      <div class="tab-pane active" id="tabBasic">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>活动类别 *</label>
+            <select class="form-control" id="fType" required>
+              <option value="chapter">服务篇章活动 (对应服务内容 5 大篇章)</option>
+              <option value="menu">特色服务菜单课程 (对应点单菜单)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>所属分类系列名称 *</label>
+            <input type="text" class="form-control" id="fCategory" placeholder="例如：科研绘科普 / 科创农野 / 水润江河" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>活动 / 课程标题 *</label>
+          <input type="text" class="form-control" id="fTitle" placeholder="例如：「土壤医生」低碳科普" required>
+        </div>
+
+        <div class="form-group">
+          <label>副标题 / 一句话宣传</label>
+          <input type="text" class="form-control" id="fSubtitle" placeholder="例如：科研项目进课堂 · 重金属土壤治理">
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>建议受众 / 适合学段</label>
+            <input type="text" class="form-control" id="fTargetAge" placeholder="例如：适合 8-12 岁 / 小学 3-6 年级">
+          </div>
+          <div class="form-group">
+            <label>活动成效标签</label>
+            <input type="text" class="form-control" id="fStats" placeholder="例如：已开展 2 期 · 覆盖 120+ 青少年">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>封面图片 (路径 / 链接 或 选择本地图片)</label>
+          <div style="display:flex; gap:10px;">
+            <input type="text" class="form-control" id="fCover" placeholder="例如：photos/IMG_5612.JPG 或 网络图片链接">
+            <label class="btn btn-outline" style="white-space:nowrap; cursor:pointer;">
+              本地图片 <input type="file" id="fCoverFile" accept="image/*" style="display:none;">
+            </label>
+          </div>
+          <div class="img-preview-box">
+            <img class="img-preview" id="fCoverPreview" src="photos/IMG_5612.JPG" alt="封面预览">
+            <span style="font-size:12px; color:var(--ink-3);">支持 JPG / PNG，建议横版比例 16:9 或 4:3</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: 图文详情与亮点 -->
+      <div class="tab-pane" id="tabIntro">
+        <div class="form-group">
+          <label>活动亮点标签 (多个用英文逗号或空格隔开)</label>
+          <input type="text" class="form-control" id="fHighlights" placeholder="例如：活动 2 次, 农水 · 土治 · 碳汇, 双碳战略">
+        </div>
+
+        <div class="form-group">
+          <label>详细活动介绍与背景说明 (支持换行分段)</label>
+          <textarea class="form-control" id="fDesc" style="min-height: 180px;" placeholder="详细介绍课程研发背景、教学理念、实践目标与受众反馈..."></textarea>
+        </div>
+      </div>
+
+      <!-- TAB 3: 照片画廊 -->
+      <div class="tab-pane" id="tabPhotos">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <span style="font-size:13px; color:var(--ink-2);">支持添加多张现场实拍图片，在专属详情页支持全屏灯箱放大浏览。</span>
+          <button class="btn btn-sm btn-primary" id="btnAddPhoto" type="button">➕ 添加一张照片</button>
+        </div>
+        <div id="photosListContainer"></div>
+      </div>
+
+      <!-- TAB 4: 视频记录 -->
+      <div class="tab-pane" id="tabVideo">
+        <div class="form-group">
+          <label>视频标题</label>
+          <input type="text" class="form-control" id="fVideoTitle" placeholder="例如：活动精彩实录与微课视频">
+        </div>
+        <div class="form-group">
+          <label>Bilibili / 视频网站嵌入 iframe 代码 或 在线视频直链 (MP4)</label>
+          <textarea class="form-control" id="fVideoEmbed" placeholder='例如：<iframe src="//player.bilibili.com/player.html?bvid=..." scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>'></textarea>
+          <span style="font-size:12px; color:var(--ink-3); margin-top:4px; display:block;">
+            提示：在 Bilibili 视频页面点击「分享」->「嵌入代码」复制后粘贴至此处即可在详情页直接播放。
+          </span>
+        </div>
+      </div>
+
+      <!-- TAB 5: 微信推文与报道 -->
+      <div class="tab-pane" id="tabTweets">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <span style="font-size:13px; color:var(--ink-2);">关联微信公众号宣传推文或媒体报道，访客可点击直接阅读原文。</span>
+          <button class="btn btn-sm btn-primary" id="btnAddTweet" type="button">➕ 添加一篇报道</button>
+        </div>
+        <div id="tweetsListContainer"></div>
+      </div>
+
+      <!-- TAB 6: 教学流程与器材 -->
+      <div class="tab-pane" id="tabSteps">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <span style="font-size:13px; color:var(--ink-2);">标准三段式教学流程与动手环节。</span>
+          <button class="btn btn-sm btn-primary" id="btnAddStep" type="button">➕ 添加一个环节</button>
+        </div>
+        <div id="stepsListContainer"></div>
+
+        <div class="form-group" style="margin-top:18px;">
+          <label>配套教具与物资清单 (多个用中英文逗号隔开)</label>
+          <input type="text" class="form-control" id="fMaterials" placeholder="例如：土壤标本盒, 便携 pH 试纸, 生态修复小盆栽, 双碳知识手册">
+        </div>
+      </div>
+    </form>
+
+    <div class="modal-foot">
+      <button class="btn btn-outline" id="btnCancelEdit" type="button">取消</button>
+      <button class="btn btn-primary" id="btnSaveAct" type="button">💾 保存活动数据</button>
+    </div>
+  </div>
+</div>
+
+<script src="activities-data.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var actList = [];
+  var currentEditingPhotos = [];
+  var currentEditingTweets = [];
+  var currentEditingSteps = [];
+
+  function $(sel) { return document.querySelector(sel); }
+  function $$(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+
+  // 1. 数据加载与列表渲染
+  function loadData() {
+    actList = window.WaterYouthData.getAll();
+    updateStats();
+    populateCategoryFilter();
+    renderTable();
+  }
+
+  function updateStats() {
+    $('#statTotal').textContent = actList.length;
+    var chapters = actList.filter(function (x) { return x.type === 'chapter'; });
+    var menus = actList.filter(function (x) { return x.type === 'menu'; });
+    var totalPhotos = actList.reduce(function (sum, x) { return sum + ((x.photos && x.photos.length) || 0); }, 0);
+
+    $('#statChapters').textContent = chapters.length;
+    $('#statMenus').textContent = menus.length;
+    $('#statPhotos').textContent = totalPhotos;
+  }
+
+  function populateCategoryFilter() {
+    var cats = {};
+    actList.forEach(function (x) { if (x.category) cats[x.category] = 1; });
+    var sel = $('#filterCat');
+    var curVal = sel.value;
+    sel.innerHTML = '<option value="">全部分类系列</option>' +
+      Object.keys(cats).map(function (c) {
+        return '<option value="' + c + '">' + c + '</option>';
+      }).join('');
+    sel.value = curVal;
+  }
+
+  function renderTable() {
+    var kw = $('#filterSearch').value.trim().toLowerCase();
+    var typeFilter = $('#filterType').value;
+    var catFilter = $('#filterCat').value;
+
+    var filtered = actList.filter(function (a) {
+      if (typeFilter && a.type !== typeFilter) return false;
+      if (catFilter && a.category !== catFilter) return false;
+      if (kw) {
+        var str = (a.title + ' ' + (a.subtitle || '') + ' ' + (a.category || '') + ' ' + (a.desc || '') + ' ' + ((a.highlights || []).join(' '))).toLowerCase();
+        if (str.indexOf(kw) === -1) return false;
+      }
+      return true;
+    });
+
+    var tbody = $('#actTableBody');
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:40px; color:var(--ink-3);">未检索到匹配的活动数据</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(function (a) {
+      var photoCount = (a.photos && a.photos.length) || 0;
+      var tweetCount = (a.tweets && a.tweets.length) || 0;
+      var coverSrc = a.cover || ((a.photos && a.photos[0] && a.photos[0].url) || 'photos/IMG_5612.JPG');
+
+      return '<tr>' +
+        '<td><img class="act-thumb" src="' + coverSrc + '" alt="' + a.title + '"></td>' +
+        '<td><code style="font-size:12px; color:var(--primary-deep); font-weight:600;">' + a.id + '</code></td>' +
+        '<td>' +
+          '<div class="act-title-box">' +
+            '<h4>' + a.title + '</h4>' +
+            '<p>' + (a.subtitle || '暂无副标题') + '</p>' +
+          '</div>' +
+        '</td>' +
+        '<td>' +
+          (a.type === 'chapter' ? '<span class="badge badge-chapter">服务篇章</span>' : '<span class="badge badge-menu">特色菜单</span>') +
+        '</td>' +
+        '<td><b>' + (a.category || '-') + '</b></td>' +
+        '<td><span style="font-size:12px; color:var(--ink-2);">' + (a.targetAge || '全龄') + '</span></td>' +
+        '<td><span style="font-size:12px; color:var(--ink-3);">🖼 ' + photoCount + ' 张 · 📰 ' + tweetCount + ' 篇</span></td>' +
+        '<td style="text-align:right;">' +
+          '<div class="row-actions" style="justify-content:flex-end;">' +
+            '<a class="btn btn-sm btn-outline" href="activity.html?id=' + a.id + '" target="_blank">👁 网页</a>' +
+            '<button class="btn btn-sm btn-primary edit-btn" data-id="' + a.id + '" type="button">✏️ 编辑</button>' +
+            '<button class="btn btn-sm btn-danger del-btn" data-id="' + a.id + '" type="button">🗑</button>' +
+          '</div>' +
+        '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  // 筛选事件绑定
+  $('#filterSearch').addEventListener('input', renderTable);
+  $('#filterType').addEventListener('change', renderTable);
+  $('#filterCat').addEventListener('change', renderTable);
+
+  // 选项卡切换
+  $$('.form-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      $$('.form-tab').forEach(function (t) { t.classList.remove('active'); });
+      $$('.tab-pane').forEach(function (p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      $('#' + tab.getAttribute('data-tab')).classList.add('active');
+    });
+  });
+
+  // 2. 新增与编辑 Modal
+  var editModal = $('#editModal');
+  function openModal(act) {
+    // 切换到第一个 Tab
+    $$('.form-tab')[0].click();
+
+    if (act) {
+      $('#modalTitle').textContent = '编辑活动：' + act.title;
+      $('#fId').value = act.id;
+      $('#fType').value = act.type || 'chapter';
+      $('#fCategory').value = act.category || '';
+      $('#fTitle').value = act.title || '';
+      $('#fSubtitle').value = act.subtitle || '';
+      $('#fTargetAge').value = act.targetAge || '';
+      $('#fStats').value = act.stats || '';
+      $('#fCover').value = act.cover || '';
+      $('#fCoverPreview').src = act.cover || 'photos/IMG_5612.JPG';
+      $('#fHighlights').value = (act.highlights || []).join(', ');
+      $('#fDesc').value = act.desc || '';
+      $('#fVideoTitle').value = (act.video && act.video.title) || '';
+      $('#fVideoEmbed').value = (act.video && (act.video.embed || act.video.url)) || '';
+      $('#fMaterials').value = (act.materials || []).join(', ');
+
+      currentEditingPhotos = JSON.parse(JSON.stringify(act.photos || []));
+      currentEditingTweets = JSON.parse(JSON.stringify(act.tweets || []));
+      currentEditingSteps = JSON.parse(JSON.stringify(act.curriculum || []));
+    } else {
+      $('#modalTitle').textContent = '新增活动 / 课程';
+      var newId = 'act-custom-' + Date.now().toString(36);
+      $('#fId').value = newId;
+      $('#fType').value = 'chapter';
+      $('#fCategory').value = '科创农野';
+      $('#fTitle').value = '';
+      $('#fSubtitle').value = '';
+      $('#fTargetAge').value = '适合 8-12 岁';
+      $('#fStats').value = '已开展 1 期 · 全面开放预约';
+      $('#fCover').value = 'photos/IMG_5612.JPG';
+      $('#fCoverPreview').src = 'photos/IMG_5612.JPG';
+      $('#fHighlights').value = '科学实验, 动手探究, 农工特色';
+      $('#fDesc').value = '';
+      $('#fVideoTitle').value = '';
+      $('#fVideoEmbed').value = '';
+      $('#fMaterials').value = '实验器材包, 探索手册';
+
+      currentEditingPhotos = [{ url: 'photos/IMG_5612.JPG', title: '活动现场照片', desc: '志愿者现场教学指导' }];
+      currentEditingTweets = [];
+      currentEditingSteps = [
+        { step: '1', title: '趣味引入与现象观察', content: '激发青少年探索好奇心。' },
+        { step: '2', title: '动手实操与实验探究', content: '分组开展动手实践体验。' },
+        { step: '3', title: '分享总结与成果展示', content: '总结核心科学知识点。' }
+      ];
+    }
+
+    renderPhotosManager();
+    renderTweetsManager();
+    renderStepsManager();
+    editModal.classList.add('open');
+  }
+
+  function closeModal() {
+    editModal.classList.remove('open');
+  }
+  $('#modalClose').addEventListener('click', closeModal);
+  $('#btnCancelEdit').addEventListener('click', closeModal);
+
+  // 封面选择与本地上传预览
+  $('#fCover').addEventListener('input', function () {
+    $('#fCoverPreview').src = this.value.trim() || 'photos/IMG_5612.JPG';
+  });
+  $('#fCoverFile').addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (evt) {
+      $('#fCover').value = evt.target.result;
+      $('#fCoverPreview').src = evt.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 照片管理渲染
+  function renderPhotosManager() {
+    $('#tabPhotoCount').textContent = currentEditingPhotos.length;
+    var container = $('#photosListContainer');
+    if (currentEditingPhotos.length === 0) {
+      container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--ink-3); font-size:13px;">暂未添加现场照片，点击右上角添加。</p>';
+      return;
+    }
+    container.innerHTML = currentEditingPhotos.map(function (ph, idx) {
+      return '<div class="item-card" data-idx="' + idx + '">' +
+        '<div class="item-card-head">' +
+          '<b>照片 #' + (idx + 1) + '</b>' +
+          '<button type="button" class="item-del-btn del-photo-btn" data-idx="' + idx + '">删除此照片</button>' +
+        '</div>' +
+        '<div class="form-grid" style="margin-bottom:8px;">' +
+          '<div class="form-group" style="margin-bottom:0;">' +
+            '<label>照片 URL / 路径</label>' +
+            '<input type="text" class="form-control ph-url-input" data-idx="' + idx + '" value="' + (ph.url || '') + '" placeholder="photos/IMG_xxxx.JPG">' +
+          '</div>' +
+          '<div class="form-group" style="margin-bottom:0;">' +
+            '<label>照片标题 / 说明</label>' +
+            '<input type="text" class="form-control ph-title-input" data-idx="' + idx + '" value="' + (ph.title || '') + '" placeholder="如：志愿者现场指导">' +
+          '</div>' +
+        '</div>' +
+        '<div class="form-group" style="margin-bottom:0;">' +
+          '<label>详细图说描述 (可选)</label>' +
+          '<input type="text" class="form-control ph-desc-input" data-idx="' + idx + '" value="' + (ph.desc || '') + '" placeholder="详细说明">' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  $('#btnAddPhoto').addEventListener('click', function () {
+    currentEditingPhotos.push({ url: 'photos/IMG_5614.JPG', title: '活动实拍', desc: '' });
+    renderPhotosManager();
+  });
+
+  $('#photosListContainer').addEventListener('click', function (e) {
+    if (e.target.classList.contains('del-photo-btn')) {
+      var idx = Number(e.target.getAttribute('data-idx'));
+      currentEditingPhotos.splice(idx, 1);
+      renderPhotosManager();
+    }
+  });
+  $('#photosListContainer').addEventListener('input', function (e) {
+    var idx = Number(e.target.getAttribute('data-idx'));
+    if (!currentEditingPhotos[idx]) return;
+    if (e.target.classList.contains('ph-url-input')) currentEditingPhotos[idx].url = e.target.value;
+    if (e.target.classList.contains('ph-title-input')) currentEditingPhotos[idx].title = e.target.value;
+    if (e.target.classList.contains('ph-desc-input')) currentEditingPhotos[idx].desc = e.target.value;
+  });
+
+  // 推文管理渲染
+  function renderTweetsManager() {
+    $('#tabTweetCount').textContent = currentEditingTweets.length;
+    var container = $('#tweetsListContainer');
+    if (currentEditingTweets.length === 0) {
+      container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--ink-3); font-size:13px;">暂未添加推文报道，点击右上角添加。</p>';
+      return;
+    }
+    container.innerHTML = currentEditingTweets.map(function (tw, idx) {
+      return '<div class="item-card" data-idx="' + idx + '">' +
+        '<div class="item-card-head">' +
+          '<b>推文报道 #' + (idx + 1) + '</b>' +
+          '<button type="button" class="item-del-btn del-tweet-btn" data-idx="' + idx + '">删除此报道</button>' +
+        '</div>' +
+        '<div class="form-group">' +
+          '<label>推文标题 *</label>' +
+          '<input type="text" class="form-control tw-title-input" data-idx="' + idx + '" value="' + (tw.title || '') + '" placeholder="【活动回顾】水韵农青...">' +
+        '</div>' +
+        '<div class="form-grid">' +
+          '<div class="form-group" style="margin-bottom:0;">' +
+            '<label>发布平台</label>' +
+            '<input type="text" class="form-control tw-plat-input" data-idx="' + idx + '" value="' + (tw.platform || '河海水韵农青公众号') + '">' +
+          '</div>' +
+          '<div class="form-group" style="margin-bottom:0;">' +
+            '<label>发布日期</label>' +
+            '<input type="text" class="form-control tw-date-input" data-idx="' + idx + '" value="' + (tw.date || '2024-05-18') + '">' +
+          '</div>' +
+        '</div>' +
+        '<div class="form-group" style="margin-top:8px;">' +
+          '<label>推文链接 URL *</label>' +
+          '<input type="text" class="form-control tw-url-input" data-idx="' + idx + '" value="' + (tw.url || '') + '" placeholder="https://mp.weixin.qq.com/...">' +
+        '</div>' +
+        '<div class="form-group" style="margin-bottom:0;">' +
+          '<label>推文摘要</label>' +
+          '<input type="text" class="form-control tw-sum-input" data-idx="' + idx + '" value="' + (tw.summary || '') + '" placeholder="简短摘要...">' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  $('#btnAddTweet').addEventListener('click', function () {
+    currentEditingTweets.push({
+      title: '【活动回顾】水韵农青志愿服务',
+      platform: '河海水韵农青公众号',
+      date: new Date().toISOString().slice(0, 10),
+      url: 'https://mp.weixin.qq.com/',
+      summary: '记录课堂与志愿服务的精彩时刻。',
+      cover: 'photos/IMG_5614.JPG'
+    });
+    renderTweetsManager();
+  });
+  $('#tweetsListContainer').addEventListener('click', function (e) {
+    if (e.target.classList.contains('del-tweet-btn')) {
+      var idx = Number(e.target.getAttribute('data-idx'));
+      currentEditingTweets.splice(idx, 1);
+      renderTweetsManager();
+    }
+  });
+  $('#tweetsListContainer').addEventListener('input', function (e) {
+    var idx = Number(e.target.getAttribute('data-idx'));
+    if (!currentEditingTweets[idx]) return;
+    if (e.target.classList.contains('tw-title-input')) currentEditingTweets[idx].title = e.target.value;
+    if (e.target.classList.contains('tw-plat-input')) currentEditingTweets[idx].platform = e.target.value;
+    if (e.target.classList.contains('tw-date-input')) currentEditingTweets[idx].date = e.target.value;
+    if (e.target.classList.contains('tw-url-input')) currentEditingTweets[idx].url = e.target.value;
+    if (e.target.classList.contains('tw-sum-input')) currentEditingTweets[idx].summary = e.target.value;
+  });
+
+  // 流程步骤渲染
+  function renderStepsManager() {
+    var container = $('#stepsListContainer');
+    container.innerHTML = currentEditingSteps.map(function (st, idx) {
+      return '<div class="item-card" data-idx="' + idx + '">' +
+        '<div class="item-card-head">' +
+          '<b>环节 ' + (idx + 1) + '</b>' +
+          '<button type="button" class="item-del-btn del-step-btn" data-idx="' + idx + '">删除此环节</button>' +
+        '</div>' +
+        '<div class="form-group">' +
+          '<label>环节标题</label>' +
+          '<input type="text" class="form-control step-title-input" data-idx="' + idx + '" value="' + (st.title || '') + '" placeholder="如：趣味引入与微观解密">' +
+        '</div>' +
+        '<div class="form-group" style="margin-bottom:0;">' +
+          '<label>环节内容与引导</label>' +
+          '<input type="text" class="form-control step-cnt-input" data-idx="' + idx + '" value="' + (st.content || '') + '" placeholder="具体教学设计...">' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+  $('#btnAddStep').addEventListener('click', function () {
+    currentEditingSteps.push({ step: String(currentEditingSteps.length + 1), title: '新教学环节', content: '' });
+    renderStepsManager();
+  });
+  $('#stepsListContainer').addEventListener('click', function (e) {
+    if (e.target.classList.contains('del-step-btn')) {
+      var idx = Number(e.target.getAttribute('data-idx'));
+      currentEditingSteps.splice(idx, 1);
+      renderStepsManager();
+    }
+  });
+  $('#stepsListContainer').addEventListener('input', function (e) {
+    var idx = Number(e.target.getAttribute('data-idx'));
+    if (!currentEditingSteps[idx]) return;
+    if (e.target.classList.contains('step-title-input')) currentEditingSteps[idx].title = e.target.value;
+    if (e.target.classList.contains('step-cnt-input')) currentEditingSteps[idx].content = e.target.value;
+  });
+
+  // 保存数据
+  $('#btnSaveAct').addEventListener('click', function () {
+    var title = $('#fTitle').value.trim();
+    if (!title) {
+      alert('请填写活动标题！');
+      $$('.form-tab')[0].click();
+      $('#fTitle').focus();
+      return;
+    }
+
+    var highlightsStr = $('#fHighlights').value.trim();
+    var hlArr = highlightsStr ? highlightsStr.split(/[,，\s]+/).filter(function (x) { return x.length > 0; }) : [];
+
+    var matStr = $('#fMaterials').value.trim();
+    var matArr = matStr ? matStr.split(/[,，]+/).filter(function (x) { return x.length > 0; }) : [];
+
+    var videoEmbedCode = $('#fVideoEmbed').value.trim();
+    var videoObj = {
+      title: $('#fVideoTitle').value.trim() || '活动精彩视频记录',
+      embed: videoEmbedCode.indexOf('<iframe') !== -1 ? videoEmbedCode : '',
+      url: videoEmbedCode.indexOf('<iframe') === -1 ? videoEmbedCode : '',
+      tip: ''
+    };
+
+    var updatedItem = {
+      id: $('#fId').value.trim(),
+      type: $('#fType').value,
+      category: $('#fCategory').value.trim(),
+      title: title,
+      subtitle: $('#fSubtitle').value.trim(),
+      targetAge: $('#fTargetAge').value.trim(),
+      stats: $('#fStats').value.trim(),
+      cover: $('#fCover').value.trim(),
+      desc: $('#fDesc').value.trim(),
+      highlights: hlArr,
+      photos: currentEditingPhotos,
+      video: videoObj,
+      tweets: currentEditingTweets,
+      curriculum: currentEditingSteps,
+      materials: matArr
+    };
+
+    window.WaterYouthData.save(updatedItem);
+    alert('🎉 活动数据已成功保存！\n首页与活动详情页已实时同步更新。');
+    closeModal();
+    loadData();
+  });
+
+  // 3. 全局按钮与操作
+  $('#btnAddNew').addEventListener('click', function () {
+    openModal(null);
+  });
+
+  $('#actTableBody').addEventListener('click', function (e) {
+    var editBtn = e.target.closest('.edit-btn');
+    if (editBtn) {
+      var id = editBtn.getAttribute('data-id');
+      var item = window.WaterYouthData.getById(id);
+      if (item) openModal(item);
+      return;
+    }
+
+    var delBtn = e.target.closest('.del-btn');
+    if (delBtn) {
+      var delId = delBtn.getAttribute('data-id');
+      if (confirm('确定要删除该活动项目 (' + delId + ') 吗？删除后可在右上角随时恢复默认数据。')) {
+        window.WaterYouthData.delete(delId);
+        loadData();
+      }
+    }
+  });
+
+  // 导出 JSON
+  $('#btnExport').addEventListener('click', function () {
+    var dataStr = window.WaterYouthData.exportJSON();
+    var blob = new Blob([dataStr], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'water_youth_activities_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // 导入 JSON
+  $('#btnImport').addEventListener('click', function () {
+    $('#importFileInput').click();
+  });
+  $('#importFileInput').addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (evt) {
+      var success = window.WaterYouthData.importJSON(evt.target.result);
+      if (success) {
+        alert('🎉 数据导入恢复成功！');
+        loadData();
+      } else {
+        alert('❌ 数据导入失败，请检查 JSON 格式是否正确。');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+
+  // 恢复默认
+  $('#btnReset').addEventListener('click', function () {
+    if (confirm('确定要将所有活动数据重置恢复为官方默认数据吗？此操作将清除本地修改。')) {
+      window.WaterYouthData.resetToDefault();
+      alert('已恢复为官方默认数据！');
+      loadData();
+    }
+  });
+
+  // 初始化
+  loadData();
+})();
+</script>
+</body>
+</html>

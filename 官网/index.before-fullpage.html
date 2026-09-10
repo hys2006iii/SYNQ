@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>水韵农青 · 大学生科技志愿服务队</title>
+<meta name="description" content="「水韵农青」大学生志愿服务队——胸怀青衿志，科普水韵行。以农工为特色、以创新为底色，欢迎志愿者加入，期待单位合作。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23019aaa'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='36' font-weight='bold' text-anchor='middle' fill='%23fbf7ef'%3E水%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   设计 Token · 温润水墨青绿 (Natural Ink & River Green)
+   清新通透，高校青年的人文与学术温度
+   ============================================================ */
+:root {
+  --teal-deep:    #163737;  /* 沉静水绿底 */
+  --teal-mid:     #1d4645;  /* 柔和水墨青 */
+  --teal-card:    #245250;  /* 实感卡片底 */
+  --teal-accent:  #019aaa;  /* 标志经典水青 */
+  --leaf:         #4ade80;  /* 生机嫩绿 */
+  --leaf-soft:    #86efac;  /* 柔和草绿 */
+  --amber:        #fbbf24;  /* 麦穗金黄 */
+  --seal:         #b91c1c;  /* 人文朱印红 */
+
+  --text-pure:    #ffffff;
+  --text-main:    #f1f5f9;  /* 柔白主文字 */
+  --text-sub:     #cbd5e1;  /* 次级灰绿文字 (清晰不刺眼) */
+  --text-dim:     #94a3b8;  /* 辅助说明 */
+
+  --border-card:  rgba(255, 255, 255, 0.15);
+  --border-light: rgba(255, 255, 255, 0.24);
+  --border-gold:  rgba(251, 191, 36, 0.4);
+
+  --font-kai:  "Ma Shan Zheng", "KaiTi", "STKaiti", serif;
+  --font-song: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+  --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+
+  --dur: 260ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background: #143232;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  touch-action: none;
+}
+::selection { background: var(--teal-accent); color: #fff; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* 全屏翻页容器 */
+.fp-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(900px 600px at 15% 15%, rgba(1, 154, 170, 0.28), transparent 70%),
+    radial-gradient(900px 600px at 85% 85%, rgba(34, 197, 94, 0.22), transparent 70%),
+    linear-gradient(170deg, #183d3c 0%, #1e4b49 50%, #153534 100%);
+}
+.fp-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0, 0, 0);
+  transition: transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.fp-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 66px 24px 16px;
+}
+
+/* 典雅细致水印暗纹 (人文纸墨肌理) */
+.fp-bg-decor {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, transparent 95%, rgba(0,0,0,0.15) 100%);
+  background-size: 36px 36px, 100% 100%;
+  opacity: 0.7;
+}
+
+/* 动效阶梯系统 */
+.anim-el {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+.fp-section.active .anim-el {
+  opacity: 1;
+  transform: translateY(0);
+}
+.d-1 { transition-delay: 40ms !important; }
+.d-2 { transition-delay: 100ms !important; }
+.d-3 { transition-delay: 160ms !important; }
+.d-4 { transition-delay: 220ms !important; }
+
+.fp-section:not(.active) .anim-el {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition-delay: 0s !important;
+}
+
+/* ============================================================
+   顶部实感导航栏
+   ============================================================ */
+.hdr {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 1000;
+  background: rgba(22, 53, 53, 0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-card);
+  transition: all var(--dur) ease;
+}
+.nav-wrap {
+  max-width: 1280px; margin: 0 auto; height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+}
+.brand { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.brand img { height: 42px; width: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)); }
+.brand .word {
+  font-family: var(--font-kai);
+  font-size: 26px;
+  letter-spacing: 0.12em;
+  color: var(--text-pure);
+}
+.brand .word b {
+  color: var(--leaf);
+  font-weight: 400;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 16px; list-style: none;
+}
+.nav-links a {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-sub);
+  letter-spacing: 0.05em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all var(--dur) ease;
+}
+.nav-links a:hover {
+  color: var(--text-pure);
+  background: rgba(255, 255, 255, 0.1);
+}
+.nav-links a.active {
+  color: var(--leaf-soft);
+  font-weight: 600;
+  background: rgba(74, 222, 128, 0.15);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+.nav-right-actions {
+  display: flex; align-items: center; gap: 12px;
+}
+.nav-act-btn {
+  padding: 6px 15px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  border: 1px solid rgba(1, 154, 170, 0.6);
+  background: rgba(1, 154, 170, 0.2);
+  color: #fff;
+  transition: all var(--dur) ease;
+}
+.nav-act-btn:hover {
+  background: var(--teal-accent);
+  box-shadow: 0 2px 10px rgba(1, 154, 170, 0.4);
+}
+.nav-join-btn {
+  padding: 6px 18px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  background: var(--leaf);
+  color: #0d2818;
+  transition: all var(--dur) ease;
+}
+.nav-join-btn:hover {
+  background: #22c55e;
+  transform: translateY(-1px);
+}
+
+.nav-toggle { display: none; width: 38px; height: 38px; }
+.nav-toggle span { display: block; width: 22px; height: 2px; margin: 5px auto; background: #fff; }
+
+/* 右侧页面指示器 */
+.fp-nav {
+  position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 1000;
+}
+.fp-nav-list {
+  display: flex; flex-direction: column; gap: 10px; list-style: none;
+  padding: 12px 6px; background: rgba(22, 53, 53, 0.85);
+  backdrop-filter: blur(10px); border: 1px solid var(--border-card);
+  border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.fp-dot {
+  position: relative; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.fp-dot-circle {
+  width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4);
+  transition: all 240ms ease;
+}
+.fp-dot:hover .fp-dot-circle { transform: scale(1.25); background: #fff; }
+.fp-dot.active .fp-dot-circle {
+  width: 8px; height: 18px; border-radius: 9px; background: var(--leaf);
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
+}
+.fp-tooltip {
+  position: absolute; right: 22px; top: 50%; transform: translateY(-50%) translateX(6px);
+  background: #1b4342; color: #fff; font-size: 12.5px; white-space: nowrap;
+  padding: 4px 10px; border-radius: 4px; opacity: 0; pointer-events: none;
+  border: 1px solid var(--border-light); transition: opacity 200ms ease, transform 200ms ease;
+}
+.fp-dot:hover .fp-tooltip { opacity: 1; transform: translateY(-50%) translateX(0); }
+
+/* 板块排版公用 */
+.wrap-box {
+  width: 100%; max-width: 1280px; height: 100%;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; z-index: 2;
+}
+.sec-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  border-bottom: 1px solid var(--border-card); padding-bottom: 10px; margin-bottom: 14px;
+  flex-shrink: 0;
+}
+.sec-head .left { display: flex; align-items: baseline; gap: 14px; }
+.sec-head .num {
+  font-family: var(--font-song); font-size: 34px; font-weight: 900; color: var(--leaf-soft); line-height: 1;
+}
+.sec-head h2 {
+  font-family: var(--font-song); font-size: clamp(22px, 2.6vw, 28px); font-weight: 700;
+  letter-spacing: 0.08em; color: var(--text-pure); line-height: 1;
+}
+.sec-head .en {
+  font-size: 12px; letter-spacing: 0.28em; color: var(--leaf-soft); font-weight: 600; text-transform: uppercase;
+}
+.sec-head .lead {
+  font-size: 14.5px; color: var(--text-sub); max-width: 620px; text-align: right; line-height: 1.5;
+}
+
+/* 实体质感卡片 */
+.real-card {
+  background: rgba(30, 71, 69, 0.72);
+  border: 1px solid var(--border-card);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  transition: transform var(--dur) ease, border-color var(--dur) ease, background var(--dur) ease;
+}
+.real-card:hover {
+  background: rgba(36, 82, 80, 0.9);
+  border-color: rgba(74, 222, 128, 0.4);
+}
+
+.btn-green-fill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 26px; border-radius: 6px; font-size: 15px; font-weight: 600;
+  background: var(--leaf); color: #092716;
+  transition: all var(--dur) ease;
+}
+.btn-green-fill:hover { background: #22c55e; transform: translateY(-2px); }
+
+.btn-line-white {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 22px; border-radius: 6px; font-size: 15px; font-weight: 500;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-light); color: #fff;
+  transition: all var(--dur) ease;
+}
+.btn-line-white:hover { background: rgba(255, 255, 255, 0.16); border-color: #fff; }
+
+/* ============================================================
+   00 首页 (Hero) · 字体特大化、气势恢宏
+   ============================================================ */
+.hero-box {
+  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 42px; align-items: center; flex: 1;
+}
+.hero-content { display: flex; flex-direction: column; align-items: flex-start; }
+.hero-kicker-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; border-radius: 6px;
+  background: rgba(251, 191, 36, 0.16); border: 1px solid var(--border-gold);
+  font-size: 14px; color: var(--amber); letter-spacing: 0.1em; margin-bottom: 16px; font-weight: 600;
+}
+/* 首页大字再放大 */
+.hero-title {
+  font-family: var(--font-kai);
+  font-size: clamp(68px, 8.2vw, 110px); /* 字体再放大！ */
+  line-height: 1.05; letter-spacing: 0.08em; color: var(--text-pure); margin-bottom: 14px;
+}
+.hero-title b { color: var(--leaf-soft); font-weight: 400; }
+.hero-slogan {
+  font-family: var(--font-song);
+  font-size: clamp(24px, 2.9vw, 36px); /* 标语再放大！ */
+  font-weight: 700; letter-spacing: 0.22em; color: #a7f3d0; margin-bottom: 18px;
+}
+.hero-desc {
+  font-size: 16.5px; color: var(--text-sub); line-height: 1.85; max-width: 580px; margin-bottom: 24px;
+}
+.hero-desc em { font-style: normal; color: #fde047; font-weight: 500; }
+.hero-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
+
+/* 实录跑马灯相册 */
+.hero-marquee-card {
+  padding: 14px; border-radius: 12px; background: rgba(22, 53, 53, 0.7);
+  border: 1px solid var(--border-card); position: relative; overflow: hidden;
+}
+.hero-marquee-wrap { display: flex; gap: 14px; overflow: hidden; position: relative; width: 100%; border-radius: 8px; }
+.hero-marquee-track { display: flex; gap: 14px; width: max-content; animation: marqueePhoto 24s linear infinite; }
+.hero-marquee-track:hover { animation-play-state: paused; }
+@keyframes marqueePhoto {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.hero-photo-slide {
+  width: 250px; height: 330px; border-radius: 6px; overflow: hidden; position: relative; flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.hero-photo-slide img { width: 100%; height: 100%; object-fit: cover; }
+.hero-photo-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(16, 40, 40, 0.95) 0%, transparent 60%);
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 14px;
+}
+.hero-photo-overlay h5 { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+.hero-photo-overlay p { font-size: 12.5px; color: var(--text-sub); }
+.hero-seal-floating {
+  position: absolute; top: 22px; right: 22px; z-index: 10;
+  padding: 4px 10px; background: var(--seal); color: #fff; border-radius: 4px;
+  font-family: var(--font-song); font-size: 12.5px; letter-spacing: 0.1em;
+}
+
+.scroll-hint-bar {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  color: var(--text-sub); font-size: 13.5px; letter-spacing: 0.2em; padding-top: 14px; cursor: pointer;
+}
+.mouse-ico {
+  width: 14px; height: 22px; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 8px; position: relative;
+}
+.mouse-dot {
+  position: absolute; top: 4px; left: 50%; transform: translateX(-50%);
+  width: 3px; height: 4px; background: var(--leaf); border-radius: 1px;
+  animation: mousePulse 1.8s infinite;
+}
+@keyframes mousePulse {
+  0% { transform: translate(-50%, 0); opacity: 1; }
+  80% { transform: translate(-50%, 8px); opacity: 0; }
+  100% { transform: translate(-50%, 0); opacity: 0; }
+}
+
+/* ============================================================
+   01 项目缘起 (Origin)
+   ============================================================ */
+.origin-layout-rich {
+  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; flex: 1; margin-bottom: 12px;
+}
+.origin-card-rich {
+  padding: 22px 26px; display: flex; flex-direction: column; justify-content: space-between;
+}
+.origin-card-rich h3 {
+  font-family: var(--font-song); font-size: 19px; color: var(--text-pure);
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border-card); padding-bottom: 8px; margin-bottom: 12px;
+}
+.origin-card-rich h3 i { font-family: var(--font-sans); font-size: 12px; color: var(--leaf-soft); font-style: normal; letter-spacing: 0.15em; }
+.origin-list-rich { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.origin-list-rich li {
+  display: flex; gap: 12px; font-size: 14.5px; color: var(--text-sub); line-height: 1.6;
+  background: rgba(22, 53, 53, 0.5); padding: 8px 14px; border-radius: 6px;
+  border-left: 3px solid var(--teal-accent);
+}
+.origin-list-rich li b { color: var(--text-pure); font-weight: 600; white-space: nowrap; font-size: 15px; }
+
+.origin-idea-rich p { font-size: 14.5px; color: var(--text-sub); line-height: 1.75; margin-bottom: 12px; }
+.origin-tags-rich { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.origin-tags-rich span {
+  font-size: 13px; padding: 3px 12px; border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-card);
+  color: var(--text-main);
+}
+.origin-tags-rich span.gold {
+  background: rgba(251, 191, 36, 0.15); border-color: var(--border-gold); color: var(--amber); font-weight: 600;
+}
+.origin-quote-box {
+  background: rgba(1, 154, 170, 0.16); border: 1px dashed rgba(74, 222, 128, 0.4);
+  border-radius: 6px; padding: 10px 14px; font-size: 13.5px; color: var(--text-main); line-height: 1.55;
+}
+.origin-quote-box em { color: #fde047; font-style: normal; font-weight: 600; }
+
+.origin-bottom-traits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; flex-shrink: 0; }
+.trait-box { padding: 12px 18px; display: flex; align-items: center; gap: 14px; }
+.trait-mark {
+  width: 42px; height: 42px; border-radius: 6px;
+  background: var(--leaf); color: #0d2818; font-family: var(--font-kai); font-size: 22px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: bold;
+}
+.trait-text h4 { font-size: 15.5px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+.trait-text p { font-size: 12.5px; color: var(--text-dim); line-height: 1.45; }
+
+/* ============================================================
+   02 核心服务 (Services) · 严谨真实的数据沉淀
+   ============================================================ */
+.serv-deck { display: flex; flex-direction: column; flex: 1; }
+.chap-tab-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; flex-shrink: 0; }
+.chap-pill {
+  padding: 7px 18px; border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-card);
+  color: var(--text-sub); font-size: 14px; font-weight: 500; transition: all var(--dur) ease;
+}
+.chap-pill:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+.chap-pill.active {
+  background: var(--leaf); color: #092716; font-weight: 600; border-color: transparent;
+}
+.serv-stage { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 20px; flex: 1; align-items: stretch; }
+.serv-spotlight { padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between; }
+.serv-spotlight .cat-badge { font-size: 12.5px; color: var(--leaf-soft); letter-spacing: 0.15em; font-weight: 600; margin-bottom: 4px; }
+.serv-spotlight h3 { font-family: var(--font-song); font-size: 22px; color: #fff; margin-bottom: 8px; }
+.serv-spotlight .desc { font-size: 14.5px; color: var(--text-sub); line-height: 1.75; margin-bottom: 16px; }
+.serv-acts-deck { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.serv-act-item {
+  background: rgba(22, 53, 53, 0.6); border: 1px solid var(--border-card);
+  padding: 12px 14px; border-radius: 6px; transition: all var(--dur) ease;
+}
+.serv-act-item:hover { background: rgba(29, 70, 69, 0.9); border-color: var(--teal-accent); transform: translateY(-2px); }
+.serv-act-item h5 { font-size: 14.5px; color: #fff; margin-bottom: 4px; font-weight: 600; }
+.serv-act-item p { font-size: 12px; color: var(--text-dim); line-height: 1.45; margin-bottom: 6px; }
+.serv-act-item .link { font-size: 12px; color: var(--leaf-soft); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+
+.serv-side-card { padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.serv-photo-showcase { border-radius: 6px; overflow: hidden; aspect-ratio: 16/10; margin-bottom: 12px; border: 1px solid var(--border-card); }
+.serv-photo-showcase img { width: 100%; height: 100%; object-fit: cover; }
+.serv-eco-archives h4 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 8px; border-left: 3px solid var(--leaf); padding-left: 10px; }
+.serv-eco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.serv-eco-item { background: rgba(22, 53, 53, 0.5); border: 1px solid var(--border-card); padding: 8px 6px; border-radius: 6px; text-align: center; }
+.serv-eco-item b { display: block; font-size: 14.5px; color: #fde047; margin-bottom: 2px; }
+.serv-eco-item span { font-size: 11.5px; color: var(--text-dim); }
+
+/* ============================================================
+   03 志愿服务活动菜单 (Service Menu)
+   ============================================================ */
+.menu-deck { display: flex; flex-direction: column; flex: 1; }
+.menu-cats-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; flex-shrink: 0; }
+.m-cat-btn {
+  padding: 6px 14px; border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-card);
+  color: var(--text-sub); font-size: 13.5px; font-weight: 500; transition: all var(--dur) ease;
+}
+.m-cat-btn:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+.m-cat-btn.active {
+  background: var(--leaf); color: #092716; font-weight: 600; border-color: transparent;
+}
+.menu-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; flex: 1; }
+.course-card {
+  padding: 12px; display: flex; flex-direction: column; justify-content: space-between;
+  background: rgba(25, 62, 60, 0.7); border: 1px solid var(--border-card);
+  border-radius: 8px; transition: all var(--dur) ease;
+}
+.course-card:hover {
+  background: rgba(32, 75, 73, 0.95); border-color: var(--teal-accent);
+  transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+.course-card-thumb { position: relative; aspect-ratio: 16/10; border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+.course-card-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.course-age-tag {
+  position: absolute; top: 6px; left: 6px;
+  background: rgba(16, 40, 40, 0.88); color: #fde047; font-size: 11px; padding: 2px 7px; border-radius: 3px; font-weight: 500;
+}
+.course-card-info h4 { font-size: 14.5px; font-weight: 600; color: #fff; margin-bottom: 3px; line-height: 1.35; }
+.course-card-info .sub { font-size: 12px; color: var(--leaf-soft); margin-bottom: 4px; font-weight: 500; }
+.course-card-info .desc { font-size: 12px; color: var(--text-dim); line-height: 1.45; margin-bottom: 8px; }
+.course-card-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--border-card); padding-top: 8px; font-size: 12px;
+}
+.course-card-foot .view-link { color: var(--leaf-soft); font-weight: 600; }
+.course-card-foot .no-pill { color: rgba(255,255,255,0.4); font-family: var(--font-song); font-weight: 700; font-size: 12.5px; }
+
+.menu-bottom-actions {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 12px; margin-top: 8px; border-top: 1px solid var(--border-card); flex-shrink: 0;
+}
+.menu-action-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13.5px; color: #fde047; font-weight: 600;
+  padding: 6px 16px; border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-card);
+  transition: all var(--dur) ease;
+}
+.menu-action-btn:hover { background: var(--teal-accent); color: #fff; border-color: var(--teal-accent); }
+
+/* ============================================================
+   04 发展成效 (Efforts)
+   ============================================================ */
+.efforts-layout-rich { display: flex; flex-direction: column; gap: 14px; flex: 1; justify-content: center; }
+.honors-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.honor-gold-card {
+  padding: 18px 20px; border-radius: 8px;
+  background: rgba(27, 65, 63, 0.8); border: 1px solid var(--border-gold);
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-left: 4px solid var(--amber);
+}
+.honor-gold-card .yr { font-size: 12.5px; color: var(--amber); letter-spacing: 0.12em; font-weight: 600; margin-bottom: 4px; }
+.honor-gold-card h4 { font-family: var(--font-song); font-size: 16.5px; color: #fff; font-weight: 700; line-height: 1.45; }
+.honor-gold-card .badge {
+  align-self: flex-start; margin-top: 8px; font-size: 11.5px;
+  padding: 2px 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.1); color: #fff;
+}
+
+.metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.metric-box { padding: 18px 14px; text-align: center; border-radius: 8px; }
+.metric-box .m-num {
+  font-family: var(--font-song); font-size: clamp(30px, 3.4vw, 42px);
+  font-weight: 800; color: var(--leaf-soft); line-height: 1.1; margin-bottom: 4px;
+}
+.metric-box .m-title { font-size: 14.5px; color: #fff; font-weight: 600; margin-bottom: 2px; }
+.metric-box .m-sub { font-size: 12px; color: var(--text-dim); }
+
+.efforts-strip-gallery { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; }
+.eff-snap-card {
+  padding: 10px 12px; border-radius: 6px; display: flex; align-items: center; gap: 10px;
+  background: rgba(22, 53, 53, 0.6); border: 1px solid var(--border-card);
+}
+.eff-snap-card img { width: 44px; height: 44px; border-radius: 4px; object-fit: cover; flex-shrink: 0; }
+.eff-snap-text h5 { font-size: 13px; color: #fff; font-weight: 600; margin-bottom: 2px; }
+.eff-snap-text p { font-size: 11px; color: var(--text-dim); }
+
+.partner-band-dark {
+  padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.partner-band-dark h5 { font-size: 14px; color: var(--leaf-soft); font-weight: 600; white-space: nowrap; }
+.partner-tags-deck { display: flex; flex-wrap: wrap; gap: 8px; }
+.partner-tags-deck span {
+  font-size: 12.5px; color: var(--text-main); padding: 3px 12px; border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-card);
+}
+
+/* ============================================================
+   05 创新理念 (Innov)
+   ============================================================ */
+.innov-grid-dark { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; flex: 1; }
+.innov-card-item { padding: 20px 24px; display: flex; flex-direction: column; justify-content: space-between; }
+.innov-card-item .tag { font-size: 11.5px; letter-spacing: 0.25em; color: var(--leaf-soft); font-weight: 600; margin-bottom: 6px; }
+.innov-card-item h3 { font-family: var(--font-song); font-size: 19px; color: #fff; margin-bottom: 8px; }
+.innov-card-item p { font-size: 14px; color: var(--text-sub); line-height: 1.75; margin-bottom: 10px; }
+.innov-pill-row { display: flex; flex-wrap: wrap; gap: 8px; border-top: 1px solid var(--border-card); padding-top: 8px; }
+.innov-pill-row span {
+  font-size: 12px; color: #fde047; padding: 2px 10px; border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-card);
+}
+
+/* ============================================================
+   06 愿景规划 (Vision)
+   ============================================================ */
+.vision-row-dark { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; flex: 1; }
+.vision-col-box { padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between; }
+.vision-col-box .v-no { font-family: var(--font-song); font-size: 30px; font-weight: 900; color: var(--leaf-soft); margin-bottom: 4px; line-height: 1; }
+.vision-col-box h3 { font-family: var(--font-song); font-size: 19px; color: #fff; margin-bottom: 8px; }
+.vision-col-box .lead-p { font-size: 13.5px; color: var(--text-sub); line-height: 1.65; margin-bottom: 14px; }
+.vision-col-box ul {
+  list-style: none; display: flex; flex-direction: column; gap: 8px;
+  border-top: 1px solid var(--border-card); padding-top: 12px;
+}
+.vision-col-box ul li { font-size: 13px; color: var(--text-dim); display: flex; gap: 8px; line-height: 1.45; }
+.vision-col-box ul li::before { content: "—"; color: var(--leaf-soft); font-weight: bold; }
+
+/* ============================================================
+   07 加入我们 (Join Us) · 真实招新大纲
+   ============================================================ */
+.join-layout-rich {
+  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 22px; flex: 1;
+}
+.join-main-card {
+  padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between;
+}
+.join-main-card h3 {
+  font-family: var(--font-song); font-size: 21px; color: #fff; margin-bottom: 6px; line-height: 1.35;
+}
+.join-main-card h3 b { color: var(--leaf-soft); }
+.join-main-card .sub {
+  font-size: 13.5px; color: var(--text-sub); margin-bottom: 14px; line-height: 1.55;
+}
+.join-roles-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;
+}
+.join-role-box {
+  background: rgba(20, 50, 49, 0.7); border: 1px solid var(--border-card);
+  padding: 10px 12px; border-radius: 6px; border-top: 3px solid var(--teal-accent);
+}
+.join-role-box:nth-child(2) { border-top-color: var(--leaf); }
+.join-role-box:nth-child(3) { border-top-color: var(--amber); }
+.join-role-box:nth-child(4) { border-top-color: #38bdf8; }
+.join-role-box .rt {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px;
+}
+.join-role-box h4 { font-size: 14px; color: #fff; font-weight: 600; }
+.join-role-box .tag { font-size: 11px; padding: 1px 6px; border-radius: 3px; background: rgba(255,255,255,0.1); color: var(--leaf-soft); }
+.join-role-box p { font-size: 11.5px; color: var(--text-dim); line-height: 1.45; }
+
+.join-contact-strip {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(20, 50, 49, 0.8); border: 1px solid var(--border-card);
+  padding: 10px 16px; border-radius: 6px;
+}
+.join-contact-left { display: flex; align-items: center; gap: 14px; }
+.join-qq-badge {
+  font-family: var(--font-song); font-size: 13.5px; color: #fff; font-weight: 600;
+}
+.join-qq-badge b { color: #fde047; font-size: 15px; letter-spacing: 0.05em; }
+
+.join-side-card {
+  padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between;
+}
+.join-side-card h4 {
+  font-family: var(--font-song); font-size: 16.5px; color: #fff; margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-card); padding-bottom: 6px;
+}
+.join-step-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.join-step-row { display: flex; gap: 10px; align-items: flex-start; }
+.join-step-row .num {
+  width: 22px; height: 22px; border-radius: 4px;
+  background: var(--leaf); color: #082515; font-weight: 800; font-size: 11.5px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.join-step-row div b { font-size: 13.5px; color: #fff; display: block; margin-bottom: 1px; }
+.join-step-row div p { font-size: 11.5px; color: var(--text-dim); line-height: 1.35; }
+
+.join-rewards-list {
+  background: rgba(20, 50, 49, 0.6); border: 1px solid var(--border-card);
+  padding: 10px 12px; border-radius: 6px; font-size: 12px; color: var(--text-sub); line-height: 1.55;
+}
+.join-rewards-list b { color: var(--leaf-soft); }
+
+/* ============================================================
+   08 单位合作与尾页 (Partner & Footer)
+   ============================================================ */
+.pf-unified-rich {
+  display: flex; flex-direction: column; gap: 14px; flex: 1; justify-content: space-between;
+}
+.pf-coop-grid {
+  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 20px;
+}
+.pf-coop-main {
+  padding: 20px 22px; display: flex; flex-direction: column; justify-content: space-between;
+}
+.pf-coop-main h3 {
+  font-family: var(--font-song); font-size: 20px; color: #fff; margin-bottom: 6px; line-height: 1.35;
+}
+.pf-coop-main h3 b { color: var(--leaf-soft); }
+.pf-coop-main .sub {
+  font-size: 13px; color: var(--text-sub); margin-bottom: 12px; line-height: 1.5;
+}
+.coop-types-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px;
+}
+.coop-type-card {
+  padding: 9px 10px; background: rgba(20, 50, 49, 0.7); border: 1px solid var(--border-card);
+  border-radius: 6px;
+}
+.coop-type-card b { display: block; font-size: 13px; color: #fde047; margin-bottom: 2px; }
+.coop-type-card span { font-size: 11px; color: var(--text-dim); line-height: 1.35; display: block; }
+
+.coop-deliver-strip {
+  background: rgba(20, 50, 49, 0.8); border: 1px solid var(--border-card);
+  padding: 9px 14px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;
+}
+.coop-deliver-strip span { font-size: 12.5px; color: var(--text-sub); }
+.coop-deliver-strip b { color: var(--leaf-soft); }
+
+.pf-coop-side {
+  padding: 20px 20px; display: flex; flex-direction: column; justify-content: space-between;
+}
+.pf-coop-side h4 {
+  font-family: var(--font-song); font-size: 16px; color: #fff; margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-card); padding-bottom: 6px;
+}
+.coop-workflow-rows {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
+}
+.workflow-item {
+  background: rgba(20, 50, 49, 0.6); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-card);
+}
+.workflow-item .n {
+  display: inline-block; width: 18px; height: 18px; border-radius: 3px;
+  background: var(--teal-accent); color: #fff; font-size: 11px; text-align: center; line-height: 18px;
+  font-weight: 700; margin-right: 4px;
+}
+.workflow-item b { font-size: 12px; color: #fff; }
+.workflow-item p { font-size: 10.5px; color: var(--text-dim); margin-top: 1px; }
+
+.coop-contact-box {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+
+/* 尾页全站导航与致谢 */
+.pf-footer-bar {
+  padding: 14px 20px; border-radius: 8px;
+  background: rgba(20, 50, 49, 0.9); border: 1px solid var(--border-card);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.footer-row-main {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.footer-nav-tags { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.footer-nav-tags a { font-size: 13px; color: var(--text-sub); transition: color var(--dur) ease; }
+.footer-nav-tags a:hover { color: var(--leaf-soft); }
+
+.footer-copy-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--border-card); padding-top: 8px; font-size: 12px; color: var(--text-dim);
+}
+.footer-copy-bar .motto { color: #fde047; font-family: var(--font-song); font-size: 13px; letter-spacing: 0.12em; }
+.back-top-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 14px; border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-card);
+  color: #fff; font-size: 12px; cursor: pointer; transition: all var(--dur) ease;
+}
+.back-top-btn:hover { background: var(--teal-accent); border-color: var(--teal-accent); }
+
+@media (max-width: 900px) {
+  .fp-nav { display: none; }
+  .hero-box, .origin-layout-rich, .serv-stage, .join-layout-rich, .pf-coop-grid {
+    grid-template-columns: 1fr; gap: 14px;
+  }
+  .menu-cards-grid { grid-template-columns: 1fr 1fr; }
+  .honors-row, .metrics-row, .vision-row-dark, .coop-types-grid, .join-roles-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 顶部固定导航 ============ -->
+<header class="hdr" id="hdr">
+  <div class="nav-wrap">
+    <a class="brand" href="#top" data-fp-target="0" id="brandLogo" title="双击或快捷键进入后台">
+      <img src="logo-mark.png" alt="水韵农青标志">
+      <span class="word">水韵<b>农</b>青</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#origin" data-fp-target="1">缘起</a></li>
+      <li><a href="#services" data-fp-target="2">核心服务</a></li>
+      <li><a href="#menu" data-fp-target="3">活动菜单</a></li>
+      <li><a href="#efforts" data-fp-target="4">发展成效</a></li>
+      <li><a href="#innov" data-fp-target="5">创新理念</a></li>
+      <li><a href="#vision" data-fp-target="6">愿景规划</a></li>
+      <li><a href="#join" data-fp-target="7">加入我们</a></li>
+      <li><a href="#partner" data-fp-target="8">单位合作</a></li>
+    </ul>
+    <div class="nav-right-actions">
+      <a class="nav-act-btn" href="activities/index.html" target="_blank">活动大厅 ↗</a>
+      <a class="nav-join-btn" href="#join" data-fp-target="7">加入我们</a>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 右侧悬浮分页圆点 (精简为 9 屏) ============ -->
+<nav class="fp-nav" id="fpNav" aria-label="全屏分页导航">
+  <ul class="fp-nav-list" id="fpNavList">
+    <li class="fp-dot active" data-fp-target="0" tabindex="0" role="button" aria-label="01 首页"><span class="fp-dot-circle"></span><span class="fp-tooltip">01 · 首页</span></li>
+    <li class="fp-dot" data-fp-target="1" tabindex="0" role="button" aria-label="02 项目缘起"><span class="fp-dot-circle"></span><span class="fp-tooltip">02 · 项目缘起</span></li>
+    <li class="fp-dot" data-fp-target="2" tabindex="0" role="button" aria-label="03 核心服务"><span class="fp-dot-circle"></span><span class="fp-tooltip">03 · 核心服务</span></li>
+    <li class="fp-dot" data-fp-target="3" tabindex="0" role="button" aria-label="04 活动菜单"><span class="fp-dot-circle"></span><span class="fp-tooltip">04 · 志愿服务菜单</span></li>
+    <li class="fp-dot" data-fp-target="4" tabindex="0" role="button" aria-label="05 发展成效"><span class="fp-dot-circle"></span><span class="fp-tooltip">05 · 发展成效</span></li>
+    <li class="fp-dot" data-fp-target="5" tabindex="0" role="button" aria-label="06 创新理念"><span class="fp-dot-circle"></span><span class="fp-tooltip">06 · 创新理念</span></li>
+    <li class="fp-dot" data-fp-target="6" tabindex="0" role="button" aria-label="07 愿景规划"><span class="fp-dot-circle"></span><span class="fp-tooltip">07 · 愿景规划</span></li>
+    <li class="fp-dot" data-fp-target="7" tabindex="0" role="button" aria-label="08 加入我们"><span class="fp-dot-circle"></span><span class="fp-tooltip">08 · 加入我们</span></li>
+    <li class="fp-dot" data-fp-target="8" tabindex="0" role="button" aria-label="09 合作与尾页"><span class="fp-dot-circle"></span><span class="fp-tooltip">09 · 单位合作与致谢</span></li>
+  </ul>
+</nav>
+
+<!-- ============ 全屏轮播主体容器 (无任何内部翻页) ============ -->
+<div class="fp-container" id="fpContainer">
+  <div class="fp-wrapper" id="fpWrapper">
+
+    <!-- ============ 00 首页 (Hero) · 字体特大、标语醒目 ============ -->
+    <section class="fp-section active" id="top" data-fp-index="0" data-fp-title="首页">
+      <div class="fp-bg-decor"></div>
+      <div class="wrap-box">
+        <div class="hero-box">
+          <div class="hero-content">
+            <div class="hero-kicker-tag anim-el d-1">
+              <span>全国示范团队 · 河海大学青年科技志愿服务队</span>
+            </div>
+            <!-- 大标题与标语特大化 -->
+            <h1 class="hero-title anim-el d-2">水韵<b>农</b>青</h1>
+            <p class="hero-slogan anim-el d-2">胸怀青衿志&ensp;·&ensp;科普水韵行</p>
+            <p class="hero-desc anim-el d-3">
+              以<em>农工为特色</em>，以<em>创新为底色</em>。我们把高校实验室里的前沿科研成果，深度转译为中小学生听得懂、摸得着的科学探索课堂；把课堂搬进田野、场馆与社区，让科学真正融入生活。
+            </p>
+            <div class="hero-actions anim-el d-4">
+              <a class="btn-green-fill" href="#services" data-fp-target="2">探索核心服务篇章 ↓</a>
+              <a class="btn-line-white" href="#menu" data-fp-target="3">特色课程菜单</a>
+              <a class="btn-line-white" href="#join" data-fp-target="7">加入团队</a>
+              <a class="btn-line-white" href="#partner" data-fp-target="8">单位合作</a>
+            </div>
+          </div>
+
+          <!-- 右侧活动实景连续滚动画廊 -->
+          <div class="hero-marquee-card real-card anim-el d-3">
+            <span class="hero-seal-floating">实践纪实</span>
+            <div class="hero-marquee-wrap">
+              <div class="hero-marquee-track">
+                <div class="hero-photo-slide">
+                  <img src="photos/IMG_5612.JPG" alt="土壤医生低碳科普">
+                  <div class="hero-photo-overlay">
+                    <h5>「土壤医生」低碳课堂</h5>
+                    <p>国家级二等奖科研成果进小学课堂</p>
+                  </div>
+                </div>
+                <div class="hero-photo-slide">
+                  <img src="photos/IMG_5614.JPG" alt="土壤酸碱度检测实验">
+                  <div class="hero-photo-overlay">
+                    <h5>动手实验：土壤诊断</h5>
+                    <p>学生亲手使用检测试剂观察酸碱颜色变化</p>
+                  </div>
+                </div>
+                <div class="hero-photo-slide">
+                  <img src="photos/IMG_5616.JPG" alt="植物拓印研学营">
+                  <div class="hero-photo-overlay">
+                    <h5>非遗植物拓印研学</h5>
+                    <p>古林公园35组家庭在花叶敲击中感悟生命</p>
+                  </div>
+                </div>
+                <div class="hero-photo-slide">
+                  <img src="photos/IMG_5619.JPG" alt="清源讲堂土壤微塑料">
+                  <div class="hero-photo-overlay">
+                    <h5>清源讲堂：土壤微塑料</h5>
+                    <p>赴金陵图书馆7天系统解读微塑料迁移风险</p>
+                  </div>
+                </div>
+                <div class="hero-photo-slide">
+                  <img src="photos/IMG_5621.JPG" alt="现代农场蔬菜市集">
+                  <div class="hero-photo-overlay">
+                    <h5>现代农场菜园奇遇记</h5>
+                    <p>五感体验串联智慧滴灌与农耕文化</p>
+                  </div>
+                </div>
+                <!-- 循环无缝拼接 -->
+                <div class="hero-photo-slide">
+                  <img src="photos/IMG_5612.JPG" alt="土壤医生低碳科普">
+                  <div class="hero-photo-overlay">
+                    <h5>「土壤医生」低碳课堂</h5>
+                    <p>国家级二等奖科研成果进小学课堂</p>
+                  </div>
+                </div>
+                <div class="hero-photo-slide">
+                  <img src="photos/IMG_5614.JPG" alt="土壤酸碱度检测实验">
+                  <div class="hero-photo-overlay">
+                    <h5>动手实验：土壤诊断</h5>
+                    <p>学生亲手使用检测试剂观察酸碱颜色变化</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-hint-bar anim-el d-4" data-fp-target="1" role="button" tabindex="0">
+          <span class="mouse-ico"><span class="mouse-dot"></span></span>
+          <span>向下滑动滚轮翻页</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 01 项目缘起 (Origin) · 真实背景与解题 ============ -->
+    <section class="fp-section" id="origin" data-fp-index="1" data-fp-title="项目缘起">
+      <div class="fp-bg-decor"></div>
+      <div class="wrap-box">
+        <div class="sec-head anim-el d-1">
+          <div class="left">
+            <span class="num">01</span>
+            <div>
+              <h2>项目缘起</h2>
+              <span class="en">ORIGIN & PURPOSE</span>
+            </div>
+          </div>
+          <p class="lead">怀揣青衿之志，我们想把大学前沿知识，变成孩子们听得懂、摸得着的科学体验。</p>
+        </div>
+
+        <div class="origin-layout-rich">
+          <div class="origin-card-rich real-card anim-el d-2">
+            <div>
+              <h3>我们看见的现实痛点 <i>PROBLEMS</i></h3>
+              <ul class="origin-list-rich">
+                <li>
+                  <b>青少年实践教育渴望强烈：</b>
+                  <span>课本理论之外，孩子们对大自然充满好奇，却常因缺乏专业指导而无法深入感知农水与生态奥秘。</span>
+                </li>
+                <li>
+                  <b>基层基地供给专业度不足：</b>
+                  <span>社区与科技馆具备场地，但缺乏结合最新科研成果的深层知识转化，科普往往流于一次性表层讲座。</span>
+                </li>
+                <li>
+                  <b>社会对“农工”存在固有偏见：</b>
+                  <span>大众常将农业误解为落后低效。急需向公众展示现代智慧农机、低碳固碳、高标准农田与节水灌溉前沿。</span>
+                </li>
+              </ul>
+            </div>
+            <div class="origin-quote-box" style="margin-top:10px;">
+              💡 <em>“用专业反哺社会，在耕读文化中消除对‘农’的偏见，让大国粮安与水韵生态深植少年心间。”</em>
+            </div>
+          </div>
+
+          <div class="origin-card-rich real-card anim-el d-3">
+            <div class="origin-idea-rich">
+              <h3>我们的解题思路 <i>OUR IDEA</i></h3>
+              <p>由青年学生自发组织、成功实现党团深度共建。我们紧扣<strong>“三农与水利”国家战略</strong>，将高校实验室的科研课题（如土壤重金属吸附、微塑料分析、水肥一体化）转译为生活化语言与动手套件，打造全流程教案。</p>
+              <div class="origin-tags-rich">
+                <span class="gold">理论与实践深度结合</span>
+                <span>农工机电交叉特色</span>
+                <span>全链条自研实验包</span>
+                <span class="gold">党团共建 · 实践育人</span>
+                <span>PBL 探索式教学</span>
+                <span>常态化驻馆讲师制</span>
+              </div>
+            </div>
+            <div style="background:rgba(20,50,49,0.7); border:1px solid var(--border-card); border-radius:6px; padding:10px 14px; font-size:13.5px; color:var(--text-sub); display:flex; justify-content:space-between; align-items:center;">
+              <span>已建立常态共建实践校馆：<b>10+</b> 家</span>
+              <a href="#services" data-fp-target="2" style="color:var(--leaf-soft); font-weight:600;">了解五大服务篇章 →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="origin-bottom-traits anim-el d-4">
+          <div class="trait-box real-card">
+            <div class="trait-mark">青</div>
+            <div class="trait-text">
+              <h4>青年自发 · 纯粹热爱</h4>
+              <p>骨干同学主动挑梁，没有功利心，每一次备课试讲皆由热爱驱动。</p>
+            </div>
+          </div>
+          <div class="trait-box real-card">
+            <div class="trait-mark">党</div>
+            <div class="trait-text">
+              <h4>党团共建 · 培根铸魂</h4>
+              <p>党日与团日同频共振，把大国水利工匠精神融入青少年科普课堂。</p>
+            </div>
+          </div>
+          <div class="trait-box real-card">
+            <div class="trait-mark">志</div>
+            <div class="trait-text">
+              <h4>专业反哺 · 扎根乡土</h4>
+              <p>发挥河海大学农水特色，把实验仪器与水稻转盘送进校园与社区。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 核心服务 (Services) · 严谨详实真实教研 ============ -->
+    <section class="fp-section" id="services" data-fp-index="2" data-fp-title="核心服务">
+      <div class="fp-bg-decor"></div>
+      <div class="wrap-box">
+        <div class="sec-head anim-el d-1">
+          <div class="left">
+            <span class="num">02</span>
+            <div>
+              <h2>核心服务</h2>
+              <span class="en">WHAT WE DO</span>
+            </div>
+          </div>
+          <p class="lead">水土共核心，「涟」动多学科。五大篇章层层递进，把科研、实践与土地串成科普主线。</p>
+        </div>
+
+        <div class="serv-deck">
+          <div class="chap-tab-pills anim-el d-2" id="chapTabsBar">
+            <button class="chap-pill active" data-cidx="0">壹 · 科研绘科普 (土壤与双碳)</button>
+            <button class="chap-pill" data-cidx="1">贰 · 实践出真知 (拓印与航天)</button>
+            <button class="chap-pill" data-cidx="2">叁 · 想法无极限 (解密与红剧)</button>
+            <button class="chap-pill" data-cidx="3">肆 · 躬行致真知 (稻米与秸秆)</button>
+            <button class="chap-pill" data-cidx="4">伍 · 未来启新篇 (农场与市集)</button>
+          </div>
+
+          <div class="serv-stage">
+            <div class="serv-spotlight real-card anim-el d-3" id="chapSpotlight">
+              <div>
+                <span class="cat-badge" id="chapCatEn">RESEARCH INTO CLASSROOM · 01</span>
+                <h3 id="chapTitle">壹 · 科研绘科普</h3>
+                <p class="desc" id="chapDesc">以获「CLEER杯」双碳创新与创意大赛全国二等奖的《土壤医生——农田土壤污染修复装置暨“双碳”助力者》项目为原型，由农工院研究生段正宇主讲，把重金属治理与固碳前沿深度转译为青少年趣味实验课。</p>
+              </div>
+
+              <div>
+                <div class="serv-acts-deck" id="chapActsDeck">
+                  <div class="serv-act-item">
+                    <h5>「土壤医生」低碳科普</h5>
+                    <p>实物装置进课堂 · 重金属治理与碳汇</p>
+                    <a class="link" href="activity.html?id=act-01" target="_blank">查看专属活动页 ↗</a>
+                  </div>
+                  <div class="serv-act-item">
+                    <h5>「咫尺青绿」土壤微塑料</h5>
+                    <p>金陵图书馆7天系列课 · 微塑料食物链风险</p>
+                    <a class="link" href="activity.html?id=act-02" target="_blank">查看专属活动页 ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="serv-side-card real-card anim-el d-3">
+              <div class="serv-photo-showcase">
+                <img id="chapPhoto" src="photos/IMG_5612.JPG" alt="篇章现场">
+              </div>
+              <div class="serv-eco-archives">
+                <h4>科普生态实录档案</h4>
+                <div class="serv-eco-grid">
+                  <div class="serv-eco-item">
+                    <b>18 门</b>
+                    <span>试讲打磨精品课</span>
+                  </div>
+                  <div class="serv-eco-item">
+                    <b>全国一等</b>
+                    <span>科普脱口秀大赛</span>
+                  </div>
+                  <div class="serv-eco-item">
+                    <b>650 余小时</b>
+                    <span>江苏科技馆常设讲解</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 03 志愿服务活动菜单 (Service Menu) ============ -->
+    <section class="fp-section" id="menu" data-fp-index="3" data-fp-title="志愿服务活动菜单">
+      <div class="fp-bg-decor"></div>
+      <div class="wrap-box">
+        <div class="sec-head anim-el d-1">
+          <div class="left">
+            <span class="num">03</span>
+            <div>
+              <h2>志愿服务活动菜单</h2>
+              <span class="en">SERVICE MENU</span>
+            </div>
+          </div>
+          <p class="lead">一份随课程研发不断上新的「点单菜单」——你选菜，我们掌勺。既支持单次点单，也支持学期定制。</p>
+        </div>
+
+        <div class="menu-deck">
+          <div class="menu-cats-bar anim-el d-2" id="menuCatsBar">
+            <button class="m-cat-btn active" data-midx="0">壹 · 科创农野 (01-04)</button>
+            <button class="m-cat-btn" data-midx="1">贰 · 水润江河 (05-08)</button>
+            <button class="m-cat-btn" data-midx="2">叁 · 趣验真知 (09-12)</button>
+            <button class="m-cat-btn" data-midx="3">肆 · 绿意未来 (13-16)</button>
+            <button class="m-cat-btn" data-midx="4">伍 · 乡土润心 (17-20)</button>
+            <button class="m-cat-btn" data-midx="5">陆 · 场馆定制 (21-22)</button>
+          </div>
+
+          <div class="menu-cards-grid anim-el d-3" id="menuCardsGrid">
+            <!-- 由 JS 渲染对应分类下的4门精品课程卡片 -->
+          </div>
+
+          <div class="menu-bottom-actions anim-el d-4">
+            <div style="font-size:14px; color:var(--text-sub);">
+              已收录 <b style="color:var(--leaf-soft); font-size:16px;">22 门</b> 菜单课程与 <b style="color:var(--leaf-soft); font-size:16px;">10 大</b> 篇章实录，每门课均配备独立详情页、实拍照与教案。
+            </div>
+            <div style="display:flex; gap:12px;">
+              <a class="menu-action-btn" href="activities/index.html" target="_blank">
+                🏛 访问志愿服务活动大厅 (全览22门) ↗
+              </a>
+              <a class="btn-green-fill" href="#partner" data-fp-target="8">
+                点单与合作接洽 →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 发展成效 (Efforts) ============ -->
+    <section class="fp-section" id="efforts" data-fp-index="4" data-fp-title="发展成效">
+      <div class="fp-bg-decor"></div>
+      <div class="wrap-box">
+        <div class="sec-head anim-el d-1">
+          <div class="left">
+            <span class="num">04</span>
+            <div>
+              <h2>发展成效</h2>
+              <span class="en">IMPACT & HONORS</span>
+            </div>
+          </div>
+          <p class="lead">扎根育人田，润泽新生代——从校园试点到全国示范，一步一个脚印。</p>
+        </div>
+
+        <div class="efforts-layout-rich">
+          <div class="honors-row anim-el d-2">
+            <div class="honor-gold-card">
+              <span class="yr">2022 年</span>
+              <h4>全国大学生科技志愿服务示范团队</h4>
+              <span class="badge">团中央重点推介 · 全国三百强</span>
+            </div>
+            <div class="honor-gold-card">
+              <span class="yr">联盟成员</span>
+              <h4>南京市鼓楼区「一馆多校」科技志愿服务联盟</h4>
+              <span class="badge">常态化驻馆服务主力队</span>
+            </div>
+            <div class="honor-gold-card">
+              <span class="yr">案例收录</span>
+              <h4>全国大学生科技志愿服务优秀案例集汇编</h4>
+              <span class="badge">全国精选优秀实践案例</span>
+            </div>
+          </div>
+
+          <div class="metrics-row anim-el d-3">
+            <div class="metric-box real-card">
+              <div class="m-num count-num" data-target="18">0</div>
+              <div class="m-title">精品打磨课程</div>
+              <div class="m-sub">多轮讲师试讲打磨出品</div>
+            </div>
+            <div class="metric-box real-card">
+              <div class="m-num count-num" data-target="10+">0</div>
+              <div class="m-title">特色点单菜单</div>
+              <div class="m-sub">向合作校馆全量开放点单</div>
+            </div>
+            <div class="metric-box real-card">
+              <div class="m-num count-num" data-target="650h+">0</div>
+              <div class="m-title">场馆讲解时长</div>
+              <div class="m-sub">江苏科技馆常设展厅服务</div>
+            </div>
+            <div class="metric-box real-card">
+              <div class="m-num" style="font-size: clamp(26px, 2.8vw, 36px);">全国一等</div>
+              <div class="m-title">科普脱口秀</div>
+              <div class="m-sub">丁志楠《AI 浪潮下的我们》</div>
+            </div>
+          </div>
+
+          <div class="efforts-strip-gallery anim-el d-3">
+            <div class="eff-snap-card">
+              <img src="photos/IMG_5612.JPG" alt="土壤医生">
+              <div class="eff-snap-text">
+                <h5>科研反哺教学</h5>
+                <p>自研土壤装置进小学课堂</p>
+              </div>
+            </div>
+            <div class="eff-snap-card">
+              <img src="photos/IMG_5616.JPG" alt="非遗拓印">
+              <div class="eff-snap-text">
+                <h5>非遗自然疗愈</h5>
+                <p>35组家庭敲打植物脉络</p>
+              </div>
+            </div>
+            <div class="eff-snap-card">
+              <img src="photos/IMG_5619.JPG" alt="废弃农作物">
+              <div class="eff-snap-text">
+                <h5>秸秆变废为宝</h5>
+                <p>全龄大闯关体验循环农业</p>
+              </div>
+            </div>
+            <div class="eff-snap-card">
+              <img src="photos/IMG_5621.JPG" alt="农场探秘">
+              <div class="eff-snap-text">
+                <h5>沉浸式菜园</h5>
+                <p>五感体验联通科技与农耕</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="partner-band-dark real-card anim-el d-4">
+            <h5>多方长期合作共建单位：</h5>
+            <div class="partner-tags-deck">
+              <span>江苏省科学技术馆</span>
+              <span>南京市金陵图书馆</span>
+              <span>南京晨报小记者团</span>
+              <span>南京市白云园小学</span>
+              <span>诚信小学 · 流动儿童社区</span>
+              <span>南京市第九中学</span>
+              <span>期待更多伙伴携手</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 05 创新理念 (Innov) ============ -->
+    <section class="fp-section" id="innov" data-fp-index="5" data-fp-title="创新理念">
+      <div class="fp-bg-decor"></div>
+      <div class="wrap-box">
+        <div class="sec-head anim-el d-1">
+          <div class="left">
+            <span class="num">05</span>
+            <div>
+              <h2>创新理念</h2>
+              <span class="en">HOW WE INNOVATE</span>
+            </div>
+          </div>
+          <p class="lead">志愿勇创新，科学焕真知——把事情做成体系，把课程做成产品。</p>
+        </div>
+
+        <div class="innov-grid-dark">
+          <div class="innov-card-item real-card anim-el d-2">
+            <div>
+              <span class="tag">FOUNDATION · 01</span>
+              <h3>筑造「党团」共建</h3>
+              <p>党建带团建，融合促发展。团日活动与党日活动协同开展，由党团组织共同锻造新一代科普课堂，让志愿服务的底色更红、方向更明。</p>
+            </div>
+            <div class="innov-pill-row">
+              <span>党支部骨干牵头</span>
+              <span>团支部统筹执行</span>
+              <span>思政育人融合</span>
+              <span>标杆示范引领</span>
+            </div>
+          </div>
+
+          <div class="innov-card-item real-card anim-el d-2">
+            <div>
+              <span class="tag">IDENTITY · 02</span>
+              <h3>彰显「农工」特色</h3>
+              <p>围绕水土核心学科深耕农与工，把学科科研前沿转译成青少年听得懂的科普语言，建立从实验室到课桌的直通桥梁。</p>
+            </div>
+            <div class="innov-pill-row">
+              <span>双碳与绿色农业</span>
+              <span>节水与跨流域调水</span>
+              <span>无人机智能农水</span>
+              <span>生态微塑料前沿</span>
+            </div>
+          </div>
+
+          <div class="innov-card-item real-card anim-el d-3">
+            <div>
+              <span class="tag">PRODUCT · 03</span>
+              <h3>贯彻「产品」思维</h3>
+              <p>将单次志愿服务标准化为系列课程包与教具产品。支持点单、拼盘与定制，让每一堂课都具备可复用、可传播的生命力。</p>
+            </div>
+            <div class="innov-pill-row">
+              <span>标准课件PPT</span>
+              <span>微型自研实验盒</span>
+              <span>授课逐字脚本</span>
+              <span>随堂反馈手册</span>
+            </div>
+          </div>
+
+          <div class="innov-card-item real-card anim-el d-3">
+            <div>
+              <span class="tag">LOOP · 04</span>
+              <h3>构建「多维」闭环</h3>
+              <p>讲师培养、课程研发、课堂交付、反馈复盘形成四位一体持续优化机制。建立老带新智库，让志愿团队生生不息。</p>
+            </div>
+            <div class="innov-pill-row">
+              <span>传帮带师徒制</span>
+              <span>课后学情复盘</span>
+              <span>星级讲师考核</span>
+              <span>课程智库沉淀</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 06 愿景规划 (Vision) ============ -->
+    <section class="fp-section" id="vision" data-fp-index="6" data-fp-title="愿景规划">
+      <div class="fp-bg-decor"></div>
+      <div class="wrap-box">
+        <div class="sec-head anim-el d-1">
+          <div class="left">
+            <span class="num">06</span>
+            <div>
+              <h2>愿景规划</h2>
+              <span class="en">VISION & FUTURE</span>
+            </div>
+          </div>
+          <p class="lead">初心绘蓝图，智驱未来愿——让科普的力量走向更远的地方。</p>
+        </div>
+
+        <div class="vision-row-dark">
+          <div class="vision-col-box real-card anim-el d-2">
+            <div>
+              <div class="v-no">壹</div>
+              <h3>开拓实践教育基地</h3>
+              <p class="lead-p">深化校地与馆校合作，与更多小学、科技馆、流动社区结对，共建稳定阵地。</p>
+            </div>
+            <ul>
+              <li>基地提供探索场地，团队输出成套定制课程</li>
+              <li>建立馆校合作长效机制，实现优势互补</li>
+              <li>拓展更多乡村小学点位，推动教育资源普惠</li>
+              <li>联合举办节气农事体验与校园科技节</li>
+            </ul>
+          </div>
+
+          <div class="vision-col-box real-card anim-el d-3">
+            <div>
+              <div class="v-no">贰</div>
+              <h3>培养方案规模化</h3>
+              <p class="lead-p">让每一份热爱都被系统训练，锻造优秀讲师梯队，形成可持续的人才孵化体系。</p>
+            </div>
+            <ul>
+              <li>“一对多、老带新”导师制，让新人快速融入上讲台</li>
+              <li>依托「水韵智库」，定期开展教研磨课与模拟演练</li>
+              <li>建立课堂演练评估机制与星级主讲认证体系</li>
+              <li>建立优秀队员评优推荐与社会实践评奖支持</li>
+            </ul>
+          </div>
+
+          <div class="vision-col-box real-card anim-el d-4">
+            <div>
+              <div class="v-no">叁</div>
+              <h3>体系精品化 · 系列化</h3>
+              <p class="lead-p">以问题驱动探究，打造青少年 PBL 科学探索工坊，打磨经得起检验的科普金课。</p>
+            </div>
+            <ul>
+              <li>深化 PBL 模式，从生活真实问题出发引导动手探索</li>
+              <li>发挥农工机电交叉学科优势，自主研发专属教具包</li>
+              <li>沉淀数字化微课视频库，拓展线上云端科普课堂</li>
+              <li>把“水韵农青”打造成具有全国辨识度的志愿服务品牌</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 07 加入我们 (Join Us) · 依据招募破冰手册充实 ============ -->
+    <section class="fp-section" id="join" data-fp-index="7" data-fp-title="加入我们">
+      <div class="fp-bg-decor"></div>
+      <div class="wrap-box">
+        <div class="sec-head anim-el d-1">
+          <div class="left">
+            <span class="num">07</span>
+            <div>
+              <h2>加入我们</h2>
+              <span class="en">JOIN US</span>
+            </div>
+          </div>
+          <p class="lead">一起，把科学带进更多孩子的生活——无论你擅长讲台、教具还是镜头，这里都有你的舞台。</p>
+        </div>
+
+        <div class="join-layout-rich">
+          <div class="join-main-card real-card anim-el d-2">
+            <div>
+              <h3>这里没有旁观席<br>把所学知识种进<b>田野与讲台</b></h3>
+              <p class="sub">我们是一支由河海大学农业科学与工程学院等青年骨干自发组建的科技志愿团队。不看年级资历，只看纯粹的热爱与担当。四个核心方向正在期待你的加入：</p>
+
+              <div class="join-roles-grid">
+                <div class="join-role-box">
+                  <div class="rt">
+                    <h4>科普主讲讲师</h4>
+                    <span class="tag">站上讲台</span>
+                  </div>
+                  <p>水利、农工、环境、机电……用通俗生动的语言，把前沿科技拆解为孩子们听得入神的科学故事。</p>
+                </div>
+                <div class="join-role-box">
+                  <div class="rt">
+                    <h4>课程与教具研发</h4>
+                    <span class="tag">动手动脑</span>
+                  </div>
+                  <p>打磨实验道具、制作水质/土壤检测试剂盒、开发桌游化探索剧本，让知识变得好玩又好懂。</p>
+                </div>
+                <div class="join-role-box">
+                  <div class="rt">
+                    <h4>宣传设计与排版</h4>
+                    <span class="tag">视觉表达</span>
+                  </div>
+                  <p>负责公众号推文排版、活动海报设计、现场照片精修与微课剪辑，记录每一次温暖与欢笑。</p>
+                </div>
+                <div class="join-role-box">
+                  <div class="rt">
+                    <h4>项目统筹与外联</h4>
+                    <span class="tag">组织协调</span>
+                  </div>
+                  <p>对接科技馆、图书馆与合作学校，协调活动排期与讲师调度，保障每一次服务安全有序落地。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="join-contact-strip">
+              <div class="join-contact-left">
+                <a class="btn-green-fill" href="mailto:1404785073@qq.com" style="padding:7px 20px;">
+                  发送邮件报名
+                </a>
+                <div class="join-qq-badge">招新 QQ 群：<b>1108743305</b></div>
+              </div>
+              <div style="font-size:12.5px; color:var(--text-dim);">面向全校各年级本科生与研究生常年招募</div>
+            </div>
+          </div>
+
+          <div class="join-side-card real-card anim-el d-3">
+            <div>
+              <h4>新队员成长四阶梯</h4>
+              <div class="join-step-list">
+                <div class="join-step-row">
+                  <span class="num">1</span>
+                  <div>
+                    <b>初见 · 意向交流</b>
+                    <p>进群交流，了解团队项目，匹配最适合你的岗位方向。</p>
+                  </div>
+                </div>
+                <div class="join-step-row">
+                  <span class="num">2</span>
+                  <div>
+                    <b>磨课 · 导师带教</b>
+                    <p>骨干老队员一对一辅助磨课试讲，提供现成教案与话术指导。</p>
+                  </div>
+                </div>
+                <div class="join-step-row">
+                  <span class="num">3</span>
+                  <div>
+                    <b>实战 · 讲台首秀</b>
+                    <p>作为助教走进真实校馆现场，逐步过渡到独立登台开讲。</p>
+                  </div>
+                </div>
+                <div class="join-step-row">
+                  <span class="num">4</span>
+                  <div>
+                    <b>领衔 · 独当一面</b>
+                    <p>带领新课程攻关，成为项目骨干，收获无可替代的成长。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="join-rewards-list">
+              <b>专属激励与收获：</b><br>
+              官方志愿时长认证 · 寒暑假社会实践学分证明 · 校级/省级优秀志愿者评选推荐 · 创新创业项目孵化支持，以及一群能通宵磨课、也能畅聊人生的真挚伙伴。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 08 单位合作与尾页 (Partner & Footer) · 依据实录充实 ============ -->
+    <section class="fp-section" id="partner" data-fp-index="8" data-fp-title="单位合作与尾页">
+      <div class="fp-bg-decor"></div>
+      <div class="wrap-box">
+        <div class="sec-head anim-el d-1">
+          <div class="left">
+            <span class="num">08</span>
+            <div>
+              <h2>单位合作与致谢</h2>
+              <span class="en">PARTNERSHIP & FOOTER</span>
+            </div>
+          </div>
+          <p class="lead">让优质科学课走进更多校园、展馆与社区——我们提供完整的公益授课与共建方案。</p>
+        </div>
+
+        <div class="pf-unified-rich">
+          <div class="pf-coop-grid anim-el d-2">
+            <div class="pf-coop-main real-card">
+              <div>
+                <h3>期待与贵单位携手共建<b>长效科普阵地</b></h3>
+                <p class="sub">水韵农青已与江苏省科技馆、金陵图书馆、南京晨报及多所中小学建立了成熟的合作机制。无论是常规课后延时服务、特色科技节展演，还是寒暑假专题营地，我们均能根据学段需求灵活适配。</p>
+                <div class="coop-types-grid">
+                  <div class="coop-type-card">
+                    <b>① 菜单点单进校</b>
+                    <span>22门成熟课程自由组合，含PPT、教具套件与主讲团队全套交付。</span>
+                  </div>
+                  <div class="coop-type-card">
+                    <b>② 馆校定制专场</b>
+                    <span>围绕展厅主题深度定制，结合微型实验开展沉浸式展教互动。</span>
+                  </div>
+                  <div class="coop-type-card">
+                    <b>③ 社区实践基地</b>
+                    <span>针对社区亲子家庭或乡村小学，开展植物拓印、农学大闯关活动。</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="coop-deliver-strip">
+                <span>承诺交付物：<b>完整教学案 + 实验耗材清单 + 资深讲师团队 + 现场摄影记录</b></span>
+                <a class="btn-green-fill" href="mailto:1404785073@qq.com" style="padding:6px 18px; font-size:13.5px;">
+                  预约合作通道
+                </a>
+              </div>
+            </div>
+
+            <div class="pf-coop-side real-card">
+              <div>
+                <h4>合作对接四步流程</h4>
+                <div class="coop-workflow-rows">
+                  <div class="workflow-item">
+                    <span class="n">1</span><b>意向接洽</b>
+                    <p>邮件/微信沟通学段与课时需求</p>
+                  </div>
+                  <div class="workflow-item">
+                    <span class="n">2</span><b>方案对齐</b>
+                    <p>确定课程主题、场地与人数</p>
+                  </div>
+                  <div class="workflow-item">
+                    <span class="n">3</span><b>课前准备</b>
+                    <p>讲师预讲、教具打包与安全确认</p>
+                  </div>
+                  <div class="workflow-item">
+                    <span class="n">4</span><b>授课复盘</b>
+                    <p>现场授课、活动反馈与新闻报道</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="coop-contact-box" style="border-top:1px solid var(--border-card); padding-top:10px;">
+                <div>
+                  <div style="font-size:12px; color:var(--text-dim);">官方联络邮箱：</div>
+                  <div style="font-size:14.5px; font-weight:600; color:#fde047;">1404785073@qq.com</div>
+                </div>
+                <div style="font-size:12px; color:var(--text-dim); text-align:right;">
+                  请注明单位名称与活动意向<br>我们将在 24 小时内回复
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 下半部分：尾页全站导航与致谢 -->
+          <div class="pf-footer-bar anim-el d-3">
+            <div class="footer-row-main">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <a class="brand" href="#top" data-fp-target="0">
+                  <img src="logo-mark.png" alt="水韵农青" style="height:32px;">
+                  <span class="word" style="font-size:22px;">水韵<b>农</b>青</span>
+                </a>
+                <span style="font-size:13px; color:var(--text-dim);">| 河海大学青年志愿者协会 · 农业科学与工程学院 · 机电工程学院</span>
+              </div>
+
+              <div class="footer-nav-tags">
+                <a href="#origin" data-fp-target="1">缘起</a>
+                <a href="#services" data-fp-target="2">核心服务</a>
+                <a href="#menu" data-fp-target="3">活动菜单</a>
+                <a href="#efforts" data-fp-target="4">发展成效</a>
+                <a href="#innov" data-fp-target="5">创新理念</a>
+                <a href="#vision" data-fp-target="6">愿景规划</a>
+                <a href="#join" data-fp-target="7">加入我们</a>
+                <a href="activities/index.html" target="_blank" style="color:#fde047; font-weight:600;">全览活动大厅 ↗</a>
+              </div>
+            </div>
+
+            <div class="footer-copy-bar">
+              <span>© 2026 「水韵农青」大学生科技志愿服务队 · 纯滚轮全屏翻页</span>
+              <span class="motto" id="secretAdminTrigger" title="双击进入管理后台" style="cursor:pointer;">胸怀青衿志 · 科普水韵行</span>
+              <button class="back-top-btn" id="backTopBtn" type="button">返回顶部 ↑</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ============ 轻量无卡顿脚本引擎 ============ -->
+<script>
+(function () {
+  'use strict';
+
+  var wrapper = document.getElementById('fpWrapper');
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.fp-section'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.fp-dot'));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('#navLinks a'));
+  var total = sections.length;
+  var currentIndex = 0;
+  var isScrolling = false;
+
+  function goToSection(index) {
+    if (index < 0 || index >= total) return;
+    currentIndex = index;
+
+    var translateY = -currentIndex * 100;
+    wrapper.style.transform = 'translate3d(0, ' + translateY + '%, 0)';
+
+    sections.forEach(function (sec, idx) {
+      if (idx === currentIndex) {
+        sec.classList.add('active');
+        if (sec.id === 'efforts') {
+          runCountAnimation(sec);
+        }
+      } else {
+        sec.classList.remove('active');
+        if (sec.id === 'efforts') {
+          resetCountAnimation(sec);
+        }
+      }
+    });
+
+    dots.forEach(function (dot, idx) {
+      dot.classList.toggle('active', idx === currentIndex);
+    });
+
+    navLinks.forEach(function (link) {
+      var tIdx = parseInt(link.getAttribute('data-fp-target'), 10);
+      link.classList.toggle('active', tIdx === currentIndex);
+    });
+
+    if (sections[currentIndex]) {
+      history.replaceState(null, '', '#' + sections[currentIndex].id);
+    }
+  }
+
+  function runCountAnimation(container) {
+    var nums = container.querySelectorAll('.count-num');
+    nums.forEach(function (el) {
+      var targetStr = el.getAttribute('data-target') || '0';
+      var isPlus = targetStr.indexOf('+') !== -1;
+      var isHPlus = targetStr.indexOf('h+') !== -1;
+      var rawNum = parseInt(targetStr.replace(/[^0-9]/g, ''), 10) || 0;
+
+      var duration = 1200;
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        var easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        var current = Math.floor(easeProgress * rawNum);
+
+        var display = current.toString();
+        if (isHPlus) {
+          display += 'h+';
+        } else if (isPlus) {
+          display += '+';
+        }
+        el.textContent = display;
+
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          el.textContent = targetStr;
+        }
+      }
+
+      window.requestAnimationFrame(step);
+    });
+  }
+
+  function resetCountAnimation(container) {
+    var nums = container.querySelectorAll('.count-num');
+    nums.forEach(function (el) { el.textContent = '0'; });
+  }
+
+  function handleWheel(e) {
+    e.preventDefault();
+    if (isScrolling) return;
+
+    var delta = e.deltaY;
+    if (Math.abs(delta) < 16) return;
+
+    if (delta > 0) {
+      if (currentIndex < total - 1) {
+        isScrolling = true;
+        goToSection(currentIndex + 1);
+        setTimeout(function () { isScrolling = false; }, 720);
+      }
+    } else {
+      if (currentIndex > 0) {
+        isScrolling = true;
+        goToSection(currentIndex - 1);
+        setTimeout(function () { isScrolling = false; }, 720);
+      }
+    }
+  }
+
+  window.addEventListener('wheel', handleWheel, { passive: false });
+
+  window.addEventListener('keydown', function (e) {
+    if (['ArrowDown', 'PageDown', ' '].indexOf(e.key) !== -1) {
+      if (currentIndex < total - 1) {
+        e.preventDefault();
+        goToSection(currentIndex + 1);
+      }
+    } else if (['ArrowUp', 'PageUp'].indexOf(e.key) !== -1) {
+      if (currentIndex > 0) {
+        e.preventDefault();
+        goToSection(currentIndex - 1);
+      }
+    }
+  });
+
+  var touchStartY = 0;
+  window.addEventListener('touchstart', function (e) {
+    if (e.touches.length > 0) touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchend', function (e) {
+    if (isScrolling || e.changedTouches.length === 0) return;
+    var deltaY = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(deltaY) > 42) {
+      if (deltaY > 0 && currentIndex < total - 1) {
+        goToSection(currentIndex + 1);
+      } else if (deltaY < 0 && currentIndex > 0) {
+        goToSection(currentIndex - 1);
+      }
+    }
+  }, { passive: true });
+
+  document.addEventListener('click', function (e) {
+    var targetBtn = e.target.closest('[data-fp-target]');
+    if (targetBtn) {
+      e.preventDefault();
+      var targetIdx = parseInt(targetBtn.getAttribute('data-fp-target'), 10);
+      if (!isNaN(targetIdx)) {
+        goToSection(targetIdx);
+        var navL = document.getElementById('navLinks');
+        var toggle = document.getElementById('navToggle');
+        if (navL && navL.classList.contains('open')) {
+          navL.classList.remove('open');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        }
+      }
+    }
+  });
+
+  var backTopBtn = document.getElementById('backTopBtn');
+  if (backTopBtn) {
+    backTopBtn.addEventListener('click', function () { goToSection(0); });
+  }
+
+  function openAdmin() { window.open('admin.html', '_blank'); }
+
+  window.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+      e.preventDefault();
+      openAdmin();
+    }
+  });
+
+  var brandLogo = document.getElementById('brandLogo');
+  if (brandLogo) {
+    brandLogo.addEventListener('dblclick', function (e) {
+      e.preventDefault();
+      openAdmin();
+    });
+  }
+
+  var secretTrigger = document.getElementById('secretAdminTrigger');
+  if (secretTrigger) {
+    secretTrigger.addEventListener('dblclick', function (e) {
+      e.preventDefault();
+      openAdmin();
+    });
+  }
+
+  var toggle = document.getElementById('navToggle');
+  var linksMenu = document.getElementById('navLinks');
+  if (toggle && linksMenu) {
+    toggle.addEventListener('click', function () {
+      var isOpen = linksMenu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+
+  // ============================================================
+  // 服务篇章 (02 Services)
+  // ============================================================
+  var CHAPTER_DATA = [
+    {
+      catEn: 'RESEARCH INTO CLASSROOM · 01',
+      title: '壹 · 科研绘科普',
+      desc: '以获「CLEER杯」双碳创新赛全国二等奖的《土壤医生——农田土壤污染修复装置暨“双碳”助力者》项目为原型，由农工院研究生段正宇主讲，把重金属治理与固碳前沿深度转译为面向青少年的低碳科普课堂。',
+      photo: 'photos/IMG_5612.JPG',
+      acts: [
+        { title: '「土壤医生」低碳科普', sub: '重金属土壤治理 · 农水与碳汇', id: 'act-01' },
+        { title: '土壤微塑料科普', sub: '金陵图书馆7天系统授课 · 清源讲堂', id: 'act-02' }
+      ]
+    },
+    {
+      catEn: 'DO FIRST, LEARN DEEPER · 02',
+      title: '贰 · 实践出真知',
+      desc: '把非遗植物拓印变成亲近自然的生命疗愈之旅，在古林公园让35组流动儿童家庭在敲打间读懂叶脉与生命；联合江苏科技馆开展气球火箭航天实验，在动手放飞中看懂作用力与反作用力。',
+      photo: 'photos/IMG_5614.JPG',
+      acts: [
+        { title: '植物拓印自然研学', sub: '非遗传承 · 古林公园35组家庭', id: 'act-03' },
+        { title: '「翱翔之翼」航天科普', sub: '气球火箭 · 江苏科技馆200组家庭', id: 'act-04' }
+      ]
+    },
+    {
+      catEn: 'IDEAS WITHOUT LIMITS · 03',
+      title: '叁 · 想法无极限',
+      desc: '7位河海学子赴安徽六安走访15天，原创《佛子岭大学》历史情景剧，重现河海校友汪胡桢修建佛子岭水库的艰苦岁月；开发OTNPW剧本导向知识解密，把“要学的知识”变成“想玩的游戏”。',
+      photo: 'photos/IMG_5616.JPG',
+      acts: [
+        { title: 'OTNPW 知识地图寻物解密', sub: '剧本游戏化教学 · 环保素养', id: 'act-05' },
+        { title: '人间天河淠史杭情景剧', sub: '农工院优秀暑期实践团队获奖项目', id: 'act-06' }
+      ]
+    },
+    {
+      catEn: 'KEEP HANDS ON THE LAND · 04',
+      title: '肆 · 躬行致真知',
+      desc: '从一粒米说起，转动“水稻的一生”时间转盘体会耕读文化；走进南京九中开展“秸秆变形记：稻草人冒险闯关嘉年华”，让农作物废弃物在亲手制作中换新生，体验循环农业。',
+      photo: 'photos/IMG_5619.JPG',
+      acts: [
+        { title: '一粒米的奇妙旅程', sub: '水稻创意指尖生趣 · 20组家庭', id: 'act-07' },
+        { title: '废弃农作物「焕新生」', sub: '南京九中嘉年华 · 秸秆稻草人7场', id: 'act-08' }
+      ]
+    },
+    {
+      catEn: 'A NEW CHAPTER FOR TOMORROW · 05',
+      title: '伍 · 未来启新篇',
+      desc: '把课堂搬进江宁校区节水园区与现代农场，以听叶声、闻泥香五感体验串联水利与农耕；开展“菜摊管家”农产品流通研学，让协作、称重与表达在真实生活里自然生长。',
+      photo: 'photos/IMG_5621.JPG',
+      acts: [
+        { title: '现代农场探秘', sub: '菜园奇遇记 · 科技与农耕深度结合', id: 'act-09' },
+        { title: '青苗当家蔬菜市集', sub: '农产品流通研学 · 沉浸式职业体验', id: 'act-10' }
+      ]
+    }
+  ];
+
+  var chapPills = document.querySelectorAll('.chap-pill');
+  var chapCatEn = document.getElementById('chapCatEn');
+  var chapTitle = document.getElementById('chapTitle');
+  var chapDesc = document.getElementById('chapDesc');
+  var chapPhoto = document.getElementById('chapPhoto');
+  var chapActsDeck = document.getElementById('chapActsDeck');
+
+  function renderChapter(idx) {
+    var data = CHAPTER_DATA[idx];
+    if (!data) return;
+    chapPills.forEach(function (p, i) { p.classList.toggle('active', i === idx); });
+
+    chapCatEn.textContent = data.catEn;
+    chapTitle.textContent = data.title;
+    chapDesc.textContent = data.desc;
+    chapPhoto.src = data.photo;
+
+    chapActsDeck.innerHTML = data.acts.map(function (a) {
+      return '<div class="serv-act-item">' +
+        '<h5>' + a.title + '</h5>' +
+        '<p>' + a.sub + '</p>' +
+        '<a class="link" href="activity.html?id=' + a.id + '" target="_blank">查看专属活动页 ↗</a>' +
+      '</div>';
+    }).join('');
+  }
+
+  chapPills.forEach(function (pill) {
+    pill.addEventListener('click', function () {
+      var cidx = parseInt(pill.getAttribute('data-cidx'), 10);
+      renderChapter(cidx);
+    });
+  });
+
+  // ============================================================
+  // 志愿服务活动菜单 (03 Menu)
+  // ============================================================
+  var MENU_GROUPS = [
+    {
+      name: '科创农野',
+      courses: [
+        { no: '01', id: 'menu-01', title: '「土壤医生」低碳科普', sub: '双碳创新赛全国二等奖', age: '适合 8-12 岁', cover: 'photos/IMG_5612.JPG', desc: '以科研土壤修复装置为原型，讲解重金属吸附与双碳碳汇。' },
+        { no: '02', id: 'menu-02', title: '土壤微塑料系列课', sub: '学科前沿 · 金陵图书馆合作', age: '中学生 / 高年级', cover: 'photos/IMG_5614.JPG', desc: '7天系统讲解土壤中微米级塑料来源、迁移与食物链风险。' },
+        { no: '03', id: 'menu-03', title: '植物拓印研学营', sub: '非遗体验 · 古林公园实景', age: '适合 全龄家庭', cover: 'photos/IMG_5616.JPG', desc: '敲击花叶脉络，在非遗植物拓印中疗愈身心，已服务35组家庭。' },
+        { no: '04', id: 'menu-04', title: '「秸秆变形记」嘉年华', sub: '废弃农作物 · 九中科技节同款', age: '适合 全龄学生', cover: 'photos/IMG_5619.JPG', desc: '科普展板+农业大闯关+秸秆稻草人手工，废料变宝藏。' }
+      ]
+    },
+    {
+      name: '水润江河',
+      courses: [
+        { no: '05', id: 'menu-05', title: '长江水脉与水纽带探秘', sub: '水利工程与南水北调', age: '适合 10-15 岁', cover: 'photos/IMG_5621.JPG', desc: '用沙盘模型重现大国重器，解密跨流域调水工程逻辑。' },
+        { no: '06', id: 'menu-06', title: '淠史杭红色水利情景剧', sub: '河海校友汪胡桢修建佛子岭', age: '适合 全龄学生', cover: 'photos/IMG_5622.JPG', desc: '情景剧还原佛子岭水库修筑史，让奉献精神触动心灵。' },
+        { no: '07', id: 'menu-07', title: '中国水周“节水每一天”', sub: '节水器具与校园雨水收集', age: '中小学生', cover: 'photos/IMG_5624.JPG', desc: '动手制作雨水沉淀净化装置，培养惜水节水好习惯。' },
+        { no: '08', id: 'menu-08', title: '水环境无人机巡航', sub: '智慧农水交叉新课', age: '适合 12-16 岁', cover: 'photos/IMG_5625.JPG', desc: '无人机多光谱相机巡河监测水体富营养化，前沿体验。' }
+      ]
+    },
+    {
+      name: '趣验真知',
+      courses: [
+        { no: '09', id: 'menu-09', title: '「水质侦探」简易水质检测', sub: '微型比色与pH试纸探秘', age: '小学 1-3 年级', cover: 'photos/IMG_5632.JPG', desc: '亲手取水样，通过科学试剂测试酸碱度，认识纯净水源。' },
+        { no: '10', id: 'menu-10', title: '气球火箭与流体动力学', sub: '反作用力与伯努利原理', age: '小学 4-6 年级', cover: 'photos/IMG_5635.JPG', desc: '放飞气球火箭，在吹气与轨道滑翔中观察流体力学奥秘。' },
+        { no: '11', id: 'menu-11', title: '「OTNPW」核污水地图解密', sub: '校园地图剧本游戏化寻物', age: '适合 10-15 岁', cover: 'photos/IMG_5715(20240518-215057).PNG', desc: '剧本解密结合地图搜寻，在闯关中学习放射性物质防护。' },
+        { no: '12', id: 'menu-12', title: '磁悬浮与混沌摆力学展演', sub: '江苏科技馆明星展品体验', age: '适合 全龄家庭', cover: 'photos/IMG_5717(20240520-011807).PNG', desc: '驻馆志愿团队亲授，近距离感受电磁感应与混沌物理。' }
+      ]
+    },
+    {
+      name: '绿意未来',
+      courses: [
+        { no: '13', id: 'menu-13', title: '双碳小卫士：家庭碳足迹', sub: '从餐桌到出行的碳计算', age: '小学 3-6 年级', cover: 'photos/IMG_5831(20240526-230008).JPG', desc: '用生活账单换算二氧化碳排放，亲手制作低碳承诺手卡。' },
+        { no: '14', id: 'menu-14', title: '生物炭改良土壤实验', sub: '农林废弃物热解碳化', age: '初中/高年级', cover: 'photos/IMG_5612.JPG', desc: '观察生物炭疏松多孔吸附重金属与保水保肥的生态奇迹。' },
+        { no: '15', id: 'menu-15', title: '微型人工湿地生态箱', sub: '水生植物与微生物净水', age: '适合 8-14 岁', cover: 'photos/IMG_5614.JPG', desc: '分层装填卵石、活性炭与挺水植物，搭建桌面净水系统。' },
+        { no: '16', id: 'menu-16', title: '可降解材料的解密实验', sub: '传统塑料 vs 淀粉基降解', age: '适合 全龄学生', cover: 'photos/IMG_5616.JPG', desc: '用温水与生物酶对比分解速率，认识真正的绿色环保。' }
+      ]
+    },
+    {
+      name: '乡土润心',
+      courses: [
+        { no: '17', id: 'menu-17', title: '「一粒米的奇妙旅程」', sub: '水稻生长与节气时令', age: '亲子家庭', cover: 'photos/IMG_5619.JPG', desc: '转动时钟转盘了解从秧苗到大米的历程，体验米粒艺术贴画。' },
+        { no: '18', id: 'menu-18', title: '「青苗当家」蔬菜市集', sub: '现代农业与市集经营', age: '适合 7-12 岁', cover: 'photos/IMG_5621.JPG', desc: '采摘清洗、算账售卖、称重记账，在田间地头学习理财与协作。' },
+        { no: '19', id: 'menu-19', title: '「菜园奇遇记」五感探农', sub: '现代智慧农场研学营', age: '适合 6-10 岁', cover: 'photos/IMG_5622.JPG', desc: '听叶声、闻泥香、辨果蔬，在自然怀抱中激发科学求知欲。' },
+        { no: '20', id: 'menu-20', title: '现代温室水肥一体化', sub: '智慧滴灌与无土栽培', age: '适合 10-15 岁', cover: 'photos/IMG_5624.JPG', desc: '解密计算机如何按秒精准给农作物输送养分，感受现代新农业。' }
+      ]
+    },
+    {
+      name: '场馆定制',
+      courses: [
+        { no: '21', id: 'menu-21', title: '江苏科技馆明星展品讲解', sub: '驻馆志愿讲解常态课', age: '适合 全龄观众', cover: 'photos/IMG_5625.JPG', desc: '650+小时常设展厅讲解，用通俗语言拆解高深前沿科技展项。' },
+        { no: '22', id: 'menu-22', title: '《AI浪潮下的我们》脱口秀', sub: '全国一等奖科普脱口秀', age: '高年级/青年', cover: 'photos/IMG_5632.JPG', desc: '丁志楠主讲，幽默包袱与科技反思深度交融，启发青少年。' }
+      ]
+    }
+  ];
+
+  var menuCardsGrid = document.getElementById('menuCardsGrid');
+  var menuCatsBar = document.getElementById('menuCatsBar');
+
+  function renderMenuCategory(midx) {
+    var group = MENU_GROUPS[midx];
+    if (!group) return;
+
+    var catButtons = menuCatsBar.querySelectorAll('.m-cat-btn');
+    catButtons.forEach(function (b, i) { b.classList.toggle('active', i === midx); });
+
+    menuCardsGrid.innerHTML = group.courses.map(function (c) {
+      return '<div class="course-card">' +
+        '<div>' +
+          '<div class="course-card-thumb">' +
+            '<img src="' + c.cover + '" alt="' + c.title + '">' +
+            '<span class="course-age-tag">' + c.age + '</span>' +
+          '</div>' +
+          '<div class="course-card-info">' +
+            '<h4>' + c.title + '</h4>' +
+            '<div class="sub">' + c.sub + '</div>' +
+            '<div class="desc">' + c.desc + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="course-card-foot">' +
+          '<span class="no-pill">NO.' + c.no + '</span>' +
+          '<a class="view-link" href="activity.html?id=' + c.id + '" target="_blank">查看详情 ↗</a>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  var catBtns = menuCatsBar.querySelectorAll('.m-cat-btn');
+  catBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var idx = parseInt(btn.getAttribute('data-midx'), 10);
+      renderMenuCategory(idx);
+    });
+  });
+
+  renderChapter(0);
+  renderMenuCategory(0);
+
+  function initHash() {
+    var h = window.location.hash.replace('#', '');
+    var found = 0;
+    if (h) {
+      sections.forEach(function (s, i) {
+        if (s.id === h) found = i;
+      });
+    }
+    goToSection(found);
+  }
+
+  initHash();
+})();
+</script>
+</body>
+</html>
