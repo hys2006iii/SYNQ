@@ -194,6 +194,17 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 .img-preview-box { display: flex; gap: 12px; align-items: center; margin-top: 8px; }
 .img-preview { width: 70px; height: 50px; border-radius: 4px; object-fit: cover; border: var(--line); background: #eee; }
 
+/* 管理选项卡 */
+.admin-tab {
+  font-size: 14px; font-weight: 500; padding: 9px 18px;
+}
+.admin-tab.active {
+  background: var(--primary); color: #fff;
+}
+.admin-panel {
+  margin-bottom: 24px;
+}
+
 /* 响应式 */
 @media (max-width: 768px) {
   .form-grid { grid-template-columns: 1fr; }
@@ -252,7 +263,70 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     </div>
   </section>
 
-  <!-- 工具栏 -->
+  <!-- 管理选项卡导航 -->
+  <section class="toolbar-card" style="margin-bottom: 20px;">
+    <div class="filter-group">
+      <button class="btn btn-primary admin-tab active" data-tab="activities" type="button">📊 活动管理</button>
+      <button class="btn btn-outline admin-tab" data-tab="apply" type="button">📋 加入申请</button>
+      <button class="btn btn-outline admin-tab" data-tab="booking" type="button">🤝 合作申请</button>
+    </div>
+  </section>
+
+  <!-- 加入申请列表 -->
+  <section class="table-card admin-panel" id="panel-apply" style="display:none;">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 60px;">ID</th>
+            <th>姓名</th>
+            <th>专业</th>
+            <th>年级</th>
+            <th>班级</th>
+            <th>自我介绍</th>
+            <th>附件</th>
+            <th>提交时间</th>
+            <th style="width: 100px; text-align: right;">操作</th>
+          </tr>
+        </thead>
+        <tbody id="applyTableBody">
+          <!-- 动态渲染 -->
+        </tbody>
+      </table>
+    </div>
+    <div id="applyEmpty" style="padding: 40px; text-align: center; color: var(--ink-3); display: none;">
+      暂无加入申请记录
+    </div>
+  </section>
+
+  <!-- 合作申请列表 -->
+  <section class="table-card admin-panel" id="panel-booking" style="display:none;">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 60px;">ID</th>
+            <th>意向课程</th>
+            <th>合作单位</th>
+            <th>联系人</th>
+            <th>受众学段与人数</th>
+            <th>具体需求</th>
+            <th>提交时间</th>
+            <th style="width: 100px; text-align: right;">操作</th>
+          </tr>
+        </thead>
+        <tbody id="bookingTableBody">
+          <!-- 动态渲染 -->
+        </tbody>
+      </table>
+    </div>
+    <div id="bookingEmpty" style="padding: 40px; text-align: center; color: var(--ink-3); display: none;">
+      暂无合作申请记录
+    </div>
+  </section>
+
+  <!-- 活动管理面板 -->
+  <section class="admin-panel" id="panel-activities">
   <section class="toolbar-card">
     <div class="filter-group">
       <input type="text" class="search-input" id="filterSearch" placeholder="🔍 搜索活动标题 / 分类 / 亮点...">
@@ -295,6 +369,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
         </tbody>
       </table>
     </div>
+  </section>
   </section>
 </main>
 
@@ -454,6 +529,124 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 
   function $(sel) { return document.querySelector(sel); }
   function $$(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+
+  // 管理选项卡切换
+  function initTabs() {
+    var tabs = $$('.admin-tab');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var target = this.getAttribute('data-tab');
+        
+        // 更新按钮状态
+        tabs.forEach(function(t) {
+          t.classList.remove('active');
+          t.classList.remove('btn-primary');
+          t.classList.add('btn-outline');
+        });
+        this.classList.add('active');
+        this.classList.remove('btn-outline');
+        this.classList.add('btn-primary');
+        
+        // 切换面板
+        $$('.admin-panel').forEach(function(panel) {
+          panel.style.display = 'none';
+        });
+        var targetPanel = document.getElementById('panel-' + target);
+        if (targetPanel) {
+          targetPanel.style.display = '';
+        }
+      });
+    });
+  }
+
+  // 加载加入申请数据
+  function loadApplyData() {
+    var data = JSON.parse(localStorage.getItem('water_youth_apply_submissions') || '[]');
+    var tbody = $('#applyTableBody');
+    var emptyDiv = $('#applyEmpty');
+    
+    if (data.length === 0) {
+      tbody.innerHTML = '';
+      emptyDiv.style.display = 'block';
+      return;
+    }
+    
+    emptyDiv.style.display = 'none';
+    tbody.innerHTML = data.map(function(item, idx) {
+      return '<tr>' +
+        '<td>' + (idx + 1) + '</td>' +
+        '<td><b>' + (item.name || '-') + '</b></td>' +
+        '<td>' + (item.major || '-') + '</td>' +
+        '<td>' + (item.grade || '-') + '</td>' +
+        '<td>' + (item.className || '-') + '</td>' +
+        '<td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + (item.selfIntro || '-') + '</td>' +
+        '<td>' + (item.hasAttachment ? '📎 ' + (item.attachmentName || '有') : '无') + '</td>' +
+        '<td>' + formatDate(item.timestamp) + '</td>' +
+        '<td style="text-align: right;"><button class="btn btn-danger btn-sm" onclick="deleteApply(' + idx + ')">删除</button></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  // 加载合作申请数据
+  function loadBookingData() {
+    var data = JSON.parse(localStorage.getItem('water_youth_booking_submissions') || '[]');
+    var tbody = $('#bookingTableBody');
+    var emptyDiv = $('#bookingEmpty');
+    
+    if (data.length === 0) {
+      tbody.innerHTML = '';
+      emptyDiv.style.display = 'block';
+      return;
+    }
+    
+    emptyDiv.style.display = 'none';
+    tbody.innerHTML = data.map(function(item, idx) {
+      return '<tr>' +
+        '<td>' + (idx + 1) + '</td>' +
+        '<td><b>' + (item.course || '-') + '</b></td>' +
+        '<td>' + (item.org || '-') + '</td>' +
+        '<td>' + (item.contact || '-') + '</td>' +
+        '<td>' + (item.audience || '-') + '</td>' +
+        '<td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + (item.requirements || '-') + '</td>' +
+        '<td>' + formatDate(item.timestamp) + '</td>' +
+        '<td style="text-align: right;"><button class="btn btn-danger btn-sm" onclick="deleteBooking(' + idx + ')">删除</button></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  // 格式化日期
+  function formatDate(isoStr) {
+    if (!isoStr) return '-';
+    var d = new Date(isoStr);
+    return d.getFullYear() + '-' + 
+      String(d.getMonth() + 1).padStart(2, '0') + '-' + 
+      String(d.getDate()).padStart(2, '0') + ' ' +
+      String(d.getHours()).padStart(2, '0') + ':' +
+      String(d.getMinutes()).padStart(2, '0');
+  }
+
+  // 删除加入申请
+  window.deleteApply = function(idx) {
+    if (!confirm('确定删除此申请记录？')) return;
+    var data = JSON.parse(localStorage.getItem('water_youth_apply_submissions') || '[]');
+    data.splice(idx, 1);
+    localStorage.setItem('water_youth_apply_submissions', JSON.stringify(data));
+    loadApplyData();
+  };
+
+  // 删除合作申请
+  window.deleteBooking = function(idx) {
+    if (!confirm('确定删除此申请记录？')) return;
+    var data = JSON.parse(localStorage.getItem('water_youth_booking_submissions') || '[]');
+    data.splice(idx, 1);
+    localStorage.setItem('water_youth_booking_submissions', JSON.stringify(data));
+    loadBookingData();
+  };
+
+  // 初始化
+  initTabs();
+  loadApplyData();
+  loadBookingData();
 
   // 1. 数据加载与列表渲染
   function loadData() {
