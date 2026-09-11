@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>活动与课程总览 · 水韵农青大学生科技志愿服务队</title>
-<meta name="description" content="水韵农青大学生科技志愿服务队全量服务活动与特色点单菜单总览。">
+<title>活动大厅 · 水韵农青大学生科技志愿服务队</title>
+<meta name="description" content="水韵农青大学生科技志愿服务队全部志愿服务活动资料总览。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23019aaa'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='36' font-weight='bold' text-anchor='middle' fill='%23fbf7ef'%3E水%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-/* 统一温润水墨水青色系 (Natural River Green) */
 :root {
   --teal-deep:    #163737;
   --teal-mid:     #1d4645;
@@ -20,23 +19,17 @@
   --leaf-soft:    #86efac;
   --amber:        #fbbf24;
   --seal:         #b91c1c;
-
   --text-pure:    #ffffff;
   --text-main:    #f1f5f9;
   --text-sub:     #cbd5e1;
   --text-dim:     #94a3b8;
-
   --border-card:  rgba(255, 255, 255, 0.14);
   --border-light: rgba(255, 255, 255, 0.22);
-  --border-gold:  rgba(251, 191, 36, 0.4);
-
   --font-kai:  "Ma Shan Zheng", "KaiTi", "STKaiti", serif;
   --font-song: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
   --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-
   --dur: 260ms;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: var(--font-sans);
@@ -52,9 +45,7 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-button { font-family: inherit; cursor: pointer; border: none; }
 
-/* 顶栏 */
 .hdr {
   background: rgba(22, 53, 53, 0.94); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-card); position: sticky; top: 0; z-index: 100;
@@ -79,7 +70,6 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 .nav-btn.primary:hover { background: #22c55e; }
 
-/* 主视觉 Hero 区域 */
 .hero {
   background: rgba(18, 44, 43, 0.6);
   color: #fff; padding: 50px 24px 34px; text-align: center;
@@ -94,10 +84,8 @@ button { font-family: inherit; cursor: pointer; border: none; }
   max-width: 680px; margin-left: auto; margin-right: auto;
 }
 
-/* 主容器 */
 .wrap { max-width: 1260px; margin: 0 auto; padding: 28px 24px 88px; }
 
-/* 筛选与搜索栏 */
 .filter-bar {
   background: rgba(30, 71, 69, 0.72); border-radius: 8px; border: 1px solid var(--border-card);
   padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;
@@ -122,36 +110,48 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .search-input:focus { border-color: var(--teal-accent); }
 .search-input::placeholder { color: var(--text-dim); }
 
-/* 活动卡片网格 */
-.act-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(285px, 1fr)); gap: 20px;
+.theme-list { display: flex; flex-direction: column; gap: 20px; }
+.theme-card {
+  background: rgba(30, 71, 69, 0.7); border-radius: 12px; border: 1px solid var(--border-card);
+  overflow: hidden; transition: border-color .25s;
 }
-.act-card {
-  background: rgba(30, 71, 69, 0.7); border-radius: 8px; border: 1px solid var(--border-card);
-  overflow: hidden; display: flex; flex-direction: column;
-  transition: transform .25s, border-color .25s, background .25s;
+.theme-card:hover { border-color: var(--teal-accent); }
+.theme-header {
+  display: flex; align-items: center; gap: 16px; padding: 18px 20px;
+  cursor: pointer; transition: background .2s;
 }
-.act-card:hover {
-  transform: translateY(-4px); border-color: var(--teal-accent); background: rgba(36, 82, 80, 0.95);
+.theme-header:hover { background: rgba(255,255,255,0.03); }
+.theme-num {
+  width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+  background: var(--leaf); color: #0d2818;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-kai); font-size: 18px; font-weight: bold;
 }
-.card-thumb {
-  position: relative; aspect-ratio: 16/10; overflow: hidden; background: #122828;
+.theme-info { flex: 1; }
+.theme-title { font-size: 18px; font-weight: 700; color: #fff; }
+.theme-meta { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+.theme-toggle {
+  font-size: 13px; color: var(--leaf-soft); font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
 }
-.card-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.card-tag {
-  position: absolute; top: 10px; left: 10px; font-size: 11.5px; padding: 2px 8px;
-  border-radius: 3px; background: rgba(16, 40, 40, 0.9); color: #fde047;
-  font-weight: 600; border: 1px solid rgba(255,255,255,0.15);
+.theme-toggle .arrow { font-size: 10px; transition: transform .2s; }
+.theme-card.open .theme-toggle .arrow { transform: rotate(180deg); }
+
+.material-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px;
+  padding: 0 20px 20px; border-top: 1px solid var(--border-card);
+  background: rgba(22, 53, 53, 0.5);
 }
-.card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-.card-cat { font-size: 12.5px; font-weight: 600; color: var(--leaf-soft); letter-spacing: 0.1em; }
-.card-title { font-size: 17.5px; font-weight: 700; color: #fff; margin: 5px 0 7px; line-height: 1.4; }
-.card-sub { font-size: 13.5px; color: var(--text-sub); line-height: 1.6; margin-bottom: 12px; }
-.card-foot {
-  display: flex; justify-content: space-between; align-items: center;
-  border-top: 1px solid var(--border-card); padding-top: 10px; font-size: 13px; color: var(--text-dim);
+.material-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; border-radius: 8px;
+  background: rgba(30, 71, 69, 0.8); border: 1px solid var(--border-card);
+  font-size: 13.5px; color: var(--text-sub); transition: all .2s;
 }
-.card-link { color: var(--leaf-soft); font-weight: 600; }
+.material-item:hover { border-color: var(--teal-accent); background: rgba(36, 82, 80, 0.95); }
+.material-icon { font-size: 20px; flex-shrink: 0; }
+.material-name { flex: 1; word-break: break-all; line-height: 1.4; }
+.material-type { font-size: 11px; color: var(--text-dim); flex-shrink: 0; }
 
 .hall-footer {
   text-align: center; padding: 36px 0 16px; color: var(--text-dim); font-size: 13px;
@@ -159,67 +159,10 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 .hall-footer .motto { color: #fde047; font-family: var(--font-song); margin-bottom: 6px; font-size: 14px; }
 
-/* 主题活动列表 */
-.chapter-list { display: flex; flex-direction: column; gap: 24px; }
-.chapter-card {
-  background: rgba(30, 71, 69, 0.7); border-radius: 12px; border: 1px solid var(--border-card);
-  overflow: hidden; transition: border-color .25s;
-}
-.chapter-card:hover { border-color: var(--teal-accent); }
-.chapter-header {
-  display: flex; gap: 20px; padding: 20px; text-decoration: none; color: inherit;
-  transition: background .2s;
-}
-.chapter-header:hover { background: rgba(255,255,255,0.03); }
-.chapter-cover {
-  width: 200px; height: 140px; border-radius: 8px; overflow: hidden; flex-shrink: 0; position: relative;
-}
-.chapter-cover img { width: 100%; height: 100%; object-fit: cover; }
-.chapter-badge {
-  position: absolute; top: 8px; left: 8px; width: 32px; height: 32px; border-radius: 6px;
-  background: var(--leaf); color: #0d2818; font-family: var(--font-kai); font-size: 18px;
-  display: flex; align-items: center; justify-content: center; font-weight: bold;
-}
-.chapter-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-.chapter-cat { font-size: 12.5px; font-weight: 600; color: var(--leaf-soft); letter-spacing: 0.1em; margin-bottom: 4px; }
-.chapter-title { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; line-height: 1.4; }
-.chapter-sub { font-size: 14px; color: var(--text-sub); margin-bottom: 10px; line-height: 1.6; }
-.chapter-meta { display: flex; gap: 16px; font-size: 13px; color: var(--text-dim); }
-.chapter-toggle {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 10px 20px; border-top: 1px solid var(--border-card); cursor: pointer;
-  font-size: 13.5px; color: var(--leaf-soft); font-weight: 500; transition: background .2s;
-}
-.chapter-toggle:hover { background: rgba(255,255,255,0.05); }
-.toggle-icon { font-size: 10px; }
-.menu-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px;
-  padding: 16px 20px 20px; border-top: 1px solid var(--border-card);
-  background: rgba(22, 53, 53, 0.5);
-}
-.menu-card {
-  background: rgba(30, 71, 69, 0.8); border-radius: 8px; border: 1px solid var(--border-card);
-  overflow: hidden; text-decoration: none; color: inherit; transition: all .2s;
-}
-.menu-card:hover { transform: translateY(-3px); border-color: var(--teal-accent); background: rgba(36, 82, 80, 0.95); }
-.menu-thumb { position: relative; aspect-ratio: 16/10; overflow: hidden; }
-.menu-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.menu-vid-badge {
-  position: absolute; bottom: 6px; right: 6px; width: 24px; height: 24px; border-radius: 4px;
-  background: rgba(0,0,0,0.8); color: #fde047; font-size: 11px;
-  display: flex; align-items: center; justify-content: center; border: 1px solid rgba(251,191,36,0.5);
-}
-.menu-body { padding: 12px 14px; }
-.menu-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; line-height: 1.4; }
-.menu-sub { font-size: 12.5px; color: var(--text-sub); margin-bottom: 8px; line-height: 1.5; }
-.menu-foot { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-dim); }
-
 @media (max-width: 700px) {
   .filter-bar { flex-direction: column; align-items: stretch; }
   .search-input { width: 100%; }
-  .chapter-header { flex-direction: column; }
-  .chapter-cover { width: 100%; height: 180px; }
-  .menu-grid { grid-template-columns: 1fr; }
+  .material-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -239,27 +182,24 @@ button { font-family: inherit; cursor: pointer; border: none; }
 </header>
 
 <section class="hero">
-  <p class="hero-k">水韵农青 · 全站活动大厅</p>
-  <h1 class="hero-t">每一道「菜」，都有专属的独立网页</h1>
-  <p class="hero-sub">点击任意卡片即可查看图文详情、实拍画廊、精彩视频与微信推文报道</p>
+  <p class="hero-k">水韵农青 · 活动大厅</p>
+  <h1 class="hero-t">志愿服务活动资料总览</h1>
+  <p class="hero-sub">点击主题名称查看活动策划书、通讯稿、照片与视频等完整资料</p>
 </section>
 
 <div class="wrap">
-  <!-- 筛选栏 -->
   <div class="filter-bar">
     <div class="tab-group" id="tabGroup">
-      <button class="tab-btn active" data-filter="all" type="button">全部活动与课程 (<span id="countAll">0</span>)</button>
-      <button class="tab-btn" data-filter="chapter" type="button">五大服务篇章 (<span id="countChap">0</span>)</button>
-      <button class="tab-btn" data-filter="menu" type="button">特色点单菜单 (<span id="countMenu">0</span>)</button>
-      <button class="tab-btn" data-filter="video" type="button" style="color:#fde047; border-color:rgba(251,191,36,0.35);">🎬 含实拍视频 (<span id="countVideo">0</span>)</button>
+      <button class="tab-btn active" data-filter="all" type="button">全部主题 (<span id="countAll">0</span>)</button>
+      <button class="tab-btn" data-filter="has-file" type="button">有资料 (<span id="countFile">0</span>)</button>
+      <button class="tab-btn" data-filter="empty" type="button">待补充 (<span id="countEmpty">0</span>)</button>
     </div>
     <div class="search-box">
-      <input type="text" class="search-input" id="searchInput" placeholder="🔍 搜索活动 / 课程 / 标签...">
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索活动主题...">
     </div>
   </div>
 
-  <!-- 内容列表容器 -->
-  <div id="gridContainer"></div>
+  <div class="theme-list" id="themeList"></div>
 
   <footer class="hall-footer">
     <div class="motto">胸怀青衿志 · 科普水韵行</div>
@@ -267,156 +207,187 @@ button { font-family: inherit; cursor: pointer; border: none; }
   </footer>
 </div>
 
-<script src="../activities-data.js"></script>
 <script>
 (function () {
   'use strict';
 
-  window.addEventListener('keydown', function (e) {
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
-      window.open('../admin.html', '_blank');
-    }
-  });
+  var themes = [
+    { id: 'soil-doctor', name: '土壤医生', materials: [] },
+    { id: 'carbon-trace', name: '碳迹迷踪', materials: [
+      { name: '低碳.docx', type: '策划书' },
+      { name: '低碳.pdf', type: '策划书' }
+    ]},
+    { id: 'plant-stamp', name: '植物拓印', materials: [
+      { name: '"寻觅自然疗愈，倾听生命脉络"植物拓印研学营活动策划书.docx', type: '策划书' },
+      { name: '10.5古林公园志愿活动报销汇总表.xlsx', type: '报销' }
+    ]},
+    { id: 'soaring-wings', name: '翱翔之翼', materials: [
+      { name: '6.8水火箭（修改简介）.docx', type: '策划书' },
+      { name: '翱翔之翼，飞young想象(诺改).pptx', type: 'PPT' },
+      { name: '主持稿子和加扣分机制.doc', type: '主持稿' },
+      { name: '"翱翔之翼，飞Young想象"航天科普活动策划书.docx', type: '策划书' },
+      { name: '活动背景.docx', type: '资料' },
+      { name: '活动前期.docx', type: '资料' },
+      { name: '意义.docx', type: '资料' }
+    ]},
+    { id: 'garden-adventure', name: '菜园奇遇记', materials: [
+      { name: '"菜园奇遇记：探秘现代农场，解锁农耕智慧"三农科普活动策划书.docx', type: '策划书' },
+      { name: '5G智慧农业.mp4', type: '视频' },
+      { name: '菜园奇遇记.pdf', type: '资料' },
+      { name: '菜园奇遇记.pptx', type: 'PPT' }
+    ]},
+    { id: 'great-water', name: '大国水利', materials: [
+      { name: '大国水利.docx', type: '策划书' },
+      { name: '航天科普.jpeg', type: '照片' },
+      { name: '航天科普2.jpeg', type: '照片' },
+      { name: '金陵水系—教案.doc', type: '教案' },
+      { name: '金陵水系.pptx', type: 'PPT' }
+    ]},
+    { id: 'straw-rebirth', name: '废弃农作固体物焕新生', materials: [
+      { name: '"废弃农作固体物\'焕新生\'"三农科普活动策划书.docx', type: '策划书' },
+      { name: '活动预告.txt', type: '资料' },
+      { name: '主持人稿.docx', type: '主持稿' },
+      { name: '废弃农作固体焕新生.pptx', type: 'PPT' },
+      { name: '水稻的生长.mp4', type: '视频' },
+      { name: '3.9通讯稿.docx', type: '通讯稿' },
+      { name: '4.4通讯稿.docx', type: '通讯稿' },
+      { name: '秸秆变形记：稻草人冒险闯关嘉年华.docx', type: '策划书' },
+      { name: '"秸"构奥秘·稻乡守望者 科学探究与三农实践工坊.docx', type: '策划书' }
+    ]},
+    { id: 'kindergarten', name: '河海大学幼儿园', materials: [
+      { name: '适合大班小朋友独立完成.docx', type: '策划书' }
+    ]},
+    { id: 'physics-experiment', name: '科普实验', materials: [
+      { name: '物理实验.docx', type: '策划书' },
+      { name: '物理实验.pdf', type: '策划书' }
+    ]},
+    { id: 'pi-shihang', name: '淠史杭第二次志愿活动', materials: [
+      { name: '《佛子岭大学》历史剧剧本.docx', type: '剧本' },
+      { name: '活动预算表.xlsx', type: '预算' },
+      { name: '历史情境剧.zip', type: '资料' },
+      { name: '马原剧本（未修改版）.docx', type: '剧本' },
+      { name: '淠史杭精神讲座ppt.pptx', type: 'PPT' },
+      { name: '淠史杭宣讲稿子（前半段）.docx', type: '宣讲稿' }
+    ]},
+    { id: 'seedling-market', name: '青苗当家', materials: [
+      { name: '"菜摊管家·农产品流通研学营"活动策划书.docx', type: '策划书' },
+      { name: '活动预告.txt', type: '资料' },
+      { name: '青苗当家.pdf', type: '资料' },
+      { name: '青苗当家.pptx', type: 'PPT' },
+      { name: '选蔬菜.mp4', type: '视频' },
+      { name: 'VID_20250703_133134.mp4', type: '视频' }
+    ]},
+    { id: 'rice-creative', name: '水稻创意指尖生趣', materials: [
+      { name: '活动预算表.xlsx', type: '预算' },
+      { name: '3月16日水稻创意活动发票.zip', type: '发票' },
+      { name: '活动策划案.docx', type: '策划书' },
+      { name: '活动ppt.pptx', type: 'PPT' },
+      { name: '活动通讯稿.docx', type: '通讯稿' }
+    ]},
+    { id: 'water-youth', name: '水韵农青', materials: [
+      { name: '水韵农青.docx', type: '策划书' },
+      { name: '预防踩踏.jpeg', type: '照片' },
+      { name: '预防踩踏2.jpeg', type: '照片' }
+    ]},
+    { id: 'inch-green', name: '咫尺青绿', materials: [
+      { name: '"咫尺青绿—清源讲堂"赴金陵图书馆科普团申报书.docx', type: '申报书' },
+      { name: '微塑料污染.pptx', type: 'PPT' },
+      { name: '咫尺青绿——清源讲堂答辩稿.docx', type: '答辩稿' }
+    ]},
+    { id: 'them-and-us', name: '它们与他们', materials: [] },
+    { id: 'water-week', name: '中国水周策划书', materials: [] },
+    { id: 'other-activities', name: '菜单外的其他活动', materials: [] },
+    { id: '2024-showcase', name: '2024年风采展', materials: [] }
+  ];
 
-  var allActs = window.WaterYouthData ? window.WaterYouthData.getAll() : [];
-  var chapters = allActs.filter(function(a) { return a.type === 'chapter'; });
-  var menus = allActs.filter(function(a) { return a.type === 'menu'; });
+  var currentFilter = 'all';
+  var expandedThemes = {};
 
-  var chapterCategoryMap = {
-    '壹': '科创农野',
-    '贰': '水润江河',
-    '叁': '趣玩实验',
-    '肆': '绿色未来',
-    '伍': '烟火城乡'
-  };
-
-  function getMenusForChapter(chapter) {
-    var categoryNo = chapter.categoryNo;
-    var menuCategory = chapterCategoryMap[categoryNo];
-    return menus.filter(function(m) { return m.category === menuCategory; });
-  }
-
-  function hasVideo(a) {
-    return !!(a.video && (a.video.url || a.video.embed));
-  }
-
-  var expandedChapters = {};
-
-  function toggleChapter(chapterId) {
-    expandedChapters[chapterId] = !expandedChapters[chapterId];
-    render();
+  function getFileIcon(name) {
+    var ext = name.split('.').pop().toLowerCase();
+    var map = {
+      'docx': '📝', 'doc': '📝', 'pptx': '📊', 'pdf': '📕',
+      'xlsx': '📋', 'mp4': '🎬', 'jpeg': '🖼', 'jpg': '🖼',
+      'png': '🖼', 'zip': '📦', 'txt': '📄'
+    };
+    return map[ext] || '📄';
   }
 
   function render() {
     var kw = document.getElementById('searchInput').value.trim().toLowerCase();
-    var container = document.getElementById('gridContainer');
+    var list = document.getElementById('themeList');
 
-    var filteredChapters = chapters;
+    var filtered = themes;
     if (kw) {
-      filteredChapters = chapters.filter(function(a) {
-        var str = (a.title + ' ' + (a.subtitle || '') + ' ' + (a.category || '') + ' ' + (a.desc || '')).toLowerCase();
-        if (str.indexOf(kw) !== -1) return true;
-        var chapterMenus = getMenusForChapter(a);
-        return chapterMenus.some(function(m) {
-          var mStr = (m.title + ' ' + (m.subtitle || '') + ' ' + (m.category || '') + ' ' + (m.desc || '')).toLowerCase();
-          return mStr.indexOf(kw) !== -1;
-        });
+      filtered = themes.filter(function(t) {
+        return t.name.toLowerCase().indexOf(kw) !== -1 ||
+          t.materials.some(function(m) { return m.name.toLowerCase().indexOf(kw) !== -1; });
       });
     }
 
-    document.getElementById('countAll').textContent = chapters.length;
-    document.getElementById('countChap').textContent = chapters.length;
-    document.getElementById('countMenu').textContent = menus.length;
-    document.getElementById('countVideo').textContent = allActs.filter(hasVideo).length;
+    if (currentFilter === 'has-file') {
+      filtered = filtered.filter(function(t) { return t.materials.length > 0; });
+    } else if (currentFilter === 'empty') {
+      filtered = filtered.filter(function(t) { return t.materials.length === 0; });
+    }
 
-    if (filteredChapters.length === 0) {
-      container.innerHTML = '<p style="text-align:center; padding:60px; color:var(--text-dim); font-size:16px;">未找到符合条件的活动</p>';
+    var hasFileCount = themes.filter(function(t) { return t.materials.length > 0; }).length;
+    var emptyCount = themes.filter(function(t) { return t.materials.length === 0; }).length;
+    document.getElementById('countAll').textContent = themes.length;
+    document.getElementById('countFile').textContent = hasFileCount;
+    document.getElementById('countEmpty').textContent = emptyCount;
+
+    if (filtered.length === 0) {
+      list.innerHTML = '<p style="text-align:center; padding:60px; color:var(--text-dim); font-size:16px;">未找到匹配的主题</p>';
       return;
     }
 
-    var html = '<div class="chapter-list">';
-    filteredChapters.forEach(function(chapter) {
-      var coverSrc = chapter.cover ? ('../' + chapter.cover) : '../photos/IMG_5612.JPG';
-      var chapterMenus = getMenusForChapter(chapter);
-      var isExpanded = expandedChapters[chapter.id];
+    var html = '';
+    filtered.forEach(function(theme, idx) {
+      var isOpen = expandedThemes[theme.id];
+      var matCount = theme.materials.length;
 
-      var filteredMenus = chapterMenus;
-      if (kw) {
-        filteredMenus = chapterMenus.filter(function(m) {
-          var mStr = (m.title + ' ' + (m.subtitle || '') + ' ' + (m.category || '') + ' ' + (m.desc || '')).toLowerCase();
-          return mStr.indexOf(kw) !== -1;
-        });
+      html += '<div class="theme-card' + (isOpen ? ' open' : '') + '">';
+      html += '<div class="theme-header" onclick="toggleTheme(\'' + theme.id + '\')">';
+      html += '<span class="theme-num">' + (idx + 1) + '</span>';
+      html += '<div class="theme-info">';
+      html += '<div class="theme-title">' + theme.name + '</div>';
+      html += '<div class="theme-meta">' + (matCount > 0 ? matCount + ' 份资料' : '暂无资料，待补充') + '</div>';
+      html += '</div>';
+      if (matCount > 0) {
+        html += '<span class="theme-toggle"><span>展开</span><span class="arrow">▼</span></span>';
       }
-
-      html += '<div class="chapter-card">';
-      html += '<a class="chapter-header" href="../activity.html?id=' + chapter.id + '">';
-      html += '<div class="chapter-cover">';
-      html += '<img src="' + coverSrc + '" alt="' + chapter.title + '" loading="lazy">';
-      html += '<span class="chapter-badge">' + chapter.categoryNo + '</span>';
       html += '</div>';
-      html += '<div class="chapter-info">';
-      html += '<span class="chapter-cat">' + (chapter.category || '科普实践') + '</span>';
-      html += '<h3 class="chapter-title">' + chapter.title + '</h3>';
-      html += '<p class="chapter-sub">' + (chapter.subtitle || '') + '</p>';
-      html += '<div class="chapter-meta">';
-      html += '<span>📋 ' + chapterMenus.length + ' 门课程</span>';
-      html += '<span>🎯 ' + (chapter.targetAge || '全龄') + '</span>';
-      html += '</div>';
-      html += '</div>';
-      html += '</a>';
 
-      if (chapterMenus.length > 0) {
-        html += '<div class="chapter-toggle" onclick="toggleChapter(\'' + chapter.id + '\')">';
-        html += '<span>' + (isExpanded ? '收起课程' : '展开全部 ' + chapterMenus.length + ' 门课程') + '</span>';
-        html += '<span class="toggle-icon">' + (isExpanded ? '▲' : '▼') + '</span>';
-        html += '</div>';
-
-        if (isExpanded && filteredMenus.length > 0) {
-          html += '<div class="menu-grid">';
-          filteredMenus.forEach(function(menu) {
-            var menuCover = menu.cover ? ('../' + menu.cover) : '../photos/IMG_5612.JPG';
-            var withVid = hasVideo(menu);
-            var photoCount = (menu.photos && menu.photos.length) || 0;
-
-            html += '<a class="menu-card" href="../activity.html?id=' + menu.id + '">';
-            html += '<div class="menu-thumb">';
-            html += '<img src="' + menuCover + '" alt="' + menu.title + '" loading="lazy">';
-            if (withVid) html += '<span class="menu-vid-badge">▶</span>';
-            html += '</div>';
-            html += '<div class="menu-body">';
-            html += '<h4 class="menu-title">' + menu.title + '</h4>';
-            html += '<p class="menu-sub">' + (menu.subtitle || '') + '</p>';
-            html += '<div class="menu-foot">';
-            html += '<span>' + (menu.targetAge || '') + '</span>';
-            if (photoCount > 0) html += '<span>🖼 ' + photoCount + '</span>';
-            html += '</div>';
-            html += '</div>';
-            html += '</a>';
-          });
+      if (matCount > 0 && isOpen) {
+        html += '<div class="material-grid">';
+        theme.materials.forEach(function(m) {
+          html += '<div class="material-item">';
+          html += '<span class="material-icon">' + getFileIcon(m.name) + '</span>';
+          html += '<span class="material-name">' + m.name + '</span>';
+          html += '<span class="material-type">' + m.type + '</span>';
           html += '</div>';
-        } else if (isExpanded && filteredMenus.length === 0 && kw) {
-          html += '<p style="padding:16px 20px; color:var(--text-dim); font-size:14px;">该主题下无匹配课程</p>';
-        }
+        });
+        html += '</div>';
       }
 
       html += '</div>';
     });
-    html += '</div>';
 
-    container.innerHTML = html;
+    list.innerHTML = html;
   }
 
-  window.toggleChapter = toggleChapter;
+  window.toggleTheme = function(id) {
+    expandedThemes[id] = !expandedThemes[id];
+    render();
+  };
 
-  var tabs = document.querySelectorAll('.tab-btn');
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      tabs.forEach(function (t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-      var filter = tab.getAttribute('data-filter');
-      if (filter === 'all' || filter === 'chapter') {
-        render();
-      }
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentFilter = btn.getAttribute('data-filter');
+      render();
     });
   });
 

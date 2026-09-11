@@ -240,6 +240,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
 .budget-table .col-name { width: 140px; }
 .budget-table .col-num { width: 70px; }
 .budget-table .col-price { width: 80px; }
+.budget-table .col-total { width: 80px; background: #f0fdf4; font-weight: 600; color: var(--leaf); }
 .budget-table .col-usage { min-width: 180px; }
 .budget-table .col-place { width: 90px; }
 .budget-table .col-buyer { width: 160px; }
@@ -485,6 +486,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
                   <th style="min-width:130px;">物品名称</th>
                   <th style="width:70px;">数量</th>
                   <th style="width:80px;">估价(元)</th>
+                  <th style="width:80px;">小计(元)</th>
                   <th style="min-width:170px;">用途</th>
                   <th style="width:90px;">采购地点</th>
                   <th style="min-width:150px;">采购人</th>
@@ -496,7 +498,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
               <tbody id="budgetTableBody"></tbody>
               <tfoot>
                 <tr class="total-row">
-                  <td colspan="3"></td>
+                  <td colspan="4"></td>
                   <td id="budgetTotalCell" style="text-align:center;">合计：0.00 元</td>
                   <td colspan="6"></td>
                 </tr>
@@ -892,24 +894,29 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     ];
   }
 
+  function calcItemTotal(item) {
+    var q = parseFloat(item.qty) || 0;
+    var p = parseFloat(item.price) || 0;
+    return q * p;
+  }
+
   function calcTotal() {
     var total = 0;
-    budgetItems.forEach(function(item) {
-      var q = parseFloat(item.qty) || 0;
-      var p = parseFloat(item.price) || 0;
-      total += q * p;
-    });
+    budgetItems.forEach(function(item) { total += calcItemTotal(item); });
     return total;
   }
 
   function renderBudgetTable() {
     var tbody = $('#budgetTableBody');
     tbody.innerHTML = budgetItems.map(function(item, i) {
+      var rowTotal = calcItemTotal(item);
+      var totalStr = rowTotal > 0 ? rowTotal.toFixed(2) : '';
       return '<tr>'
         + '<td class="row-num">' + (i+1) + '</td>'
         + '<td class="col-name"><input type="text" value="'+item.name+'" data-idx="'+i+'" data-field="name" placeholder="物品名称"></td>'
         + '<td class="col-num"><input type="number" value="'+item.qty+'" data-idx="'+i+'" data-field="qty" min="0" step="1" placeholder="0"></td>'
         + '<td class="col-price"><input type="number" value="'+item.price+'" data-idx="'+i+'" data-field="price" min="0" step="0.01" placeholder="0.00"></td>'
+        + '<td class="col-total" style="text-align:center;color:var(--leaf);font-weight:600;">' + totalStr + '</td>'
         + '<td class="col-usage"><input type="text" value="'+item.usage+'" data-idx="'+i+'" data-field="usage" placeholder="用途说明"></td>'
         + '<td class="col-place"><input type="text" value="'+item.place+'" data-idx="'+i+'" data-field="place" placeholder="采购地点"></td>'
         + '<td class="col-buyer"><input type="text" value="'+item.buyer+'" data-idx="'+i+'" data-field="buyer" placeholder="采购人"></td>'
@@ -949,7 +956,20 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     var field = e.target.dataset.field;
     if (budgetItems[idx] !== undefined) {
       budgetItems[idx][field] = e.target.value;
-      if (field === 'qty' || field === 'price') updateBudgetTotal();
+      if (field === 'qty' || field === 'price') {
+        renderBudgetTable();
+      }
+    }
+  });
+
+  $('#budgetTableBody').addEventListener('change', function(e) {
+    var idx = +e.target.dataset.idx;
+    var field = e.target.dataset.field;
+    if (budgetItems[idx] !== undefined) {
+      budgetItems[idx][field] = e.target.value;
+      if (field === 'qty' || field === 'price') {
+        renderBudgetTable();
+      }
     }
   });
 
@@ -996,13 +1016,15 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     var rows = [];
     rows.push(['', '', '江苏科技馆展教部物品购买申请单', '', '', '', '', '']);
     rows.push(['申请人：' + applicant, '', '', '', '', '申请年月日：' + dateDisplay, '', '']);
-    rows.push(['物品名称', '数量', '估价', '用途', '采购地点', '采购人', '部门领导', '分管领导']);
+    rows.push(['物品名称', '数量', '估价', '小计', '用途', '采购地点', '采购人', '部门领导', '分管领导']);
 
     budgetItems.forEach(function(item) {
+      var rowTotal = calcItemTotal(item);
       rows.push([
         item.name || '',
         item.qty || '',
         item.price || '',
+        rowTotal > 0 ? rowTotal.toFixed(2) : '',
         item.usage || '',
         item.place || '',
         item.buyer || '',
@@ -1012,20 +1034,20 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     });
 
     var total = calcTotal();
-    rows.push(['', '', '合计：' + total.toFixed(2) + '元人民币', '', '', '', '', '']);
+    rows.push(['', '', '', '合计：' + total.toFixed(2) + '元人民币', '', '', '', '', '']);
 
     var ws = XLSX.utils.aoa_to_sheet(rows);
 
     ws['!cols'] = [
-      { wch: 16 }, { wch: 8 }, { wch: 10 }, { wch: 30 },
+      { wch: 16 }, { wch: 8 }, { wch: 10 }, { wch: 10 }, { wch: 30 },
       { wch: 12 }, { wch: 22 }, { wch: 12 }, { wch: 12 }
     ];
 
     ws['!merges'] = [
-      { s: { r: 0, c: 2 }, e: { r: 0, c: 5 } },
+      { s: { r: 0, c: 2 }, e: { r: 0, c: 6 } },
       { s: { r: 1, c: 0 }, e: { r: 1, c: 4 } },
-      { s: { r: 1, c: 5 }, e: { r: 1, c: 7 } },
-      { s: { r: rows.length - 1, c: 2 }, e: { r: rows.length - 1, c: 5 } }
+      { s: { r: 1, c: 5 }, e: { r: 1, c: 8 } },
+      { s: { r: rows.length - 1, c: 3 }, e: { r: rows.length - 1, c: 6 } }
     ];
 
     var wb = XLSX.utils.book_new();
