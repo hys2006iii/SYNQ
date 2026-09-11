@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>志愿服务活动 · 水韵农青大学生科技志愿服务队</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23019aaa'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='36' font-weight='bold' text-anchor='middle' fill='%23fbf7ef'%3E水%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal-deep: #163737;
+      --teal-mid: #1d4645;
+      --teal-accent: #019aaa;
+      --leaf: #4ade80;
+      --leaf-soft: #86efac;
+      --amber: #fbbf24;
+      --seal: #b91c1c;
+      --text-pure: #ffffff;
+      --text-main: #f1f5f9;
+      --text-sub: #cbd5e1;
+      --text-dim: #94a3b8;
+      --border-card: rgba(255, 255, 255, 0.15);
+      --font-kai: "Ma Shan Zheng", "KaiTi", "STKaiti", serif;
+      --font-song: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+      --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+      --dur: 260ms;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      background: var(--teal-deep);
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    /* 顶部导航 */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(22, 53, 53, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-card);
+    }
+    .nav-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-pure);
+    }
+    .brand img {
+      height: 38px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+    }
+    .brand .word {
+      font-family: var(--font-kai);
+      font-size: 24px;
+      letter-spacing: 0.12em;
+    }
+    .brand .word b {
+      color: var(--leaf);
+      font-weight: 400;
+    }
+    .nav-links {
+      display: flex;
+      gap: 16px;
+    }
+    .nav-links a {
+      color: var(--text-sub);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all var(--dur) ease;
+    }
+    .nav-links a:hover {
+      color: var(--text-pure);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* 主内容 */
+    .main {
+      padding-top: 64px;
+      min-height: 100vh;
+    }
+
+    /* 页面头部 */
+    .page-header {
+      background: linear-gradient(135deg, var(--teal-mid) 0%, var(--teal-deep) 100%);
+      padding: 48px 24px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-card);
+    }
+    .page-header h1 {
+      font-family: var(--font-song);
+      font-size: clamp(28px, 3vw, 36px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-pure);
+      margin-bottom: 12px;
+    }
+    .page-header p {
+      font-size: 16px;
+      color: var(--text-sub);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* 搜索和筛选 */
+    .filter-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .search-box {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .search-input {
+      flex: 1;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      color: var(--text-pure);
+      font-size: 15px;
+      font-family: var(--font-sans);
+      outline: none;
+      transition: all var(--dur) ease;
+    }
+    .search-input::placeholder {
+      color: var(--text-dim);
+    }
+    .search-input:focus {
+      border-color: var(--teal-accent);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .search-btn {
+      padding: 12px 24px;
+      background: var(--teal-accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--dur) ease;
+    }
+    .search-btn:hover {
+      background: #01bcc8;
+    }
+
+    /* 分类筛选 */
+    .category-filter {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .filter-btn {
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-card);
+      border-radius: 6px;
+      color: var(--text-sub);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all var(--dur) ease;
+    }
+    .filter-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--text-pure);
+    }
+    .filter-btn.active {
+      background: var(--teal-accent);
+      border-color: var(--teal-accent);
+      color: #fff;
+    }
+
+    /* 活动网格 */
+    .activities-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* 活动卡片 */
+    .activity-card {
+      background: rgba(30, 71, 69, 0.72);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all var(--dur) ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .activity-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(74, 222, 128, 0.4);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+    .activity-card .cover {
+      aspect-ratio: 16/9;
+      overflow: hidden;
+    }
+    .activity-card .cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--dur) ease;
+    }
+    .activity-card:hover .cover img {
+      transform: scale(1.05);
+    }
+    .activity-card .info {
+      padding: 20px;
+    }
+    .activity-card .info h3 {
+      font-family: var(--font-song);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-pure);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .activity-card .info .subtitle {
+      font-size: 14px;
+      color: var(--leaf-soft);
+      margin-bottom: 12px;
+    }
+    .activity-card .info .meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .activity-card .info .meta-tag {
+      padding: 4px 10px;
+      background: rgba(74, 222, 128, 0.15);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--leaf-soft);
+    }
+
+    /* 空状态 */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--text-dim);
+    }
+    .empty-state .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .empty-state h4 {
+      font-size: 18px;
+      color: var(--text-sub);
+      margin-bottom: 8px;
+    }
+    .empty-state p {
+      font-size: 14px;
+    }
+
+    /* 统计信息 */
+    .stats {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 24px;
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+    .stats b {
+      color: var(--leaf-soft);
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .activities-grid {
+        grid-template-columns: 1fr;
+      }
+      .search-box {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <header class="header">
+    <nav class="nav-wrap">
+      <a class="brand" href="../index.html">
+        <img src="../logo-mark.png" alt="水韵农青">
+        <span class="word">水韵<b>农</b>青</span>
+      </a>
+      <div class="nav-links">
+        <a href="../index.html">返回首页</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <!-- 页面头部 -->
+    <section class="page-header">
+      <h1>志愿服务活动</h1>
+      <p>水韵农青大学生科技志愿服务队开展的各项志愿服务活动详情</p>
+    </section>
+
+    <!-- 搜索和筛选 -->
+    <section class="filter-section">
+      <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 搜索活动名称或关键词...">
+        <button class="search-btn" id="searchBtn">搜索</button>
+      </div>
+
+      <div class="category-filter" id="categoryFilter">
+        <button class="filter-btn active" data-category="all">全部</button>
+        <button class="filter-btn" data-category="科研绘科普">科研绘科普</button>
+        <button class="filter-btn" data-category="实践出真知">实践出真知</button>
+        <button class="filter-btn" data-category="想法无极限">想法无极限</button>
+        <button class="filter-btn" data-category="躬行致真知">躬行致真知</button>
+        <button class="filter-btn" data-category="未来启新篇">未来启新篇</button>
+        <button class="filter-btn" data-category="水润江河">水润江河</button>
+        <button class="filter-btn" data-category="趣玩实验">趣玩实验</button>
+        <button class="filter-btn" data-category="绿色未来">绿色未来</button>
+        <button class="filter-btn" data-category="场馆联展 · 专属定制">场馆联展</button>
+      </div>
+    </section>
+
+    <!-- 统计信息 -->
+    <div class="stats" id="stats">
+      共 <b>18</b> 个志愿服务活动
+    </div>
+
+    <!-- 活动网格 -->
+    <div class="activities-grid" id="activitiesGrid">
+      <!-- 活动卡片将通过JavaScript动态加载 -->
+    </div>
+  </main>
+
+  <script>
+    // 活动数据
+    const activities = [
+      {
+        id: 'soil-doctor',
+        title: '「土壤医生」低碳科普',
+        subtitle: '科研项目进课堂 · 重金属土壤治理',
+        category: '科研绘科普',
+        age: '适合 8-12 岁',
+        cover: '../photos/IMG_5612.JPG',
+        desc: '以获「CLEER杯」双碳创新与创意大赛全国二等奖的《土壤医生——农田土壤污染修复装置暨"双碳"助力者》项目为原型，把科研一线带进中小学课堂。'
+      },
+      {
+        id: 'inch-green',
+        title: '「咫尺青绿——清源讲堂」土壤微塑料科普',
+        subtitle: '学科前沿 · 研究热点',
+        category: '科研绘科普',
+        age: '适合 中学生 / 高年级小学',
+        cover: '../photos/IMG_5619.JPG',
+        desc: '7天系列课程深度讲解，聚焦土壤微塑料与碳汇等前沿话题，让科研的种子在课堂上生根发芽。'
+      },
+      {
+        id: 'plant-stamp',
+        title: '「寻觅自然疗愈，倾听生命脉络」植物拓印',
+        subtitle: '站团 + 游学双模式 · 非遗传承',
+        category: '实践出真知',
+        age: '适合 全龄家庭',
+        cover: '../photos/IMG_5622.JPG',
+        desc: '结合农工专业知识，把非遗植物拓印变成一场亲近自然的疗愈之旅，让35组家庭与流动社区成员在敲打之间读懂生命脉络。'
+      },
+      {
+        id: 'soaring-wings',
+        title: '「翱翔之翼，飞young想象」航天科普',
+        subtitle: '气球火箭 · 物理启蒙',
+        category: '实践出真知',
+        age: '适合 4-12 岁',
+        cover: '../photos/IMG_5632.JPG',
+        desc: '亲手放飞气球火箭，在欢呼中感受作用力与反作用力——让抽象的物理定律在指尖被真实地"看懂"。'
+      },
+      {
+        id: 'otnpw',
+        title: '「OTNPW」核污水知识地图寻物解密',
+        subtitle: '剧本导向 · 寓教于乐',
+        category: '想法无极限',
+        age: '适合 校内外试点',
+        cover: '../photos/IMG_5831(20240526-230008).JPG',
+        desc: '以剧本驱动解密任务，在校园地图寻物中传递核污水与环保知识——把"要学的"变成"想玩的"。'
+      },
+      {
+        id: 'pi-shihang',
+        title: '「人间天河淠史杭」精神传承与历史展演',
+        subtitle: '历史情境剧《佛子岭大学》· 河海校友汪胡桢治水事迹',
+        category: '想法无极限',
+        age: '适合 全龄学生 / 党团组织',
+        cover: '../photos/IMG_5833.PNG',
+        desc: '由农工院暑期实践团队在安徽六安深入走访15天孵化而成的历史情境剧《佛子岭大学》，生动再现了新中国治水巨擘、河海知名校友汪胡桢先生在极为艰难的环境下，带领工程技术人员和治水军民修建新中国第一座钢筋混凝土连拱坝——佛子岭水库的壮阔历程。'
+      },
+      {
+        id: 'rice-creative',
+        title: '「三农」科普 · 水稻创意指尖生趣',
+        subtitle: '一粒米的奇妙旅程',
+        category: '躬行致真知',
+        age: '适合 亲子家庭 / 5-10 岁',
+        cover: '../photos/IMG_5835.PNG',
+        desc: '从一粒米说起，转动「水稻的一生」时间转盘，在指尖趣味中读懂"谁知盘中餐"背后的土地逻辑。'
+      },
+      {
+        id: 'straw-rebirth',
+        title: '废弃农作固体物「焕新生」',
+        subtitle: '视频 + 互动立体式科普',
+        category: '躬行致真知',
+        age: '适合 全龄中小学 / 亲子社区',
+        cover: '../photos/photos_straw_jiuzhong_1.jpg',
+        desc: '7场活动、累计300组家庭——从原理讲解到手工创意实践，让废弃农作固体物在手中"焕新生"，循环农业由此可感。'
+      },
+      {
+        id: 'garden-adventure',
+        title: '「菜园奇遇记」现代农场探秘',
+        subtitle: '科技与农耕深度结合 · 五感体验',
+        category: '未来启新篇',
+        age: '适合 幼儿园大班 / 小学 1-4 年级',
+        cover: '../photos/photos_garden_1.png',
+        desc: '把课堂搬进现代农场，以五感体验式教育串联科技与农耕，让每一次"奇遇"都成为认知世界的起点。'
+      },
+      {
+        id: 'seedling-market',
+        title: '「青苗『当』家」蔬菜市集体验营',
+        subtitle: '真实场景沉浸式职业体验',
+        category: '未来启新篇',
+        age: '适合 小学 2-6 年级 / 亲子家庭',
+        cover: '../photos/IMG_5625.JPG',
+        desc: '孩子亲手"当家"——在蔬菜市集里完成真实场景的职业体验，交易、协作与表达在生活里自然生长。'
+      },
+      {
+        id: 'great-water',
+        title: '「大国水利」水利枢纽工程科普',
+        subtitle: '纪录片 + 实物模型 + 抢答 + 绘制',
+        category: '水润江河',
+        age: '适合 10-15 岁',
+        cover: '../photos/IMG_5834.PNG',
+        desc: '重点介绍小浪底与葛洲坝，带孩子看懂大国重器如何安澜一方水土，并把心中的枢纽画出来。'
+      },
+      {
+        id: 'water-day',
+        title: '「中国水周 · 世界水日」系列',
+        subtitle: '手抄报征集 + 水知识竞赛',
+        category: '水润江河',
+        age: '适合 高校校园',
+        cover: '../photos/IMG_5616.JPG',
+        desc: '3月22日世界水日前后，以手抄报与知识竞赛的形式，把节水意识种进校园。'
+      },
+      {
+        id: 'physics-experiment',
+        title: '「水运」物理系列科普实验',
+        subtitle: '大气压 · 流体压强 · 伯努利浮球',
+        category: '趣玩实验',
+        age: '适合 1-3 年级',
+        cover: '../photos/IMG_5632.JPG',
+        desc: '水下喷发、火焰吸水……主讲演示+亲自动手，用安全有趣的小实验开启物理启蒙。'
+      },
+      {
+        id: 'carbon-trace',
+        title: '「峰回路转 · 共碳未来」碳迹迷踪',
+        subtitle: '碳达峰 · 碳中和 · 垃圾分类团战',
+        category: '绿色未来',
+        age: '适合 4-8 岁',
+        cover: '../photos/IMG_5621.JPG',
+        desc: '画环保小树、晒节能妙招，再分组玩垃圾分类大作战，让低碳的种子生根发芽。'
+      },
+      {
+        id: 'kindergarten',
+        title: '幼儿启蒙定制系列',
+        subtitle: '防踩踏安全课 · 气球火箭 · 小水滴绘本',
+        category: '场馆联展 · 专属定制',
+        age: '适合 幼儿园大班',
+        cover: '../photos/photos_safe_1.jpeg',
+        desc: '为幼儿园大班量身组合的手工与实验小课包，难度、时长、材料按班设计，已与河海大学幼儿园对接。'
+      },
+      {
+        id: 'water-youth',
+        title: '「水韵农青」大学生科技志愿服务队',
+        subtitle: '志愿服务团队介绍',
+        category: '其他',
+        age: '大学生',
+        cover: '../photos/IMG_5612.JPG',
+        desc: '「水韵农青」大学生科技志愿服务队——胸怀青衿志，科普水韵行。以农工为特色、以创新为底色，欢迎志愿者加入，期待单位合作。'
+      },
+      {
+        id: '2024-showcase',
+        title: '2024年风采展',
+        subtitle: '年度活动成果展示',
+        category: '其他',
+        age: '全龄',
+        cover: '../photos/IMG_5612.JPG',
+        desc: '展示2024年度水韵农青志愿服务队的各项活动成果与团队风采。'
+      },
+      {
+        id: 'other-activities',
+        title: '菜单外的其他活动',
+        subtitle: '志愿服务队其他特色活动',
+        category: '其他',
+        age: '全龄',
+        cover: '../photos/IMG_5612.JPG',
+        desc: '水韵农青志愿服务队开展的其他特色志愿服务活动。'
+      }
+    ];
+
+    let currentCategory = 'all';
+    let searchKeyword = '';
+
+    // 渲染活动卡片
+    function renderActivities() {
+      const grid = document.getElementById('activitiesGrid');
+      const stats = document.getElementById('stats');
+
+      let filtered = activities;
+
+      // 应用分类筛选
+      if (currentCategory !== 'all') {
+        filtered = filtered.filter(a => a.category === currentCategory);
+      }
+
+      // 应用搜索筛选
+      if (searchKeyword) {
+        filtered = filtered.filter(a => 
+          a.title.toLowerCase().includes(searchKeyword) ||
+          a.subtitle.toLowerCase().includes(searchKeyword) ||
+          a.desc.toLowerCase().includes(searchKeyword) ||
+          a.age.toLowerCase().includes(searchKeyword)
+        );
+      }
+
+      // 更新统计信息
+      stats.innerHTML = `共 <b>${filtered.length}</b> 个志愿服务活动`;
+
+      // 渲染卡片
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">🔍</div>
+            <h4>未找到匹配的活动</h4>
+            <p>请尝试其他关键词或分类</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(activity => `
+        <a class="activity-card" href="template.html?id=${activity.id}">
+          <div class="cover">
+            <img src="${activity.cover}" alt="${activity.title}">
+          </div>
+          <div class="info">
+            <h3>${activity.title}</h3>
+            <div class="subtitle">${activity.subtitle}</div>
+            <div class="meta">
+              <span class="meta-tag">${activity.age}</span>
+              <span class="meta-tag">${activity.category}</span>
+            </div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // 搜索功能
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      searchKeyword = document.getElementById('searchInput').value.trim().toLowerCase();
+      renderActivities();
+    });
+
+    document.getElementById('searchInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchKeyword = document.getElementById('searchInput').value.trim().toLowerCase();
+        renderActivities();
+      }
+    });
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      searchKeyword = e.target.value.trim().toLowerCase();
+      renderActivities();
+    });
+
+    // 分类筛选
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.dataset.category;
+        renderActivities();
+      });
+    });
+
+    // 初始化
+    renderActivities();
+  </script>
+</body>
+</html>

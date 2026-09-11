@@ -432,9 +432,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .serv-deck { display: flex; flex-direction: column; flex: 1; }
 .chap-tab-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; flex-shrink: 0; }
 .chap-pill {
-  padding: 7px 18px; border-radius: 6px;
+  padding: 7px 14px; border-radius: 6px;
   background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-card);
-  color: var(--text-sub); font-size: 14px; font-weight: 500; transition: all var(--dur) ease;
+  color: var(--text-sub); font-size: 13px; font-weight: 500; transition: all var(--dur) ease;
 }
 .chap-pill:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
 .chap-pill.active {
@@ -1061,11 +1061,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
         <div class="serv-deck">
           <div class="chap-tab-pills anim-el d-2" id="chapTabsBar">
-            <button class="chap-pill active" data-cidx="0">壹 · 科研绘科普 (土壤与双碳)</button>
-            <button class="chap-pill" data-cidx="1">贰 · 实践出真知 (拓印与航天)</button>
-            <button class="chap-pill" data-cidx="2">叁 · 想法无极限 (解密与红剧)</button>
-            <button class="chap-pill" data-cidx="3">肆 · 躬行致真知 (稻米与秸秆)</button>
-            <button class="chap-pill" data-cidx="4">伍 · 未来启新篇 (农场与市集)</button>
+            <button class="chap-pill active" data-cidx="0">壹 · 科研绘科普</button>
+            <button class="chap-pill" data-cidx="1">贰 · 实践出真知</button>
+            <button class="chap-pill" data-cidx="2">叁 · 想法无极限</button>
+            <button class="chap-pill" data-cidx="3">肆 · 躬行致真知</button>
+            <button class="chap-pill" data-cidx="4">伍 · 未来启新篇</button>
+            <button class="chap-pill" data-cidx="5">陆 · 水润江河</button>
+            <button class="chap-pill" data-cidx="6">柒 · 趣玩实验</button>
+            <button class="chap-pill" data-cidx="7">捌 · 绿色未来</button>
           </div>
 
           <div class="serv-stage">
@@ -1081,12 +1084,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                   <div class="serv-act-item">
                     <h5>「土壤医生」低碳科普</h5>
                     <p>实物装置进课堂 · 重金属治理与碳汇</p>
-                    <a class="link" href="activity.html?id=act-01" target="_blank">查看专属活动页 ↗</a>
+                    <a class="link" href="activity-detail/template.html?id=soil-doctor" target="_blank">查看专属活动页 ↗</a>
                   </div>
                   <div class="serv-act-item">
                     <h5>「咫尺青绿」土壤微塑料</h5>
                     <p>金陵图书馆7天系列课 · 微塑料食物链风险</p>
-                    <a class="link" href="activity.html?id=act-02" target="_blank">查看专属活动页 ↗</a>
+                    <a class="link" href="activity-detail/template.html?id=inch-green" target="_blank">查看专属活动页 ↗</a>
                   </div>
                 </div>
               </div>
@@ -1100,16 +1103,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <h4>科普生态实录档案</h4>
                 <div class="serv-eco-grid">
                   <div class="serv-eco-item">
-                    <b>18 门</b>
-                    <span>试讲打磨精品课</span>
+                    <b>18 个</b>
+                    <span>志愿服务活动</span>
                   </div>
                   <div class="serv-eco-item">
                     <b>全国一等</b>
                     <span>科普脱口秀大赛</span>
                   </div>
                   <div class="serv-eco-item">
-                    <b>650 余小时</b>
-                    <span>江苏科技馆常设讲解</span>
+                    <b>650+ h</b>
+                    <span>江苏科技馆驻馆</span>
                   </div>
                 </div>
               </div>
@@ -1153,16 +1156,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           </div>
 
           <div class="menu-cards-grid anim-el d-3" id="menuCardsGrid">
-            <!-- 由 JS 渲染对应分类下的4门精品课程卡片 -->
+            <!-- 由 JS 渲染对应分类下的精品课程卡片 -->
           </div>
 
           <div class="menu-bottom-actions anim-el d-4">
             <div style="font-size:14px; color:var(--text-sub);">
-              已收录 <b style="color:var(--leaf-soft); font-size:16px;">22 门</b> 菜单课程与 <b style="color:var(--leaf-soft); font-size:16px;">10 大</b> 篇章实录，每门课均配备独立详情页、实拍照与教案。
+              已收录 <b style="color:var(--leaf-soft); font-size:16px;">18 个</b> 志愿服务活动，涵盖科研科普、实践体验、红色传承等多个领域，每个活动均配备独立详情页、活动策划书、照片与视频资料。
             </div>
             <div style="display:flex; gap:12px;">
-              <a class="menu-action-btn" href="activities/index.html" target="_blank">
-                🏛 访问志愿服务活动大厅 (全览22门) ↗
+              <a class="menu-action-btn" href="activity-detail/index.html" target="_blank">
+                🏛 访问志愿服务活动大厅 (全览18个) ↗
               </a>
               <a class="btn-green-fill" href="#partner" data-fp-target="8">
                 点单与合作接洽 →
@@ -1844,51 +1847,79 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     {
       catEn: 'RESEARCH INTO CLASSROOM · 01',
       title: '壹 · 科研绘科普',
-      desc: '以获「CLEER杯」双碳创新赛全国二等奖的《土壤医生——农田土壤污染修复装置暨“双碳”助力者》项目为原型，由农工院研究生段正宇主讲，把重金属治理与固碳前沿深度转译为面向青少年的低碳科普课堂。',
+      desc: '以获「CLEER杯」双碳创新赛全国二等奖的《土壤医生——农田土壤污染修复装置暨"双碳"助力者》项目为原型，把科研一线带进中小学课堂。',
       photo: 'photos/IMG_5612.JPG',
       acts: [
-        { title: '「土壤医生」低碳科普', sub: '重金属土壤治理 · 农水与碳汇', id: 'act-01' },
-        { title: '土壤微塑料科普', sub: '金陵图书馆7天系统授课 · 清源讲堂', id: 'act-02' }
+        { title: '「土壤医生」低碳科普', sub: '科研项目进课堂 · 重金属土壤治理', id: 'soil-doctor' },
+        { title: '「咫尺青绿」土壤微塑料科普', sub: '学科前沿 · 研究热点', id: 'inch-green' }
       ]
     },
     {
       catEn: 'DO FIRST, LEARN DEEPER · 02',
       title: '贰 · 实践出真知',
-      desc: '把非遗植物拓印变成亲近自然的生命疗愈之旅，在古林公园让35组流动儿童家庭在敲打间读懂叶脉与生命；联合江苏科技馆开展气球火箭航天实验，在动手放飞中看懂作用力与反作用力。',
+      desc: '把非遗植物拓印变成亲近自然的生命疗愈之旅，让35组家庭与流动社区成员在敲打之间读懂生命脉络；联合江苏科技馆开展气球火箭航天实验，在动手放飞中看懂作用力与反作用力。',
       photo: 'photos/IMG_5614.JPG',
       acts: [
-        { title: '植物拓印自然研学', sub: '非遗传承 · 古林公园35组家庭', id: 'act-03' },
-        { title: '「翱翔之翼」航天科普', sub: '气球火箭 · 江苏科技馆200组家庭', id: 'act-04' }
+        { title: '「寻觅自然疗愈」植物拓印', sub: '站团 + 游学双模式 · 非遗传承', id: 'plant-stamp' },
+        { title: '「翱翔之翼，飞young想象」航天科普', sub: '气球火箭 · 物理启蒙', id: 'soaring-wings' }
       ]
     },
     {
       catEn: 'IDEAS WITHOUT LIMITS · 03',
       title: '叁 · 想法无极限',
-      desc: '7位河海学子赴安徽六安走访15天，原创《佛子岭大学》历史情景剧，重现河海校友汪胡桢修建佛子岭水库的艰苦岁月；开发OTNPW剧本导向知识解密，把“要学的知识”变成“想玩的游戏”。',
+      desc: '以剧本驱动解密任务，在校园地图寻物中传递核污水与环保知识——把"要学的"变成"想玩的"；原创《佛子岭大学》历史情景剧，重现河海校友汪胡桢修建佛子岭水库的艰苦岁月。',
       photo: 'photos/IMG_5616.JPG',
       acts: [
-        { title: 'OTNPW 知识地图寻物解密', sub: '剧本游戏化教学 · 环保素养', id: 'act-05' },
-        { title: '人间天河淠史杭情景剧', sub: '农工院优秀暑期实践团队获奖项目', id: 'act-06' }
+        { title: '「OTNPW」核污水知识地图寻物解密', sub: '剧本导向 · 寓教于乐', id: 'otnpw' },
+        { title: '「人间天河淠史杭」精神传承与历史展演', sub: '历史情境剧《佛子岭大学》', id: 'pi-shihang' }
       ]
     },
     {
       catEn: 'KEEP HANDS ON THE LAND · 04',
       title: '肆 · 躬行致真知',
-      desc: '从一粒米说起，转动“水稻的一生”时间转盘体会耕读文化；走进南京九中开展“秸秆变形记：稻草人冒险闯关嘉年华”，让农作物废弃物在亲手制作中换新生，体验循环农业。',
+      desc: '从一粒米说起，转动「水稻的一生」时间转盘，在指尖趣味中读懂"谁知盘中餐"背后的土地逻辑；废弃农作物"焕新生"，让循环农业由此可感。',
       photo: 'photos/IMG_5619.JPG',
       acts: [
-        { title: '一粒米的奇妙旅程', sub: '水稻创意指尖生趣 · 20组家庭', id: 'act-07' },
-        { title: '废弃农作物「焕新生」', sub: '南京九中嘉年华 · 秸秆稻草人7场', id: 'act-08' }
+        { title: '「三农」科普 · 水稻创意指尖生趣', sub: '一粒米的奇妙旅程', id: 'rice-creative' },
+        { title: '废弃农作固体物「焕新生」', sub: '视频 + 互动立体式科普', id: 'straw-rebirth' }
       ]
     },
     {
       catEn: 'A NEW CHAPTER FOR TOMORROW · 05',
       title: '伍 · 未来启新篇',
-      desc: '把课堂搬进江宁校区节水园区与现代农场，以听叶声、闻泥香五感体验串联水利与农耕；开展“菜摊管家”农产品流通研学，让协作、称重与表达在真实生活里自然生长。',
+      desc: '把课堂搬进现代农场，以五感体验式教育串联科技与农耕，让每一次"奇遇"都成为认知世界的起点；孩子亲手"当家"——在蔬菜市集里完成真实场景的职业体验。',
       photo: 'photos/IMG_5621.JPG',
       acts: [
-        { title: '现代农场探秘', sub: '菜园奇遇记 · 科技与农耕深度结合', id: 'act-09' },
-        { title: '青苗当家蔬菜市集', sub: '农产品流通研学 · 沉浸式职业体验', id: 'act-10' }
+        { title: '「菜园奇遇记」现代农场探秘', sub: '科技与农耕深度结合 · 五感体验', id: 'garden-adventure' },
+        { title: '「青苗『当』家」蔬菜市集体验营', sub: '真实场景沉浸式职业体验', id: 'seedling-market' }
+      ]
+    },
+    {
+      catEn: 'RIVERS AND WATER · 06',
+      title: '陆 · 水润江河',
+      desc: '重点介绍小浪底与葛洲坝，带孩子看懂大国重器如何安澜一方水土，并把心中的枢纽画出来；3月22日世界水日前后，以手抄报与知识竞赛的形式，把节水意识种进校园。',
+      photo: 'photos/IMG_5624.JPG',
+      acts: [
+        { title: '「大国水利」水利枢纽工程科普', sub: '纪录片 + 实物模型 + 抢答 + 绘制', id: 'great-water' },
+        { title: '「中国水周 · 世界水日」系列', sub: '手抄报征集 + 水知识竞赛', id: 'water-day' }
+      ]
+    },
+    {
+      catEn: 'FUN EXPERIMENTS · 07',
+      title: '柒 · 趣玩实验',
+      desc: '水下喷发、火焰吸水……主讲演示+亲自动手，用安全有趣的小实验开启物理启蒙。',
+      photo: 'photos/IMG_5632.JPG',
+      acts: [
+        { title: '「水运」物理系列科普实验', sub: '大气压 · 流体压强 · 伯努利浮球', id: 'physics-experiment' }
+      ]
+    },
+    {
+      catEn: 'GREEN FUTURE · 08',
+      title: '捌 · 绿色未来',
+      desc: '画环保小树、晒节能妙招，再分组玩垃圾分类大作战，让低碳的种子生根发芽。',
+      photo: 'photos/IMG_5621.JPG',
+      acts: [
+        { title: '「峰回路转 · 共碳未来」碳迹迷踪', sub: '碳达峰 · 碳中和 · 垃圾分类团战', id: 'carbon-trace' }
       ]
     }
   ];
@@ -1914,7 +1945,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       return '<div class="serv-act-item">' +
         '<h5>' + a.title + '</h5>' +
         '<p>' + a.sub + '</p>' +
-        '<a class="link" href="activity.html?id=' + a.id + '" target="_blank">查看专属活动页 ↗</a>' +
+        '<a class="link" href="activity-detail/template.html?id=' + a.id + '" target="_blank">查看专属活动页 ↗</a>' +
       '</div>';
     }).join('');
   }
@@ -1931,55 +1962,63 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   // ============================================================
   var MENU_GROUPS = [
     {
-      name: '科创农野',
+      name: '科研绘科普',
       courses: [
-        { no: '01', id: 'menu-01', title: '「土壤医生」低碳科普', sub: '双碳创新赛全国二等奖', age: '适合 8-12 岁', cover: 'photos/IMG_5612.JPG', desc: '以科研土壤修复装置为原型，讲解重金属吸附与双碳碳汇。' },
-        { no: '02', id: 'menu-02', title: '土壤微塑料系列课', sub: '学科前沿 · 金陵图书馆合作', age: '中学生 / 高年级', cover: 'photos/IMG_5614.JPG', desc: '7天系统讲解土壤中微米级塑料来源、迁移与食物链风险。' },
-        { no: '03', id: 'menu-03', title: '植物拓印研学营', sub: '非遗体验 · 古林公园实景', age: '适合 全龄家庭', cover: 'photos/IMG_5616.JPG', desc: '敲击花叶脉络，在非遗植物拓印中疗愈身心，已服务35组家庭。' },
-        { no: '04', id: 'menu-04', title: '「秸秆变形记」嘉年华', sub: '废弃农作物 · 九中科技节同款', age: '适合 全龄学生', cover: 'photos/IMG_5619.JPG', desc: '科普展板+农业大闯关+秸秆稻草人手工，废料变宝藏。' }
+        { no: '01', id: 'soil-doctor', title: '「土壤医生」低碳科普', sub: '科研项目进课堂 · 重金属土壤治理', age: '适合 8-12 岁', cover: 'photos/IMG_5612.JPG', desc: '以获「CLEER杯」双碳创新与创意大赛全国二等奖的《土壤医生——农田土壤污染修复装置暨"双碳"助力者》项目为原型，把科研一线带进中小学课堂。' },
+        { no: '02', id: 'inch-green', title: '「咫尺青绿——清源讲堂」土壤微塑料科普', sub: '学科前沿 · 研究热点', age: '适合 中学生 / 高年级小学', cover: 'photos/IMG_5619.JPG', desc: '7天系列课程深度讲解，聚焦土壤微塑料与碳汇等前沿话题，让科研的种子在课堂上生根发芽。' }
+      ]
+    },
+    {
+      name: '实践出真知',
+      courses: [
+        { no: '03', id: 'plant-stamp', title: '「寻觅自然疗愈，倾听生命脉络」植物拓印', sub: '站团 + 游学双模式 · 非遗传承', age: '适合 全龄家庭', cover: 'photos/IMG_5622.JPG', desc: '结合农工专业知识，把非遗植物拓印变成一场亲近自然的疗愈之旅，让35组家庭与流动社区成员在敲打之间读懂生命脉络。' },
+        { no: '04', id: 'soaring-wings', title: '「翱翔之翼，飞young想象」航天科普', sub: '气球火箭 · 物理启蒙', age: '适合 4-12 岁', cover: 'photos/IMG_5632.JPG', desc: '亲手放飞气球火箭，在欢呼中感受作用力与反作用力——让抽象的物理定律在指尖被真实地"看懂"。' }
+      ]
+    },
+    {
+      name: '想法无极限',
+      courses: [
+        { no: '05', id: 'otnpw', title: '「OTNPW」核污水知识地图寻物解密', sub: '剧本导向 · 寓教于乐', age: '适合 校内外试点', cover: 'photos/IMG_5831(20240526-230008).JPG', desc: '以剧本驱动解密任务，在校园地图寻物中传递核污水与环保知识——把"要学的"变成"想玩的"。' },
+        { no: '06', id: 'pi-shihang', title: '「人间天河淠史杭」精神传承与历史展演', sub: '历史情境剧《佛子岭大学》· 河海校友汪胡桢治水事迹', age: '适合 全龄学生 / 党团组织', cover: 'photos/IMG_5833.PNG', desc: '由农工院暑期实践团队在安徽六安深入走访15天孵化而成的历史情境剧《佛子岭大学》，生动再现了新中国治水巨擘、河海知名校友汪胡桢先生在极为艰难的环境下，带领工程技术人员和治水军民修建新中国第一座钢筋混凝土连拱坝——佛子岭水库的壮阔历程。' }
+      ]
+    },
+    {
+      name: '躬行致真知',
+      courses: [
+        { no: '07', id: 'rice-creative', title: '「三农」科普 · 水稻创意指尖生趣', sub: '一粒米的奇妙旅程', age: '适合 亲子家庭 / 5-10 岁', cover: 'photos/IMG_5835.PNG', desc: '从一粒米说起，转动「水稻的一生」时间转盘，在指尖趣味中读懂"谁知盘中餐"背后的土地逻辑。' },
+        { no: '08', id: 'straw-rebirth', title: '废弃农作固体物「焕新生」', sub: '视频 + 互动立体式科普', age: '适合 全龄中小学 / 亲子社区', cover: 'photos/photos_straw_jiuzhong_1.jpg', desc: '7场活动、累计300组家庭——从原理讲解到手工创意实践，让废弃农作固体物在手中"焕新生"，循环农业由此可感。' }
+      ]
+    },
+    {
+      name: '未来启新篇',
+      courses: [
+        { no: '09', id: 'garden-adventure', title: '「菜园奇遇记」现代农场探秘', sub: '科技与农耕深度结合 · 五感体验', age: '适合 幼儿园大班 / 小学 1-4 年级', cover: 'photos/photos_garden_1.png', desc: '把课堂搬进现代农场，以五感体验式教育串联科技与农耕，让每一次"奇遇"都成为认知世界的起点。' },
+        { no: '10', id: 'seedling-market', title: '「青苗『当』家」蔬菜市集体验营', sub: '真实场景沉浸式职业体验', age: '适合 小学 2-6 年级 / 亲子家庭', cover: 'photos/IMG_5625.JPG', desc: '孩子亲手"当家"——在蔬菜市集里完成真实场景的职业体验，交易、协作与表达在生活里自然生长。' }
       ]
     },
     {
       name: '水润江河',
       courses: [
-        { no: '05', id: 'menu-05', title: '长江水脉与水纽带探秘', sub: '水利工程与南水北调', age: '适合 10-15 岁', cover: 'photos/IMG_5621.JPG', desc: '用沙盘模型重现大国重器，解密跨流域调水工程逻辑。' },
-        { no: '06', id: 'menu-06', title: '淠史杭红色水利情景剧', sub: '河海校友汪胡桢修建佛子岭', age: '适合 全龄学生', cover: 'photos/IMG_5622.JPG', desc: '情景剧还原佛子岭水库修筑史，让奉献精神触动心灵。' },
-        { no: '07', id: 'menu-07', title: '中国水周“节水每一天”', sub: '节水器具与校园雨水收集', age: '中小学生', cover: 'photos/IMG_5624.JPG', desc: '动手制作雨水沉淀净化装置，培养惜水节水好习惯。' },
-        { no: '08', id: 'menu-08', title: '水环境无人机巡航', sub: '智慧农水交叉新课', age: '适合 12-16 岁', cover: 'photos/IMG_5625.JPG', desc: '无人机多光谱相机巡河监测水体富营养化，前沿体验。' }
+        { no: '11', id: 'great-water', title: '「大国水利」水利枢纽工程科普', sub: '纪录片 + 实物模型 + 抢答 + 绘制', age: '适合 10-15 岁', cover: 'photos/IMG_5834.PNG', desc: '重点介绍小浪底与葛洲坝，带孩子看懂大国重器如何安澜一方水土，并把心中的枢纽画出来。' },
+        { no: '12', id: 'water-day', title: '「中国水周 · 世界水日」系列', sub: '手抄报征集 + 水知识竞赛', age: '适合 高校校园', cover: 'photos/IMG_5616.JPG', desc: '3月22日世界水日前后，以手抄报与知识竞赛的形式，把节水意识种进校园。' }
       ]
     },
     {
-      name: '趣验真知',
+      name: '趣玩实验',
       courses: [
-        { no: '09', id: 'menu-09', title: '「水质侦探」简易水质检测', sub: '微型比色与pH试纸探秘', age: '小学 1-3 年级', cover: 'photos/IMG_5632.JPG', desc: '亲手取水样，通过科学试剂测试酸碱度，认识纯净水源。' },
-        { no: '10', id: 'menu-10', title: '气球火箭与流体动力学', sub: '反作用力与伯努利原理', age: '小学 4-6 年级', cover: 'photos/IMG_5635.JPG', desc: '放飞气球火箭，在吹气与轨道滑翔中观察流体力学奥秘。' },
-        { no: '11', id: 'menu-11', title: '「OTNPW」核污水地图解密', sub: '校园地图剧本游戏化寻物', age: '适合 10-15 岁', cover: 'photos/IMG_5715(20240518-215057).PNG', desc: '剧本解密结合地图搜寻，在闯关中学习放射性物质防护。' },
-        { no: '12', id: 'menu-12', title: '磁悬浮与混沌摆力学展演', sub: '江苏科技馆明星展品体验', age: '适合 全龄家庭', cover: 'photos/IMG_5717(20240520-011807).PNG', desc: '驻馆志愿团队亲授，近距离感受电磁感应与混沌物理。' }
+        { no: '13', id: 'physics-experiment', title: '「水运」物理系列科普实验', sub: '大气压 · 流体压强 · 伯努利浮球', age: '适合 1-3 年级', cover: 'photos/IMG_5632.JPG', desc: '水下喷发、火焰吸水……主讲演示+亲自动手，用安全有趣的小实验开启物理启蒙。' }
       ]
     },
     {
-      name: '绿意未来',
+      name: '绿色未来',
       courses: [
-        { no: '13', id: 'menu-13', title: '双碳小卫士：家庭碳足迹', sub: '从餐桌到出行的碳计算', age: '小学 3-6 年级', cover: 'photos/IMG_5831(20240526-230008).JPG', desc: '用生活账单换算二氧化碳排放，亲手制作低碳承诺手卡。' },
-        { no: '14', id: 'menu-14', title: '生物炭改良土壤实验', sub: '农林废弃物热解碳化', age: '初中/高年级', cover: 'photos/IMG_5612.JPG', desc: '观察生物炭疏松多孔吸附重金属与保水保肥的生态奇迹。' },
-        { no: '15', id: 'menu-15', title: '微型人工湿地生态箱', sub: '水生植物与微生物净水', age: '适合 8-14 岁', cover: 'photos/IMG_5614.JPG', desc: '分层装填卵石、活性炭与挺水植物，搭建桌面净水系统。' },
-        { no: '16', id: 'menu-16', title: '可降解材料的解密实验', sub: '传统塑料 vs 淀粉基降解', age: '适合 全龄学生', cover: 'photos/IMG_5616.JPG', desc: '用温水与生物酶对比分解速率，认识真正的绿色环保。' }
+        { no: '14', id: 'carbon-trace', title: '「峰回路转 · 共碳未来」碳迹迷踪', sub: '碳达峰 · 碳中和 · 垃圾分类团战', age: '适合 4-8 岁', cover: 'photos/IMG_5621.JPG', desc: '画环保小树、晒节能妙招，再分组玩垃圾分类大作战，让低碳的种子生根发芽。' }
       ]
     },
     {
-      name: '乡土润心',
+      name: '场馆联展 · 专属定制',
       courses: [
-        { no: '17', id: 'menu-17', title: '「一粒米的奇妙旅程」', sub: '水稻生长与节气时令', age: '亲子家庭', cover: 'photos/IMG_5619.JPG', desc: '转动时钟转盘了解从秧苗到大米的历程，体验米粒艺术贴画。' },
-        { no: '18', id: 'menu-18', title: '「青苗当家」蔬菜市集', sub: '现代农业与市集经营', age: '适合 7-12 岁', cover: 'photos/IMG_5621.JPG', desc: '采摘清洗、算账售卖、称重记账，在田间地头学习理财与协作。' },
-        { no: '19', id: 'menu-19', title: '「菜园奇遇记」五感探农', sub: '现代智慧农场研学营', age: '适合 6-10 岁', cover: 'photos/IMG_5622.JPG', desc: '听叶声、闻泥香、辨果蔬，在自然怀抱中激发科学求知欲。' },
-        { no: '20', id: 'menu-20', title: '现代温室水肥一体化', sub: '智慧滴灌与无土栽培', age: '适合 10-15 岁', cover: 'photos/IMG_5624.JPG', desc: '解密计算机如何按秒精准给农作物输送养分，感受现代新农业。' }
-      ]
-    },
-    {
-      name: '场馆定制',
-      courses: [
-        { no: '21', id: 'menu-21', title: '江苏科技馆明星展品讲解', sub: '驻馆志愿讲解常态课', age: '适合 全龄观众', cover: 'photos/IMG_5625.JPG', desc: '650+小时常设展厅讲解，用通俗语言拆解高深前沿科技展项。' },
-        { no: '22', id: 'menu-22', title: '《AI浪潮下的我们》脱口秀', sub: '全国一等奖科普脱口秀', age: '高年级/青年', cover: 'photos/IMG_5632.JPG', desc: '丁志楠主讲，幽默包袱与科技反思深度交融，启发青少年。' }
+        { no: '15', id: 'kindergarten', title: '幼儿启蒙定制系列', sub: '防踩踏安全课 · 气球火箭 · 小水滴绘本', age: '适合 幼儿园大班', cover: 'photos/photos_safe_1.jpeg', desc: '为幼儿园大班量身组合的手工与实验小课包，难度、时长、材料按班设计，已与河海大学幼儿园对接。' }
       ]
     }
   ];
@@ -2072,7 +2111,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         '</div>' +
         '<div class="course-card-foot">' +
           '<span class="no-pill">NO.' + c.no + '</span>' +
-          '<a class="view-link" href="activity.html?id=' + c.id + '" target="_blank">查看详情 ↗</a>' +
+          '<a class="view-link" href="activity-detail/template.html?id=' + c.id + '" target="_blank">查看详情 ↗</a>' +
         '</div>' +
       '</div>';
     }).join('');
