@@ -468,6 +468,71 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    03 志愿服务活动菜单 (Service Menu)
    ============================================================ */
 .menu-deck { display: flex; flex-direction: column; flex: 1; }
+/* 搜索框样式 */
+.menu-search-box {
+  display: flex; gap: 8px; margin-bottom: 12px; flex-shrink: 0;
+}
+.menu-search-input {
+  flex: 1; padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  color: var(--text-pure);
+  font-size: 14px;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: all var(--dur) ease;
+}
+.menu-search-input::placeholder {
+  color: var(--text-dim);
+}
+.menu-search-input:focus {
+  border-color: var(--teal-accent);
+  background: rgba(255, 255, 255, 0.15);
+}
+.menu-search-btn {
+  padding: 10px 20px;
+  background: var(--teal-accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dur) ease;
+}
+.menu-search-btn:hover {
+  background: #01bcc8;
+}
+.menu-clear-btn {
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-sub);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--dur) ease;
+}
+.menu-clear-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* 搜索结果计数 */
+.search-result-count {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: rgba(74, 222, 128, 0.1);
+  border-radius: 6px;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+}
+.search-result-count b {
+  color: var(--leaf-soft);
+}
+
 .menu-cats-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; flex-shrink: 0; }
 .m-cat-btn {
   padding: 6px 14px; border-radius: 4px;
@@ -1070,13 +1135,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         </div>
 
         <div class="menu-deck">
+          <!-- 搜索框 -->
+          <div class="menu-search-box anim-el d-1" id="menuSearchBox">
+            <input type="text" id="menuSearchInput" class="menu-search-input" placeholder="🔍 搜索课程名称或关键词...">
+            <button id="menuSearchBtn" class="menu-search-btn" type="button">搜索</button>
+            <button id="menuClearBtn" class="menu-clear-btn" type="button" style="display:none;">清除</button>
+          </div>
+
           <div class="menu-cats-bar anim-el d-2" id="menuCatsBar">
-            <button class="m-cat-btn active" data-midx="0">壹 · 科创农野 (01-04)</button>
-            <button class="m-cat-btn" data-midx="1">贰 · 水润江河 (05-08)</button>
-            <button class="m-cat-btn" data-midx="2">叁 · 趣验真知 (09-12)</button>
-            <button class="m-cat-btn" data-midx="3">肆 · 绿意未来 (13-16)</button>
-            <button class="m-cat-btn" data-midx="4">伍 · 乡土润心 (17-20)</button>
-            <button class="m-cat-btn" data-midx="5">陆 · 场馆定制 (21-22)</button>
+            <button class="m-cat-btn active" data-midx="0">全部</button>
+            <button class="m-cat-btn" data-midx="1">壹 · 科创农野</button>
+            <button class="m-cat-btn" data-midx="2">贰 · 水润江河</button>
+            <button class="m-cat-btn" data-midx="3">叁 · 趣验真知</button>
+            <button class="m-cat-btn" data-midx="4">肆 · 绿意未来</button>
+            <button class="m-cat-btn" data-midx="5">伍 · 乡土润心</button>
+            <button class="m-cat-btn" data-midx="6">陆 · 场馆定制</button>
           </div>
 
           <div class="menu-cards-grid anim-el d-3" id="menuCardsGrid">
@@ -1913,15 +1986,78 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
   var menuCardsGrid = document.getElementById('menuCardsGrid');
   var menuCatsBar = document.getElementById('menuCatsBar');
+  var menuSearchInput = document.getElementById('menuSearchInput');
+  var menuSearchBtn = document.getElementById('menuSearchBtn');
+  var menuClearBtn = document.getElementById('menuClearBtn');
+  var currentMenuFilter = 0;
+  var searchKeyword = '';
+
+  // 获取所有课程的扁平数组
+  function getAllCourses() {
+    var allCourses = [];
+    MENU_GROUPS.forEach(function(group, groupIndex) {
+      group.courses.forEach(function(course) {
+        course.groupIndex = groupIndex;
+        course.groupName = group.name;
+        allCourses.push(course);
+      });
+    });
+    return allCourses;
+  }
 
   function renderMenuCategory(midx) {
-    var group = MENU_GROUPS[midx];
-    if (!group) return;
-
+    currentMenuFilter = midx;
     var catButtons = menuCatsBar.querySelectorAll('.m-cat-btn');
     catButtons.forEach(function (b, i) { b.classList.toggle('active', i === midx); });
 
-    menuCardsGrid.innerHTML = group.courses.map(function (c) {
+    var filteredCourses;
+    if (midx === 0) {
+      // 显示所有课程
+      filteredCourses = getAllCourses();
+    } else {
+      // 显示指定分类的课程 (midx-1 因为第一个按钮是"全部")
+      var group = MENU_GROUPS[midx - 1];
+      filteredCourses = group ? group.courses.map(function(c) {
+        c.groupIndex = midx - 1;
+        c.groupName = group.name;
+        return c;
+      }) : [];
+    }
+
+    // 应用搜索过滤
+    if (searchKeyword) {
+      filteredCourses = filteredCourses.filter(function(c) {
+        return c.title.toLowerCase().includes(searchKeyword) ||
+               c.sub.toLowerCase().includes(searchKeyword) ||
+               c.desc.toLowerCase().includes(searchKeyword) ||
+               c.age.toLowerCase().includes(searchKeyword);
+      });
+    }
+
+    // 显示搜索结果计数
+    var resultCountDiv = document.querySelector('.search-result-count');
+    if (searchKeyword && filteredCourses.length > 0) {
+      if (!resultCountDiv) {
+        resultCountDiv = document.createElement('div');
+        resultCountDiv.className = 'search-result-count';
+        menuCardsGrid.parentNode.insertBefore(resultCountDiv, menuCardsGrid);
+      }
+      resultCountDiv.innerHTML = '找到 <b>' + filteredCourses.length + '</b> 门匹配课程';
+      resultCountDiv.style.display = 'block';
+    } else if (resultCountDiv) {
+      resultCountDiv.style.display = 'none';
+    }
+
+    if (filteredCourses.length === 0) {
+      menuCardsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:40px; color:var(--text-dim);">' +
+        '<div style="font-size:48px; margin-bottom:16px;">🔍</div>' +
+        '<div style="font-size:16px;">未找到匹配的课程</div>' +
+        '<div style="font-size:13px; margin-top:8px;">请尝试其他关键词或分类</div>' +
+        '</div>';
+      return;
+    }
+
+    menuCardsGrid.innerHTML = filteredCourses.map(function (c) {
       return '<div class="course-card">' +
         '<div>' +
           '<div class="course-card-thumb">' +
@@ -1949,6 +2085,47 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       renderMenuCategory(idx);
     });
   });
+
+  // 搜索功能
+  if (menuSearchBtn) {
+    menuSearchBtn.addEventListener('click', function() {
+      searchKeyword = menuSearchInput.value.trim().toLowerCase();
+      if (searchKeyword) {
+        menuClearBtn.style.display = 'inline-block';
+      }
+      renderMenuCategory(currentMenuFilter);
+    });
+  }
+
+  if (menuSearchInput) {
+    menuSearchInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchKeyword = menuSearchInput.value.trim().toLowerCase();
+        if (searchKeyword) {
+          menuClearBtn.style.display = 'inline-block';
+        }
+        renderMenuCategory(currentMenuFilter);
+      }
+    });
+
+    // 实时搜索
+    menuSearchInput.addEventListener('input', function() {
+      searchKeyword = menuSearchInput.value.trim().toLowerCase();
+      if (!searchKeyword) {
+        menuClearBtn.style.display = 'none';
+      }
+      renderMenuCategory(currentMenuFilter);
+    });
+  }
+
+  if (menuClearBtn) {
+    menuClearBtn.addEventListener('click', function() {
+      menuSearchInput.value = '';
+      searchKeyword = '';
+      menuClearBtn.style.display = 'none';
+      renderMenuCategory(currentMenuFilter);
+    });
+  }
 
   renderChapter(0);
   renderMenuCategory(0);
