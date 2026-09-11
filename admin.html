@@ -3,516 +3,606 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>活动管理后台 · 水韵农青大学生科技志愿服务队</title>
-<meta name="description" content="水韵农青大学生科技志愿服务队官网后台管理系统，支持活动与课程的增删改查、图文照片编辑、推文链接与视频管理。">
+<title>管理后台 · 水韵农青</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23019aaa'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='36' font-weight='bold' text-anchor='middle' fill='%23fbf7ef'%3E水%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 <style>
 :root {
-  --paper:   #f4f6f8;
-  --white:   #ffffff;
-  --ink:     #1e293b;
-  --ink-2:   #475569;
-  --ink-3:   #94a3b8;
+  --bg: #f0f2f5;
+  --white: #ffffff;
+  --ink: #1a1a2e;
+  --ink-2: #4a5568;
+  --ink-3: #a0aec0;
   --primary: #019aaa;
-  --primary-deep: #0b7285;
-  --leaf:    #2b8a3e;
-  --seal:    #c92a2a;
-  --gold:    #e67700;
-  --line:    1px solid #e2e8f0;
-  --radius:  8px;
-  --shadow:  0 4px 16px rgba(0, 0, 0, 0.05);
+  --primary-deep: #017a8a;
+  --primary-light: #e0f7fa;
+  --leaf: #38a169;
+  --leaf-light: #c6f6d5;
+  --amber: #d69e2e;
+  --amber-light: #fefcbf;
+  --seal: #e53e3e;
+  --seal-light: #fed7d7;
+  --purple: #805ad5;
+  --purple-light: #e9d8fd;
+  --sidebar-w: 240px;
+  --topbar-h: 0px;
+  --line: 1px solid #e2e8f0;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.12);
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--paper); color: var(--ink); line-height: 1.6; font-size: 15px;
+  font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg); color: var(--ink); line-height: 1.6; font-size: 14px;
+  min-height: 100vh;
 }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: none; }
+input, select, textarea { font-family: inherit; }
 
-/* 顶栏 */
-.topbar {
-  background: #0f172a; color: #fff; height: 68px;
+/* === 侧边栏 === */
+.sidebar {
+  position: fixed; left: 0; top: 0; bottom: 0; width: var(--sidebar-w);
+  background: linear-gradient(180deg, #0f2b2b 0%, #163737 40%, #1a4040 100%);
+  color: #fff; z-index: 200; display: flex; flex-direction: column;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+}
+.sidebar-brand {
+  padding: 24px 20px; display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.sidebar-brand img { height: 36px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)); }
+.sidebar-brand .text { font-size: 16px; font-weight: 700; letter-spacing: 0.04em; }
+.sidebar-brand .text b { color: #4ade80; font-weight: 400; }
+.sidebar-brand .ver {
+  font-size: 10px; background: var(--primary); color: #fff;
+  padding: 2px 6px; border-radius: 3px; margin-left: auto;
+}
+.sidebar-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
+.nav-section { padding: 8px 20px 4px; font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; }
+.nav-item {
+  display: flex; align-items: center; gap: 12px; padding: 11px 20px;
+  color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all .2s; border-left: 3px solid transparent;
+}
+.nav-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.nav-item.active { background: rgba(1,154,170,0.2); color: #4ade80; border-left-color: #4ade80; font-weight: 600; }
+.nav-item .icon { width: 20px; text-align: center; font-size: 16px; }
+.nav-item .badge-count {
+  margin-left: auto; background: var(--primary); color: #fff;
+  font-size: 11px; padding: 1px 7px; border-radius: 10px; font-weight: 600;
+}
+.sidebar-footer {
+  padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 12px; color: rgba(255,255,255,0.35);
+}
+
+/* === 主内容区 === */
+.main-content { margin-left: var(--sidebar-w); min-height: 100vh; }
+.page-header {
+  background: var(--white); border-bottom: var(--line); padding: 20px 32px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 28px; position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: sticky; top: 0; z-index: 100;
 }
-.brand-box { display: flex; align-items: center; gap: 14px; }
-.brand-box img { height: 36px; }
-.brand-box h1 { font-size: 19px; font-weight: 700; letter-spacing: 0.06em; }
-.brand-box span.badge {
-  font-size: 12px; background: var(--primary); color: #fff; padding: 3px 10px; border-radius: 4px;
-}
-.top-links { display: flex; align-items: center; gap: 14px; }
-.btn-nav {
-  font-size: 14px; color: #cbd5e1; background: rgba(255,255,255,0.1);
-  padding: 7px 14px; border-radius: 6px; transition: all .2s;
-}
-.btn-nav:hover { background: rgba(255,255,255,0.2); color: #fff; }
-.btn-nav.active { background: var(--primary); color: #fff; }
+.page-header h2 { font-size: 20px; font-weight: 700; color: var(--ink); }
+.page-header .actions { display: flex; gap: 10px; }
+.content-area { padding: 24px 32px; }
 
-/* 容器布局 */
-.layout { max-width: 1340px; margin: 28px auto 60px; padding: 0 24px; }
-
-/* 统计卡片栅格 */
-.stats-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 28px;
-}
+/* === 统计卡片 === */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
 .stat-card {
-  background: var(--white); padding: 22px; border-radius: var(--radius);
-  border: var(--line); box-shadow: var(--shadow); display: flex; align-items: center; gap: 18px;
+  background: var(--white); border-radius: var(--radius); padding: 20px;
+  border: var(--line); box-shadow: var(--shadow); display: flex; align-items: center; gap: 16px;
+  transition: transform .2s, box-shadow .2s;
 }
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 .stat-icon {
-  width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center;
-  justify-content: center; font-size: 24px; color: #fff;
+  width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center;
+  justify-content: center; font-size: 22px; flex-shrink: 0;
 }
-.stat-icon.c1 { background: linear-gradient(135deg, #019aaa, #0b7285); }
-.stat-icon.c2 { background: linear-gradient(135deg, #2b8a3e, #2f9e44); }
-.stat-icon.c3 { background: linear-gradient(135deg, #e67700, #f59f00); }
-.stat-icon.c4 { background: linear-gradient(135deg, #7048e8, #5f3dc4); }
-.stat-text h3 { font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.2; }
-.stat-text p { font-size: 13.5px; color: var(--ink-3); margin-top: 3px; }
+.stat-icon.c1 { background: var(--primary-light); color: var(--primary); }
+.stat-icon.c2 { background: var(--leaf-light); color: var(--leaf); }
+.stat-icon.c3 { background: var(--amber-light); color: var(--amber); }
+.stat-icon.c4 { background: var(--purple-light); color: var(--purple); }
+.stat-info h3 { font-size: 24px; font-weight: 700; line-height: 1.2; }
+.stat-info p { font-size: 12.5px; color: var(--ink-3); margin-top: 2px; }
 
-/* 操控工具栏 */
-.toolbar-card {
-  background: var(--white); padding: 20px 24px; border-radius: var(--radius);
-  border: var(--line); box-shadow: var(--shadow); margin-bottom: 24px;
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
-}
-.filter-group { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.search-input {
-  padding: 9px 14px; border: var(--line); border-radius: 6px; width: 240px;
-  font-size: 14px; background: var(--paper); outline: none;
-}
-.search-input:focus { border-color: var(--primary); background: #fff; }
-.select-input {
-  padding: 9px 12px; border: var(--line); border-radius: 6px;
-  font-size: 14px; background: var(--paper); outline: none;
-}
-.action-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+/* === 按钮 === */
 .btn {
-  padding: 9px 18px; border-radius: 6px; font-size: 14px; font-weight: 500;
-  display: inline-flex; align-items: center; gap: 8px; transition: all .2s;
+  padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 6px; transition: all .15s;
 }
 .btn-primary { background: var(--primary); color: #fff; }
 .btn-primary:hover { background: var(--primary-deep); }
-.btn-outline { background: #fff; border: var(--line); color: var(--ink-2); }
-.btn-outline:hover { background: var(--paper); color: var(--ink); }
-.btn-danger { background: #fff; border: 1px solid #ffc9c9; color: var(--seal); }
-.btn-danger:hover { background: #ffe3e3; }
+.btn-success { background: var(--leaf); color: #fff; }
+.btn-success:hover { background: #2f855a; }
+.btn-outline { background: #fff; border: 1px solid #e2e8f0; color: var(--ink-2); }
+.btn-outline:hover { background: #f7fafc; border-color: #cbd5e0; }
+.btn-danger { background: #fff; border: 1px solid #fed7d7; color: var(--seal); }
+.btn-danger:hover { background: #fff5f5; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-ghost { background: transparent; color: var(--ink-2); }
+.btn-ghost:hover { background: #f7fafc; }
 
-/* 表格卡片 */
-.table-card {
-  background: var(--white); border-radius: var(--radius);
-  border: var(--line); box-shadow: var(--shadow); overflow: hidden;
+/* === 面板 === */
+.panel { display: none; }
+.panel.active { display: block; }
+.card {
+  background: var(--white); border-radius: var(--radius); border: var(--line);
+  box-shadow: var(--shadow); overflow: hidden;
 }
+.card-header {
+  padding: 16px 20px; border-bottom: var(--line); display: flex;
+  align-items: center; justify-content: space-between; background: #fafbfc;
+}
+.card-header h3 { font-size: 15px; font-weight: 600; }
+.card-body { padding: 20px; }
+
+/* === 表格 === */
 .table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; text-align: left; }
-th {
-  background: #f8fafc; padding: 14px 18px; font-size: 13.5px; font-weight: 600;
-  color: var(--ink-2); border-bottom: var(--line); white-space: nowrap;
-}
-td {
-  padding: 16px 18px; border-bottom: var(--line); font-size: 14.5px; vertical-align: middle;
-}
-tr:hover td { background: #f8fafc; }
-.badge {
-  display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 500;
-}
-.badge-chapter { background: #e0f2fe; color: #0369a1; }
-.badge-menu { background: #dcfce7; color: #15803d; }
-.act-thumb { width: 64px; height: 44px; border-radius: 4px; object-fit: cover; background: #e2e8f0; }
-.act-title-box h4 { font-size: 15.5px; font-weight: 600; color: var(--ink); }
-.act-title-box p { font-size: 13px; color: var(--ink-3); margin-top: 3px; }
-.row-actions { display: flex; gap: 8px; }
-.btn-sm {
-  padding: 5px 12px; border-radius: 4px; font-size: 13px; font-weight: 500;
-}
+table { width: 100%; border-collapse: collapse; }
+th { background: #f7fafc; padding: 12px 16px; font-size: 12.5px; font-weight: 600; color: var(--ink-2); text-align: left; white-space: nowrap; border-bottom: var(--line); }
+td { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; font-size: 13.5px; vertical-align: middle; }
+tr:hover td { background: #f7fafc; }
+.empty-state { text-align: center; padding: 48px 20px; color: var(--ink-3); }
+.empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+.badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11.5px; font-weight: 600; }
+.badge-chapter { background: var(--primary-light); color: var(--primary); }
+.badge-menu { background: var(--leaf-light); color: var(--leaf); }
 
-/* 模态弹窗 Modal */
-.modal {
-  position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center;
-  padding: 20px;
+/* === 表单 === */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 12.5px; font-weight: 600; color: var(--ink-2); margin-bottom: 5px; }
+.form-control {
+  width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px;
+  font-size: 13.5px; background: #fff; outline: none; transition: border-color .15s;
 }
-.modal.open { display: flex; animation: fadeIn .2s ease; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(1,154,170,0.1); }
+textarea.form-control { resize: vertical; min-height: 72px; }
+.form-hint { font-size: 11.5px; color: var(--ink-3); margin-top: 3px; }
+
+/* === 搜索与筛选 === */
+.filter-bar {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.search-box {
+  display: flex; align-items: center; gap: 8px; background: #fff;
+  border: 1px solid #e2e8f0; border-radius: 6px; padding: 0 12px; flex: 1; max-width: 320px;
+}
+.search-box input { border: none; outline: none; padding: 9px 0; font-size: 13.5px; flex: 1; background: transparent; }
+.filter-select { padding: 9px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 13px; background: #fff; outline: none; }
+
+/* === 模态框 === */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.open { display: flex; }
 .modal-box {
-  background: var(--white); border-radius: 10px; width: 100%; max-width: 860px;
+  background: #fff; border-radius: 12px; width: 100%; max-width: 860px;
   max-height: 90vh; display: flex; flex-direction: column; overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.25);
 }
 .modal-head {
   padding: 18px 24px; border-bottom: var(--line); display: flex;
-  justify-content: space-between; align-items: center; background: #f8fafc;
+  justify-content: space-between; align-items: center;
 }
-.modal-head h3 { font-size: 18px; font-weight: 700; color: var(--ink); }
-.modal-close { font-size: 24px; color: var(--ink-3); background: none; }
+.modal-head h3 { font-size: 17px; font-weight: 700; }
+.modal-close { font-size: 22px; color: var(--ink-3); background: none; padding: 4px; }
+.modal-close:hover { color: var(--ink); }
 .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
-.modal-foot {
-  padding: 16px 24px; border-top: var(--line); background: #f8fafc;
-  display: flex; justify-content: flex-end; gap: 12px;
-}
+.modal-foot { padding: 14px 24px; border-top: var(--line); display: flex; justify-content: flex-end; gap: 10px; background: #fafbfc; }
 
-/* 表单组件 */
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.form-group { margin-bottom: 16px; }
-.form-group.full { grid-column: 1 / -1; }
-.form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-2); margin-bottom: 6px; }
-.form-control {
-  width: 100%; padding: 9px 12px; border: var(--line); border-radius: 6px;
-  font-family: inherit; font-size: 14px; background: #fff; outline: none; transition: border-color .2s;
+/* === 选项卡 === */
+.tab-nav { display: flex; gap: 4px; border-bottom: 1px solid #e2e8f0; margin-bottom: 18px; }
+.tab-btn {
+  padding: 8px 16px; font-size: 13px; font-weight: 500; color: var(--ink-3);
+  background: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all .15s;
 }
-.form-control:focus { border-color: var(--primary); }
-textarea.form-control { resize: vertical; min-height: 80px; }
-
-/* 选项卡导航 */
-.form-tabs {
-  display: flex; gap: 8px; border-bottom: var(--line); margin-bottom: 20px;
-}
-.form-tab {
-  padding: 8px 16px; font-size: 13.5px; font-weight: 500; color: var(--ink-2);
-  background: none; border-bottom: 2px solid transparent; cursor: pointer;
-}
-.form-tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+.tab-btn:hover { color: var(--ink-2); }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
 .tab-pane { display: none; }
 .tab-pane.active { display: block; }
 
-/* 动态列表（照片/推文/步骤） */
+/* === 动态列表项 === */
 .item-card {
-  background: #f8fafc; border: var(--line); border-radius: 6px;
-  padding: 12px; margin-bottom: 12px; position: relative;
+  background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+  padding: 14px; margin-bottom: 12px;
 }
-.item-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.item-card-head b { font-size: 13px; color: var(--ink); }
+.item-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.item-card-head b { font-size: 13px; }
 .item-del-btn { color: var(--seal); background: none; font-size: 12px; font-weight: 500; }
+.item-del-btn:hover { text-decoration: underline; }
 
-.img-preview-box { display: flex; gap: 12px; align-items: center; margin-top: 8px; }
-.img-preview { width: 70px; height: 50px; border-radius: 4px; object-fit: cover; border: var(--line); background: #eee; }
+/* === 预算表 === */
+.budget-header-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+.budget-table-wrap { overflow-x: auto; margin-bottom: 16px; }
+.budget-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.budget-table th {
+  background: #163737; color: #fff; padding: 10px 12px; font-weight: 600;
+  text-align: center; white-space: nowrap; font-size: 12.5px;
+}
+.budget-table td { padding: 0; border: 1px solid #e2e8f0; text-align: center; }
+.budget-table td input {
+  width: 100%; border: none; outline: none; padding: 9px 10px; text-align: center;
+  font-size: 13px; background: transparent;
+}
+.budget-table td input:focus { background: #f0fdf4; }
+.budget-table td input[type="number"] { -moz-appearance: textfield; }
+.budget-table td input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+.budget-table .row-num { background: #f7fafc; color: var(--ink-3); font-weight: 600; width: 40px; }
+.budget-table .col-name { width: 140px; }
+.budget-table .col-num { width: 70px; }
+.budget-table .col-price { width: 80px; }
+.budget-table .col-usage { min-width: 180px; }
+.budget-table .col-place { width: 90px; }
+.budget-table .col-buyer { width: 160px; }
+.budget-table .col-sign { width: 80px; }
+.budget-table .total-row td { background: #f0fdf4; font-weight: 600; color: var(--leaf); font-size: 14px; }
+.budget-table .del-row {
+  background: none; border: none; color: var(--seal); cursor: pointer;
+  font-size: 16px; padding: 8px; opacity: 0.5; transition: opacity .15s;
+}
+.budget-table .del-row:hover { opacity: 1; }
+.budget-add-row {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+}
+.budget-total-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; background: linear-gradient(135deg, #163737, #1a4a4a);
+  border-radius: 8px; color: #fff; margin-top: 16px;
+}
+.budget-total-bar .amount { font-size: 22px; font-weight: 700; color: #4ade80; }
 
-/* 管理选项卡 */
-.admin-tab {
-  font-size: 14px; font-weight: 500; padding: 9px 18px;
+/* === 响应式 === */
+@media (max-width: 1024px) {
+  .sidebar { width: 64px; }
+  .sidebar .text, .sidebar .ver, .sidebar .nav-text, .sidebar .badge-count, .sidebar .nav-section, .sidebar-footer { display: none; }
+  .sidebar-brand { justify-content: center; padding: 16px 8px; }
+  .nav-item { justify-content: center; padding: 12px; }
+  .nav-item .icon { margin: 0; }
+  .main-content { margin-left: 64px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .content-area { padding: 16px; }
 }
-.admin-tab.active {
-  background: var(--primary); color: #fff;
-}
-.admin-panel {
-  margin-bottom: 24px;
-}
-
-/* 响应式 */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
+  .sidebar { display: none; }
+  .main-content { margin-left: 0; }
+  .stats-grid { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
-  .toolbar-card { flex-direction: column; align-items: stretch; }
-  .action-group { justify-content: stretch; }
-  .action-group .btn { flex: 1; justify-content: center; }
+  .budget-header-form { grid-template-columns: 1fr; }
+  .filter-bar { flex-direction: column; align-items: stretch; }
+  .search-box { max-width: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- 顶栏 -->
-<header class="topbar">
-  <div class="brand-box">
+<!-- 侧边栏 -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
     <img src="logo-mark.png" alt="水韵农青">
-    <h1>水韵农青 · 活动后台管理系统</h1>
-    <span class="badge">V1.0</span>
+    <div class="text">水韵<b>农</b>青</div>
+    <span class="ver">管理端</span>
   </div>
-  <div class="top-links">
-    <a class="btn-nav" href="index.html" target="_blank">🌐 预览官网首页</a>
-    <a class="btn-nav" href="activities/index.html" target="_blank">📚 活动总览</a>
-    <a class="btn-nav active" href="admin.html">⚙ 管理中心</a>
+  <nav class="sidebar-nav">
+    <div class="nav-section">主要功能</div>
+    <div class="nav-item active" data-panel="overview">
+      <span class="icon">📊</span><span class="nav-text">数据概览</span>
+    </div>
+    <div class="nav-item" data-panel="activities">
+      <span class="icon">📋</span><span class="nav-text">活动管理</span>
+    </div>
+    <div class="nav-section">申请管理</div>
+    <div class="nav-item" data-panel="apply">
+      <span class="icon">👥</span><span class="nav-text">加入申请</span>
+      <span class="badge-count" id="navApplyCount">0</span>
+    </div>
+    <div class="nav-item" data-panel="booking">
+      <span class="icon">🤝</span><span class="nav-text">合作申请</span>
+      <span class="badge-count" id="navBookingCount">0</span>
+    </div>
+    <div class="nav-section">工具</div>
+    <div class="nav-item" data-panel="budget">
+      <span class="icon">💰</span><span class="nav-text">预算表</span>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    © 2026 水韵农青
   </div>
-</header>
+</aside>
 
-<main class="layout">
-  <!-- 统计卡片 -->
-  <section class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-icon c1">📊</div>
-      <div class="stat-text">
-        <h3 id="statTotal">0</h3>
-        <p>全站活动与课程总数</p>
+<!-- 主内容区 -->
+<div class="main-content">
+
+  <!-- ====== 数据概览面板 ====== -->
+  <div class="panel active" id="panel-overview">
+    <div class="page-header">
+      <h2>📊 数据概览</h2>
+      <div class="actions">
+        <a class="btn btn-outline" href="index.html" target="_blank">🌐 预览官网</a>
+        <a class="btn btn-outline" href="activities/index.html" target="_blank">📚 活动大厅</a>
       </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon c2">📖</div>
-      <div class="stat-text">
-        <h3 id="statChapters">0</h3>
-        <p>服务篇章核心活动</p>
+    <div class="content-area">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon c1">📊</div>
+          <div class="stat-info"><h3 id="statTotal">0</h3><p>活动与课程总数</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c2">📖</div>
+          <div class="stat-info"><h3 id="statChapters">0</h3><p>服务篇章活动</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c3">🥗</div>
+          <div class="stat-info"><h3 id="statMenus">0</h3><p>特色菜单课程</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c4">📸</div>
+          <div class="stat-info"><h3 id="statPhotos">0</h3><p>实拍照片收录</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>快捷操作</h3></div>
+        <div class="card-body" style="display:flex; gap:12px; flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="switchPanel('activities')">➕ 新增活动</button>
+          <button class="btn btn-success" onclick="switchPanel('budget')">💰 制作预算表</button>
+          <button class="btn btn-outline" id="btnExport">💾 导出数据备份</button>
+          <button class="btn btn-outline" id="btnImport">📂 导入数据</button>
+          <button class="btn btn-danger" id="btnReset">🔄 恢复默认数据</button>
+          <input type="file" id="importFileInput" accept=".json" style="display:none;">
+        </div>
       </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon c3">🥗</div>
-      <div class="stat-text">
-        <h3 id="statMenus">0</h3>
-        <p>特色服务菜单课程</p>
+  </div>
+
+  <!-- ====== 活动管理面板 ====== -->
+  <div class="panel" id="panel-activities">
+    <div class="page-header">
+      <h2>📋 活动管理</h2>
+      <div class="actions">
+        <button class="btn btn-primary" id="btnAddNew">➕ 新增活动 / 课程</button>
       </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon c4">📸</div>
-      <div class="stat-text">
-        <h3 id="statPhotos">0</h3>
-        <p>现场实拍照片收录</p>
+    <div class="content-area">
+      <div class="filter-bar">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="filterSearch" placeholder="搜索活动标题 / 分类 / 亮点...">
+        </div>
+        <select class="filter-select" id="filterType">
+          <option value="">全部类型</option>
+          <option value="chapter">服务篇章</option>
+          <option value="menu">特色菜单</option>
+        </select>
+        <select class="filter-select" id="filterCat">
+          <option value="">全部分类</option>
+        </select>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:60px;">封面</th>
+                <th>ID</th>
+                <th>活动标题</th>
+                <th>类型</th>
+                <th>分类</th>
+                <th>学段</th>
+                <th>照片/推文</th>
+                <th style="width:140px;text-align:right;">操作</th>
+              </tr>
+            </thead>
+            <tbody id="actTableBody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- 管理选项卡导航 -->
-  <section class="toolbar-card" style="margin-bottom: 20px;">
-    <div class="filter-group">
-      <button class="btn btn-primary admin-tab active" data-tab="activities" type="button">📊 活动管理</button>
-      <button class="btn btn-outline admin-tab" data-tab="apply" type="button">📋 加入申请</button>
-      <button class="btn btn-outline admin-tab" data-tab="booking" type="button">🤝 合作申请</button>
+  <!-- ====== 加入申请面板 ====== -->
+  <div class="panel" id="panel-apply">
+    <div class="page-header"><h2>👥 加入申请</h2></div>
+    <div class="content-area">
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:50px;">#</th><th>姓名</th><th>专业</th><th>年级</th><th>班级</th>
+                <th>自我介绍</th><th>附件</th><th>提交时间</th><th style="width:80px;text-align:right;">操作</th>
+              </tr>
+            </thead>
+            <tbody id="applyTableBody"></tbody>
+          </table>
+        </div>
+        <div id="applyEmpty" class="empty-state" style="display:none;">
+          <div class="icon">📭</div><p>暂无加入申请记录</p>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- 加入申请列表 -->
-  <section class="table-card admin-panel" id="panel-apply" style="display:none;">
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 60px;">ID</th>
-            <th>姓名</th>
-            <th>专业</th>
-            <th>年级</th>
-            <th>班级</th>
-            <th>自我介绍</th>
-            <th>附件</th>
-            <th>提交时间</th>
-            <th style="width: 100px; text-align: right;">操作</th>
-          </tr>
-        </thead>
-        <tbody id="applyTableBody">
-          <!-- 动态渲染 -->
-        </tbody>
-      </table>
+  <!-- ====== 合作申请面板 ====== -->
+  <div class="panel" id="panel-booking">
+    <div class="page-header"><h2>🤝 合作申请</h2></div>
+    <div class="content-area">
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:50px;">#</th><th>意向课程</th><th>合作单位</th><th>联系人</th>
+                <th>受众学段</th><th>具体需求</th><th>提交时间</th><th style="width:80px;text-align:right;">操作</th>
+              </tr>
+            </thead>
+            <tbody id="bookingTableBody"></tbody>
+          </table>
+        </div>
+        <div id="bookingEmpty" class="empty-state" style="display:none;">
+          <div class="icon">📭</div><p>暂无合作申请记录</p>
+        </div>
+      </div>
     </div>
-    <div id="applyEmpty" style="padding: 40px; text-align: center; color: var(--ink-3); display: none;">
-      暂无加入申请记录
-    </div>
-  </section>
+  </div>
 
-  <!-- 合作申请列表 -->
-  <section class="table-card admin-panel" id="panel-booking" style="display:none;">
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 60px;">ID</th>
-            <th>意向课程</th>
-            <th>合作单位</th>
-            <th>联系人</th>
-            <th>受众学段与人数</th>
-            <th>具体需求</th>
-            <th>提交时间</th>
-            <th style="width: 100px; text-align: right;">操作</th>
-          </tr>
-        </thead>
-        <tbody id="bookingTableBody">
-          <!-- 动态渲染 -->
-        </tbody>
-      </table>
+  <!-- ====== 预算表面板 ====== -->
+  <div class="panel" id="panel-budget">
+    <div class="page-header">
+      <h2>💰 物品购买申请单</h2>
+      <div class="actions">
+        <button class="btn btn-outline" id="btnBudgetClear">🗑 清空重填</button>
+        <button class="btn btn-success" id="btnBudgetExport">📥 导出 Excel</button>
+      </div>
     </div>
-    <div id="bookingEmpty" style="padding: 40px; text-align: center; color: var(--ink-3); display: none;">
-      暂无合作申请记录
-    </div>
-  </section>
+    <div class="content-area">
+      <div class="card">
+        <div class="card-body">
+          <div class="budget-header-form">
+            <div class="form-group">
+              <label>申请人</label>
+              <input type="text" class="form-control" id="budgetApplicant" value="河海大学水韵农青志愿队">
+            </div>
+            <div class="form-group">
+              <label>申请日期</label>
+              <input type="date" class="form-control" id="budgetDate">
+            </div>
+          </div>
 
-  <!-- 活动管理面板 -->
-  <section class="admin-panel" id="panel-activities">
-  <section class="toolbar-card">
-    <div class="filter-group">
-      <input type="text" class="search-input" id="filterSearch" placeholder="🔍 搜索活动标题 / 分类 / 亮点...">
-      <select class="select-input" id="filterType">
-        <option value="">全部类型 (篇章 + 菜单)</option>
-        <option value="chapter">服务篇章活动</option>
-        <option value="menu">特色服务菜单课程</option>
-      </select>
-      <select class="select-input" id="filterCat">
-        <option value="">全部分类系列</option>
-      </select>
-    </div>
-    <div class="action-group">
-      <button class="btn btn-primary" id="btnAddNew" type="button">➕ 新增活动 / 课程</button>
-      <button class="btn btn-outline" id="btnExport" type="button">💾 导出备份 JSON</button>
-      <button class="btn btn-outline" id="btnImport" type="button">📂 导入数据 JSON</button>
-      <button class="btn btn-danger" id="btnReset" type="button">🔄 恢复官方默认数据</button>
-      <input type="file" id="importFileInput" accept=".json" style="display:none;">
-    </div>
-  </section>
+          <div class="budget-table-wrap">
+            <table class="budget-table" id="budgetTable">
+              <thead>
+                <tr>
+                  <th style="width:40px;">#</th>
+                  <th style="min-width:130px;">物品名称</th>
+                  <th style="width:70px;">数量</th>
+                  <th style="width:80px;">估价(元)</th>
+                  <th style="min-width:170px;">用途</th>
+                  <th style="width:90px;">采购地点</th>
+                  <th style="min-width:150px;">采购人</th>
+                  <th style="width:80px;">部门领导</th>
+                  <th style="width:80px;">分管领导</th>
+                  <th style="width:40px;"></th>
+                </tr>
+              </thead>
+              <tbody id="budgetTableBody"></tbody>
+              <tfoot>
+                <tr class="total-row">
+                  <td colspan="3"></td>
+                  <td id="budgetTotalCell" style="text-align:center;">合计：0.00 元</td>
+                  <td colspan="6"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
 
-  <!-- 活动数据表格 -->
-  <section class="table-card">
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 70px;">封面</th>
-            <th>ID / 编号</th>
-            <th>活动标题与副标题</th>
-            <th>类型</th>
-            <th>所属分类系列</th>
-            <th>适合学段</th>
-            <th>照片 / 推文</th>
-            <th style="width: 160px; text-align: right;">操作管理</th>
-          </tr>
-        </thead>
-        <tbody id="actTableBody">
-          <!-- 动态渲染 -->
-        </tbody>
-      </table>
-    </div>
-  </section>
-  </section>
-</main>
+          <div class="budget-add-row">
+            <button class="btn btn-outline" id="btnBudgetAddRow">➕ 添加物品行</button>
+          </div>
 
-<!-- 新增/编辑活动弹窗 Modal -->
-<div class="modal" id="editModal" role="dialog" aria-modal="true">
+          <div class="budget-total-bar">
+            <div>
+              <div style="font-size:13px; opacity:0.7;">申请总金额</div>
+              <div class="amount" id="budgetTotalBar">¥ 0.00</div>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-outline" style="color:#fff; border-color:rgba(255,255,255,0.3);" id="btnBudgetSave">💾 暂存数据</button>
+              <button class="btn btn-success" id="btnBudgetExport2">📥 导出 Excel 文件</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 活动编辑弹窗 ====== -->
+<div class="modal-overlay" id="editModal">
   <div class="modal-box">
     <div class="modal-head">
-      <h3 id="modalTitle">编辑活动详情</h3>
-      <button class="modal-close" id="modalClose" type="button">&times;</button>
+      <h3 id="modalTitle">编辑活动</h3>
+      <button class="modal-close" id="modalClose">&times;</button>
     </div>
-
-    <!-- 弹窗标签导航 -->
-    <div style="padding: 12px 24px 0;">
-      <nav class="form-tabs">
-        <button class="form-tab active" data-tab="tabBasic" type="button">1. 基础属性</button>
-        <button class="form-tab" data-tab="tabIntro" type="button">2. 详细图文与亮点</button>
-        <button class="form-tab" data-tab="tabPhotos" type="button">3. 照片画廊 (<span id="tabPhotoCount">0</span>)</button>
-        <button class="form-tab" data-tab="tabVideo" type="button">4. 视频记录</button>
-        <button class="form-tab" data-tab="tabTweets" type="button">5. 微信推文报道 (<span id="tabTweetCount">0</span>)</button>
-        <button class="form-tab" data-tab="tabSteps" type="button">6. 教学流程与物资</button>
+    <div style="padding:12px 24px 0;">
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="tabBasic" type="button">基础信息</button>
+        <button class="tab-btn" data-tab="tabIntro" type="button">图文亮点</button>
+        <button class="tab-btn" data-tab="tabPhotos" type="button">照片 (<span id="tabPhotoCount">0</span>)</button>
+        <button class="tab-btn" data-tab="tabVideo" type="button">视频</button>
+        <button class="tab-btn" data-tab="tabTweets" type="button">推文 (<span id="tabTweetCount">0</span>)</button>
+        <button class="tab-btn" data-tab="tabSteps" type="button">教学流程</button>
       </nav>
     </div>
-
     <form class="modal-body" id="actForm">
-      <!-- 隐藏域 ID -->
       <input type="hidden" id="fId">
-
-      <!-- TAB 1: 基础属性 -->
       <div class="tab-pane active" id="tabBasic">
         <div class="form-grid">
-          <div class="form-group">
-            <label>活动类别 *</label>
+          <div class="form-group"><label>活动类别 *</label>
             <select class="form-control" id="fType" required>
-              <option value="chapter">服务篇章活动 (对应服务内容 5 大篇章)</option>
-              <option value="menu">特色服务菜单课程 (对应点单菜单)</option>
+              <option value="chapter">服务篇章活动</option>
+              <option value="menu">特色菜单课程</option>
             </select>
           </div>
-          <div class="form-group">
-            <label>所属分类系列名称 *</label>
-            <input type="text" class="form-control" id="fCategory" placeholder="例如：科研绘科普 / 科创农野 / 水润江河" required>
+          <div class="form-group"><label>所属分类 *</label>
+            <input type="text" class="form-control" id="fCategory" placeholder="如：科创农野 / 水润江河" required>
           </div>
         </div>
-
-        <div class="form-group">
-          <label>活动 / 课程标题 *</label>
-          <input type="text" class="form-control" id="fTitle" placeholder="例如：「土壤医生」低碳科普" required>
-        </div>
-
-        <div class="form-group">
-          <label>副标题 / 一句话宣传</label>
-          <input type="text" class="form-control" id="fSubtitle" placeholder="例如：科研项目进课堂 · 重金属土壤治理">
-        </div>
-
+        <div class="form-group"><label>活动标题 *</label><input type="text" class="form-control" id="fTitle" required></div>
+        <div class="form-group"><label>副标题</label><input type="text" class="form-control" id="fSubtitle"></div>
         <div class="form-grid">
-          <div class="form-group">
-            <label>建议受众 / 适合学段</label>
-            <input type="text" class="form-control" id="fTargetAge" placeholder="例如：适合 8-12 岁 / 小学 3-6 年级">
-          </div>
-          <div class="form-group">
-            <label>活动成效标签</label>
-            <input type="text" class="form-control" id="fStats" placeholder="例如：已开展 2 期 · 覆盖 120+ 青少年">
-          </div>
+          <div class="form-group"><label>适合学段</label><input type="text" class="form-control" id="fTargetAge" placeholder="如：适合 8-12 岁"></div>
+          <div class="form-group"><label>成效标签</label><input type="text" class="form-control" id="fStats"></div>
         </div>
-
-        <div class="form-group">
-          <label>封面图片 (路径 / 链接 或 选择本地图片)</label>
-          <div style="display:flex; gap:10px;">
-            <input type="text" class="form-control" id="fCover" placeholder="例如：photos/IMG_5612.JPG 或 网络图片链接">
-            <label class="btn btn-outline" style="white-space:nowrap; cursor:pointer;">
-              本地图片 <input type="file" id="fCoverFile" accept="image/*" style="display:none;">
-            </label>
+        <div class="form-group"><label>封面图片路径</label>
+          <div style="display:flex;gap:8px;">
+            <input type="text" class="form-control" id="fCover" placeholder="photos/IMG_xxx.JPG">
+            <label class="btn btn-outline" style="white-space:nowrap;cursor:pointer;">本地图片<input type="file" id="fCoverFile" accept="image/*" style="display:none;"></label>
           </div>
-          <div class="img-preview-box">
-            <img class="img-preview" id="fCoverPreview" src="photos/IMG_5612.JPG" alt="封面预览">
-            <span style="font-size:12px; color:var(--ink-3);">支持 JPG / PNG，建议横版比例 16:9 或 4:3</span>
-          </div>
+          <img id="fCoverPreview" src="photos/IMG_5612.JPG" style="width:100px;height:65px;object-fit:cover;border-radius:6px;margin-top:8px;border:1px solid #e2e8f0;">
         </div>
       </div>
-
-      <!-- TAB 2: 图文详情与亮点 -->
       <div class="tab-pane" id="tabIntro">
-        <div class="form-group">
-          <label>活动亮点标签 (多个用英文逗号或空格隔开)</label>
-          <input type="text" class="form-control" id="fHighlights" placeholder="例如：活动 2 次, 农水 · 土治 · 碳汇, 双碳战略">
-        </div>
-
-        <div class="form-group">
-          <label>详细活动介绍与背景说明 (支持换行分段)</label>
-          <textarea class="form-control" id="fDesc" style="min-height: 180px;" placeholder="详细介绍课程研发背景、教学理念、实践目标与受众反馈..."></textarea>
-        </div>
+        <div class="form-group"><label>亮点标签 (逗号分隔)</label><input type="text" class="form-control" id="fHighlights"></div>
+        <div class="form-group"><label>详细介绍</label><textarea class="form-control" id="fDesc" style="min-height:160px;"></textarea></div>
       </div>
-
-      <!-- TAB 3: 照片画廊 -->
       <div class="tab-pane" id="tabPhotos">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-          <span style="font-size:13px; color:var(--ink-2);">支持添加多张现场实拍图片，在专属详情页支持全屏灯箱放大浏览。</span>
-          <button class="btn btn-sm btn-primary" id="btnAddPhoto" type="button">➕ 添加一张照片</button>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span style="font-size:13px;color:var(--ink-3);">支持全屏灯箱浏览</span>
+          <button class="btn btn-sm btn-primary" id="btnAddPhoto" type="button">➕ 添加照片</button>
         </div>
         <div id="photosListContainer"></div>
       </div>
-
-      <!-- TAB 4: 视频记录 -->
       <div class="tab-pane" id="tabVideo">
-        <div class="form-group">
-          <label>视频标题</label>
-          <input type="text" class="form-control" id="fVideoTitle" placeholder="例如：活动精彩实录与微课视频">
-        </div>
-        <div class="form-group">
-          <label>Bilibili / 视频网站嵌入 iframe 代码 或 在线视频直链 (MP4)</label>
-          <textarea class="form-control" id="fVideoEmbed" placeholder='例如：<iframe src="//player.bilibili.com/player.html?bvid=..." scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>'></textarea>
-          <span style="font-size:12px; color:var(--ink-3); margin-top:4px; display:block;">
-            提示：在 Bilibili 视频页面点击「分享」->「嵌入代码」复制后粘贴至此处即可在详情页直接播放。
-          </span>
-        </div>
+        <div class="form-group"><label>视频标题</label><input type="text" class="form-control" id="fVideoTitle"></div>
+        <div class="form-group"><label>嵌入代码或直链</label><textarea class="form-control" id="fVideoEmbed" placeholder="Bilibili iframe 代码或 MP4 链接"></textarea></div>
       </div>
-
-      <!-- TAB 5: 微信推文与报道 -->
       <div class="tab-pane" id="tabTweets">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-          <span style="font-size:13px; color:var(--ink-2);">关联微信公众号宣传推文或媒体报道，访客可点击直接阅读原文。</span>
-          <button class="btn btn-sm btn-primary" id="btnAddTweet" type="button">➕ 添加一篇报道</button>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span style="font-size:13px;color:var(--ink-3);">微信公众号推文报道</span>
+          <button class="btn btn-sm btn-primary" id="btnAddTweet" type="button">➕ 添加报道</button>
         </div>
         <div id="tweetsListContainer"></div>
       </div>
-
-      <!-- TAB 6: 教学流程与器材 -->
       <div class="tab-pane" id="tabSteps">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-          <span style="font-size:13px; color:var(--ink-2);">标准三段式教学流程与动手环节。</span>
-          <button class="btn btn-sm btn-primary" id="btnAddStep" type="button">➕ 添加一个环节</button>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span style="font-size:13px;color:var(--ink-3);">教学流程环节</span>
+          <button class="btn btn-sm btn-primary" id="btnAddStep" type="button">➕ 添加环节</button>
         </div>
         <div id="stepsListContainer"></div>
-
-        <div class="form-group" style="margin-top:18px;">
-          <label>配套教具与物资清单 (多个用中英文逗号隔开)</label>
-          <input type="text" class="form-control" id="fMaterials" placeholder="例如：土壤标本盒, 便携 pH 试纸, 生态修复小盆栽, 双碳知识手册">
-        </div>
+        <div class="form-group" style="margin-top:14px;"><label>配套物资 (逗号分隔)</label><input type="text" class="form-control" id="fMaterials"></div>
       </div>
     </form>
-
     <div class="modal-foot">
       <button class="btn btn-outline" id="btnCancelEdit" type="button">取消</button>
-      <button class="btn btn-primary" id="btnSaveAct" type="button">💾 保存活动数据</button>
+      <button class="btn btn-primary" id="btnSaveAct" type="button">💾 保存</button>
     </div>
   </div>
 </div>
@@ -522,236 +612,91 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 (function () {
   'use strict';
 
+  function $(s) { return document.querySelector(s); }
+  function $$(s) { return Array.prototype.slice.call(document.querySelectorAll(s)); }
+
+  /* ========== 侧边栏导航 ========== */
+  var navItems = $$('.nav-item');
+  var panels = $$('.panel');
+  function switchPanel(name) {
+    navItems.forEach(function(n) { n.classList.toggle('active', n.getAttribute('data-panel') === name); });
+    panels.forEach(function(p) { p.classList.toggle('active', p.id === 'panel-' + name); });
+  }
+  window.switchPanel = switchPanel;
+  navItems.forEach(function(item) {
+    item.addEventListener('click', function() { switchPanel(this.getAttribute('data-panel')); });
+  });
+
+  /* ========== 活动数据 ========== */
   var actList = [];
   var currentEditingPhotos = [];
   var currentEditingTweets = [];
   var currentEditingSteps = [];
 
-  function $(sel) { return document.querySelector(sel); }
-  function $$(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
-
-  // 管理选项卡切换
-  function initTabs() {
-    var tabs = $$('.admin-tab');
-    tabs.forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        var target = this.getAttribute('data-tab');
-        
-        // 更新按钮状态
-        tabs.forEach(function(t) {
-          t.classList.remove('active');
-          t.classList.remove('btn-primary');
-          t.classList.add('btn-outline');
-        });
-        this.classList.add('active');
-        this.classList.remove('btn-outline');
-        this.classList.add('btn-primary');
-        
-        // 切换面板
-        $$('.admin-panel').forEach(function(panel) {
-          panel.style.display = 'none';
-        });
-        var targetPanel = document.getElementById('panel-' + target);
-        if (targetPanel) {
-          targetPanel.style.display = '';
-        }
-      });
-    });
-  }
-
-  // 加载加入申请数据
-  function loadApplyData() {
-    var data = JSON.parse(localStorage.getItem('water_youth_apply_submissions') || '[]');
-    var tbody = $('#applyTableBody');
-    var emptyDiv = $('#applyEmpty');
-    
-    if (data.length === 0) {
-      tbody.innerHTML = '';
-      emptyDiv.style.display = 'block';
-      return;
-    }
-    
-    emptyDiv.style.display = 'none';
-    tbody.innerHTML = data.map(function(item, idx) {
-      return '<tr>' +
-        '<td>' + (idx + 1) + '</td>' +
-        '<td><b>' + (item.name || '-') + '</b></td>' +
-        '<td>' + (item.major || '-') + '</td>' +
-        '<td>' + (item.grade || '-') + '</td>' +
-        '<td>' + (item.className || '-') + '</td>' +
-        '<td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + (item.selfIntro || '-') + '</td>' +
-        '<td>' + (item.hasAttachment ? '📎 ' + (item.attachmentName || '有') : '无') + '</td>' +
-        '<td>' + formatDate(item.timestamp) + '</td>' +
-        '<td style="text-align: right;"><button class="btn btn-danger btn-sm" onclick="deleteApply(' + idx + ')">删除</button></td>' +
-        '</tr>';
-    }).join('');
-  }
-
-  // 加载合作申请数据
-  function loadBookingData() {
-    var data = JSON.parse(localStorage.getItem('water_youth_booking_submissions') || '[]');
-    var tbody = $('#bookingTableBody');
-    var emptyDiv = $('#bookingEmpty');
-    
-    if (data.length === 0) {
-      tbody.innerHTML = '';
-      emptyDiv.style.display = 'block';
-      return;
-    }
-    
-    emptyDiv.style.display = 'none';
-    tbody.innerHTML = data.map(function(item, idx) {
-      return '<tr>' +
-        '<td>' + (idx + 1) + '</td>' +
-        '<td><b>' + (item.course || '-') + '</b></td>' +
-        '<td>' + (item.org || '-') + '</td>' +
-        '<td>' + (item.contact || '-') + '</td>' +
-        '<td>' + (item.audience || '-') + '</td>' +
-        '<td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + (item.requirements || '-') + '</td>' +
-        '<td>' + formatDate(item.timestamp) + '</td>' +
-        '<td style="text-align: right;"><button class="btn btn-danger btn-sm" onclick="deleteBooking(' + idx + ')">删除</button></td>' +
-        '</tr>';
-    }).join('');
-  }
-
-  // 格式化日期
-  function formatDate(isoStr) {
-    if (!isoStr) return '-';
-    var d = new Date(isoStr);
-    return d.getFullYear() + '-' + 
-      String(d.getMonth() + 1).padStart(2, '0') + '-' + 
-      String(d.getDate()).padStart(2, '0') + ' ' +
-      String(d.getHours()).padStart(2, '0') + ':' +
-      String(d.getMinutes()).padStart(2, '0');
-  }
-
-  // 删除加入申请
-  window.deleteApply = function(idx) {
-    if (!confirm('确定删除此申请记录？')) return;
-    var data = JSON.parse(localStorage.getItem('water_youth_apply_submissions') || '[]');
-    data.splice(idx, 1);
-    localStorage.setItem('water_youth_apply_submissions', JSON.stringify(data));
-    loadApplyData();
-  };
-
-  // 删除合作申请
-  window.deleteBooking = function(idx) {
-    if (!confirm('确定删除此申请记录？')) return;
-    var data = JSON.parse(localStorage.getItem('water_youth_booking_submissions') || '[]');
-    data.splice(idx, 1);
-    localStorage.setItem('water_youth_booking_submissions', JSON.stringify(data));
-    loadBookingData();
-  };
-
-  // 初始化
-  initTabs();
-  loadApplyData();
-  loadBookingData();
-
-  // 1. 数据加载与列表渲染
   function loadData() {
     actList = window.WaterYouthData.getAll();
-    updateStats();
+    var chapters = actList.filter(function(x){ return x.type==='chapter'; });
+    var menus = actList.filter(function(x){ return x.type==='menu'; });
+    var totalPhotos = actList.reduce(function(s,x){ return s+((x.photos&&x.photos.length)||0); },0);
+    $('#statTotal').textContent = actList.length;
+    $('#statChapters').textContent = chapters.length;
+    $('#statMenus').textContent = menus.length;
+    $('#statPhotos').textContent = totalPhotos;
     populateCategoryFilter();
     renderTable();
   }
 
-  function updateStats() {
-    $('#statTotal').textContent = actList.length;
-    var chapters = actList.filter(function (x) { return x.type === 'chapter'; });
-    var menus = actList.filter(function (x) { return x.type === 'menu'; });
-    var totalPhotos = actList.reduce(function (sum, x) { return sum + ((x.photos && x.photos.length) || 0); }, 0);
-
-    $('#statChapters').textContent = chapters.length;
-    $('#statMenus').textContent = menus.length;
-    $('#statPhotos').textContent = totalPhotos;
-  }
-
   function populateCategoryFilter() {
     var cats = {};
-    actList.forEach(function (x) { if (x.category) cats[x.category] = 1; });
+    actList.forEach(function(x){ if(x.category) cats[x.category]=1; });
     var sel = $('#filterCat');
-    var curVal = sel.value;
-    sel.innerHTML = '<option value="">全部分类系列</option>' +
-      Object.keys(cats).map(function (c) {
-        return '<option value="' + c + '">' + c + '</option>';
-      }).join('');
-    sel.value = curVal;
+    var v = sel.value;
+    sel.innerHTML = '<option value="">全部分类</option>' + Object.keys(cats).map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
+    sel.value = v;
   }
 
   function renderTable() {
     var kw = $('#filterSearch').value.trim().toLowerCase();
-    var typeFilter = $('#filterType').value;
-    var catFilter = $('#filterCat').value;
-
-    var filtered = actList.filter(function (a) {
-      if (typeFilter && a.type !== typeFilter) return false;
-      if (catFilter && a.category !== catFilter) return false;
+    var tf = $('#filterType').value;
+    var cf = $('#filterCat').value;
+    var filtered = actList.filter(function(a) {
+      if (tf && a.type !== tf) return false;
+      if (cf && a.category !== cf) return false;
       if (kw) {
-        var str = (a.title + ' ' + (a.subtitle || '') + ' ' + (a.category || '') + ' ' + (a.desc || '') + ' ' + ((a.highlights || []).join(' '))).toLowerCase();
-        if (str.indexOf(kw) === -1) return false;
+        var s = (a.title+' '+(a.subtitle||'')+' '+(a.category||'')+' '+(a.desc||'')).toLowerCase();
+        if (s.indexOf(kw) === -1) return false;
       }
       return true;
     });
-
     var tbody = $('#actTableBody');
-    if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:40px; color:var(--ink-3);">未检索到匹配的活动数据</td></tr>';
-      return;
-    }
-
-    tbody.innerHTML = filtered.map(function (a) {
-      var photoCount = (a.photos && a.photos.length) || 0;
-      var tweetCount = (a.tweets && a.tweets.length) || 0;
-      var coverSrc = a.cover || ((a.photos && a.photos[0] && a.photos[0].url) || 'photos/IMG_5612.JPG');
-
-      return '<tr>' +
-        '<td><img class="act-thumb" src="' + coverSrc + '" alt="' + a.title + '"></td>' +
-        '<td><code style="font-size:12px; color:var(--primary-deep); font-weight:600;">' + a.id + '</code></td>' +
-        '<td>' +
-          '<div class="act-title-box">' +
-            '<h4>' + a.title + '</h4>' +
-            '<p>' + (a.subtitle || '暂无副标题') + '</p>' +
-          '</div>' +
-        '</td>' +
-        '<td>' +
-          (a.type === 'chapter' ? '<span class="badge badge-chapter">服务篇章</span>' : '<span class="badge badge-menu">特色菜单</span>') +
-        '</td>' +
-        '<td><b>' + (a.category || '-') + '</b></td>' +
-        '<td><span style="font-size:12px; color:var(--ink-2);">' + (a.targetAge || '全龄') + '</span></td>' +
-        '<td><span style="font-size:12px; color:var(--ink-3);">🖼 ' + photoCount + ' 张 · 📰 ' + tweetCount + ' 篇</span></td>' +
-        '<td style="text-align:right;">' +
-          '<div class="row-actions" style="justify-content:flex-end;">' +
-            '<a class="btn btn-sm btn-outline" href="activity.html?id=' + a.id + '" target="_blank">👁 网页</a>' +
-            '<button class="btn btn-sm btn-primary edit-btn" data-id="' + a.id + '" type="button">✏️ 编辑</button>' +
-            '<button class="btn btn-sm btn-danger del-btn" data-id="' + a.id + '" type="button">🗑</button>' +
-          '</div>' +
-        '</td>' +
-      '</tr>';
+    if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--ink-3);">未找到匹配活动</td></tr>'; return; }
+    tbody.innerHTML = filtered.map(function(a) {
+      var pc = (a.photos&&a.photos.length)||0;
+      var tc = (a.tweets&&a.tweets.length)||0;
+      var cs = a.cover || 'photos/IMG_5612.JPG';
+      return '<tr><td><img src="'+cs+'" style="width:56px;height:38px;object-fit:cover;border-radius:4px;background:#eee;"></td>'
+        + '<td><code style="font-size:11px;color:var(--primary);">'+a.id+'</code></td>'
+        + '<td><b>'+a.title+'</b><br><span style="font-size:12px;color:var(--ink-3);">'+(a.subtitle||'')+'</span></td>'
+        + '<td>'+(a.type==='chapter'?'<span class="badge badge-chapter">篇章</span>':'<span class="badge badge-menu">菜单</span>')+'</td>'
+        + '<td>'+(a.category||'-')+'</td>'
+        + '<td style="font-size:12px;">'+(a.targetAge||'全龄')+'</td>'
+        + '<td style="font-size:12px;color:var(--ink-3);">🖼'+pc+' 📰'+tc+'</td>'
+        + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
+        + '<a class="btn btn-sm btn-outline" href="activity.html?id='+a.id+'" target="_blank">👁</a>'
+        + '<button class="btn btn-sm btn-primary edit-btn" data-id="'+a.id+'">✏️</button>'
+        + '<button class="btn btn-sm btn-danger del-btn" data-id="'+a.id+'">🗑</button>'
+        + '</div></td></tr>';
     }).join('');
   }
 
-  // 筛选事件绑定
   $('#filterSearch').addEventListener('input', renderTable);
   $('#filterType').addEventListener('change', renderTable);
   $('#filterCat').addEventListener('change', renderTable);
 
-  // 选项卡切换
-  $$('.form-tab').forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      $$('.form-tab').forEach(function (t) { t.classList.remove('active'); });
-      $$('.tab-pane').forEach(function (p) { p.classList.remove('active'); });
-      tab.classList.add('active');
-      $('#' + tab.getAttribute('data-tab')).classList.add('active');
-    });
-  });
-
-  // 2. 新增与编辑 Modal
+  /* ========== 活动编辑弹窗 ========== */
   var editModal = $('#editModal');
   function openModal(act) {
-    // 切换到第一个 Tab
-    $$('.form-tab')[0].click();
-
+    $$('.tab-btn')[0].click();
     if (act) {
       $('#modalTitle').textContent = '编辑活动：' + act.title;
       $('#fId').value = act.id;
@@ -763,343 +708,364 @@ textarea.form-control { resize: vertical; min-height: 80px; }
       $('#fStats').value = act.stats || '';
       $('#fCover').value = act.cover || '';
       $('#fCoverPreview').src = act.cover || 'photos/IMG_5612.JPG';
-      $('#fHighlights').value = (act.highlights || []).join(', ');
+      $('#fHighlights').value = (act.highlights||[]).join(', ');
       $('#fDesc').value = act.desc || '';
-      $('#fVideoTitle').value = (act.video && act.video.title) || '';
-      $('#fVideoEmbed').value = (act.video && (act.video.embed || act.video.url)) || '';
-      $('#fMaterials').value = (act.materials || []).join(', ');
-
-      currentEditingPhotos = JSON.parse(JSON.stringify(act.photos || []));
-      currentEditingTweets = JSON.parse(JSON.stringify(act.tweets || []));
-      currentEditingSteps = JSON.parse(JSON.stringify(act.curriculum || []));
+      $('#fVideoTitle').value = (act.video&&act.video.title)||'';
+      $('#fVideoEmbed').value = (act.video&&(act.video.embed||act.video.url))||'';
+      $('#fMaterials').value = (act.materials||[]).join(', ');
+      currentEditingPhotos = JSON.parse(JSON.stringify(act.photos||[]));
+      currentEditingTweets = JSON.parse(JSON.stringify(act.tweets||[]));
+      currentEditingSteps = JSON.parse(JSON.stringify(act.curriculum||[]));
     } else {
-      $('#modalTitle').textContent = '新增活动 / 课程';
-      var newId = 'act-custom-' + Date.now().toString(36);
-      $('#fId').value = newId;
+      $('#modalTitle').textContent = '新增活动';
+      $('#fId').value = 'act-custom-' + Date.now().toString(36);
       $('#fType').value = 'chapter';
       $('#fCategory').value = '科创农野';
       $('#fTitle').value = '';
       $('#fSubtitle').value = '';
       $('#fTargetAge').value = '适合 8-12 岁';
-      $('#fStats').value = '已开展 1 期 · 全面开放预约';
+      $('#fStats').value = '';
       $('#fCover').value = 'photos/IMG_5612.JPG';
       $('#fCoverPreview').src = 'photos/IMG_5612.JPG';
-      $('#fHighlights').value = '科学实验, 动手探究, 农工特色';
+      $('#fHighlights').value = '';
       $('#fDesc').value = '';
       $('#fVideoTitle').value = '';
       $('#fVideoEmbed').value = '';
-      $('#fMaterials').value = '实验器材包, 探索手册';
-
-      currentEditingPhotos = [{ url: 'photos/IMG_5612.JPG', title: '活动现场照片', desc: '志愿者现场教学指导' }];
+      $('#fMaterials').value = '';
+      currentEditingPhotos = [{url:'photos/IMG_5612.JPG',title:'活动照片',desc:''}];
       currentEditingTweets = [];
-      currentEditingSteps = [
-        { step: '1', title: '趣味引入与现象观察', content: '激发青少年探索好奇心。' },
-        { step: '2', title: '动手实操与实验探究', content: '分组开展动手实践体验。' },
-        { step: '3', title: '分享总结与成果展示', content: '总结核心科学知识点。' }
-      ];
+      currentEditingSteps = [{step:'1',title:'引入',content:''},{step:'2',title:'实操',content:''},{step:'3',title:'总结',content:''}];
     }
-
-    renderPhotosManager();
-    renderTweetsManager();
-    renderStepsManager();
+    renderPhotosManager(); renderTweetsManager(); renderStepsManager();
     editModal.classList.add('open');
   }
-
-  function closeModal() {
-    editModal.classList.remove('open');
-  }
+  function closeModal() { editModal.classList.remove('open'); }
   $('#modalClose').addEventListener('click', closeModal);
   $('#btnCancelEdit').addEventListener('click', closeModal);
+  editModal.addEventListener('click', function(e) { if (e.target===editModal) closeModal(); });
 
-  // 封面选择与本地上传预览
-  $('#fCover').addEventListener('input', function () {
-    $('#fCoverPreview').src = this.value.trim() || 'photos/IMG_5612.JPG';
-  });
-  $('#fCoverFile').addEventListener('change', function (e) {
-    var file = e.target.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function (evt) {
-      $('#fCover').value = evt.target.result;
-      $('#fCoverPreview').src = evt.target.result;
-    };
-    reader.readAsDataURL(file);
+  $$('.tab-btn').forEach(function(t) {
+    t.addEventListener('click', function() {
+      $$('.tab-btn').forEach(function(x){x.classList.remove('active');});
+      $$('.tab-pane').forEach(function(x){x.classList.remove('active');});
+      t.classList.add('active');
+      $('#'+t.getAttribute('data-tab')).classList.add('active');
+    });
   });
 
-  // 照片管理渲染
+  $('#fCover').addEventListener('input', function() { $('#fCoverPreview').src = this.value || 'photos/IMG_5612.JPG'; });
+  $('#fCoverFile').addEventListener('change', function(e) {
+    var f = e.target.files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function(ev) { $('#fCover').value = ev.target.result; $('#fCoverPreview').src = ev.target.result; };
+    r.readAsDataURL(f);
+  });
+
   function renderPhotosManager() {
     $('#tabPhotoCount').textContent = currentEditingPhotos.length;
-    var container = $('#photosListContainer');
-    if (currentEditingPhotos.length === 0) {
-      container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--ink-3); font-size:13px;">暂未添加现场照片，点击右上角添加。</p>';
-      return;
-    }
-    container.innerHTML = currentEditingPhotos.map(function (ph, idx) {
-      return '<div class="item-card" data-idx="' + idx + '">' +
-        '<div class="item-card-head">' +
-          '<b>照片 #' + (idx + 1) + '</b>' +
-          '<button type="button" class="item-del-btn del-photo-btn" data-idx="' + idx + '">删除此照片</button>' +
-        '</div>' +
-        '<div class="form-grid" style="margin-bottom:8px;">' +
-          '<div class="form-group" style="margin-bottom:0;">' +
-            '<label>照片 URL / 路径</label>' +
-            '<input type="text" class="form-control ph-url-input" data-idx="' + idx + '" value="' + (ph.url || '') + '" placeholder="photos/IMG_xxxx.JPG">' +
-          '</div>' +
-          '<div class="form-group" style="margin-bottom:0;">' +
-            '<label>照片标题 / 说明</label>' +
-            '<input type="text" class="form-control ph-title-input" data-idx="' + idx + '" value="' + (ph.title || '') + '" placeholder="如：志愿者现场指导">' +
-          '</div>' +
-        '</div>' +
-        '<div class="form-group" style="margin-bottom:0;">' +
-          '<label>详细图说描述 (可选)</label>' +
-          '<input type="text" class="form-control ph-desc-input" data-idx="' + idx + '" value="' + (ph.desc || '') + '" placeholder="详细说明">' +
-        '</div>' +
-      '</div>';
+    var c = $('#photosListContainer');
+    if (!currentEditingPhotos.length) { c.innerHTML = '<p style="text-align:center;padding:20px;color:var(--ink-3);font-size:13px;">暂无照片</p>'; return; }
+    c.innerHTML = currentEditingPhotos.map(function(p,i) {
+      return '<div class="item-card"><div class="item-card-head"><b>照片 #'+(i+1)+'</b><button type="button" class="item-del-btn del-photo" data-idx="'+i+'">删除</button></div>'
+        + '<div class="form-grid"><div class="form-group" style="margin-bottom:0;"><label>URL</label><input type="text" class="form-control ph-url" data-idx="'+i+'" value="'+(p.url||'')+'"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>标题</label><input type="text" class="form-control ph-title" data-idx="'+i+'" value="'+(p.title||'')+'"></div></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>图说</label><input type="text" class="form-control ph-desc" data-idx="'+i+'" value="'+(p.desc||'')+'"></div></div>';
     }).join('');
   }
-
-  $('#btnAddPhoto').addEventListener('click', function () {
-    currentEditingPhotos.push({ url: 'photos/IMG_5614.JPG', title: '活动实拍', desc: '' });
-    renderPhotosManager();
+  $('#btnAddPhoto').addEventListener('click', function() { currentEditingPhotos.push({url:'photos/IMG_5614.JPG',title:'',desc:''}); renderPhotosManager(); });
+  $('#photosListContainer').addEventListener('click', function(e) { if(e.target.classList.contains('del-photo')){ currentEditingPhotos.splice(+e.target.dataset.idx,1); renderPhotosManager(); }});
+  $('#photosListContainer').addEventListener('input', function(e) {
+    var i = +e.target.dataset.idx; if(!currentEditingPhotos[i])return;
+    if(e.target.classList.contains('ph-url')) currentEditingPhotos[i].url=e.target.value;
+    if(e.target.classList.contains('ph-title')) currentEditingPhotos[i].title=e.target.value;
+    if(e.target.classList.contains('ph-desc')) currentEditingPhotos[i].desc=e.target.value;
   });
 
-  $('#photosListContainer').addEventListener('click', function (e) {
-    if (e.target.classList.contains('del-photo-btn')) {
-      var idx = Number(e.target.getAttribute('data-idx'));
-      currentEditingPhotos.splice(idx, 1);
-      renderPhotosManager();
-    }
-  });
-  $('#photosListContainer').addEventListener('input', function (e) {
-    var idx = Number(e.target.getAttribute('data-idx'));
-    if (!currentEditingPhotos[idx]) return;
-    if (e.target.classList.contains('ph-url-input')) currentEditingPhotos[idx].url = e.target.value;
-    if (e.target.classList.contains('ph-title-input')) currentEditingPhotos[idx].title = e.target.value;
-    if (e.target.classList.contains('ph-desc-input')) currentEditingPhotos[idx].desc = e.target.value;
-  });
-
-  // 推文管理渲染
   function renderTweetsManager() {
     $('#tabTweetCount').textContent = currentEditingTweets.length;
-    var container = $('#tweetsListContainer');
-    if (currentEditingTweets.length === 0) {
-      container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--ink-3); font-size:13px;">暂未添加推文报道，点击右上角添加。</p>';
-      return;
-    }
-    container.innerHTML = currentEditingTweets.map(function (tw, idx) {
-      return '<div class="item-card" data-idx="' + idx + '">' +
-        '<div class="item-card-head">' +
-          '<b>推文报道 #' + (idx + 1) + '</b>' +
-          '<button type="button" class="item-del-btn del-tweet-btn" data-idx="' + idx + '">删除此报道</button>' +
-        '</div>' +
-        '<div class="form-group">' +
-          '<label>推文标题 *</label>' +
-          '<input type="text" class="form-control tw-title-input" data-idx="' + idx + '" value="' + (tw.title || '') + '" placeholder="【活动回顾】水韵农青...">' +
-        '</div>' +
-        '<div class="form-grid">' +
-          '<div class="form-group" style="margin-bottom:0;">' +
-            '<label>发布平台</label>' +
-            '<input type="text" class="form-control tw-plat-input" data-idx="' + idx + '" value="' + (tw.platform || '河海水韵农青公众号') + '">' +
-          '</div>' +
-          '<div class="form-group" style="margin-bottom:0;">' +
-            '<label>发布日期</label>' +
-            '<input type="text" class="form-control tw-date-input" data-idx="' + idx + '" value="' + (tw.date || '2024-05-18') + '">' +
-          '</div>' +
-        '</div>' +
-        '<div class="form-group" style="margin-top:8px;">' +
-          '<label>推文链接 URL *</label>' +
-          '<input type="text" class="form-control tw-url-input" data-idx="' + idx + '" value="' + (tw.url || '') + '" placeholder="https://mp.weixin.qq.com/...">' +
-        '</div>' +
-        '<div class="form-group" style="margin-bottom:0;">' +
-          '<label>推文摘要</label>' +
-          '<input type="text" class="form-control tw-sum-input" data-idx="' + idx + '" value="' + (tw.summary || '') + '" placeholder="简短摘要...">' +
-        '</div>' +
-      '</div>';
+    var c = $('#tweetsListContainer');
+    if (!currentEditingTweets.length) { c.innerHTML = '<p style="text-align:center;padding:20px;color:var(--ink-3);font-size:13px;">暂无推文</p>'; return; }
+    c.innerHTML = currentEditingTweets.map(function(t,i) {
+      return '<div class="item-card"><div class="item-card-head"><b>推文 #'+(i+1)+'</b><button type="button" class="item-del-btn del-tweet" data-idx="'+i+'">删除</button></div>'
+        + '<div class="form-group"><label>标题</label><input type="text" class="form-control tw-title" data-idx="'+i+'" value="'+(t.title||'')+'"></div>'
+        + '<div class="form-grid"><div class="form-group" style="margin-bottom:0;"><label>平台</label><input type="text" class="form-control tw-plat" data-idx="'+i+'" value="'+(t.platform||'')+'"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>日期</label><input type="text" class="form-control tw-date" data-idx="'+i+'" value="'+(t.date||'')+'"></div></div>'
+        + '<div class="form-group" style="margin-top:8px;"><label>链接</label><input type="text" class="form-control tw-url" data-idx="'+i+'" value="'+(t.url||'')+'"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>摘要</label><input type="text" class="form-control tw-sum" data-idx="'+i+'" value="'+(t.summary||'')+'"></div></div>';
     }).join('');
   }
-
-  $('#btnAddTweet').addEventListener('click', function () {
-    currentEditingTweets.push({
-      title: '【活动回顾】水韵农青志愿服务',
-      platform: '河海水韵农青公众号',
-      date: new Date().toISOString().slice(0, 10),
-      url: 'https://mp.weixin.qq.com/',
-      summary: '记录课堂与志愿服务的精彩时刻。',
-      cover: 'photos/IMG_5614.JPG'
-    });
-    renderTweetsManager();
-  });
-  $('#tweetsListContainer').addEventListener('click', function (e) {
-    if (e.target.classList.contains('del-tweet-btn')) {
-      var idx = Number(e.target.getAttribute('data-idx'));
-      currentEditingTweets.splice(idx, 1);
-      renderTweetsManager();
-    }
-  });
-  $('#tweetsListContainer').addEventListener('input', function (e) {
-    var idx = Number(e.target.getAttribute('data-idx'));
-    if (!currentEditingTweets[idx]) return;
-    if (e.target.classList.contains('tw-title-input')) currentEditingTweets[idx].title = e.target.value;
-    if (e.target.classList.contains('tw-plat-input')) currentEditingTweets[idx].platform = e.target.value;
-    if (e.target.classList.contains('tw-date-input')) currentEditingTweets[idx].date = e.target.value;
-    if (e.target.classList.contains('tw-url-input')) currentEditingTweets[idx].url = e.target.value;
-    if (e.target.classList.contains('tw-sum-input')) currentEditingTweets[idx].summary = e.target.value;
+  $('#btnAddTweet').addEventListener('click', function() { currentEditingTweets.push({title:'',platform:'河海水韵农青公众号',date:new Date().toISOString().slice(0,10),url:'',summary:''}); renderTweetsManager(); });
+  $('#tweetsListContainer').addEventListener('click', function(e) { if(e.target.classList.contains('del-tweet')){ currentEditingTweets.splice(+e.target.dataset.idx,1); renderTweetsManager(); }});
+  $('#tweetsListContainer').addEventListener('input', function(e) {
+    var i = +e.target.dataset.idx; if(!currentEditingTweets[i])return;
+    if(e.target.classList.contains('tw-title')) currentEditingTweets[i].title=e.target.value;
+    if(e.target.classList.contains('tw-plat')) currentEditingTweets[i].platform=e.target.value;
+    if(e.target.classList.contains('tw-date')) currentEditingTweets[i].date=e.target.value;
+    if(e.target.classList.contains('tw-url')) currentEditingTweets[i].url=e.target.value;
+    if(e.target.classList.contains('tw-sum')) currentEditingTweets[i].summary=e.target.value;
   });
 
-  // 流程步骤渲染
   function renderStepsManager() {
-    var container = $('#stepsListContainer');
-    container.innerHTML = currentEditingSteps.map(function (st, idx) {
-      return '<div class="item-card" data-idx="' + idx + '">' +
-        '<div class="item-card-head">' +
-          '<b>环节 ' + (idx + 1) + '</b>' +
-          '<button type="button" class="item-del-btn del-step-btn" data-idx="' + idx + '">删除此环节</button>' +
-        '</div>' +
-        '<div class="form-group">' +
-          '<label>环节标题</label>' +
-          '<input type="text" class="form-control step-title-input" data-idx="' + idx + '" value="' + (st.title || '') + '" placeholder="如：趣味引入与微观解密">' +
-        '</div>' +
-        '<div class="form-group" style="margin-bottom:0;">' +
-          '<label>环节内容与引导</label>' +
-          '<input type="text" class="form-control step-cnt-input" data-idx="' + idx + '" value="' + (st.content || '') + '" placeholder="具体教学设计...">' +
-        '</div>' +
-      '</div>';
+    var c = $('#stepsListContainer');
+    c.innerHTML = currentEditingSteps.map(function(s,i) {
+      return '<div class="item-card"><div class="item-card-head"><b>环节 '+(i+1)+'</b><button type="button" class="item-del-btn del-step" data-idx="'+i+'">删除</button></div>'
+        + '<div class="form-group"><label>标题</label><input type="text" class="form-control step-title" data-idx="'+i+'" value="'+(s.title||'')+'"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>内容</label><input type="text" class="form-control step-cnt" data-idx="'+i+'" value="'+(s.content||'')+'"></div></div>';
     }).join('');
   }
-  $('#btnAddStep').addEventListener('click', function () {
-    currentEditingSteps.push({ step: String(currentEditingSteps.length + 1), title: '新教学环节', content: '' });
-    renderStepsManager();
-  });
-  $('#stepsListContainer').addEventListener('click', function (e) {
-    if (e.target.classList.contains('del-step-btn')) {
-      var idx = Number(e.target.getAttribute('data-idx'));
-      currentEditingSteps.splice(idx, 1);
-      renderStepsManager();
-    }
-  });
-  $('#stepsListContainer').addEventListener('input', function (e) {
-    var idx = Number(e.target.getAttribute('data-idx'));
-    if (!currentEditingSteps[idx]) return;
-    if (e.target.classList.contains('step-title-input')) currentEditingSteps[idx].title = e.target.value;
-    if (e.target.classList.contains('step-cnt-input')) currentEditingSteps[idx].content = e.target.value;
+  $('#btnAddStep').addEventListener('click', function() { currentEditingSteps.push({step:String(currentEditingSteps.length+1),title:'',content:''}); renderStepsManager(); });
+  $('#stepsListContainer').addEventListener('click', function(e) { if(e.target.classList.contains('del-step')){ currentEditingSteps.splice(+e.target.dataset.idx,1); renderStepsManager(); }});
+  $('#stepsListContainer').addEventListener('input', function(e) {
+    var i = +e.target.dataset.idx; if(!currentEditingSteps[i])return;
+    if(e.target.classList.contains('step-title')) currentEditingSteps[i].title=e.target.value;
+    if(e.target.classList.contains('step-cnt')) currentEditingSteps[i].content=e.target.value;
   });
 
-  // 保存数据
-  $('#btnSaveAct').addEventListener('click', function () {
+  $('#btnSaveAct').addEventListener('click', function() {
     var title = $('#fTitle').value.trim();
-    if (!title) {
-      alert('请填写活动标题！');
-      $$('.form-tab')[0].click();
-      $('#fTitle').focus();
-      return;
-    }
-
-    var highlightsStr = $('#fHighlights').value.trim();
-    var hlArr = highlightsStr ? highlightsStr.split(/[,，\s]+/).filter(function (x) { return x.length > 0; }) : [];
-
-    var matStr = $('#fMaterials').value.trim();
-    var matArr = matStr ? matStr.split(/[,，]+/).filter(function (x) { return x.length > 0; }) : [];
-
-    var videoEmbedCode = $('#fVideoEmbed').value.trim();
-    var videoObj = {
-      title: $('#fVideoTitle').value.trim() || '活动精彩视频记录',
-      embed: videoEmbedCode.indexOf('<iframe') !== -1 ? videoEmbedCode : '',
-      url: videoEmbedCode.indexOf('<iframe') === -1 ? videoEmbedCode : '',
-      tip: ''
-    };
-
-    var updatedItem = {
-      id: $('#fId').value.trim(),
-      type: $('#fType').value,
-      category: $('#fCategory').value.trim(),
-      title: title,
-      subtitle: $('#fSubtitle').value.trim(),
-      targetAge: $('#fTargetAge').value.trim(),
-      stats: $('#fStats').value.trim(),
-      cover: $('#fCover').value.trim(),
-      desc: $('#fDesc').value.trim(),
-      highlights: hlArr,
+    if (!title) { alert('请填写活动标题！'); $$('.tab-btn')[0].click(); $('#fTitle').focus(); return; }
+    var hl = $('#fHighlights').value.trim();
+    var mat = $('#fMaterials').value.trim();
+    var ve = $('#fVideoEmbed').value.trim();
+    window.WaterYouthData.save({
+      id: $('#fId').value.trim(), type: $('#fType').value, category: $('#fCategory').value.trim(),
+      title: title, subtitle: $('#fSubtitle').value.trim(), targetAge: $('#fTargetAge').value.trim(),
+      stats: $('#fStats').value.trim(), cover: $('#fCover').value.trim(), desc: $('#fDesc').value.trim(),
+      highlights: hl ? hl.split(/[,，\s]+/).filter(Boolean) : [],
       photos: currentEditingPhotos,
-      video: videoObj,
-      tweets: currentEditingTweets,
-      curriculum: currentEditingSteps,
-      materials: matArr
+      video: { title: $('#fVideoTitle').value.trim()||'', embed: ve.indexOf('<iframe')!==-1?ve:'', url: ve.indexOf('<iframe')===-1?ve:'', tip:'' },
+      tweets: currentEditingTweets, curriculum: currentEditingSteps,
+      materials: mat ? mat.split(/[,，]+/).filter(Boolean) : []
+    });
+    alert('✅ 活动数据已保存！');
+    closeModal(); loadData();
+  });
+
+  $('#btnAddNew').addEventListener('click', function() { openModal(null); });
+  $('#actTableBody').addEventListener('click', function(e) {
+    var eb = e.target.closest('.edit-btn');
+    if (eb) { var item = window.WaterYouthData.getById(eb.dataset.id); if(item) openModal(item); return; }
+    var db = e.target.closest('.del-btn');
+    if (db && confirm('确定删除 '+db.dataset.id+' ?')) { window.WaterYouthData.delete(db.dataset.id); loadData(); }
+  });
+
+  /* ========== 申请数据 ========== */
+  function fmtDate(s) { if(!s) return '-'; var d=new Date(s); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+  function loadApplyData() {
+    var data = JSON.parse(localStorage.getItem('water_youth_apply_submissions')||'[]');
+    $('#navApplyCount').textContent = data.length;
+    var tb = $('#applyTableBody'), em = $('#applyEmpty');
+    if(!data.length){ tb.innerHTML=''; em.style.display='block'; return; }
+    em.style.display='none';
+    tb.innerHTML = data.map(function(d,i) {
+      return '<tr><td>'+(i+1)+'</td><td><b>'+(d.name||'-')+'</b></td><td>'+(d.major||'-')+'</td><td>'+(d.grade||'-')+'</td><td>'+(d.className||'-')+'</td>'
+        + '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(d.selfIntro||'-')+'</td>'
+        + '<td>'+(d.hasAttachment?'📎 '+(d.attachmentName||'有'):'无')+'</td><td>'+fmtDate(d.timestamp)+'</td>'
+        + '<td style="text-align:right;"><button class="btn btn-danger btn-sm" onclick="deleteApply('+i+')">删除</button></td></tr>';
+    }).join('');
+  }
+  function loadBookingData() {
+    var data = JSON.parse(localStorage.getItem('water_youth_booking_submissions')||'[]');
+    $('#navBookingCount').textContent = data.length;
+    var tb = $('#bookingTableBody'), em = $('#bookingEmpty');
+    if(!data.length){ tb.innerHTML=''; em.style.display='block'; return; }
+    em.style.display='none';
+    tb.innerHTML = data.map(function(d,i) {
+      return '<tr><td>'+(i+1)+'</td><td><b>'+(d.course||'-')+'</b></td><td>'+(d.org||'-')+'</td><td>'+(d.contact||'-')+'</td>'
+        + '<td>'+(d.audience||'-')+'</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(d.requirements||'-')+'</td>'
+        + '<td>'+fmtDate(d.timestamp)+'</td>'
+        + '<td style="text-align:right;"><button class="btn btn-danger btn-sm" onclick="deleteBooking('+i+')">删除</button></td></tr>';
+    }).join('');
+  }
+  window.deleteApply = function(i) { if(!confirm('确定删除？'))return; var d=JSON.parse(localStorage.getItem('water_youth_apply_submissions')||'[]'); d.splice(i,1); localStorage.setItem('water_youth_apply_submissions',JSON.stringify(d)); loadApplyData(); };
+  window.deleteBooking = function(i) { if(!confirm('确定删除？'))return; var d=JSON.parse(localStorage.getItem('water_youth_booking_submissions')||'[]'); d.splice(i,1); localStorage.setItem('water_youth_booking_submissions',JSON.stringify(d)); loadBookingData(); };
+
+  /* ========== 预算表 ========== */
+  var BUDGET_KEY = 'water_youth_budget_data';
+  var budgetItems = [];
+
+  function defaultBudgetItems() {
+    return [
+      { name:'', qty:'', price:'', usage:'', place:'淘宝', buyer:'大学生志愿者：', dept:'', leader:'' },
+      { name:'', qty:'', price:'', usage:'', place:'淘宝', buyer:'大学生志愿者：', dept:'', leader:'' },
+      { name:'', qty:'', price:'', usage:'', place:'淘宝', buyer:'大学生志愿者：', dept:'', leader:'' }
+    ];
+  }
+
+  function calcTotal() {
+    var total = 0;
+    budgetItems.forEach(function(item) {
+      var q = parseFloat(item.qty) || 0;
+      var p = parseFloat(item.price) || 0;
+      total += q * p;
+    });
+    return total;
+  }
+
+  function renderBudgetTable() {
+    var tbody = $('#budgetTableBody');
+    tbody.innerHTML = budgetItems.map(function(item, i) {
+      return '<tr>'
+        + '<td class="row-num">' + (i+1) + '</td>'
+        + '<td class="col-name"><input type="text" value="'+item.name+'" data-idx="'+i+'" data-field="name" placeholder="物品名称"></td>'
+        + '<td class="col-num"><input type="number" value="'+item.qty+'" data-idx="'+i+'" data-field="qty" min="0" step="1" placeholder="0"></td>'
+        + '<td class="col-price"><input type="number" value="'+item.price+'" data-idx="'+i+'" data-field="price" min="0" step="0.01" placeholder="0.00"></td>'
+        + '<td class="col-usage"><input type="text" value="'+item.usage+'" data-idx="'+i+'" data-field="usage" placeholder="用途说明"></td>'
+        + '<td class="col-place"><input type="text" value="'+item.place+'" data-idx="'+i+'" data-field="place" placeholder="采购地点"></td>'
+        + '<td class="col-buyer"><input type="text" value="'+item.buyer+'" data-idx="'+i+'" data-field="buyer" placeholder="采购人"></td>'
+        + '<td class="col-sign"><input type="text" value="'+item.dept+'" data-idx="'+i+'" data-field="dept" placeholder="签字"></td>'
+        + '<td class="col-sign"><input type="text" value="'+item.leader+'" data-idx="'+i+'" data-field="leader" placeholder="签字"></td>'
+        + '<td><button class="del-row" data-idx="'+i+'" title="删除此行">&times;</button></td>'
+        + '</tr>';
+    }).join('');
+    updateBudgetTotal();
+  }
+
+  function updateBudgetTotal() {
+    var total = calcTotal();
+    $('#budgetTotalCell').textContent = '合计：' + total.toFixed(2) + ' 元';
+    $('#budgetTotalBar').textContent = '¥ ' + total.toFixed(2);
+  }
+
+  function loadBudgetFromStorage() {
+    var saved = localStorage.getItem(BUDGET_KEY);
+    if (saved) {
+      try {
+        var parsed = JSON.parse(saved);
+        if (parsed.applicant) $('#budgetApplicant').value = parsed.applicant;
+        if (parsed.date) $('#budgetDate').value = parsed.date;
+        if (parsed.items && parsed.items.length) budgetItems = parsed.items;
+        else budgetItems = defaultBudgetItems();
+      } catch(e) { budgetItems = defaultBudgetItems(); }
+    } else {
+      budgetItems = defaultBudgetItems();
+      $('#budgetDate').value = new Date().toISOString().slice(0,10);
+    }
+    renderBudgetTable();
+  }
+
+  $('#budgetTableBody').addEventListener('input', function(e) {
+    var idx = +e.target.dataset.idx;
+    var field = e.target.dataset.field;
+    if (budgetItems[idx] !== undefined) {
+      budgetItems[idx][field] = e.target.value;
+      if (field === 'qty' || field === 'price') updateBudgetTotal();
+    }
+  });
+
+  $('#budgetTableBody').addEventListener('click', function(e) {
+    var btn = e.target.closest('.del-row');
+    if (btn) {
+      budgetItems.splice(+btn.dataset.idx, 1);
+      renderBudgetTable();
+    }
+  });
+
+  $('#btnBudgetAddRow').addEventListener('click', function() {
+    budgetItems.push({ name:'', qty:'', price:'', usage:'', place:'淘宝', buyer:'大学生志愿者：', dept:'', leader:'' });
+    renderBudgetTable();
+  });
+
+  $('#btnBudgetSave').addEventListener('click', function() {
+    var data = {
+      applicant: $('#budgetApplicant').value,
+      date: $('#budgetDate').value,
+      items: budgetItems
     };
-
-    window.WaterYouthData.save(updatedItem);
-    alert('🎉 活动数据已成功保存！\n首页与活动详情页已实时同步更新。');
-    closeModal();
-    loadData();
+    localStorage.setItem(BUDGET_KEY, JSON.stringify(data));
+    alert('✅ 预算数据已暂存！');
   });
 
-  // 3. 全局按钮与操作
-  $('#btnAddNew').addEventListener('click', function () {
-    openModal(null);
+  $('#btnBudgetClear').addEventListener('click', function() {
+    if (!confirm('确定清空所有预算数据？')) return;
+    localStorage.removeItem(BUDGET_KEY);
+    budgetItems = defaultBudgetItems();
+    $('#budgetApplicant').value = '河海大学水韵农青志愿队';
+    $('#budgetDate').value = new Date().toISOString().slice(0,10);
+    renderBudgetTable();
   });
 
-  $('#actTableBody').addEventListener('click', function (e) {
-    var editBtn = e.target.closest('.edit-btn');
-    if (editBtn) {
-      var id = editBtn.getAttribute('data-id');
-      var item = window.WaterYouthData.getById(id);
-      if (item) openModal(item);
-      return;
-    }
+  function exportBudgetExcel() {
+    if (typeof XLSX === 'undefined') { alert('xlsx 库加载失败，请检查网络连接。'); return; }
 
-    var delBtn = e.target.closest('.del-btn');
-    if (delBtn) {
-      var delId = delBtn.getAttribute('data-id');
-      if (confirm('确定要删除该活动项目 (' + delId + ') 吗？删除后可在右上角随时恢复默认数据。')) {
-        window.WaterYouthData.delete(delId);
-        loadData();
-      }
-    }
-  });
+    var applicant = $('#budgetApplicant').value || '河海大学水韵农青志愿队';
+    var dateStr = $('#budgetDate').value || new Date().toISOString().slice(0,10);
+    var dateObj = new Date(dateStr);
+    var dateDisplay = dateObj.getFullYear() + '年' + (dateObj.getMonth()+1) + '月' + dateObj.getDate() + '日';
 
-  // 导出 JSON
-  $('#btnExport').addEventListener('click', function () {
-    var dataStr = window.WaterYouthData.exportJSON();
-    var blob = new Blob([dataStr], { type: 'application/json' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'water_youth_activities_backup_' + new Date().toISOString().slice(0, 10) + '.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+    var rows = [];
+    rows.push(['', '', '江苏科技馆展教部物品购买申请单', '', '', '', '', '']);
+    rows.push(['申请人：' + applicant, '', '', '', '', '申请年月日：' + dateDisplay, '', '']);
+    rows.push(['物品名称', '数量', '估价', '用途', '采购地点', '采购人', '部门领导', '分管领导']);
 
-  // 导入 JSON
-  $('#btnImport').addEventListener('click', function () {
-    $('#importFileInput').click();
+    budgetItems.forEach(function(item) {
+      rows.push([
+        item.name || '',
+        item.qty || '',
+        item.price || '',
+        item.usage || '',
+        item.place || '',
+        item.buyer || '',
+        item.dept || '',
+        item.leader || ''
+      ]);
+    });
+
+    var total = calcTotal();
+    rows.push(['', '', '合计：' + total.toFixed(2) + '元人民币', '', '', '', '', '']);
+
+    var ws = XLSX.utils.aoa_to_sheet(rows);
+
+    ws['!cols'] = [
+      { wch: 16 }, { wch: 8 }, { wch: 10 }, { wch: 30 },
+      { wch: 12 }, { wch: 22 }, { wch: 12 }, { wch: 12 }
+    ];
+
+    ws['!merges'] = [
+      { s: { r: 0, c: 2 }, e: { r: 0, c: 5 } },
+      { s: { r: 1, c: 0 }, e: { r: 1, c: 4 } },
+      { s: { r: 1, c: 5 }, e: { r: 1, c: 7 } },
+      { s: { r: rows.length - 1, c: 2 }, e: { r: rows.length - 1, c: 5 } }
+    ];
+
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, '物品购买申请单');
+
+    var filename = '水韵农青预算表_' + dateStr + '.xlsx';
+    XLSX.writeFile(wb, filename);
+  }
+
+  $('#btnBudgetExport').addEventListener('click', exportBudgetExcel);
+  $('#btnBudgetExport2').addEventListener('click', exportBudgetExcel);
+
+  /* ========== 全局数据操作 ========== */
+  $('#btnExport').addEventListener('click', function() {
+    var d = window.WaterYouthData.exportJSON();
+    var b = new Blob([d], {type:'application/json'});
+    var u = URL.createObjectURL(b);
+    var a = document.createElement('a'); a.href = u;
+    a.download = 'water_youth_backup_' + new Date().toISOString().slice(0,10) + '.json';
+    a.click(); URL.revokeObjectURL(u);
   });
-  $('#importFileInput').addEventListener('change', function (e) {
-    var file = e.target.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function (evt) {
-      var success = window.WaterYouthData.importJSON(evt.target.result);
-      if (success) {
-        alert('🎉 数据导入恢复成功！');
-        loadData();
-      } else {
-        alert('❌ 数据导入失败，请检查 JSON 格式是否正确。');
-      }
+  $('#btnImport').addEventListener('click', function() { $('#importFileInput').click(); });
+  $('#importFileInput').addEventListener('change', function(e) {
+    var f = e.target.files[0]; if(!f) return;
+    var r = new FileReader();
+    r.onload = function(ev) {
+      if (window.WaterYouthData.importJSON(ev.target.result)) { alert('✅ 导入成功！'); loadData(); }
+      else alert('❌ 导入失败，请检查 JSON 格式。');
     };
-    reader.readAsText(file);
-    e.target.value = '';
+    r.readAsText(f); e.target.value = '';
+  });
+  $('#btnReset').addEventListener('click', function() {
+    if (confirm('确定恢复官方默认数据？此操作不可撤销。')) { window.WaterYouthData.resetToDefault(); alert('已恢复！'); loadData(); }
   });
 
-  // 恢复默认
-  $('#btnReset').addEventListener('click', function () {
-    if (confirm('确定要将所有活动数据重置恢复为官方默认数据吗？此操作将清除本地修改。')) {
-      window.WaterYouthData.resetToDefault();
-      alert('已恢复为官方默认数据！');
-      loadData();
-    }
-  });
-
-  // 初始化
+  /* ========== 初始化 ========== */
   loadData();
+  loadApplyData();
+  loadBookingData();
+  loadBudgetFromStorage();
 })();
 </script>
 </body>
