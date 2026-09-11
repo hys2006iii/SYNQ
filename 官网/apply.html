@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>加入申请 · 水韵农青</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23019aaa'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='36' font-weight='bold' text-anchor='middle' fill='%23fbf7ef'%3E水%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal-deep: #163737;
+      --teal-mid: #1d4645;
+      --teal-accent: #019aaa;
+      --leaf: #4ade80;
+      --leaf-soft: #86efac;
+      --amber: #fbbf24;
+      --text-pure: #ffffff;
+      --text-main: #f1f5f9;
+      --text-sub: #cbd5e1;
+      --text-dim: #94a3b8;
+      --border-card: rgba(255, 255, 255, 0.15);
+      --font-kai: "Ma Shan Zheng", "KaiTi", "STKaiti", serif;
+      --font-song: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+      --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      background: var(--teal-deep);
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(22, 53, 53, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-card);
+    }
+    .nav-wrap {
+      max-width: 1200px; margin: 0 auto; height: 64px;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-pure); }
+    .brand img { height: 38px; }
+    .brand .word { font-family: var(--font-kai); font-size: 24px; letter-spacing: 0.12em; }
+    .brand .word b { color: var(--leaf); font-weight: 400; }
+    .back-link { color: var(--text-sub); text-decoration: none; font-size: 14px; }
+    .back-link:hover { color: var(--text-pure); }
+    .main { padding-top: 64px; min-height: 100vh; }
+    .page-header {
+      background: linear-gradient(135deg, var(--teal-mid) 0%, var(--teal-deep) 100%);
+      padding: 48px 24px; text-align: center; border-bottom: 1px solid var(--border-card);
+    }
+    .page-header h1 {
+      font-family: var(--font-song); font-size: clamp(28px, 3vw, 36px);
+      font-weight: 700; letter-spacing: 0.08em; color: var(--text-pure); margin-bottom: 12px;
+    }
+    .page-header p { font-size: 16px; color: var(--text-sub); max-width: 600px; margin: 0 auto; }
+    .form-container {
+      max-width: 700px; margin: 32px auto; padding: 0 24px 48px;
+    }
+    .form-card {
+      background: rgba(30, 71, 69, 0.72);
+      border: 1px solid var(--border-card);
+      border-radius: 12px; padding: 32px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 14px; color: var(--leaf-soft);
+      font-weight: 600; margin-bottom: 6px;
+    }
+    .form-group label .required { color: #f87171; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 10px 14px; font-size: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-card);
+      border-radius: 6px; color: var(--text-pure);
+      font-family: var(--font-sans); outline: none;
+      transition: border-color 260ms ease;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--teal-accent);
+    }
+    .form-group textarea { min-height: 140px; resize: vertical; line-height: 1.6; }
+    .select-wrap {
+      position: relative;
+    }
+    .select-wrap::after {
+      content: "▾"; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--text-sub); font-size: 14px; pointer-events: none;
+    }
+    .select-wrap select {
+      width: 100%; padding: 10px 36px 10px 14px; font-size: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-card);
+      border-radius: 6px; color: var(--text-pure);
+      font-family: var(--font-sans); outline: none;
+      transition: border-color 260ms ease;
+      cursor: pointer;
+    }
+    .select-wrap select:focus { border-color: var(--teal-accent); }
+    .select-wrap select option { background: var(--teal-deep); color: var(--text-pure); }
+    .file-upload {
+      border: 2px dashed var(--border-card);
+      border-radius: 8px; padding: 20px; text-align: center;
+      cursor: pointer; transition: border-color 260ms ease;
+    }
+    .file-upload:hover { border-color: var(--teal-accent); }
+    .file-upload input[type="file"] {
+      position: absolute; width: 100%; height: 100%; top: 0; left: 0;
+      opacity: 0; cursor: pointer;
+    }
+    .file-upload-text { font-size: 13px; color: var(--text-dim); }
+    .file-upload-text b { color: var(--leaf-soft); }
+    .file-name { font-size: 12px; color: var(--leaf-soft); margin-top: 8px; }
+    .submit-btn {
+      width: 100%; padding: 12px; font-size: 16px; font-weight: 600;
+      background: var(--teal-accent); color: #fff; border: none;
+      border-radius: 8px; cursor: pointer; transition: background 260ms ease;
+    }
+    .submit-btn:hover { background: #01bcc8; }
+    .contact-info {
+      margin-top: 24px; padding: 16px; background: rgba(20, 50, 49, 0.8);
+      border: 1px solid var(--border-card); border-radius: 8px;
+      font-size: 13px; color: var(--text-sub); line-height: 1.8;
+    }
+    .contact-info b { color: var(--leaf-soft); }
+    .success-modal {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7); z-index: 2000;
+      align-items: center; justify-content: center;
+    }
+    .success-modal.show { display: flex; }
+    .success-content {
+      background: var(--teal-mid); border: 1px solid var(--border-card);
+      border-radius: 12px; padding: 32px; max-width: 400px; text-align: center;
+    }
+    .success-content h3 { font-family: var(--font-song); color: var(--leaf-soft); margin-bottom: 12px; }
+    .success-content p { font-size: 14px; color: var(--text-sub); margin-bottom: 8px; }
+    .success-content .close-btn {
+      margin-top: 16px; padding: 8px 24px; background: var(--teal-accent);
+      color: #fff; border: none; border-radius: 6px; cursor: pointer;
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav-wrap">
+      <a class="brand" href="index.html">
+        <img src="logo-mark.png" alt="水韵农青">
+        <span class="word">水韵<b>农</b>青</span>
+      </a>
+      <a class="back-link" href="index.html#join">← 返回首页</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <section class="page-header">
+      <h1>加入申请</h1>
+      <p>成为「水韵农青」大学生科技志愿服务队的一员</p>
+    </section>
+
+    <div class="form-container">
+      <div class="form-card">
+        <form id="applyForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>专业 <span class="required">*</span></label>
+              <input type="text" id="major" placeholder="例如：农业水利工程" required>
+            </div>
+            <div class="form-group">
+              <label>年级 <span class="required">*</span></label>
+              <div class="select-wrap">
+                <select id="grade" required>
+                  <option value="">请选择年级</option>
+                  <option value="大一">大一</option>
+                  <option value="大二">大二</option>
+                  <option value="大三">大三</option>
+                  <option value="大四">大四</option>
+                  <option value="研一">研一</option>
+                  <option value="研二">研二</option>
+                  <option value="研三">研三</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>班级 <span class="required">*</span></label>
+              <input type="text" id="className" placeholder="例如：2024级1班" required>
+            </div>
+            <div class="form-group">
+              <label>姓名 <span class="required">*</span></label>
+              <input type="text" id="fullName" placeholder="例如：张三" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>自我介绍 <span class="required">*</span></label>
+            <textarea id="selfIntro" placeholder="请简要介绍自己的兴趣特长、相关经历、加入团队的动机等..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>附件上传（可选）</label>
+            <div class="file-upload" id="fileUploadArea">
+              <input type="file" id="attachment" accept=".pdf,.doc,.docx,.jpg,.png">
+              <div class="file-upload-text">
+                <b>点击上传</b> 或拖拽文件到此处<br>
+                支持 PDF、Word、JPG、PNG 格式
+              </div>
+              <div class="file-name" id="fileName"></div>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">提交申请</button>
+        </form>
+
+        <div class="contact-info">
+          <b>联系我们：</b><br>
+          📧 官方邮箱：2416010432@hhu.edu.cn<br>
+          📱 联系电话：18475136044<br>
+          💬 招新 QQ 群：1108743305<br>
+          <span style="color:var(--text-dim);">我们将在 24 小时内与您联系</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="success-modal" id="successModal">
+    <div class="success-content">
+      <h3>✅ 申请已提交</h3>
+      <p>感谢您的申请！我们将尽快与您联系。</p>
+      <p><b>如有疑问请拨打：</b>18475136044</p>
+      <button class="close-btn" onclick="document.getElementById('successModal').classList.remove('show')">关闭</button>
+    </div>
+  </div>
+
+  <script>
+    var fileInput = document.getElementById('attachment');
+    var fileName = document.getElementById('fileName');
+    fileInput.addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+        fileName.textContent = '已选择：' + this.files[0].name;
+      }
+    });
+
+    document.getElementById('applyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var submission = {
+        id: Date.now(),
+        major: document.getElementById('major').value,
+        grade: document.getElementById('grade').value,
+        className: document.getElementById('className').value,
+        name: document.getElementById('fullName').value,
+        selfIntro: document.getElementById('selfIntro').value,
+        hasAttachment: fileInput.files && fileInput.files.length > 0,
+        attachmentName: fileInput.files && fileInput.files[0] ? fileInput.files[0].name : '',
+        timestamp: new Date().toISOString()
+      };
+
+      var existing = JSON.parse(localStorage.getItem('water_youth_apply_submissions') || '[]');
+      existing.push(submission);
+      localStorage.setItem('water_youth_apply_submissions', JSON.stringify(existing));
+
+      document.getElementById('successModal').classList.add('show');
+      document.getElementById('applyForm').reset();
+      fileName.textContent = '';
+    });
+  </script>
+</body>
+</html>

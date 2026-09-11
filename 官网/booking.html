@@ -73,7 +73,7 @@
       font-weight: 600; margin-bottom: 6px;
     }
     .form-group label .required { color: #f87171; }
-    .form-group input, .form-group select, .form-group textarea {
+    .form-group input, .form-group textarea {
       width: 100%; padding: 10px 14px; font-size: 14px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--border-card);
@@ -81,13 +81,29 @@
       font-family: var(--font-sans); outline: none;
       transition: border-color 260ms ease;
     }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    .form-group input:focus, .form-group textarea:focus {
       border-color: var(--teal-accent);
     }
     .form-group textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
-    .form-group select { appearance: none; cursor: pointer; }
-    .form-group select option { background: var(--teal-deep); color: var(--text-pure); }
-    .form-group .hint { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+    .select-wrap {
+      position: relative;
+    }
+    .select-wrap::after {
+      content: "▾"; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--text-sub); font-size: 14px; pointer-events: none;
+    }
+    .select-wrap select {
+      width: 100%; padding: 10px 36px 10px 14px; font-size: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-card);
+      border-radius: 6px; color: var(--text-pure);
+      font-family: var(--font-sans); outline: none;
+      transition: border-color 260ms ease;
+      cursor: pointer;
+    }
+    .select-wrap select:focus { border-color: var(--teal-accent); }
+    .select-wrap select option { background: var(--teal-deep); color: var(--text-pure); }
+    .select-wrap select optgroup { color: var(--leaf-soft); font-weight: 600; font-style: normal; }
     .submit-btn {
       width: 100%; padding: 12px; font-size: 16px; font-weight: 600;
       background: var(--teal-accent); color: #fff; border: none;
@@ -140,43 +156,45 @@
         <form id="bookingForm">
           <div class="form-group">
             <label>意向课程名称 <span class="required">*</span></label>
-            <select id="courseName" required>
-              <option value="">请选择课程</option>
-              <optgroup label="壹 · 科研绘科普">
-                <option value="「土壤医生」低碳科普 (科研绘科普)">「土壤医生」低碳科普</option>
-                <option value="「咫尺青绿——清源讲堂」土壤微塑料科普 (科研绘科普)">「咫尺青绿——清源讲堂」土壤微塑料科普</option>
-              </optgroup>
-              <optgroup label="贰 · 实践出真知">
-                <option value="「寻觅自然疗愈，倾听生命脉络」植物拓印 (实践出真知)">「寻觅自然疗愈，倾听生命脉络」植物拓印</option>
-                <option value="「翱翔之翼，飞young想象」航天科普 (实践出真知)">「翱翔之翼，飞young想象」航天科普</option>
-              </optgroup>
-              <optgroup label="叁 · 想法无极限">
-                <option value="「OTNPW」核污水知识地图寻物解密 (想法无极限)">「OTNPW」核污水知识地图寻物解密</option>
-                <option value="「人间天河淠史杭」精神传承与历史展演 (想法无极限)">「人间天河淠史杭」精神传承与历史展演</option>
-              </optgroup>
-              <optgroup label="肆 · 躬行致真知">
-                <option value="「三农」科普 · 水稻创意指尖生趣 (躬行致真知)">「三农」科普 · 水稻创意指尖生趣</option>
-                <option value="废弃农作固体物「焕新生」 (躬行致真知)">废弃农作固体物「焕新生」</option>
-              </optgroup>
-              <optgroup label="伍 · 未来启新篇">
-                <option value="「菜园奇遇记」现代农场探秘 (未来启新篇)">「菜园奇遇记」现代农场探秘</option>
-                <option value="「青苗『当』家」蔬菜市集体验营 (未来启新篇)">「青苗『当』家」蔬菜市集体验营</option>
-              </optgroup>
-              <optgroup label="陆 · 水润江河">
-                <option value="「大国水利」水利枢纽工程科普 (水润江河)">「大国水利」水利枢纽工程科普</option>
-                <option value="「中国水周 · 世界水日」系列 (水润江河)">「中国水周 · 世界水日」系列</option>
-              </optgroup>
-              <optgroup label="柒 · 趣玩实验">
-                <option value="「水运」物理系列科普实验 (趣玩实验)">「水运」物理系列科普实验</option>
-              </optgroup>
-              <optgroup label="捌 · 绿色未来">
-                <option value="「峰回路转 · 共碳未来」碳迹迷踪 (绿色未来)">「峰回路转 · 共碳未来」碳迹迷踪</option>
-              </optgroup>
-              <optgroup label="场馆联展 · 专属定制">
-                <option value="幼儿启蒙定制系列 (场馆联展)">幼儿启蒙定制系列</option>
-              </optgroup>
-              <option value="其他课程/自定义">其他课程/自定义</option>
-            </select>
+            <div class="select-wrap">
+              <select id="courseName" required>
+                <option value="">请选择课程</option>
+                <optgroup label="壹 · 科研绘科普">
+                  <option value="「土壤医生」低碳科普">「土壤医生」低碳科普</option>
+                  <option value="「咫尺青绿——清源讲堂」土壤微塑料科普">「咫尺青绿——清源讲堂」土壤微塑料科普</option>
+                </optgroup>
+                <optgroup label="贰 · 实践出真知">
+                  <option value="「寻觅自然疗愈，倾听生命脉络」植物拓印">「寻觅自然疗愈，倾听生命脉络」植物拓印</option>
+                  <option value="「翱翔之翼，飞young想象」航天科普">「翱翔之翼，飞young想象」航天科普</option>
+                </optgroup>
+                <optgroup label="叁 · 想法无极限">
+                  <option value="「OTNPW」核污水知识地图寻物解密">「OTNPW」核污水知识地图寻物解密</option>
+                  <option value="「人间天河淠史杭」精神传承与历史展演">「人间天河淠史杭」精神传承与历史展演</option>
+                </optgroup>
+                <optgroup label="肆 · 躬行致真知">
+                  <option value="「三农」科普 · 水稻创意指尖生趣">「三农」科普 · 水稻创意指尖生趣</option>
+                  <option value="废弃农作固体物「焕新生」">废弃农作固体物「焕新生」</option>
+                </optgroup>
+                <optgroup label="伍 · 未来启新篇">
+                  <option value="「菜园奇遇记」现代农场探秘">「菜园奇遇记」现代农场探秘</option>
+                  <option value="「青苗『当』家」蔬菜市集体验营">「青苗『当』家」蔬菜市集体验营</option>
+                </optgroup>
+                <optgroup label="陆 · 水润江河">
+                  <option value="「大国水利」水利枢纽工程科普">「大国水利」水利枢纽工程科普</option>
+                  <option value="「中国水周 · 世界水日」系列">「中国水周 · 世界水日」系列</option>
+                </optgroup>
+                <optgroup label="柒 · 趣玩实验">
+                  <option value="「水运」物理系列科普实验">「水运」物理系列科普实验</option>
+                </optgroup>
+                <optgroup label="捌 · 绿色未来">
+                  <option value="「峰回路转 · 共碳未来」碳迹迷踪">「峰回路转 · 共碳未来」碳迹迷踪</option>
+                </optgroup>
+                <optgroup label="场馆联展 · 专属定制">
+                  <option value="幼儿启蒙定制系列">幼儿启蒙定制系列</option>
+                </optgroup>
+                <option value="其他课程/自定义">其他课程/自定义</option>
+              </select>
+            </div>
           </div>
 
           <div class="form-group">
@@ -218,7 +236,6 @@
       <h3>✅ 预约意向已提交</h3>
       <p>感谢您的关注！我们将尽快与您联系。</p>
       <p><b>紧急联系请拨打：</b>18475136044</p>
-      <p><b>或发送邮件至：</b>2416010432@hhu.edu.cn</p>
       <button class="close-btn" onclick="document.getElementById('successModal').classList.remove('show')">关闭</button>
     </div>
   </div>
@@ -226,26 +243,22 @@
   <script>
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      var course = document.getElementById('courseName').value;
-      var org = document.getElementById('orgName').value;
-      var contact = document.getElementById('contactInfo').value;
-      var audience = document.getElementById('audience').value;
-      var requirements = document.getElementById('requirements').value;
+      var submission = {
+        id: Date.now(),
+        course: document.getElementById('courseName').value,
+        org: document.getElementById('orgName').value,
+        contact: document.getElementById('contactInfo').value,
+        audience: document.getElementById('audience').value || '待定',
+        requirements: document.getElementById('requirements').value || '待定',
+        timestamp: new Date().toISOString()
+      };
 
-      var text = '【课程预约意向】\n' +
-        '意向课程：' + course + '\n' +
-        '合作单位：' + org + '\n' +
-        '联系人：' + contact + '\n' +
-        '受众学段与人数：' + (audience || '待定') + '\n' +
-        '具体需求：' + (requirements || '待定');
+      var existing = JSON.parse(localStorage.getItem('water_youth_booking_submissions') || '[]');
+      existing.push(submission);
+      localStorage.setItem('water_youth_booking_submissions', JSON.stringify(existing));
 
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(function() {
-          document.getElementById('successModal').classList.add('show');
-        });
-      } else {
-        document.getElementById('successModal').classList.add('show');
-      }
+      document.getElementById('successModal').classList.add('show');
+      document.getElementById('bookingForm').reset();
     });
   </script>
 </body>
