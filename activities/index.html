@@ -159,9 +159,67 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 .hall-footer .motto { color: #fde047; font-family: var(--font-song); margin-bottom: 6px; font-size: 14px; }
 
+/* 主题活动列表 */
+.chapter-list { display: flex; flex-direction: column; gap: 24px; }
+.chapter-card {
+  background: rgba(30, 71, 69, 0.7); border-radius: 12px; border: 1px solid var(--border-card);
+  overflow: hidden; transition: border-color .25s;
+}
+.chapter-card:hover { border-color: var(--teal-accent); }
+.chapter-header {
+  display: flex; gap: 20px; padding: 20px; text-decoration: none; color: inherit;
+  transition: background .2s;
+}
+.chapter-header:hover { background: rgba(255,255,255,0.03); }
+.chapter-cover {
+  width: 200px; height: 140px; border-radius: 8px; overflow: hidden; flex-shrink: 0; position: relative;
+}
+.chapter-cover img { width: 100%; height: 100%; object-fit: cover; }
+.chapter-badge {
+  position: absolute; top: 8px; left: 8px; width: 32px; height: 32px; border-radius: 6px;
+  background: var(--leaf); color: #0d2818; font-family: var(--font-kai); font-size: 18px;
+  display: flex; align-items: center; justify-content: center; font-weight: bold;
+}
+.chapter-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.chapter-cat { font-size: 12.5px; font-weight: 600; color: var(--leaf-soft); letter-spacing: 0.1em; margin-bottom: 4px; }
+.chapter-title { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; line-height: 1.4; }
+.chapter-sub { font-size: 14px; color: var(--text-sub); margin-bottom: 10px; line-height: 1.6; }
+.chapter-meta { display: flex; gap: 16px; font-size: 13px; color: var(--text-dim); }
+.chapter-toggle {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 20px; border-top: 1px solid var(--border-card); cursor: pointer;
+  font-size: 13.5px; color: var(--leaf-soft); font-weight: 500; transition: background .2s;
+}
+.chapter-toggle:hover { background: rgba(255,255,255,0.05); }
+.toggle-icon { font-size: 10px; }
+.menu-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px;
+  padding: 16px 20px 20px; border-top: 1px solid var(--border-card);
+  background: rgba(22, 53, 53, 0.5);
+}
+.menu-card {
+  background: rgba(30, 71, 69, 0.8); border-radius: 8px; border: 1px solid var(--border-card);
+  overflow: hidden; text-decoration: none; color: inherit; transition: all .2s;
+}
+.menu-card:hover { transform: translateY(-3px); border-color: var(--teal-accent); background: rgba(36, 82, 80, 0.95); }
+.menu-thumb { position: relative; aspect-ratio: 16/10; overflow: hidden; }
+.menu-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.menu-vid-badge {
+  position: absolute; bottom: 6px; right: 6px; width: 24px; height: 24px; border-radius: 4px;
+  background: rgba(0,0,0,0.8); color: #fde047; font-size: 11px;
+  display: flex; align-items: center; justify-content: center; border: 1px solid rgba(251,191,36,0.5);
+}
+.menu-body { padding: 12px 14px; }
+.menu-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; line-height: 1.4; }
+.menu-sub { font-size: 12.5px; color: var(--text-sub); margin-bottom: 8px; line-height: 1.5; }
+.menu-foot { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-dim); }
+
 @media (max-width: 700px) {
   .filter-bar { flex-direction: column; align-items: stretch; }
   .search-input { width: 100%; }
+  .chapter-header { flex-direction: column; }
+  .chapter-cover { width: 100%; height: 180px; }
+  .menu-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -221,78 +279,144 @@ button { font-family: inherit; cursor: pointer; border: none; }
   });
 
   var allActs = window.WaterYouthData ? window.WaterYouthData.getAll() : [];
-  var currentFilter = 'all';
+  var chapters = allActs.filter(function(a) { return a.type === 'chapter'; });
+  var menus = allActs.filter(function(a) { return a.type === 'menu'; });
+
+  var chapterCategoryMap = {
+    '壹': '科创农野',
+    '贰': '水润江河',
+    '叁': '趣玩实验',
+    '肆': '绿色未来',
+    '伍': '烟火城乡'
+  };
+
+  function getMenusForChapter(chapter) {
+    var categoryNo = chapter.categoryNo;
+    var menuCategory = chapterCategoryMap[categoryNo];
+    return menus.filter(function(m) { return m.category === menuCategory; });
+  }
 
   function hasVideo(a) {
     return !!(a.video && (a.video.url || a.video.embed));
   }
 
+  var expandedChapters = {};
+
+  function toggleChapter(chapterId) {
+    expandedChapters[chapterId] = !expandedChapters[chapterId];
+    render();
+  }
+
   function render() {
     var kw = document.getElementById('searchInput').value.trim().toLowerCase();
-    var filtered = allActs.filter(function (a) {
-      if (currentFilter === 'chapter' && a.type !== 'chapter') return false;
-      if (currentFilter === 'menu' && a.type !== 'menu') return false;
-      if (currentFilter === 'video' && !hasVideo(a)) return false;
-      if (kw) {
-        var str = (a.title + ' ' + (a.subtitle || '') + ' ' + (a.category || '') + ' ' + (a.desc || '')).toLowerCase();
-        if (str.indexOf(kw) === -1) return false;
-      }
-      return true;
-    });
+    var container = document.getElementById('gridContainer');
 
-    document.getElementById('countAll').textContent = allActs.length;
-    document.getElementById('countChap').textContent = allActs.filter(function(x){ return x.type === 'chapter'; }).length;
-    document.getElementById('countMenu').textContent = allActs.filter(function(x){ return x.type === 'menu'; }).length;
+    var filteredChapters = chapters;
+    if (kw) {
+      filteredChapters = chapters.filter(function(a) {
+        var str = (a.title + ' ' + (a.subtitle || '') + ' ' + (a.category || '') + ' ' + (a.desc || '')).toLowerCase();
+        if (str.indexOf(kw) !== -1) return true;
+        var chapterMenus = getMenusForChapter(a);
+        return chapterMenus.some(function(m) {
+          var mStr = (m.title + ' ' + (m.subtitle || '') + ' ' + (m.category || '') + ' ' + (m.desc || '')).toLowerCase();
+          return mStr.indexOf(kw) !== -1;
+        });
+      });
+    }
+
+    document.getElementById('countAll').textContent = chapters.length;
+    document.getElementById('countChap').textContent = chapters.length;
+    document.getElementById('countMenu').textContent = menus.length;
     document.getElementById('countVideo').textContent = allActs.filter(hasVideo).length;
 
-    var container = document.getElementById('gridContainer');
-    if (filtered.length === 0) {
+    if (filteredChapters.length === 0) {
       container.innerHTML = '<p style="text-align:center; padding:60px; color:var(--text-dim); font-size:16px;">未找到符合条件的活动</p>';
       return;
     }
 
-    container.innerHTML = '<div class="act-grid">' + filtered.map(function (a) {
-      var coverSrc = a.cover ? ('../' + a.cover) : '../photos/IMG_5612.JPG';
-      var photoCount = (a.photos && a.photos.length) || 0;
-      var tweetCount = (a.tweets && a.tweets.length) || 0;
-      var withVid = hasVideo(a);
+    var html = '<div class="chapter-list">';
+    filteredChapters.forEach(function(chapter) {
+      var coverSrc = chapter.cover ? ('../' + chapter.cover) : '../photos/IMG_5612.JPG';
+      var chapterMenus = getMenusForChapter(chapter);
+      var isExpanded = expandedChapters[chapter.id];
 
-      var metaList = [];
-      if (withVid) metaList.push('<span style="color:#fde047; font-weight:600;">🎬 含实拍视频</span>');
-      if (photoCount > 0) metaList.push('🖼 ' + photoCount + ' 张照片');
-      if (tweetCount > 0) metaList.push('📰 ' + tweetCount + ' 篇报道');
-      if (metaList.length === 0) metaList.push('🎯 ' + (a.targetAge || '精品课程'));
+      var filteredMenus = chapterMenus;
+      if (kw) {
+        filteredMenus = chapterMenus.filter(function(m) {
+          var mStr = (m.title + ' ' + (m.subtitle || '') + ' ' + (m.category || '') + ' ' + (m.desc || '')).toLowerCase();
+          return mStr.indexOf(kw) !== -1;
+        });
+      }
 
-      var videoBadge = withVid ? '<span style="position:absolute; bottom:10px; right:10px; font-size:11.5px; padding:2px 8px; border-radius:3px; background:rgba(0,0,0,0.85); color:#fde047; border:1px solid rgba(251,191,36,0.6); display:flex; align-items:center; gap:4px; font-weight:600;">▶ 实拍视频</span>' : '';
+      html += '<div class="chapter-card">';
+      html += '<a class="chapter-header" href="../activity.html?id=' + chapter.id + '">';
+      html += '<div class="chapter-cover">';
+      html += '<img src="' + coverSrc + '" alt="' + chapter.title + '" loading="lazy">';
+      html += '<span class="chapter-badge">' + chapter.categoryNo + '</span>';
+      html += '</div>';
+      html += '<div class="chapter-info">';
+      html += '<span class="chapter-cat">' + (chapter.category || '科普实践') + '</span>';
+      html += '<h3 class="chapter-title">' + chapter.title + '</h3>';
+      html += '<p class="chapter-sub">' + (chapter.subtitle || '') + '</p>';
+      html += '<div class="chapter-meta">';
+      html += '<span>📋 ' + chapterMenus.length + ' 门课程</span>';
+      html += '<span>🎯 ' + (chapter.targetAge || '全龄') + '</span>';
+      html += '</div>';
+      html += '</div>';
+      html += '</a>';
 
-      return '<a class="act-card" href="../activity.html?id=' + a.id + '">' +
-        '<div class="card-thumb">' +
-          '<img src="' + coverSrc + '" alt="' + a.title + '" loading="lazy">' +
-          '<span class="card-tag">' + (a.type === 'chapter' ? '服务篇章' : '特色菜单') + '</span>' +
-          videoBadge +
-        '</div>' +
-        '<div class="card-body">' +
-          '<div>' +
-            '<span class="card-cat">' + (a.category || '科普实践') + '</span>' +
-            '<h3 class="card-title">' + a.title + '</h3>' +
-            '<p class="card-sub">' + (a.subtitle || (a.desc ? a.desc.slice(0, 46) + '...' : '')) + '</p>' +
-          '</div>' +
-          '<div class="card-foot">' +
-            '<span>' + metaList.slice(0, 2).join(' · ') + '</span>' +
-            '<span class="card-link">查看详情 →</span>' +
-          '</div>' +
-        '</div>' +
-      '</a>';
-    }).join('') + '</div>';
+      if (chapterMenus.length > 0) {
+        html += '<div class="chapter-toggle" onclick="toggleChapter(\'' + chapter.id + '\')">';
+        html += '<span>' + (isExpanded ? '收起课程' : '展开全部 ' + chapterMenus.length + ' 门课程') + '</span>';
+        html += '<span class="toggle-icon">' + (isExpanded ? '▲' : '▼') + '</span>';
+        html += '</div>';
+
+        if (isExpanded && filteredMenus.length > 0) {
+          html += '<div class="menu-grid">';
+          filteredMenus.forEach(function(menu) {
+            var menuCover = menu.cover ? ('../' + menu.cover) : '../photos/IMG_5612.JPG';
+            var withVid = hasVideo(menu);
+            var photoCount = (menu.photos && menu.photos.length) || 0;
+
+            html += '<a class="menu-card" href="../activity.html?id=' + menu.id + '">';
+            html += '<div class="menu-thumb">';
+            html += '<img src="' + menuCover + '" alt="' + menu.title + '" loading="lazy">';
+            if (withVid) html += '<span class="menu-vid-badge">▶</span>';
+            html += '</div>';
+            html += '<div class="menu-body">';
+            html += '<h4 class="menu-title">' + menu.title + '</h4>';
+            html += '<p class="menu-sub">' + (menu.subtitle || '') + '</p>';
+            html += '<div class="menu-foot">';
+            html += '<span>' + (menu.targetAge || '') + '</span>';
+            if (photoCount > 0) html += '<span>🖼 ' + photoCount + '</span>';
+            html += '</div>';
+            html += '</div>';
+            html += '</a>';
+          });
+          html += '</div>';
+        } else if (isExpanded && filteredMenus.length === 0 && kw) {
+          html += '<p style="padding:16px 20px; color:var(--text-dim); font-size:14px;">该主题下无匹配课程</p>';
+        }
+      }
+
+      html += '</div>';
+    });
+    html += '</div>';
+
+    container.innerHTML = html;
   }
+
+  window.toggleChapter = toggleChapter;
 
   var tabs = document.querySelectorAll('.tab-btn');
   tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
       tabs.forEach(function (t) { t.classList.remove('active'); });
       tab.classList.add('active');
-      currentFilter = tab.getAttribute('data-filter');
-      render();
+      var filter = tab.getAttribute('data-filter');
+      if (filter === 'all' || filter === 'chapter') {
+        render();
+      }
     });
   });
 

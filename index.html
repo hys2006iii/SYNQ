@@ -364,9 +364,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .fp-section:not(#top):not(#ending) .scroll-hint-bar {
   left: 24px; bottom: 50%; transform: translateY(50%);
+  flex-direction: column; align-items: center; gap: 4px;
 }
 .fp-section:not(#top):not(#ending) .scroll-hint-bar .mouse-ico {
-  margin-bottom: 2px;
+  margin-bottom: 0;
+}
+.fp-section:not(#top):not(#ending) .scroll-hint-bar span:last-child {
+  writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 0.2em;
 }
 .mouse-ico {
   width: 14px; height: 22px; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 8px; position: relative;
@@ -906,15 +910,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <!-- ============ 右侧悬浮分页圆点 (精简为 9 屏) ============ -->
 <nav class="fp-nav" id="fpNav" aria-label="全屏分页导航">
   <ul class="fp-nav-list" id="fpNavList">
-    <li class="fp-dot active" data-fp-target="0" tabindex="0" role="button" aria-label="01 首页"><span class="fp-dot-circle"></span><span class="fp-tooltip">01 · 首页</span></li>
-    <li class="fp-dot" data-fp-target="1" tabindex="0" role="button" aria-label="02 项目缘起"><span class="fp-dot-circle"></span><span class="fp-tooltip">02 · 项目缘起</span></li>
-    <li class="fp-dot" data-fp-target="2" tabindex="0" role="button" aria-label="03 发展成效"><span class="fp-dot-circle"></span><span class="fp-tooltip">03 · 发展成效</span></li>
-    <li class="fp-dot" data-fp-target="3" tabindex="0" role="button" aria-label="04 核心服务"><span class="fp-dot-circle"></span><span class="fp-tooltip">04 · 核心服务</span></li>
-    <li class="fp-dot" data-fp-target="4" tabindex="0" role="button" aria-label="05 创新理念"><span class="fp-dot-circle"></span><span class="fp-tooltip">05 · 创新理念</span></li>
-    <li class="fp-dot" data-fp-target="5" tabindex="0" role="button" aria-label="06 愿景规划"><span class="fp-dot-circle"></span><span class="fp-tooltip">06 · 愿景规划</span></li>
-    <li class="fp-dot" data-fp-target="6" tabindex="0" role="button" aria-label="07 加入我们"><span class="fp-dot-circle"></span><span class="fp-tooltip">07 · 加入我们</span></li>
-    <li class="fp-dot" data-fp-target="7" tabindex="0" role="button" aria-label="08 单位合作"><span class="fp-dot-circle"></span><span class="fp-tooltip">08 · 单位合作</span></li>
-    <li class="fp-dot" data-fp-target="8" tabindex="0" role="button" aria-label="09 尾页"><span class="fp-dot-circle"></span><span class="fp-tooltip">09 · 尾页</span></li>
+    <li class="fp-dot active" data-fp-target="0" tabindex="0" role="button" aria-label="首页"><span class="fp-dot-circle"></span><span class="fp-tooltip">首页</span></li>
+    <li class="fp-dot" data-fp-target="1" tabindex="0" role="button" aria-label="01 项目缘起"><span class="fp-dot-circle"></span><span class="fp-tooltip">01 · 项目缘起</span></li>
+    <li class="fp-dot" data-fp-target="2" tabindex="0" role="button" aria-label="02 发展成效"><span class="fp-dot-circle"></span><span class="fp-tooltip">02 · 发展成效</span></li>
+    <li class="fp-dot" data-fp-target="3" tabindex="0" role="button" aria-label="03 核心服务"><span class="fp-dot-circle"></span><span class="fp-tooltip">03 · 核心服务</span></li>
+    <li class="fp-dot" data-fp-target="4" tabindex="0" role="button" aria-label="04 创新理念"><span class="fp-dot-circle"></span><span class="fp-tooltip">04 · 创新理念</span></li>
+    <li class="fp-dot" data-fp-target="5" tabindex="0" role="button" aria-label="05 愿景规划"><span class="fp-dot-circle"></span><span class="fp-tooltip">05 · 愿景规划</span></li>
+    <li class="fp-dot" data-fp-target="6" tabindex="0" role="button" aria-label="06 加入我们"><span class="fp-dot-circle"></span><span class="fp-tooltip">06 · 加入我们</span></li>
+    <li class="fp-dot" data-fp-target="7" tabindex="0" role="button" aria-label="07 单位合作"><span class="fp-dot-circle"></span><span class="fp-tooltip">07 · 单位合作</span></li>
+    <li class="fp-dot" data-fp-target="8" tabindex="0" role="button" aria-label="尾页"><span class="fp-dot-circle"></span><span class="fp-tooltip">尾页</span></li>
   </ul>
 </nav>
 
@@ -1554,6 +1558,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </div>
           </div>
         </div>
+
+        <div class="scroll-hint-bar anim-el d-4" data-fp-target="7" role="button" tabindex="0">
+          <span class="mouse-ico"><span class="mouse-dot"></span></span>
+          <span>向下滑动滚轮翻页</span>
+        </div>
       </div>
     </section>
 
@@ -1648,6 +1657,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="scroll-hint-bar anim-el d-4" data-fp-target="8" role="button" tabindex="0">
+          <span class="mouse-ico"><span class="mouse-dot"></span></span>
+          <span>向下滑动滚轮翻页</span>
         </div>
       </div>
     </section>
