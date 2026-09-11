@@ -314,7 +314,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* 首页大字再放大 */
 .hero-title {
   font-family: var(--font-kai);
-  font-size: clamp(68px, 8.2vw, 110px); /* 字体再放大！ */
+  font-size: clamp(80px, 10vw, 140px); /* 字体进一步放大 */
   line-height: 1.05; letter-spacing: 0.08em; color: var(--text-pure); margin-bottom: 14px;
 }
 .hero-title b { color: var(--leaf-soft); font-weight: 400; }
@@ -832,17 +832,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#origin" data-fp-target="1">缘起</a></li>
-      <li><a href="#services" data-fp-target="2">核心服务</a></li>
-      <li><a href="#menu" data-fp-target="3">活动菜单</a></li>
-      <li><a href="#efforts" data-fp-target="4">发展成效</a></li>
-      <li><a href="#innov" data-fp-target="5">创新理念</a></li>
-      <li><a href="#vision" data-fp-target="6">愿景规划</a></li>
-      <li><a href="#join" data-fp-target="7">加入我们</a></li>
-      <li><a href="#partner" data-fp-target="8">单位合作</a></li>
+      <li><a href="#efforts" data-fp-target="2">发展成效</a></li>
+      <li><a href="#innov" data-fp-target="3">创新理念</a></li>
+      <li><a href="#vision" data-fp-target="4">愿景规划</a></li>
+      <li><a href="#join" data-fp-target="5">加入我们</a></li>
+      <li><a href="#partner" data-fp-target="6">单位合作</a></li>
     </ul>
     <div class="nav-right-actions">
       <a class="nav-act-btn" href="activities/index.html" target="_blank">活动大厅 ↗</a>
-      <a class="nav-join-btn" href="#join" data-fp-target="7">加入我们</a>
       <button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -855,13 +852,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   <ul class="fp-nav-list" id="fpNavList">
     <li class="fp-dot active" data-fp-target="0" tabindex="0" role="button" aria-label="01 首页"><span class="fp-dot-circle"></span><span class="fp-tooltip">01 · 首页</span></li>
     <li class="fp-dot" data-fp-target="1" tabindex="0" role="button" aria-label="02 项目缘起"><span class="fp-dot-circle"></span><span class="fp-tooltip">02 · 项目缘起</span></li>
-    <li class="fp-dot" data-fp-target="2" tabindex="0" role="button" aria-label="03 核心服务"><span class="fp-dot-circle"></span><span class="fp-tooltip">03 · 核心服务</span></li>
-    <li class="fp-dot" data-fp-target="3" tabindex="0" role="button" aria-label="04 活动菜单"><span class="fp-dot-circle"></span><span class="fp-tooltip">04 · 志愿服务菜单</span></li>
-    <li class="fp-dot" data-fp-target="4" tabindex="0" role="button" aria-label="05 发展成效"><span class="fp-dot-circle"></span><span class="fp-tooltip">05 · 发展成效</span></li>
-    <li class="fp-dot" data-fp-target="5" tabindex="0" role="button" aria-label="06 创新理念"><span class="fp-dot-circle"></span><span class="fp-tooltip">06 · 创新理念</span></li>
-    <li class="fp-dot" data-fp-target="6" tabindex="0" role="button" aria-label="07 愿景规划"><span class="fp-dot-circle"></span><span class="fp-tooltip">07 · 愿景规划</span></li>
-    <li class="fp-dot" data-fp-target="7" tabindex="0" role="button" aria-label="08 加入我们"><span class="fp-dot-circle"></span><span class="fp-tooltip">08 · 加入我们</span></li>
-    <li class="fp-dot" data-fp-target="8" tabindex="0" role="button" aria-label="09 合作与尾页"><span class="fp-dot-circle"></span><span class="fp-tooltip">09 · 单位合作与致谢</span></li>
+    <li class="fp-dot" data-fp-target="2" tabindex="0" role="button" aria-label="03 发展成效"><span class="fp-dot-circle"></span><span class="fp-tooltip">03 · 发展成效</span></li>
+    <li class="fp-dot" data-fp-target="3" tabindex="0" role="button" aria-label="04 创新理念"><span class="fp-dot-circle"></span><span class="fp-tooltip">04 · 创新理念</span></li>
+    <li class="fp-dot" data-fp-target="4" tabindex="0" role="button" aria-label="05 愿景规划"><span class="fp-dot-circle"></span><span class="fp-tooltip">05 · 愿景规划</span></li>
+    <li class="fp-dot" data-fp-target="5" tabindex="0" role="button" aria-label="06 加入我们"><span class="fp-dot-circle"></span><span class="fp-tooltip">06 · 加入我们</span></li>
+    <li class="fp-dot" data-fp-target="6" tabindex="0" role="button" aria-label="07 合作与尾页"><span class="fp-dot-circle"></span><span class="fp-tooltip">07 · 单位合作与致谢</span></li>
   </ul>
 </nav>
 
@@ -882,11 +877,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <h1 class="hero-title anim-el d-2">水韵<b>农</b>青</h1>
             <p class="hero-slogan anim-el d-2">胸怀青衿志&ensp;·&ensp;科普水韵行</p>
             <p class="hero-desc anim-el d-3">
-              以<em>农工为特色</em>，以<em>创新为底色</em>。我们把高校实验室里的前沿科研成果，深度转译为中小学生听得懂、摸得着的科学探索课堂；把课堂搬进田野、场馆与社区，让科学真正融入生活。
+              以<em>农工为特色</em>，以<em>创新为底色</em>。把高校实验室里的前沿科研成果，转译为中小学生听得懂、摸得着的科学探索课堂。
             </p>
             <div class="hero-actions anim-el d-4">
-              <a class="btn-green-fill" href="#services" data-fp-target="2">探索核心服务篇章 ↓</a>
-              <a class="btn-line-white" href="#menu" data-fp-target="3">特色课程菜单</a>
+              <a class="btn-green-fill" href="#menu" data-fp-target="3">探索服务菜单</a>
               <a class="btn-line-white" href="#join" data-fp-target="7">加入团队</a>
               <a class="btn-line-white" href="#partner" data-fp-target="8">单位合作</a>
             </div>
@@ -1099,90 +1093,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
               <div class="serv-photo-showcase">
                 <img id="chapPhoto" src="photos/IMG_5612.JPG" alt="篇章现场">
               </div>
-              <div class="serv-eco-archives">
-                <h4>科普生态实录档案</h4>
-                <div class="serv-eco-grid">
-                  <div class="serv-eco-item">
-                    <b>18 个</b>
-                    <span>志愿服务活动</span>
-                  </div>
-                  <div class="serv-eco-item">
-                    <b>全国一等</b>
-                    <span>科普脱口秀大赛</span>
-                  </div>
-                  <div class="serv-eco-item">
-                    <b>650+ h</b>
-                    <span>江苏科技馆驻馆</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
+        </div>
+        
+        <div class="scroll-hint-bar anim-el d-4" data-fp-target="2" role="button" tabindex="0">
+          <span class="mouse-ico"><span class="mouse-dot"></span></span>
+          <span>向下滑动滚轮翻页</span>
         </div>
       </div>
     </section>
 
-    <!-- ============ 03 志愿服务活动菜单 (Service Menu) ============ -->
-    <section class="fp-section" id="menu" data-fp-index="3" data-fp-title="志愿服务活动菜单">
+    <!-- ============ 02 发展成效 (Efforts) ============ -->
+    <section class="fp-section" id="efforts" data-fp-index="2" data-fp-title="发展成效">
       <div class="fp-bg-decor"></div>
       <div class="wrap-box">
         <div class="sec-head anim-el d-1">
           <div class="left">
-            <span class="num">03</span>
-            <div>
-              <h2>志愿服务活动菜单</h2>
-              <span class="en">SERVICE MENU</span>
-            </div>
-          </div>
-          <p class="lead">一份随课程研发不断上新的「点单菜单」——你选菜，我们掌勺。既支持单次点单，也支持学期定制。</p>
-        </div>
-
-        <div class="menu-deck">
-          <!-- 搜索框 -->
-          <div class="menu-search-box anim-el d-1" id="menuSearchBox">
-            <input type="text" id="menuSearchInput" class="menu-search-input" placeholder="🔍 搜索课程名称或关键词...">
-            <button id="menuSearchBtn" class="menu-search-btn" type="button">搜索</button>
-            <button id="menuClearBtn" class="menu-clear-btn" type="button" style="display:none;">清除</button>
-          </div>
-
-          <div class="menu-cats-bar anim-el d-2" id="menuCatsBar">
-            <button class="m-cat-btn active" data-midx="0">全部</button>
-            <button class="m-cat-btn" data-midx="1">壹 · 科创农野</button>
-            <button class="m-cat-btn" data-midx="2">贰 · 水润江河</button>
-            <button class="m-cat-btn" data-midx="3">叁 · 趣验真知</button>
-            <button class="m-cat-btn" data-midx="4">肆 · 绿意未来</button>
-            <button class="m-cat-btn" data-midx="5">伍 · 乡土润心</button>
-            <button class="m-cat-btn" data-midx="6">陆 · 场馆定制</button>
-          </div>
-
-          <div class="menu-cards-grid anim-el d-3" id="menuCardsGrid">
-            <!-- 由 JS 渲染对应分类下的精品课程卡片 -->
-          </div>
-
-          <div class="menu-bottom-actions anim-el d-4">
-            <div style="font-size:14px; color:var(--text-sub);">
-              已收录 <b style="color:var(--leaf-soft); font-size:16px;">18 个</b> 志愿服务活动，涵盖科研科普、实践体验、红色传承等多个领域，每个活动均配备独立详情页、活动策划书、照片与视频资料。
-            </div>
-            <div style="display:flex; gap:12px;">
-              <a class="menu-action-btn" href="activity-detail/index.html" target="_blank">
-                🏛 访问志愿服务活动大厅 (全览18个) ↗
-              </a>
-              <a class="btn-green-fill" href="#partner" data-fp-target="8">
-                点单与合作接洽 →
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 04 发展成效 (Efforts) ============ -->
-    <section class="fp-section" id="efforts" data-fp-index="4" data-fp-title="发展成效">
-      <div class="fp-bg-decor"></div>
-      <div class="wrap-box">
-        <div class="sec-head anim-el d-1">
-          <div class="left">
-            <span class="num">04</span>
+            <span class="num">02</span>
             <div>
               <h2>发展成效</h2>
               <span class="en">IMPACT & HONORS</span>
@@ -1277,16 +1205,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </div>
           </div>
         </div>
+        
+        <div class="scroll-hint-bar anim-el d-4" data-fp-target="3" role="button" tabindex="0">
+          <span class="mouse-ico"><span class="mouse-dot"></span></span>
+          <span>向下滑动滚轮翻页</span>
+        </div>
       </div>
     </section>
 
-    <!-- ============ 05 创新理念 (Innov) ============ -->
-    <section class="fp-section" id="innov" data-fp-index="5" data-fp-title="创新理念">
+    <!-- ============ 03 创新理念 (Innov) ============ -->
+    <section class="fp-section" id="innov" data-fp-index="3" data-fp-title="创新理念">
       <div class="fp-bg-decor"></div>
       <div class="wrap-box">
         <div class="sec-head anim-el d-1">
           <div class="left">
-            <span class="num">05</span>
+            <span class="num">03</span>
             <div>
               <h2>创新理念</h2>
               <span class="en">HOW WE INNOVATE</span>
@@ -1300,13 +1233,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <div>
               <span class="tag">FOUNDATION · 01</span>
               <h3>筑造「党团」共建</h3>
-              <p>党建带团建，融合促发展。团日活动与党日活动协同开展，由党团组织共同锻造新一代科普课堂，让志愿服务的底色更红、方向更明。</p>
+              <p>党建带团建，融合促发展。团日活动与党日活动协同开展，由党团组织共同锻造新一代科普课堂，让志愿服务的底色更红、方向更明。通过党团共建机制，确保志愿服务始终沿着正确方向前进，培养学生的社会责任感和使命感。</p>
             </div>
             <div class="innov-pill-row">
               <span>党支部骨干牵头</span>
               <span>团支部统筹执行</span>
               <span>思政育人融合</span>
               <span>标杆示范引领</span>
+              <span>党团活动协同</span>
+              <span>志愿服务方向把控</span>
             </div>
           </div>
 
@@ -1314,13 +1249,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <div>
               <span class="tag">IDENTITY · 02</span>
               <h3>彰显「农工」特色</h3>
-              <p>围绕水土核心学科深耕农与工，把学科科研前沿转译成青少年听得懂的科普语言，建立从实验室到课桌的直通桥梁。</p>
+              <p>围绕水土核心学科深耕农与工，把学科科研前沿转译成青少年听得懂的科普语言，建立从实验室到课桌的直通桥梁。依托河海大学农业科学与工程学院的学科优势，将专业的水利、农学知识转化为生动有趣的科普课程。</p>
             </div>
             <div class="innov-pill-row">
               <span>双碳与绿色农业</span>
               <span>节水与跨流域调水</span>
               <span>无人机智能农水</span>
               <span>生态微塑料前沿</span>
+              <span>土壤修复技术</span>
+              <span>智慧灌溉系统</span>
             </div>
           </div>
 
@@ -1328,13 +1265,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <div>
               <span class="tag">PRODUCT · 03</span>
               <h3>贯彻「产品」思维</h3>
-              <p>将单次志愿服务标准化为系列课程包与教具产品。支持点单、拼盘与定制，让每一堂课都具备可复用、可传播的生命力。</p>
+              <p>将单次志愿服务标准化为系列课程包与教具产品。支持点单、拼盘与定制，让每一堂课都具备可复用、可传播的生命力。通过产品化思维，确保志愿服务的质量和效果，让更多学生受益。</p>
             </div>
             <div class="innov-pill-row">
               <span>标准课件PPT</span>
               <span>微型自研实验盒</span>
               <span>授课逐字脚本</span>
               <span>随堂反馈手册</span>
+              <span>课程包标准化</span>
+              <span>教具产品化</span>
             </div>
           </div>
 
@@ -1342,26 +1281,33 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <div>
               <span class="tag">LOOP · 04</span>
               <h3>构建「多维」闭环</h3>
-              <p>讲师培养、课程研发、课堂交付、反馈复盘形成四位一体持续优化机制。建立老带新智库，让志愿团队生生不息。</p>
+              <p>讲师培养、课程研发、课堂交付、反馈复盘形成四位一体持续优化机制。建立老带新智库，让志愿团队生生不息。通过闭环管理，不断优化课程内容和教学方法，提升志愿服务质量。</p>
             </div>
             <div class="innov-pill-row">
               <span>传帮带师徒制</span>
               <span>课后学情复盘</span>
               <span>星级讲师考核</span>
               <span>课程智库沉淀</span>
+              <span>持续改进机制</span>
+              <span>质量监控体系</span>
             </div>
           </div>
+        </div>
+        
+        <div class="scroll-hint-bar anim-el d-4" data-fp-target="4" role="button" tabindex="0">
+          <span class="mouse-ico"><span class="mouse-dot"></span></span>
+          <span>向下滑动滚轮翻页</span>
         </div>
       </div>
     </section>
 
-    <!-- ============ 06 愿景规划 (Vision) ============ -->
-    <section class="fp-section" id="vision" data-fp-index="6" data-fp-title="愿景规划">
+    <!-- ============ 04 愿景规划 (Vision) ============ -->
+    <section class="fp-section" id="vision" data-fp-index="4" data-fp-title="愿景规划">
       <div class="fp-bg-decor"></div>
       <div class="wrap-box">
         <div class="sec-head anim-el d-1">
           <div class="left">
-            <span class="num">06</span>
+            <span class="num">04</span>
             <div>
               <h2>愿景规划</h2>
               <span class="en">VISION & FUTURE</span>
@@ -1413,16 +1359,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </ul>
           </div>
         </div>
+        
+        <div class="scroll-hint-bar anim-el d-4" data-fp-target="5" role="button" tabindex="0">
+          <span class="mouse-ico"><span class="mouse-dot"></span></span>
+          <span>向下滑动滚轮翻页</span>
+        </div>
       </div>
     </section>
 
-    <!-- ============ 07 加入我们 (Join Us) · 依据招募破冰手册充实 ============ -->
-    <section class="fp-section" id="join" data-fp-index="7" data-fp-title="加入我们">
+    <!-- ============ 05 加入我们 (Join Us) · 依据招募破冰手册充实 ============ -->
+    <section class="fp-section" id="join" data-fp-index="5" data-fp-title="加入我们">
       <div class="fp-bg-decor"></div>
       <div class="wrap-box">
         <div class="sec-head anim-el d-1">
           <div class="left">
-            <span class="num">07</span>
+            <span class="num">05</span>
             <div>
               <h2>加入我们</h2>
               <span class="en">JOIN US</span>
@@ -1493,13 +1444,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             
             <div style="margin-top: 16px;">
               <div style="font-size: 13px; color: var(--leaf-soft); font-weight: 600; margin-bottom: 8px;">📱 招新资讯</div>
-              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 200px;">
-                  <img src="recruitment/招聘岗位.png" alt="招聘岗位" style="width: 100%; border-radius: 6px; border: 1px solid var(--border-card);">
-                </div>
-                <div style="flex: 1; min-width: 200px;">
-                  <img src="recruitment/招新群.jpg" alt="招新群" style="width: 100%; border-radius: 6px; border: 1px solid var(--border-card);">
-                </div>
+              <div style="font-size: 12px; color: var(--text-sub); line-height: 1.6;">
+                <p>🔔 2026年秋季学期招新即将开始！</p>
+                <p>✨ 想要成为一名青年大学生科技志愿者吗？想要走出校园亲身体验社会实践吗？</p>
+                <p>🎯 我们面向全校各年级本科生与研究生常年招募，不看年级资历，只看纯粹的热爱与担当。</p>
+                <p>📋 四个核心方向：科普主讲讲师 / 课程与教具研发 / 宣传设计与排版 / 项目统筹与外联</p>
+                <p>🏆 收获：江苏省科技馆志愿证书、优秀志愿者奖状、PU学时导入、即兴演讲力与统筹规划力提升</p>
               </div>
             </div>
           </div>
@@ -1548,16 +1498,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
     </section>
 
-    <!-- ============ 08 单位合作与尾页 (Partner & Footer) · 依据实录充实 ============ -->
-    <section class="fp-section" id="partner" data-fp-index="8" data-fp-title="单位合作与尾页">
+    <!-- ============ 06 单位合作与尾页 (Partner & Footer) ============ -->
+    <section class="fp-section" id="partner" data-fp-index="6" data-fp-title="单位合作与致谢">
       <div class="fp-bg-decor"></div>
       <div class="wrap-box">
         <div class="sec-head anim-el d-1">
           <div class="left">
-            <span class="num">08</span>
+            <span class="num">06</span>
             <div>
               <h2>单位合作与致谢</h2>
-              <span class="en">PARTNERSHIP & FOOTER</span>
+              <span class="en">PARTNERSHIP & ACKNOWLEDGEMENT</span>
             </div>
           </div>
           <p class="lead">让优质科学课走进更多校园、展馆与社区——我们提供完整的公益授课与共建方案。</p>
@@ -1572,22 +1522,34 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <div class="coop-types-grid">
                   <div class="coop-type-card">
                     <b>① 菜单点单进校</b>
-                    <span>22门成熟课程自由组合，含PPT、教具套件与主讲团队全套交付。</span>
+                    <span>18门成熟课程自由组合，含PPT、教具套件与主讲团队全套交付。支持单次体验或学期定制。</span>
                   </div>
                   <div class="coop-type-card">
                     <b>② 馆校定制专场</b>
-                    <span>围绕展厅主题深度定制，结合微型实验开展沉浸式展教互动。</span>
+                    <span>围绕科技馆、图书馆展厅主题深度定制，结合微型实验开展沉浸式展教互动。已与江苏省科技馆、金陵图书馆建立常态化合作。</span>
                   </div>
                   <div class="coop-type-card">
                     <b>③ 社区实践基地</b>
-                    <span>针对社区亲子家庭或乡村小学，开展植物拓印、农学大闯关活动。</span>
+                    <span>针对社区亲子家庭或乡村小学，开展植物拓印、农学大闯关、碳迹迷踪等活动，推动教育资源普惠。</span>
+                  </div>
+                  <div class="coop-type-card">
+                    <b>④ 校园科技节</b>
+                    <span>为学校科技节、游园会提供定制化科普展位与互动实验，涵盖水土检测、无人机巡河、物理趣味实验等。</span>
+                  </div>
+                  <div class="coop-type-card">
+                    <b>⑤ 寒暑假专题营地</b>
+                    <span>5-7天沉浸式科学探索营，包含实地研学、动手实验、成果展示等环节，适合夏令营与冬令营。</span>
+                  </div>
+                  <div class="coop-type-card">
+                    <b>⑥ 课程研发合作</b>
+                    <span>与学校/馆方联合开发特色校本课程，提供从课程设计到教具量产的全链条支持。</span>
                   </div>
                 </div>
               </div>
 
               <div class="coop-deliver-strip">
                 <span>承诺交付物：<b>完整教学案 + 实验耗材清单 + 资深讲师团队 + 现场摄影记录</b></span>
-                <a class="btn-green-fill" href="mailto:1404785073@qq.com" style="padding:6px 18px; font-size:13.5px;">
+                <a class="btn-green-fill" href="booking.html" target="_blank" style="padding:6px 18px; font-size:13.5px;">
                   预约合作通道
                 </a>
               </div>
@@ -1619,10 +1581,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
               <div class="coop-contact-box" style="border-top:1px solid var(--border-card); padding-top:10px;">
                 <div>
                   <div style="font-size:12px; color:var(--text-dim);">官方联络邮箱：</div>
-                  <div style="font-size:14.5px; font-weight:600; color:#fde047;">1404785073@qq.com</div>
+                  <div style="font-size:14.5px; font-weight:600; color:#fde047;">2416010432@hhu.edu.cn</div>
                 </div>
                 <div style="font-size:12px; color:var(--text-dim); text-align:right;">
-                  请注明单位名称与活动意向<br>我们将在 24 小时内回复
+                  联系电话：18475136044<br>请注明单位名称与活动意向
                 </div>
               </div>
             </div>
@@ -1636,24 +1598,36 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                   <img src="logo-mark.png" alt="水韵农青" style="height:32px;">
                   <span class="word" style="font-size:22px;">水韵<b>农</b>青</span>
                 </a>
-                <span style="font-size:13px; color:var(--text-dim);">| 河海大学青年志愿者协会 · 农业科学与工程学院 · 机电工程学院</span>
               </div>
 
               <div class="footer-nav-tags">
                 <a href="#origin" data-fp-target="1">缘起</a>
-                <a href="#services" data-fp-target="2">核心服务</a>
-                <a href="#menu" data-fp-target="3">活动菜单</a>
-                <a href="#efforts" data-fp-target="4">发展成效</a>
-                <a href="#innov" data-fp-target="5">创新理念</a>
-                <a href="#vision" data-fp-target="6">愿景规划</a>
-                <a href="#join" data-fp-target="7">加入我们</a>
+                <a href="#efforts" data-fp-target="2">发展成效</a>
+                <a href="#innov" data-fp-target="3">创新理念</a>
+                <a href="#vision" data-fp-target="4">愿景规划</a>
+                <a href="#join" data-fp-target="5">加入我们</a>
                 <a href="activities/index.html" target="_blank" style="color:#fde047; font-weight:600;">全览活动大厅 ↗</a>
               </div>
             </div>
 
+            <!-- 致谢 -->
+            <div style="padding: 12px 0; border-top: 1px solid var(--border-card); margin-top: 10px;">
+              <div style="font-size: 12px; color: var(--text-dim); line-height: 1.6; text-align: center;">
+                <b style="color: var(--leaf-soft);">致谢</b>：感谢江苏省科学技术馆、南京市金陵图书馆、南京晨报小记者团、南京市白云园小学、诚信小学、南京市第九中学等合作单位的长期支持与信任。<br>
+                感谢河海大学农业科学与工程学院、机电工程学院、河海大学青年志愿者协会的指导与帮助。<br>
+                感谢每一位参与志愿服务的队员和关注我们的社会人士。
+              </div>
+            </div>
+
             <div class="footer-copy-bar">
-              <span>© 2026 「水韵农青」大学生科技志愿服务队 · 纯滚轮全屏翻页</span>
+              <span>© 2026 「水韵农青」大学生科技志愿服务队</span>
               <span class="motto" id="secretAdminTrigger" title="双击进入管理后台" style="cursor:pointer;">胸怀青衿志 · 科普水韵行</span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:11px; color:var(--text-dim);">管理端</span>
+                <input type="text" id="adminUser" placeholder="账号" style="width:70px; padding:2px 6px; font-size:11px; background:rgba(255,255,255,0.1); border:1px solid var(--border-card); border-radius:3px; color:#fff;">
+                <input type="password" id="adminPass" placeholder="密码" style="width:70px; padding:2px 6px; font-size:11px; background:rgba(255,255,255,0.1); border:1px solid var(--border-card); border-radius:3px; color:#fff;">
+                <button id="adminLoginBtn" style="padding:2px 8px; font-size:11px; background:var(--teal-accent); border:none; border-radius:3px; color:#fff; cursor:pointer;">登录</button>
+              </div>
               <button class="back-top-btn" id="backTopBtn" type="button">返回顶部 ↑</button>
             </div>
           </div>
@@ -1852,6 +1826,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     secretTrigger.addEventListener('dblclick', function (e) {
       e.preventDefault();
       openAdmin();
+    });
+  }
+
+  var adminLoginBtn = document.getElementById('adminLoginBtn');
+  if (adminLoginBtn) {
+    adminLoginBtn.addEventListener('click', function () {
+      var user = document.getElementById('adminUser').value;
+      var pass = document.getElementById('adminPass').value;
+      if (user === 'admin' && pass === 'password') {
+        openAdmin();
+      } else {
+        alert('账号或密码错误');
+      }
     });
   }
 
