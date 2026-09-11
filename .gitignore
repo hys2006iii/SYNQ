@@ -36,6 +36,17 @@ media/
 !官网/logo-mark.png
 !官网/logo-wide.jpg
 
+# 保留招新相关图片
+!官网/photos/联系方式和二维码.jpg
+!官网/photos/招新群.jpg
+!官网/photos/招聘岗位.png
+
+# 保留招新图片文件夹
+!官网/recruitment/
+!官网/recruitment/*.jpg
+!官网/recruitment/*.jpeg
+!官网/recruitment/*.png
+
 # ==========================================
 # 非代码活动资料与文档（5GB 大体积PPT/Word/ZIP）
 # ==========================================
