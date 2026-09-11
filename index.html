@@ -360,8 +360,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .scroll-hint-bar {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  color: var(--text-sub); font-size: 13.5px; letter-spacing: 0.2em; padding-top: 14px; cursor: pointer;
+  color: var(--text-sub); font-size: 13.5px; letter-spacing: 0.2em; cursor: pointer;
+  z-index: 10;
 }
 .mouse-ico {
   width: 14px; height: 22px; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 8px; position: relative;
@@ -430,33 +432,34 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    02 核心服务 (Services) · 严谨真实的数据沉淀
    ============================================================ */
 .serv-deck { display: flex; flex-direction: column; flex: 1; }
-.chap-tab-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; flex-shrink: 0; }
+.chap-tab-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; flex-shrink: 0; }
 .chap-pill {
-  padding: 7px 14px; border-radius: 6px;
+  padding: 8px 16px; border-radius: 6px;
   background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-card);
   color: var(--text-sub); font-size: 13px; font-weight: 500; transition: all var(--dur) ease;
+  white-space: nowrap;
 }
 .chap-pill:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
 .chap-pill.active {
   background: var(--leaf); color: #092716; font-weight: 600; border-color: transparent;
 }
-.serv-stage { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 20px; flex: 1; align-items: stretch; }
-.serv-spotlight { padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between; }
-.serv-spotlight .cat-badge { font-size: 12.5px; color: var(--leaf-soft); letter-spacing: 0.15em; font-weight: 600; margin-bottom: 4px; }
-.serv-spotlight h3 { font-family: var(--font-song); font-size: 22px; color: #fff; margin-bottom: 8px; }
-.serv-spotlight .desc { font-size: 14.5px; color: var(--text-sub); line-height: 1.75; margin-bottom: 16px; }
-.serv-acts-deck { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.serv-stage { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; flex: 1; align-items: stretch; }
+.serv-spotlight { padding: 24px 28px; display: flex; flex-direction: column; justify-content: space-between; }
+.serv-spotlight .cat-badge { font-size: 12.5px; color: var(--leaf-soft); letter-spacing: 0.15em; font-weight: 600; margin-bottom: 6px; }
+.serv-spotlight h3 { font-family: var(--font-song); font-size: 24px; color: #fff; margin-bottom: 10px; }
+.serv-spotlight .desc { font-size: 14.5px; color: var(--text-sub); line-height: 1.8; margin-bottom: 18px; }
+.serv-acts-deck { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .serv-act-item {
   background: rgba(22, 53, 53, 0.6); border: 1px solid var(--border-card);
-  padding: 12px 14px; border-radius: 6px; transition: all var(--dur) ease;
+  padding: 14px 16px; border-radius: 8px; transition: all var(--dur) ease;
 }
 .serv-act-item:hover { background: rgba(29, 70, 69, 0.9); border-color: var(--teal-accent); transform: translateY(-2px); }
-.serv-act-item h5 { font-size: 14.5px; color: #fff; margin-bottom: 4px; font-weight: 600; }
-.serv-act-item p { font-size: 12px; color: var(--text-dim); line-height: 1.45; margin-bottom: 6px; }
-.serv-act-item .link { font-size: 12px; color: var(--leaf-soft); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+.serv-act-item h5 { font-size: 15px; color: #fff; margin-bottom: 6px; font-weight: 600; }
+.serv-act-item p { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; margin-bottom: 8px; }
+.serv-act-item .link { font-size: 12.5px; color: var(--leaf-soft); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
 
-.serv-side-card { padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
-.serv-photo-showcase { border-radius: 6px; overflow: hidden; aspect-ratio: 16/10; margin-bottom: 12px; border: 1px solid var(--border-card); }
+.serv-side-card { padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+.serv-photo-showcase { border-radius: 8px; overflow: hidden; aspect-ratio: 16/10; margin-bottom: 14px; border: 1px solid var(--border-card); }
 .serv-photo-showcase img { width: 100%; height: 100%; object-fit: cover; }
 .serv-eco-archives h4 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 8px; border-left: 3px solid var(--leaf); padding-left: 10px; }
 .serv-eco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -661,66 +664,67 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    07 加入我们 (Join Us) · 真实招新大纲
    ============================================================ */
 .join-layout-rich {
-  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 22px; flex: 1;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1;
 }
 .join-main-card {
-  padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between;
+  padding: 24px 28px; display: flex; flex-direction: column; justify-content: space-between;
 }
 .join-main-card h3 {
-  font-family: var(--font-song); font-size: 21px; color: #fff; margin-bottom: 6px; line-height: 1.35;
+  font-family: var(--font-song); font-size: 22px; color: #fff; margin-bottom: 8px; line-height: 1.4;
 }
 .join-main-card h3 b { color: var(--leaf-soft); }
 .join-main-card .sub {
-  font-size: 13.5px; color: var(--text-sub); margin-bottom: 14px; line-height: 1.55;
+  font-size: 14px; color: var(--text-sub); margin-bottom: 16px; line-height: 1.6;
 }
 .join-roles-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;
 }
 .join-role-box {
   background: rgba(20, 50, 49, 0.7); border: 1px solid var(--border-card);
-  padding: 10px 12px; border-radius: 6px; border-top: 3px solid var(--teal-accent);
+  padding: 12px 14px; border-radius: 8px; border-top: 3px solid var(--teal-accent);
 }
 .join-role-box:nth-child(2) { border-top-color: var(--leaf); }
 .join-role-box:nth-child(3) { border-top-color: var(--amber); }
 .join-role-box:nth-child(4) { border-top-color: #38bdf8; }
 .join-role-box .rt {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px;
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;
 }
-.join-role-box h4 { font-size: 14px; color: #fff; font-weight: 600; }
-.join-role-box .tag { font-size: 11px; padding: 1px 6px; border-radius: 3px; background: rgba(255,255,255,0.1); color: var(--leaf-soft); }
-.join-role-box p { font-size: 11.5px; color: var(--text-dim); line-height: 1.45; }
+.join-role-box h4 { font-size: 14.5px; color: #fff; font-weight: 600; }
+.join-role-box .tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.1); color: var(--leaf-soft); }
+.join-role-box p { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
 
 .join-contact-strip {
   display: flex; align-items: center; justify-content: space-between;
   background: rgba(20, 50, 49, 0.8); border: 1px solid var(--border-card);
-  padding: 10px 16px; border-radius: 6px;
+  padding: 12px 18px; border-radius: 8px;
 }
-.join-contact-left { display: flex; align-items: center; gap: 14px; }
+.join-contact-left { display: flex; align-items: center; gap: 16px; }
 .join-qq-badge {
-  font-family: var(--font-song); font-size: 13.5px; color: #fff; font-weight: 600;
+  font-family: var(--font-song); font-size: 14px; color: #fff; font-weight: 600;
 }
 .join-qq-badge b { color: #fde047; font-size: 15px; letter-spacing: 0.05em; }
 
 .join-side-card {
-  padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between;
+  padding: 24px 22px; display: flex; flex-direction: column; justify-content: space-between;
+  background: rgba(30, 71, 69, 0.5); border: 1px solid var(--border-card); border-radius: 12px;
 }
 .join-side-card h4 {
-  font-family: var(--font-song); font-size: 16.5px; color: #fff; margin-bottom: 10px;
-  border-bottom: 1px solid var(--border-card); padding-bottom: 6px;
+  font-family: var(--font-song); font-size: 18px; color: #fff; margin-bottom: 14px;
+  border-bottom: 1px solid var(--border-card); padding-bottom: 8px;
 }
-.join-step-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
-.join-step-row { display: flex; gap: 10px; align-items: flex-start; }
+.join-step-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.join-step-row { display: flex; gap: 12px; align-items: flex-start; }
 .join-step-row .num {
-  width: 22px; height: 22px; border-radius: 4px;
-  background: var(--leaf); color: #082515; font-weight: 800; font-size: 11.5px;
+  width: 24px; height: 24px; border-radius: 5px;
+  background: var(--leaf); color: #082515; font-weight: 800; font-size: 12px;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.join-step-row div b { font-size: 13.5px; color: #fff; display: block; margin-bottom: 1px; }
-.join-step-row div p { font-size: 11.5px; color: var(--text-dim); line-height: 1.35; }
+.join-step-row div b { font-size: 14px; color: #fff; display: block; margin-bottom: 2px; }
+.join-step-row div p { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
 
 .join-rewards-list {
   background: rgba(20, 50, 49, 0.6); border: 1px solid var(--border-card);
-  padding: 10px 12px; border-radius: 6px; font-size: 12px; color: var(--text-sub); line-height: 1.55;
+  padding: 12px 14px; border-radius: 8px; font-size: 13px; color: var(--text-sub); line-height: 1.6;
 }
 .join-rewards-list b { color: var(--leaf-soft); }
 
@@ -831,12 +835,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <span class="word">水韵<b>农</b>青</span>
     </a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#origin" data-fp-target="1">缘起</a></li>
+      <li><a href="#origin" data-fp-target="1">项目缘起</a></li>
       <li><a href="#efforts" data-fp-target="2">发展成效</a></li>
-      <li><a href="#innov" data-fp-target="3">创新理念</a></li>
-      <li><a href="#vision" data-fp-target="4">愿景规划</a></li>
-      <li><a href="#join" data-fp-target="5">加入我们</a></li>
-      <li><a href="#partner" data-fp-target="6">单位合作</a></li>
+      <li><a href="#services" data-fp-target="3">核心服务</a></li>
+      <li><a href="#innov" data-fp-target="4">创新理念</a></li>
+      <li><a href="#vision" data-fp-target="5">愿景规划</a></li>
+      <li><a href="#join" data-fp-target="6">加入我们</a></li>
+      <li><a href="#partner" data-fp-target="7">单位合作</a></li>
     </ul>
     <div class="nav-right-actions">
       <a class="nav-act-btn" href="activities/index.html" target="_blank">活动大厅 ↗</a>
@@ -853,10 +858,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     <li class="fp-dot active" data-fp-target="0" tabindex="0" role="button" aria-label="01 首页"><span class="fp-dot-circle"></span><span class="fp-tooltip">01 · 首页</span></li>
     <li class="fp-dot" data-fp-target="1" tabindex="0" role="button" aria-label="02 项目缘起"><span class="fp-dot-circle"></span><span class="fp-tooltip">02 · 项目缘起</span></li>
     <li class="fp-dot" data-fp-target="2" tabindex="0" role="button" aria-label="03 发展成效"><span class="fp-dot-circle"></span><span class="fp-tooltip">03 · 发展成效</span></li>
-    <li class="fp-dot" data-fp-target="3" tabindex="0" role="button" aria-label="04 创新理念"><span class="fp-dot-circle"></span><span class="fp-tooltip">04 · 创新理念</span></li>
-    <li class="fp-dot" data-fp-target="4" tabindex="0" role="button" aria-label="05 愿景规划"><span class="fp-dot-circle"></span><span class="fp-tooltip">05 · 愿景规划</span></li>
-    <li class="fp-dot" data-fp-target="5" tabindex="0" role="button" aria-label="06 加入我们"><span class="fp-dot-circle"></span><span class="fp-tooltip">06 · 加入我们</span></li>
-    <li class="fp-dot" data-fp-target="6" tabindex="0" role="button" aria-label="07 合作与尾页"><span class="fp-dot-circle"></span><span class="fp-tooltip">07 · 单位合作与致谢</span></li>
+    <li class="fp-dot" data-fp-target="3" tabindex="0" role="button" aria-label="04 核心服务"><span class="fp-dot-circle"></span><span class="fp-tooltip">04 · 核心服务</span></li>
+    <li class="fp-dot" data-fp-target="4" tabindex="0" role="button" aria-label="05 创新理念"><span class="fp-dot-circle"></span><span class="fp-tooltip">05 · 创新理念</span></li>
+    <li class="fp-dot" data-fp-target="5" tabindex="0" role="button" aria-label="06 愿景规划"><span class="fp-dot-circle"></span><span class="fp-tooltip">06 · 愿景规划</span></li>
+    <li class="fp-dot" data-fp-target="6" tabindex="0" role="button" aria-label="07 加入我们"><span class="fp-dot-circle"></span><span class="fp-tooltip">07 · 加入我们</span></li>
+    <li class="fp-dot" data-fp-target="7" tabindex="0" role="button" aria-label="08 单位合作与致谢"><span class="fp-dot-circle"></span><span class="fp-tooltip">08 · 单位合作与致谢</span></li>
   </ul>
 </nav>
 
@@ -880,9 +886,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
               以<em>农工为特色</em>，以<em>创新为底色</em>。把高校实验室里的前沿科研成果，转译为中小学生听得懂、摸得着的科学探索课堂。
             </p>
             <div class="hero-actions anim-el d-4">
-              <a class="btn-green-fill" href="#menu" data-fp-target="3">探索服务菜单</a>
-              <a class="btn-line-white" href="#join" data-fp-target="7">加入团队</a>
-              <a class="btn-line-white" href="#partner" data-fp-target="8">单位合作</a>
+              <a class="btn-green-fill" href="#services" data-fp-target="3">探索服务菜单</a>
+              <a class="btn-line-white" href="#join" data-fp-target="6">加入团队</a>
+              <a class="btn-line-white" href="#partner" data-fp-target="7">单位合作</a>
             </div>
           </div>
 
@@ -1007,7 +1013,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </div>
             <div style="background:rgba(20,50,49,0.7); border:1px solid var(--border-card); border-radius:6px; padding:10px 14px; font-size:13.5px; color:var(--text-sub); display:flex; justify-content:space-between; align-items:center;">
               <span>已建立常态共建实践校馆：<b>10+</b> 家</span>
-              <a href="#services" data-fp-target="2" style="color:var(--leaf-soft); font-weight:600;">了解五大服务篇章 →</a>
+              <a href="#services" data-fp-target="3" style="color:var(--leaf-soft); font-weight:600;">了解五大服务篇章 →</a>
             </div>
           </div>
         </div>
@@ -1032,67 +1038,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <div class="trait-text">
               <h4>专业反哺 · 扎根乡土</h4>
               <p>发挥河海大学农水特色，把实验仪器与水稻转盘送进校园与社区。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 02 核心服务 (Services) · 严谨详实真实教研 ============ -->
-    <section class="fp-section" id="services" data-fp-index="2" data-fp-title="核心服务">
-      <div class="fp-bg-decor"></div>
-      <div class="wrap-box">
-        <div class="sec-head anim-el d-1">
-          <div class="left">
-            <span class="num">02</span>
-            <div>
-              <h2>核心服务</h2>
-              <span class="en">WHAT WE DO</span>
-            </div>
-          </div>
-          <p class="lead">水土共核心，「涟」动多学科。五大篇章层层递进，把科研、实践与土地串成科普主线。</p>
-        </div>
-
-        <div class="serv-deck">
-          <div class="chap-tab-pills anim-el d-2" id="chapTabsBar">
-            <button class="chap-pill active" data-cidx="0">壹 · 科研绘科普</button>
-            <button class="chap-pill" data-cidx="1">贰 · 实践出真知</button>
-            <button class="chap-pill" data-cidx="2">叁 · 想法无极限</button>
-            <button class="chap-pill" data-cidx="3">肆 · 躬行致真知</button>
-            <button class="chap-pill" data-cidx="4">伍 · 未来启新篇</button>
-            <button class="chap-pill" data-cidx="5">陆 · 水润江河</button>
-            <button class="chap-pill" data-cidx="6">柒 · 趣玩实验</button>
-            <button class="chap-pill" data-cidx="7">捌 · 绿色未来</button>
-          </div>
-
-          <div class="serv-stage">
-            <div class="serv-spotlight real-card anim-el d-3" id="chapSpotlight">
-              <div>
-                <span class="cat-badge" id="chapCatEn">RESEARCH INTO CLASSROOM · 01</span>
-                <h3 id="chapTitle">壹 · 科研绘科普</h3>
-                <p class="desc" id="chapDesc">以获「CLEER杯」双碳创新与创意大赛全国二等奖的《土壤医生——农田土壤污染修复装置暨“双碳”助力者》项目为原型，由农工院研究生段正宇主讲，把重金属治理与固碳前沿深度转译为青少年趣味实验课。</p>
-              </div>
-
-              <div>
-                <div class="serv-acts-deck" id="chapActsDeck">
-                  <div class="serv-act-item">
-                    <h5>「土壤医生」低碳科普</h5>
-                    <p>实物装置进课堂 · 重金属治理与碳汇</p>
-                    <a class="link" href="activity-detail/template.html?id=soil-doctor" target="_blank">查看专属活动页 ↗</a>
-                  </div>
-                  <div class="serv-act-item">
-                    <h5>「咫尺青绿」土壤微塑料</h5>
-                    <p>金陵图书馆7天系列课 · 微塑料食物链风险</p>
-                    <a class="link" href="activity-detail/template.html?id=inch-green" target="_blank">查看专属活动页 ↗</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="serv-side-card real-card anim-el d-3">
-              <div class="serv-photo-showcase">
-                <img id="chapPhoto" src="photos/IMG_5612.JPG" alt="篇章现场">
-              </div>
             </div>
           </div>
         </div>
@@ -1213,13 +1158,79 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
     </section>
 
-    <!-- ============ 03 创新理念 (Innov) ============ -->
-    <section class="fp-section" id="innov" data-fp-index="3" data-fp-title="创新理念">
+    <!-- ============ 03 核心服务 (Services) · 严谨详实真实教研 ============ -->
+    <section class="fp-section" id="services" data-fp-index="3" data-fp-title="核心服务">
       <div class="fp-bg-decor"></div>
       <div class="wrap-box">
         <div class="sec-head anim-el d-1">
           <div class="left">
             <span class="num">03</span>
+            <div>
+              <h2>核心服务</h2>
+              <span class="en">WHAT WE DO</span>
+            </div>
+          </div>
+          <p class="lead">水土共核心，「涟」动多学科。五大篇章层层递进，把科研、实践与土地串成科普主线。</p>
+        </div>
+
+        <div class="serv-deck">
+          <div class="chap-tab-pills anim-el d-2" id="chapTabsBar">
+            <button class="chap-pill active" data-cidx="0">壹 · 科研绘科普</button>
+            <button class="chap-pill" data-cidx="1">贰 · 实践出真知</button>
+            <button class="chap-pill" data-cidx="2">叁 · 想法无极限</button>
+            <button class="chap-pill" data-cidx="3">肆 · 躬行致真知</button>
+            <button class="chap-pill" data-cidx="4">伍 · 未来启新篇</button>
+            <button class="chap-pill" data-cidx="5">陆 · 水润江河</button>
+            <button class="chap-pill" data-cidx="6">柒 · 趣玩实验</button>
+            <button class="chap-pill" data-cidx="7">捌 · 绿色未来</button>
+          </div>
+
+          <div class="serv-stage">
+            <div class="serv-spotlight real-card anim-el d-3" id="chapSpotlight">
+              <div>
+                <span class="cat-badge" id="chapCatEn">RESEARCH INTO CLASSROOM · 01</span>
+                <h3 id="chapTitle">壹 · 科研绘科普</h3>
+                <p class="desc" id="chapDesc">以获「CLEER杯」双碳创新与创意大赛全国二等奖的《土壤医生——农田土壤污染修复装置暨“双碳”助力者》项目为原型，由农工院研究生段正宇主讲，把重金属治理与固碳前沿深度转译为青少年趣味实验课。</p>
+              </div>
+
+              <div>
+                <div class="serv-acts-deck" id="chapActsDeck">
+                  <div class="serv-act-item">
+                    <h5>「土壤医生」低碳科普</h5>
+                    <p>实物装置进课堂 · 重金属治理与碳汇</p>
+                    <a class="link" href="activity-detail/template.html?id=soil-doctor" target="_blank">查看专属活动页 ↗</a>
+                  </div>
+                  <div class="serv-act-item">
+                    <h5>「咫尺青绿」土壤微塑料</h5>
+                    <p>金陵图书馆7天系列课 · 微塑料食物链风险</p>
+                    <a class="link" href="activity-detail/template.html?id=inch-green" target="_blank">查看专属活动页 ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="serv-side-card real-card anim-el d-3">
+              <div class="serv-photo-showcase">
+                <img id="chapPhoto" src="photos/IMG_5612.JPG" alt="篇章现场">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="scroll-hint-bar anim-el d-4" data-fp-target="4" role="button" tabindex="0">
+          <span class="mouse-ico"><span class="mouse-dot"></span></span>
+          <span>向下滑动滚轮翻页</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 创新理念 (Innov) ============ -->
+    <section class="fp-section" id="innov" data-fp-index="4" data-fp-title="创新理念">
+      <div class="fp-bg-decor"></div>
+      <div class="wrap-box">
+        <div class="sec-head anim-el d-1">
+          <div class="left">
+            <span class="num">04</span>
             <div>
               <h2>创新理念</h2>
               <span class="en">HOW WE INNOVATE</span>
@@ -1294,20 +1305,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           </div>
         </div>
         
-        <div class="scroll-hint-bar anim-el d-4" data-fp-target="4" role="button" tabindex="0">
+        <div class="scroll-hint-bar anim-el d-4" data-fp-target="5" role="button" tabindex="0">
           <span class="mouse-ico"><span class="mouse-dot"></span></span>
           <span>向下滑动滚轮翻页</span>
         </div>
       </div>
     </section>
 
-    <!-- ============ 04 愿景规划 (Vision) ============ -->
-    <section class="fp-section" id="vision" data-fp-index="4" data-fp-title="愿景规划">
+    <!-- ============ 05 愿景规划 (Vision) ============ -->
+    <section class="fp-section" id="vision" data-fp-index="5" data-fp-title="愿景规划">
       <div class="fp-bg-decor"></div>
       <div class="wrap-box">
         <div class="sec-head anim-el d-1">
           <div class="left">
-            <span class="num">04</span>
+            <span class="num">05</span>
             <div>
               <h2>愿景规划</h2>
               <span class="en">VISION & FUTURE</span>
@@ -1360,20 +1371,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           </div>
         </div>
         
-        <div class="scroll-hint-bar anim-el d-4" data-fp-target="5" role="button" tabindex="0">
+        <div class="scroll-hint-bar anim-el d-4" data-fp-target="6" role="button" tabindex="0">
           <span class="mouse-ico"><span class="mouse-dot"></span></span>
           <span>向下滑动滚轮翻页</span>
         </div>
       </div>
     </section>
 
-    <!-- ============ 05 加入我们 (Join Us) · 依据招募破冰手册充实 ============ -->
-    <section class="fp-section" id="join" data-fp-index="5" data-fp-title="加入我们">
+    <!-- ============ 06 加入我们 (Join Us) · 依据招募破冰手册充实 ============ -->
+    <section class="fp-section" id="join" data-fp-index="6" data-fp-title="加入我们">
       <div class="fp-bg-decor"></div>
       <div class="wrap-box">
         <div class="sec-head anim-el d-1">
           <div class="left">
-            <span class="num">05</span>
+            <span class="num">06</span>
             <div>
               <h2>加入我们</h2>
               <span class="en">JOIN US</span>
@@ -1433,8 +1444,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
             <div class="join-contact-strip">
               <div class="join-contact-left">
-                <a class="btn-green-fill" href="mailto:2416010432@hhu.edu.cn" style="padding:7px 20px;">
-                  发送邮件报名
+                <a class="btn-green-fill" href="apply.html" target="_blank" style="padding:7px 20px;">
+                  填写加入申请
                 </a>
                 <div class="join-qq-badge">招新 QQ 群：<b>1108743305</b></div>
                 <div class="join-qq-badge">联系电话：<b>18475136044</b></div>
@@ -1498,13 +1509,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
     </section>
 
-    <!-- ============ 06 单位合作与尾页 (Partner & Footer) ============ -->
-    <section class="fp-section" id="partner" data-fp-index="6" data-fp-title="单位合作与致谢">
+    <!-- ============ 07 单位合作与致谢 (Partner & Footer) ============ -->
+    <section class="fp-section" id="partner" data-fp-index="7" data-fp-title="单位合作与致谢">
       <div class="fp-bg-decor"></div>
       <div class="wrap-box">
         <div class="sec-head anim-el d-1">
           <div class="left">
-            <span class="num">06</span>
+            <span class="num">07</span>
             <div>
               <h2>单位合作与致谢</h2>
               <span class="en">PARTNERSHIP & ACKNOWLEDGEMENT</span>
@@ -1590,7 +1601,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </div>
           </div>
 
-          <!-- 下半部分：尾页全站导航与致谢 -->
+          <!-- 致谢 -->
+          <div class="ack-section anim-el d-3" style="padding: 20px 0; border-top: 1px solid var(--border-card); margin-top: 16px;">
+            <div style="font-size: 14px; color: var(--text-sub); line-height: 1.8; text-align: center;">
+              <b style="color: var(--leaf-soft); font-size: 16px;">致谢</b><br>
+              感谢江苏省科学技术馆、南京市金陵图书馆、南京晨报小记者团、南京市白云园小学、诚信小学、南京市第九中学等合作单位的长期支持与信任。<br>
+              感谢河海大学农业科学与工程学院、机电工程学院、河海大学青年志愿者协会的指导与帮助。<br>
+              感谢每一位参与志愿服务的队员和关注我们的社会人士。
+            </div>
+          </div>
+
+          <!-- 下半部分：尾页全站导航 -->
           <div class="pf-footer-bar anim-el d-3">
             <div class="footer-row-main">
               <div style="display:flex; align-items:center; gap:12px;">
@@ -1601,33 +1622,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
               </div>
 
               <div class="footer-nav-tags">
-                <a href="#origin" data-fp-target="1">缘起</a>
+                <a href="#origin" data-fp-target="1">项目缘起</a>
                 <a href="#efforts" data-fp-target="2">发展成效</a>
-                <a href="#innov" data-fp-target="3">创新理念</a>
-                <a href="#vision" data-fp-target="4">愿景规划</a>
-                <a href="#join" data-fp-target="5">加入我们</a>
+                <a href="#services" data-fp-target="3">核心服务</a>
+                <a href="#innov" data-fp-target="4">创新理念</a>
+                <a href="#vision" data-fp-target="5">愿景规划</a>
+                <a href="#join" data-fp-target="6">加入我们</a>
                 <a href="activities/index.html" target="_blank" style="color:#fde047; font-weight:600;">全览活动大厅 ↗</a>
-              </div>
-            </div>
-
-            <!-- 致谢 -->
-            <div style="padding: 12px 0; border-top: 1px solid var(--border-card); margin-top: 10px;">
-              <div style="font-size: 12px; color: var(--text-dim); line-height: 1.6; text-align: center;">
-                <b style="color: var(--leaf-soft);">致谢</b>：感谢江苏省科学技术馆、南京市金陵图书馆、南京晨报小记者团、南京市白云园小学、诚信小学、南京市第九中学等合作单位的长期支持与信任。<br>
-                感谢河海大学农业科学与工程学院、机电工程学院、河海大学青年志愿者协会的指导与帮助。<br>
-                感谢每一位参与志愿服务的队员和关注我们的社会人士。
               </div>
             </div>
 
             <div class="footer-copy-bar">
               <span>© 2026 「水韵农青」大学生科技志愿服务队</span>
               <span class="motto" id="secretAdminTrigger" title="双击进入管理后台" style="cursor:pointer;">胸怀青衿志 · 科普水韵行</span>
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:11px; color:var(--text-dim);">管理端</span>
-                <input type="text" id="adminUser" placeholder="账号" style="width:70px; padding:2px 6px; font-size:11px; background:rgba(255,255,255,0.1); border:1px solid var(--border-card); border-radius:3px; color:#fff;">
-                <input type="password" id="adminPass" placeholder="密码" style="width:70px; padding:2px 6px; font-size:11px; background:rgba(255,255,255,0.1); border:1px solid var(--border-card); border-radius:3px; color:#fff;">
-                <button id="adminLoginBtn" style="padding:2px 8px; font-size:11px; background:var(--teal-accent); border:none; border-radius:3px; color:#fff; cursor:pointer;">登录</button>
-              </div>
+              <span id="adminTrigger" style="font-size:11px; color:var(--text-dim); cursor:pointer; text-decoration:underline;" title="点击进入管理后台">管理端</span>
               <button class="back-top-btn" id="backTopBtn" type="button">返回顶部 ↑</button>
             </div>
           </div>
@@ -1829,16 +1837,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     });
   }
 
-  var adminLoginBtn = document.getElementById('adminLoginBtn');
-  if (adminLoginBtn) {
-    adminLoginBtn.addEventListener('click', function () {
-      var user = document.getElementById('adminUser').value;
-      var pass = document.getElementById('adminPass').value;
-      if (user === 'admin' && pass === 'password') {
-        openAdmin();
-      } else {
-        alert('账号或密码错误');
-      }
+  var adminTrigger = document.getElementById('adminTrigger');
+  if (adminTrigger) {
+    adminTrigger.addEventListener('click', function () {
+      var modal = document.getElementById('adminLoginModal');
+      if (modal) modal.classList.add('show');
     });
   }
 
@@ -2192,6 +2195,47 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   }
 
   initHash();
+})();
+</script>
+
+<!-- 管理端登录弹窗 -->
+<div id="adminLoginModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center;">
+  <div style="background:var(--teal-mid); border:1px solid var(--border-card); border-radius:12px; padding:32px; max-width:360px; width:90%; text-align:center;">
+    <h3 style="font-family:var(--font-song); color:var(--leaf-soft); margin-bottom:20px; font-size:20px;">管理端登录</h3>
+    <input type="text" id="modalAdminUser" placeholder="账号" style="width:100%; padding:10px 14px; margin-bottom:12px; font-size:14px; background:rgba(255,255,255,0.08); border:1px solid var(--border-card); border-radius:6px; color:#fff; outline:none;">
+    <input type="password" id="modalAdminPass" placeholder="密码" style="width:100%; padding:10px 14px; margin-bottom:20px; font-size:14px; background:rgba(255,255,255,0.08); border:1px solid var(--border-card); border-radius:6px; color:#fff; outline:none;">
+    <div style="display:flex; gap:10px;">
+      <button id="modalAdminLoginBtn" style="flex:1; padding:10px; font-size:14px; font-weight:600; background:var(--teal-accent); color:#fff; border:none; border-radius:6px; cursor:pointer;">登录</button>
+      <button onclick="document.getElementById('adminLoginModal').classList.remove('show')" style="flex:1; padding:10px; font-size:14px; background:transparent; color:var(--text-sub); border:1px solid var(--border-card); border-radius:6px; cursor:pointer;">取消</button>
+    </div>
+    <div id="adminLoginError" style="color:#f87171; font-size:12px; margin-top:10px; display:none;">账号或密码错误</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var modal = document.getElementById('adminLoginModal');
+  var loginBtn = document.getElementById('modalAdminLoginBtn');
+  var errorDiv = document.getElementById('adminLoginError');
+  
+  if (loginBtn) {
+    loginBtn.addEventListener('click', function() {
+      var user = document.getElementById('modalAdminUser').value;
+      var pass = document.getElementById('modalAdminPass').value;
+      if (user === 'admin' && pass === 'password') {
+        modal.classList.remove('show');
+        window.open('admin.html', '_blank');
+      } else {
+        errorDiv.style.display = 'block';
+      }
+    });
+  }
+  
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.classList.remove('show');
+    }
+  });
 })();
 </script>
 </body>
