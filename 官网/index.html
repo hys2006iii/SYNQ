@@ -488,6 +488,113 @@ section { position: relative; padding: 96px 0; }
 /* ============================================================
    03 服务菜单
    ============================================================ */
+/* 搜索与筛选工具栏 */
+.menu-toolbar {
+  position: relative; z-index: 1;
+  margin-top: 24px; padding: 20px 24px;
+  background: var(--white);
+  border: var(--line);
+  border-radius: 3px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.menu-search-box {
+  display: flex; gap: 10px;
+}
+.menu-search-input {
+  flex: 1; padding: 10px 16px;
+  border: 1px solid oklch(0.29 0.03 255 / 0.2);
+  border-radius: 2px;
+  font-size: 14px; font-family: var(--font-sans);
+  background: var(--paper);
+  transition: border-color var(--dur) var(--ease);
+}
+.menu-search-input:focus {
+  outline: none; border-color: var(--sea);
+}
+.menu-search-btn {
+  padding: 10px 24px;
+  background: var(--sea-ink); color: var(--white);
+  border: none; border-radius: 2px;
+  font-size: 14px; font-weight: 500;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease);
+}
+.menu-search-btn:hover { background: var(--sea-dark); }
+.menu-filter-group {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.menu-filter-btn {
+  padding: 6px 16px;
+  background: var(--paper); color: var(--ink-2);
+  border: 1px solid oklch(0.29 0.03 255 / 0.16);
+  border-radius: 2px;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+}
+.menu-filter-btn:hover {
+  background: var(--mist); color: var(--sea-ink);
+  border-color: var(--sea);
+}
+.menu-filter-btn.active {
+  background: var(--sea-ink); color: var(--white);
+  border-color: var(--sea-ink);
+}
+.menu-filter-btn.hidden {
+  display: none;
+}
+
+/* 分页控件 */
+.menu-pagination {
+  position: relative; z-index: 1;
+  margin-top: 32px; padding: 20px 24px;
+  background: var(--white);
+  border: var(--line);
+  border-radius: 3px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  flex-wrap: wrap;
+}
+.pagination-btn {
+  padding: 8px 18px;
+  background: var(--paper); color: var(--ink-2);
+  border: 1px solid oklch(0.29 0.03 255 / 0.2);
+  border-radius: 2px;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+}
+.pagination-btn:hover:not(:disabled) {
+  background: var(--mist); color: var(--sea-ink);
+  border-color: var(--sea);
+}
+.pagination-btn:disabled {
+  opacity: 0.5; cursor: not-allowed;
+}
+.pagination-numbers {
+  display: flex; gap: 6px;
+}
+.pagination-number {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  background: var(--paper); color: var(--ink-2);
+  border: 1px solid oklch(0.29 0.03 255 / 0.2);
+  border-radius: 2px;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+}
+.pagination-number:hover {
+  background: var(--mist); color: var(--sea-ink);
+  border-color: var(--sea);
+}
+.pagination-number.active {
+  background: var(--sea-ink); color: var(--white);
+  border-color: var(--sea-ink);
+}
+.pagination-info {
+  font-size: 12.5px; color: var(--ink-3);
+  margin-left: 12px;
+}
 #menu { background: var(--paper-2); }
 #menu::before {
   content: ""; position: absolute; inset: 0;
@@ -1230,6 +1337,23 @@ section { position: relative; padding: 96px 0; }
         <p class="kd">从科研实验室到田间地头，从场馆散客到校园课堂——我们把打磨成熟的课程端成一桌「农家宴」，按主题分作五道主菜、一味拼盘，随点随做。</p>
       </div>
 
+      <!-- 搜索与筛选工具栏 -->
+      <div class="menu-toolbar reveal" data-d="1">
+        <div class="menu-search-box">
+          <input type="text" id="menuSearchInput" class="menu-search-input" placeholder="🔍 搜索课程名称、分类或关键词...">
+          <button id="menuSearchBtn" class="menu-search-btn" type="button">搜索</button>
+        </div>
+        <div class="menu-filter-group">
+          <button class="menu-filter-btn active" data-filter="all" type="button">全部</button>
+          <button class="menu-filter-btn" data-filter="科创农野" type="button">科创农野</button>
+          <button class="menu-filter-btn" data-filter="水润江河" type="button">水润江河</button>
+          <button class="menu-filter-btn" data-filter="趣玩实验" type="button">趣玩实验</button>
+          <button class="menu-filter-btn" data-filter="绿色未来" type="button">绿色未来</button>
+          <button class="menu-filter-btn" data-filter="烟火城乡" type="button">烟火城乡</button>
+          <button class="menu-filter-btn" data-filter="场馆联展" type="button">场馆联展</button>
+        </div>
+      </div>
+
       <!-- 壹 · 科创农野 -->
       <div class="serve-group reveal" data-d="1">
         <div class="g-head">
@@ -1520,6 +1644,18 @@ section { position: relative; padding: 96px 0; }
       <div class="serve-cta reveal" data-d="1">
         <p>不做预制菜，每一课都现炒现浇。</p>
         <a class="btn btn-fill" href="#partner">预约课程 · 洽谈合作</a>
+      </div>
+
+      <!-- 分页控件 -->
+      <div class="menu-pagination reveal" data-d="1" id="menuPagination">
+        <button class="pagination-btn" id="prevPage" type="button" disabled>上一页</button>
+        <div class="pagination-numbers" id="paginationNumbers">
+          <button class="pagination-number active" data-page="1" type="button">1</button>
+          <button class="pagination-number" data-page="2" type="button">2</button>
+          <button class="pagination-number" data-page="3" type="button">3</button>
+        </div>
+        <button class="pagination-btn" id="nextPage" type="button">下一页</button>
+        <span class="pagination-info" id="paginationInfo">显示 1-8 共 22 项</span>
       </div>
     </div>
   </section>
@@ -1866,6 +2002,151 @@ section { position: relative; padding: 96px 0; }
       }
     });
   });
+
+  /* 服务菜单搜索与筛选功能 */
+  var menuSearchInput = document.getElementById('menuSearchInput');
+  var menuSearchBtn = document.getElementById('menuSearchBtn');
+  var menuFilterBtns = document.querySelectorAll('.menu-filter-btn');
+  var menuItems = document.querySelectorAll('.serve-it');
+  var serveGroups = document.querySelectorAll('.serve-group');
+  var currentFilter = 'all';
+  var searchKeyword = '';
+
+  function filterMenuItems() {
+    menuItems.forEach(function(item) {
+      var title = item.querySelector('h4') ? item.querySelector('h4').textContent.toLowerCase() : '';
+      var desc = item.querySelector('.s-desc') ? item.querySelector('.s-desc').textContent.toLowerCase() : '';
+      var sub = item.querySelector('.s-sub') ? item.querySelector('.s-sub').textContent.toLowerCase() : '';
+      var tags = item.querySelector('.tags') ? item.querySelector('.tags').textContent.toLowerCase() : '';
+      
+      var matchesSearch = searchKeyword === '' || 
+        title.includes(searchKeyword) || 
+        desc.includes(searchKeyword) || 
+        sub.includes(searchKeyword) || 
+        tags.includes(searchKeyword);
+      
+      var matchesFilter = currentFilter === 'all' || 
+        item.closest('.serve-group').querySelector('.g-head h3').textContent.includes(currentFilter);
+      
+      if (matchesSearch && matchesFilter) {
+        item.style.display = '';
+        item.classList.remove('hidden');
+      } else {
+        item.style.display = 'none';
+        item.classList.add('hidden');
+      }
+    });
+
+    // 隐藏没有可见项目的分类组
+    serveGroups.forEach(function(group) {
+      var visibleItems = group.querySelectorAll('.serve-it:not(.hidden)');
+      if (visibleItems.length === 0) {
+        group.style.display = 'none';
+      } else {
+        group.style.display = '';
+      }
+    });
+  }
+
+  // 搜索按钮点击事件
+  if (menuSearchBtn) {
+    menuSearchBtn.addEventListener('click', function() {
+      searchKeyword = menuSearchInput.value.trim().toLowerCase();
+      filterMenuItems();
+    });
+  }
+
+  // 搜索输入框回车事件
+  if (menuSearchInput) {
+    menuSearchInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchKeyword = menuSearchInput.value.trim().toLowerCase();
+        filterMenuItems();
+      }
+    });
+
+    // 实时搜索（输入时）
+    menuSearchInput.addEventListener('input', function() {
+      searchKeyword = menuSearchInput.value.trim().toLowerCase();
+      filterMenuItems();
+    });
+  }
+
+  // 筛选按钮点击事件
+  menuFilterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      // 更新按钮状态
+      menuFilterBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      
+      // 更新筛选条件
+      currentFilter = btn.getAttribute('data-filter');
+      currentPage = 1;
+      filterMenuItems();
+      updatePagination();
+    });
+  });
+
+  /* 分页功能 */
+  var currentPage = 1;
+  var itemsPerPage = 8;
+  var totalItems = menuItems.length;
+  var totalPages = Math.ceil(totalItems / itemsPerPage);
+  var paginationNumbers = document.getElementById('paginationNumbers');
+  var prevPageBtn = document.getElementById('prevPage');
+  var nextPageBtn = document.getElementById('nextPage');
+  var paginationInfo = document.getElementById('paginationInfo');
+
+  function updatePagination() {
+    // 更新分页按钮状态
+    prevPageBtn.disabled = currentPage === 1;
+    nextPageBtn.disabled = currentPage === totalPages;
+
+    // 更新分页数字
+    paginationNumbers.innerHTML = '';
+    for (var i = 1; i <= totalPages; i++) {
+      var btn = document.createElement('button');
+      btn.className = 'pagination-number' + (i === currentPage ? ' active' : '');
+      btn.setAttribute('data-page', i);
+      btn.textContent = i;
+      btn.addEventListener('click', function() {
+        currentPage = parseInt(this.getAttribute('data-page'));
+        filterMenuItems();
+        updatePagination();
+      });
+      paginationNumbers.appendChild(btn);
+    }
+
+    // 更新分页信息
+    var startItem = (currentPage - 1) * itemsPerPage + 1;
+    var endItem = Math.min(currentPage * itemsPerPage, totalItems);
+    paginationInfo.textContent = '显示 ' + startItem + '-' + endItem + ' 共 ' + totalItems + ' 项';
+  }
+
+  // 上一页按钮点击事件
+  if (prevPageBtn) {
+    prevPageBtn.addEventListener('click', function() {
+      if (currentPage > 1) {
+        currentPage--;
+        filterMenuItems();
+        updatePagination();
+      }
+    });
+  }
+
+  // 下一页按钮点击事件
+  if (nextPageBtn) {
+    nextPageBtn.addEventListener('click', function() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        filterMenuItems();
+        updatePagination();
+      }
+    });
+  }
+
+  // 初始化分页
+  updatePagination();
 })();
 </script>
 </body>
