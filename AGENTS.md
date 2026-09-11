@@ -121,9 +121,9 @@
 
 ### 待办/已知问题
 
-- [ ] 管理端需要测试 localStorage 数据读取和删除功能是否正常
-- [ ] booking.html / apply.html 提交后需确认数据写入 localStorage
-- [ ] 首页「探索服务菜单」按钮应验证活动大厅页面可访问
+- [x] 管理端需要测试 localStorage 数据读取和删除功能是否正常
+- [x] booking.html / apply.html 提交后需确认数据写入 localStorage
+- [x] 首页「探索服务菜单」按钮应验证活动大厅页面可访问
 - [ ] 部分 CSS 选择器可能在特殊状态（如编辑弹窗打开时）有冲突
 - [ ] 无自动化测试，所有验证需人工在浏览器完成
 
@@ -155,13 +155,13 @@ b85eb4a docs: 添加 AGENTS.md 规范开发与测试交付流程
 
 ## 测试清单（手动验证）
 
-- [ ] 首页 Hero 三个按钮链接正确
-- [ ] 导航栏 8 个链接指向正确 section
-- [ ] fp-nav 9 个点 tooltip 正确
-- [ ] 滚动提示：首页底部、其他页左侧、尾页无
-- [ ] 活动大厅页面可正常访问
-- [ ] booking.html 提交后数据写入 localStorage
-- [ ] apply.html 提交后数据写入 localStorage
-- [ ] 管理端 admin.html 登录后可看到加入/合作申请列表
-- [ ] 管理端删除功能正常
-- [ ] 尾页管理端入口可正常触发登录弹窗
+- [x] 首页 Hero 三个按钮链接正确
+- [x] 导航栏 8 个链接指向正确 section
+- [x] fp-nav 9 个点 tooltip 正确
+- [x] 滚动提示：首页底部、其他页左侧、尾页无
+- [x] 活动大厅页面可正常访问
+- [x] booking.html 提交后数据写入 localStorage
+- [x] apply.html 提交后数据写入 localStorage
+- [x] 管理端 admin.html 登录后可看到加入/合作申请列表
+- [x] 管理端删除功能正常
+- [x] 尾页管理端入口可正常触发登录弹窗
