@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>预约合作 · 水韵农青</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23019aaa'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='36' font-weight='bold' text-anchor='middle' fill='%23fbf7ef'%3E水%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal-deep: #163737;
+      --teal-mid: #1d4645;
+      --teal-accent: #019aaa;
+      --leaf: #4ade80;
+      --leaf-soft: #86efac;
+      --amber: #fbbf24;
+      --text-pure: #ffffff;
+      --text-main: #f1f5f9;
+      --text-sub: #cbd5e1;
+      --text-dim: #94a3b8;
+      --border-card: rgba(255, 255, 255, 0.15);
+      --font-kai: "Ma Shan Zheng", "KaiTi", "STKaiti", serif;
+      --font-song: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+      --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      background: var(--teal-deep);
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(22, 53, 53, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-card);
+    }
+    .nav-wrap {
+      max-width: 1200px; margin: 0 auto; height: 64px;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-pure); }
+    .brand img { height: 38px; }
+    .brand .word { font-family: var(--font-kai); font-size: 24px; letter-spacing: 0.12em; }
+    .brand .word b { color: var(--leaf); font-weight: 400; }
+    .back-link { color: var(--text-sub); text-decoration: none; font-size: 14px; }
+    .back-link:hover { color: var(--text-pure); }
+    .main { padding-top: 64px; min-height: 100vh; }
+    .page-header {
+      background: linear-gradient(135deg, var(--teal-mid) 0%, var(--teal-deep) 100%);
+      padding: 48px 24px; text-align: center; border-bottom: 1px solid var(--border-card);
+    }
+    .page-header h1 {
+      font-family: var(--font-song); font-size: clamp(28px, 3vw, 36px);
+      font-weight: 700; letter-spacing: 0.08em; color: var(--text-pure); margin-bottom: 12px;
+    }
+    .page-header p { font-size: 16px; color: var(--text-sub); max-width: 600px; margin: 0 auto; }
+    .form-container {
+      max-width: 700px; margin: 32px auto; padding: 0 24px 48px;
+    }
+    .form-card {
+      background: rgba(30, 71, 69, 0.72);
+      border: 1px solid var(--border-card);
+      border-radius: 12px; padding: 32px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 14px; color: var(--leaf-soft);
+      font-weight: 600; margin-bottom: 6px;
+    }
+    .form-group label .required { color: #f87171; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 10px 14px; font-size: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-card);
+      border-radius: 6px; color: var(--text-pure);
+      font-family: var(--font-sans); outline: none;
+      transition: border-color 260ms ease;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--teal-accent);
+    }
+    .form-group textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
+    .form-group select { appearance: none; cursor: pointer; }
+    .form-group select option { background: var(--teal-deep); color: var(--text-pure); }
+    .form-group .hint { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+    .submit-btn {
+      width: 100%; padding: 12px; font-size: 16px; font-weight: 600;
+      background: var(--teal-accent); color: #fff; border: none;
+      border-radius: 8px; cursor: pointer; transition: background 260ms ease;
+    }
+    .submit-btn:hover { background: #01bcc8; }
+    .contact-info {
+      margin-top: 24px; padding: 16px; background: rgba(20, 50, 49, 0.8);
+      border: 1px solid var(--border-card); border-radius: 8px;
+      font-size: 13px; color: var(--text-sub); line-height: 1.8;
+    }
+    .contact-info b { color: var(--leaf-soft); }
+    .success-modal {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7); z-index: 2000;
+      align-items: center; justify-content: center;
+    }
+    .success-modal.show { display: flex; }
+    .success-content {
+      background: var(--teal-mid); border: 1px solid var(--border-card);
+      border-radius: 12px; padding: 32px; max-width: 400px; text-align: center;
+    }
+    .success-content h3 { font-family: var(--font-song); color: var(--leaf-soft); margin-bottom: 12px; }
+    .success-content p { font-size: 14px; color: var(--text-sub); margin-bottom: 8px; }
+    .success-content .close-btn {
+      margin-top: 16px; padding: 8px 24px; background: var(--teal-accent);
+      color: #fff; border: none; border-radius: 6px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav-wrap">
+      <a class="brand" href="index.html">
+        <img src="logo-mark.png" alt="水韵农青">
+        <span class="word">水韵<b>农</b>青</span>
+      </a>
+      <a class="back-link" href="index.html#partner">← 返回首页</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <section class="page-header">
+      <h1>预约合作</h1>
+      <p>向「水韵农青」提出课程进校、场馆联展或社区科普定制需求</p>
+    </section>
+
+    <div class="form-container">
+      <div class="form-card">
+        <form id="bookingForm">
+          <div class="form-group">
+            <label>意向课程名称 <span class="required">*</span></label>
+            <select id="courseName" required>
+              <option value="">请选择课程</option>
+              <optgroup label="壹 · 科研绘科普">
+                <option value="「土壤医生」低碳科普 (科研绘科普)">「土壤医生」低碳科普</option>
+                <option value="「咫尺青绿——清源讲堂」土壤微塑料科普 (科研绘科普)">「咫尺青绿——清源讲堂」土壤微塑料科普</option>
+              </optgroup>
+              <optgroup label="贰 · 实践出真知">
+                <option value="「寻觅自然疗愈，倾听生命脉络」植物拓印 (实践出真知)">「寻觅自然疗愈，倾听生命脉络」植物拓印</option>
+                <option value="「翱翔之翼，飞young想象」航天科普 (实践出真知)">「翱翔之翼，飞young想象」航天科普</option>
+              </optgroup>
+              <optgroup label="叁 · 想法无极限">
+                <option value="「OTNPW」核污水知识地图寻物解密 (想法无极限)">「OTNPW」核污水知识地图寻物解密</option>
+                <option value="「人间天河淠史杭」精神传承与历史展演 (想法无极限)">「人间天河淠史杭」精神传承与历史展演</option>
+              </optgroup>
+              <optgroup label="肆 · 躬行致真知">
+                <option value="「三农」科普 · 水稻创意指尖生趣 (躬行致真知)">「三农」科普 · 水稻创意指尖生趣</option>
+                <option value="废弃农作固体物「焕新生」 (躬行致真知)">废弃农作固体物「焕新生」</option>
+              </optgroup>
+              <optgroup label="伍 · 未来启新篇">
+                <option value="「菜园奇遇记」现代农场探秘 (未来启新篇)">「菜园奇遇记」现代农场探秘</option>
+                <option value="「青苗『当』家」蔬菜市集体验营 (未来启新篇)">「青苗『当』家」蔬菜市集体验营</option>
+              </optgroup>
+              <optgroup label="陆 · 水润江河">
+                <option value="「大国水利」水利枢纽工程科普 (水润江河)">「大国水利」水利枢纽工程科普</option>
+                <option value="「中国水周 · 世界水日」系列 (水润江河)">「中国水周 · 世界水日」系列</option>
+              </optgroup>
+              <optgroup label="柒 · 趣玩实验">
+                <option value="「水运」物理系列科普实验 (趣玩实验)">「水运」物理系列科普实验</option>
+              </optgroup>
+              <optgroup label="捌 · 绿色未来">
+                <option value="「峰回路转 · 共碳未来」碳迹迷踪 (绿色未来)">「峰回路转 · 共碳未来」碳迹迷踪</option>
+              </optgroup>
+              <optgroup label="场馆联展 · 专属定制">
+                <option value="幼儿启蒙定制系列 (场馆联展)">幼儿启蒙定制系列</option>
+              </optgroup>
+              <option value="其他课程/自定义">其他课程/自定义</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>合作单位 / 学校名称 <span class="required">*</span></label>
+            <input type="text" id="orgName" placeholder="例如：南京市白云园小学 / 江苏科技馆" required>
+          </div>
+
+          <div class="form-group">
+            <label>联系人姓名与手机 / 微信 <span class="required">*</span></label>
+            <input type="text" id="contactInfo" placeholder="例如：张老师 138xxxxxxxx" required>
+          </div>
+
+          <div class="form-group">
+            <label>预计受众学段与人数</label>
+            <input type="text" id="audience" placeholder="例如：四年级 2 个班，约 80 人">
+          </div>
+
+          <div class="form-group">
+            <label>具体需求与期望时间</label>
+            <textarea id="requirements" placeholder="例如：希望在 5 月科技节期间安排 2 场授课，需协助准备实验耗材..."></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">提交预约意向</button>
+        </form>
+
+        <div class="contact-info">
+          <b>联系我们：</b><br>
+          📧 官方邮箱：2416010432@hhu.edu.cn<br>
+          📱 联系电话：18475136044<br>
+          💬 招新 QQ 群：1108743305<br>
+          <span style="color:var(--text-dim);">请注明单位名称与活动意向，我们将在 24 小时内回复</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="success-modal" id="successModal">
+    <div class="success-content">
+      <h3>✅ 预约意向已提交</h3>
+      <p>感谢您的关注！我们将尽快与您联系。</p>
+      <p><b>紧急联系请拨打：</b>18475136044</p>
+      <p><b>或发送邮件至：</b>2416010432@hhu.edu.cn</p>
+      <button class="close-btn" onclick="document.getElementById('successModal').classList.remove('show')">关闭</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var course = document.getElementById('courseName').value;
+      var org = document.getElementById('orgName').value;
+      var contact = document.getElementById('contactInfo').value;
+      var audience = document.getElementById('audience').value;
+      var requirements = document.getElementById('requirements').value;
+
+      var text = '【课程预约意向】\n' +
+        '意向课程：' + course + '\n' +
+        '合作单位：' + org + '\n' +
+        '联系人：' + contact + '\n' +
+        '受众学段与人数：' + (audience || '待定') + '\n' +
+        '具体需求：' + (requirements || '待定');
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function() {
+          document.getElementById('successModal').classList.add('show');
+        });
+      } else {
+        document.getElementById('successModal').classList.add('show');
+      }
+    });
+  </script>
+</body>
+</html>
