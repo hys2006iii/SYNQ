@@ -349,7 +349,10 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     </div>
   </nav>
   <div class="sidebar-footer">
-    © 2026 水韵农青
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <span>© 2026 水韵农青</span>
+      <button onclick="logout()" style="background:none; border:none; color:rgba(255,255,255,0.6); font-size:12px; cursor:pointer; padding:4px 8px; border-radius:4px; transition:all .2s;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'; this.style.background='none'">🚪 退出登录</button>
+    </div>
   </div>
 </aside>
 
@@ -1946,9 +1949,67 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   $('#btnExportFinanceReport').addEventListener('click', function() {
     alert('📊 年度财务报表导出功能开发中...');
   });
-  loadReimbursementData();
-  loadExpenseData();
-  loadFinanceStats();
+  /* ========== 登录状态检测 ========== */
+  var LOGIN_KEY = 'water_youth_admin_login';
+  var SESSION_TIMEOUT = 30 * 60 * 1000; // 30分钟
+  
+  function checkLoginStatus() {
+    var loginData = JSON.parse(localStorage.getItem(LOGIN_KEY));
+    if (!loginData || !loginData.isLoggedIn) {
+      redirectToLogin();
+      return false;
+    }
+    
+    var now = Date.now();
+    var lastActivity = loginData.lastActivity || loginData.loginTime;
+    
+    // 检查是否超过30分钟无操作
+    if (now - lastActivity > SESSION_TIMEOUT) {
+      alert('⚠️ 登录已过期（30分钟无操作），请重新登录。');
+      localStorage.removeItem(LOGIN_KEY);
+      redirectToLogin();
+      return false;
+    }
+    
+    // 更新最后活动时间
+    loginData.lastActivity = now;
+    localStorage.setItem(LOGIN_KEY, JSON.stringify(loginData));
+    return true;
+  }
+  
+  function redirectToLogin() {
+    localStorage.removeItem(LOGIN_KEY);
+    window.location.href = 'index.html';
+  }
+  
+  function updateActivity() {
+    var loginData = JSON.parse(localStorage.getItem(LOGIN_KEY));
+    if (loginData && loginData.isLoggedIn) {
+      loginData.lastActivity = Date.now();
+      localStorage.setItem(LOGIN_KEY, JSON.stringify(loginData));
+    }
+  }
+  
+  function logout() {
+    localStorage.removeItem(LOGIN_KEY);
+    window.location.href = 'index.html';
+  }
+  
+  // 检查登录状态
+  if (!checkLoginStatus()) {
+    return;
+  }
+  
+  // 监听用户活动，更新最后活动时间
+  var activityEvents = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+  activityEvents.forEach(function(event) {
+    document.addEventListener(event, updateActivity, { passive: true });
+  });
+  
+  // 定期检查登录状态
+  setInterval(function() {
+    checkLoginStatus();
+  }, 60000); // 每分钟检查一次
 })();
 </script>
 </body>

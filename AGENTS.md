@@ -62,6 +62,13 @@
 - 密码：`password`
 - 入口：尾页「管理端」文字链接 → 登录弹窗 → 跳转 admin.html
 - 弹窗显示使用 `style.display='flex'`（非 classList，因 inline `display:none` 会覆盖 class）
+- **登录状态管理**：
+  - 登录成功后存储登录状态到localStorage（`water_youth_admin_login`）
+  - 记录登录时间戳和最后活动时间
+  - 30分钟无操作自动退出登录
+  - 监听用户活动（鼠标点击、移动、按键、滚动、触摸）更新活动时间
+  - 定期检查登录状态（每分钟）
+  - 侧边栏底部有退出登录按钮
 
 ### localStorage Keys
 | Key | 用途 |
@@ -71,6 +78,7 @@
 | `water_youth_budget_data` | 预算表暂存数据 |
 | `water_youth_reimbursements` | 报销记录数据 |
 | `water_youth_expenses` | 消费记录数据 |
+| `water_youth_admin_login` | 管理端登录状态 |
 
 ### Git Ignore
 - 忽略：`*.jpg`、`*.png`、`photos/`、`videos/`

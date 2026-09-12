@@ -1960,6 +1960,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       var user = document.getElementById('modalAdminUser').value;
       var pass = document.getElementById('modalAdminPass').value;
       if (user === 'admin' && pass === 'password') {
+        // 存储登录状态
+        var loginData = {
+          isLoggedIn: true,
+          loginTime: Date.now(),
+          lastActivity: Date.now(),
+          username: user
+        };
+        localStorage.setItem('water_youth_admin_login', JSON.stringify(loginData));
         modal.style.display = 'none';
         window.open('admin.html', '_blank');
       } else {
