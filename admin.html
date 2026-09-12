@@ -334,6 +334,14 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       <span class="icon">🤝</span><span class="nav-text">合作申请</span>
       <span class="badge-count" id="navBookingCount">0</span>
     </div>
+    <div class="nav-section">志愿者管理</div>
+    <div class="nav-item" data-panel="volunteers">
+      <span class="icon">👤</span><span class="nav-text">志愿者档案</span>
+      <span class="badge-count" id="navVolunteerCount">0</span>
+    </div>
+    <div class="nav-item" data-panel="schedule">
+      <span class="icon">📅</span><span class="nav-text">排班管理</span>
+    </div>
     <div class="nav-section">财务管理</div>
     <div class="nav-item" data-panel="budget">
       <span class="icon">📋</span><span class="nav-text">预算申请</span>
@@ -346,6 +354,10 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     </div>
     <div class="nav-item" data-panel="finance-stats">
       <span class="icon">📊</span><span class="nav-text">财务统计</span>
+    </div>
+    <div class="nav-section">数据展示</div>
+    <div class="nav-item" data-panel="dashboard">
+      <span class="icon">📈</span><span class="nav-text">数据大屏</span>
     </div>
   </nav>
   <div class="sidebar-footer">
@@ -729,9 +741,305 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       </div>
     </div>
   </div>
-</div>
 
-<!-- ====== 报销单编辑弹窗 ====== -->
+  <!-- ====== 志愿者档案面板 ====== -->
+  <div class="panel" id="panel-volunteers">
+    <div class="page-header">
+      <h2>👤 志愿者档案</h2>
+      <div class="actions">
+        <button class="btn btn-primary" id="btnAddVolunteer">➕ 新增志愿者</button>
+        <button class="btn btn-success" id="btnExportVolunteers">📥 导出花名册</button>
+      </div>
+    </div>
+    <div class="content-area">
+      <div class="filter-bar">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="volFilterSearch" placeholder="搜索姓名、专业、技能...">
+        </div>
+        <select class="filter-select" id="volFilterSkill">
+          <option value="">全部技能</option>
+          <option value="摄影">摄影</option>
+          <option value="文案">文案</option>
+          <option value="活动策划">活动策划</option>
+          <option value="教学">教学</option>
+          <option value="设计">设计</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon c1">👤</div>
+          <div class="stat-info"><h3 id="volTotalCount">0</h3><p>志愿者总数</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c2">⏱</div>
+          <div class="stat-info"><h3 id="volTotalHours">0</h3><p>总服务时长(小时)</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c3">🎯</div>
+          <div class="stat-info"><h3 id="volActiveCount">0</h3><p>本月活跃</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c4">🏆</div>
+          <div class="stat-info"><h3 id="volTopHours">0</h3><p>最高服务时长</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:50px;">#</th>
+                <th>姓名</th>
+                <th>专业</th>
+                <th>年级</th>
+                <th>技能标签</th>
+                <th>服务时长</th>
+                <th>参与活动</th>
+                <th>入职日期</th>
+                <th style="width:140px;text-align:right;">操作</th>
+              </tr>
+            </thead>
+            <tbody id="volTableBody"></tbody>
+          </table>
+        </div>
+        <div id="volEmpty" class="empty-state" style="display:none;">
+          <div class="icon">📭</div><p>暂无志愿者数据</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== 排班管理面板 ====== -->
+  <div class="panel" id="panel-schedule">
+    <div class="page-header">
+      <h2>📅 排班管理</h2>
+      <div class="actions">
+        <button class="btn btn-primary" id="btnAddSchedule">➕ 新建排班</button>
+        <button class="btn btn-outline" id="btnScheduleWeek">📅 本周排班</button>
+      </div>
+    </div>
+    <div class="content-area">
+      <div class="filter-bar">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="schFilterSearch" placeholder="搜索活动名称、志愿者...">
+        </div>
+        <select class="filter-select" id="schFilterStatus">
+          <option value="">全部状态</option>
+          <option value="pending">待执行</option>
+          <option value="ongoing">进行中</option>
+          <option value="completed">已完成</option>
+          <option value="cancelled">已取消</option>
+        </select>
+        <input type="date" class="filter-select" id="schFilterDate">
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:50px;">#</th>
+                <th>活动名称</th>
+                <th>日期</th>
+                <th>时间</th>
+                <th>地点</th>
+                <th>负责人</th>
+                <th>参与志愿者</th>
+                <th>状态</th>
+                <th style="width:140px;text-align:right;">操作</th>
+              </tr>
+            </thead>
+            <tbody id="schTableBody"></tbody>
+          </table>
+        </div>
+        <div id="schEmpty" class="empty-state" style="display:none;">
+          <div class="icon">📭</div><p>暂无排班记录</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== 数据大屏面板 ====== -->
+  <div class="panel" id="panel-dashboard">
+    <div class="page-header">
+      <h2>📈 数据大屏</h2>
+      <div class="actions">
+        <select class="filter-select" id="dashTimeRange">
+          <option value="week">最近一周</option>
+          <option value="month" selected>最近一月</option>
+          <option value="quarter">最近一季</option>
+          <option value="year">最近一年</option>
+        </select>
+      </div>
+    </div>
+    <div class="content-area">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon c1">👤</div>
+          <div class="stat-info"><h3 id="dashTotalVol">0</h3><p>志愿者总数</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c2">📋</div>
+          <div class="stat-info"><h3 id="dashTotalAct">0</h3><p>活动总数</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c3">⏱</div>
+          <div class="stat-info"><h3 id="dashTotalHours">0</h3><p>总服务时长</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c4">🤝</div>
+          <div class="stat-info"><h3 id="dashTotalPartner">0</h3><p>合作单位</p></div>
+        </div>
+      </div>
+      
+      <div style="display:grid; grid-template-columns:2fr 1fr; gap:16px; margin-bottom:16px;">
+        <div class="card">
+          <div class="card-header"><h3>月度活动趋势</h3></div>
+          <div class="card-body">
+            <canvas id="dashActivityTrend" height="220"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>服务类型分布</h3></div>
+          <div class="card-body">
+            <canvas id="dashServiceType" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:16px;">
+        <div class="card">
+          <div class="card-header"><h3>志愿者排行</h3></div>
+          <div class="card-body" style="max-height:300px; overflow-y:auto;">
+            <div id="dashVolRanking"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>近期活动</h3></div>
+          <div class="card-body" style="max-height:300px; overflow-y:auto;">
+            <div id="dashRecentActivities"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>技能分布</h3></div>
+          <div class="card-body">
+            <canvas id="dashSkillDist" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== 志愿者编辑弹窗 ====== -->
+  <div class="modal-overlay" id="volModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="volModalTitle">新增志愿者</h3>
+        <button class="modal-close" id="volModalClose">&times;</button>
+      </div>
+      <form class="modal-body" id="volForm">
+        <input type="hidden" id="volId">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>姓名 *</label>
+            <input type="text" class="form-control" id="volName" required>
+          </div>
+          <div class="form-group">
+            <label>专业 *</label>
+            <input type="text" class="form-control" id="volMajor" required>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>年级</label>
+            <select class="form-control" id="volGrade">
+              <option value="大一">大一</option>
+              <option value="大二">大二</option>
+              <option value="大三">大三</option>
+              <option value="大四">大四</option>
+              <option value="研究生">研究生</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>联系电话</label>
+            <input type="text" class="form-control" id="volPhone">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>技能标签（逗号分隔）</label>
+          <input type="text" class="form-control" id="volSkills" placeholder="如：摄影, 文案, 活动策划">
+        </div>
+        <div class="form-group">
+          <label>入职日期</label>
+          <input type="date" class="form-control" id="volJoinDate">
+        </div>
+        <div class="form-group">
+          <label>备注</label>
+          <textarea class="form-control" id="volNote" rows="3"></textarea>
+        </div>
+      </form>
+      <div class="modal-foot">
+        <button class="btn btn-outline" id="btnCancelVol" type="button">取消</button>
+        <button class="btn btn-primary" id="btnSaveVol" type="button">💾 保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== 排班编辑弹窗 ====== -->
+  <div class="modal-overlay" id="schModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="schModalTitle">新建排班</h3>
+        <button class="modal-close" id="schModalClose">&times;</button>
+      </div>
+      <form class="modal-body" id="schForm">
+        <input type="hidden" id="schId">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>活动名称 *</label>
+            <input type="text" class="form-control" id="schActivity" required>
+          </div>
+          <div class="form-group">
+            <label>日期 *</label>
+            <input type="date" class="form-control" id="schDate" required>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>开始时间 *</label>
+            <input type="time" class="form-control" id="schStartTime" required>
+          </div>
+          <div class="form-group">
+            <label>结束时间 *</label>
+            <input type="time" class="form-control" id="schEndTime" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>活动地点</label>
+          <input type="text" class="form-control" id="schLocation">
+        </div>
+        <div class="form-group">
+          <label>负责人</label>
+          <input type="text" class="form-control" id="schLeader">
+        </div>
+        <div class="form-group">
+          <label>参与志愿者（选择多人）</label>
+          <div id="schVolunteersCheckboxes" style="max-height:150px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:6px; padding:10px;"></div>
+        </div>
+        <div class="form-group">
+          <label>备注</label>
+          <textarea class="form-control" id="schNote" rows="2"></textarea>
+        </div>
+      </form>
+      <div class="modal-foot">
+        <button class="btn btn-outline" id="btnCancelSch" type="button">取消</button>
+        <button class="btn btn-primary" id="btnSaveSch" type="button">💾 保存</button>
+      </div>
+    </div>
+  </div>
+
 <div class="modal-overlay" id="reimbModal">
   <div class="modal-box">
     <div class="modal-head">
@@ -2010,6 +2318,631 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   setInterval(function() {
     checkLoginStatus();
   }, 60000); // 每分钟检查一次
+
+  /* ========== 志愿者管理 ========== */
+  var VOL_KEY = 'water_youth_volunteers';
+  var volunteerList = [];
+
+  function loadVolunteerData() {
+    volunteerList = JSON.parse(localStorage.getItem(VOL_KEY) || '[]');
+    renderVolTable();
+    updateVolunteerStats();
+  }
+
+  function renderVolTable() {
+    var kw = $('#volFilterSearch') ? $('#volFilterSearch').value.trim().toLowerCase() : '';
+    var skill = $('#volFilterSkill') ? $('#volFilterSkill').value : '';
+    
+    var filtered = volunteerList.filter(function(v) {
+      if (skill && (!v.skills || v.skills.indexOf(skill) === -1)) return false;
+      if (kw) {
+        var s = (v.name + ' ' + v.major + ' ' + (v.skills || '')).toLowerCase();
+        if (s.indexOf(kw) === -1) return false;
+      }
+      return true;
+    });
+
+    var tbody = $('#volTableBody');
+    var em = $('#volEmpty');
+    
+    if (!filtered.length) {
+      tbody.innerHTML = '';
+      em.style.display = 'block';
+      return;
+    }
+    
+    em.style.display = 'none';
+    tbody.innerHTML = filtered.map(function(v, i) {
+      var skillsHtml = (v.skills || []).map(function(s) {
+        return '<span class="badge badge-chapter" style="margin-right:4px;">' + s + '</span>';
+      }).join('');
+      
+      return '<tr>'
+        + '<td>' + (i+1) + '</td>'
+        + '<td><b>' + v.name + '</b></td>'
+        + '<td>' + v.major + '</td>'
+        + '<td>' + (v.grade || '-') + '</td>'
+        + '<td>' + (skillsHtml || '-') + '</td>'
+        + '<td style="font-weight:600;color:var(--leaf);">' + (v.serviceHours || 0) + 'h</td>'
+        + '<td>' + (v.activitiesCount || 0) + '次</td>'
+        + '<td>' + (v.joinDate || '-') + '</td>'
+        + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
+        + '<button class="btn btn-sm btn-primary edit-vol" data-id="' + v.id + '">✏️</button>'
+        + '<button class="btn btn-sm btn-danger del-vol" data-id="' + v.id + '">🗑</button>'
+        + '</div></td></tr>';
+    }).join('');
+  }
+
+  function updateVolunteerStats() {
+    $('#volTotalCount').textContent = volunteerList.length;
+    var totalHours = volunteerList.reduce(function(s, v) { return s + (v.serviceHours || 0); }, 0);
+    $('#volTotalHours').textContent = totalHours;
+    
+    var now = new Date();
+    var thisMonth = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2, '0');
+    var activeCount = volunteerList.filter(function(v) {
+      return v.lastActivity && v.lastActivity.startsWith(thisMonth);
+    }).length;
+    $('#volActiveCount').textContent = activeCount;
+    
+    var maxHours = Math.max.apply(null, volunteerList.map(function(v) { return v.serviceHours || 0; }));
+    $('#volTopHours').textContent = maxHours;
+    
+    $('#navVolunteerCount').textContent = volunteerList.length;
+  }
+
+  function openVolModal(vol) {
+    if (vol) {
+      $('#volModalTitle').textContent = '编辑志愿者';
+      $('#volId').value = vol.id;
+      $('#volName').value = vol.name;
+      $('#volMajor').value = vol.major;
+      $('#volGrade').value = vol.grade || '大一';
+      $('#volPhone').value = vol.phone || '';
+      $('#volSkills').value = (vol.skills || []).join(', ');
+      $('#volJoinDate').value = vol.joinDate || '';
+      $('#volNote').value = vol.note || '';
+    } else {
+      $('#volModalTitle').textContent = '新增志愿者';
+      $('#volId').value = 'vol-' + Date.now().toString(36);
+      $('#volName').value = '';
+      $('#volMajor').value = '';
+      $('#volGrade').value = '大一';
+      $('#volPhone').value = '';
+      $('#volSkills').value = '';
+      $('#volJoinDate').value = new Date().toISOString().slice(0, 10);
+      $('#volNote').value = '';
+    }
+    $('#volModal').classList.add('open');
+  }
+
+  function saveVolunteer() {
+    var name = $('#volName').value.trim();
+    var major = $('#volMajor').value.trim();
+    if (!name || !major) {
+      alert('请填写姓名和专业！');
+      return;
+    }
+
+    var id = $('#volId').value;
+    var skills = $('#volSkills').value.split(/[,，]+/).map(function(s) { return s.trim(); }).filter(Boolean);
+    
+    var volData = {
+      id: id,
+      name: name,
+      major: major,
+      grade: $('#volGrade').value,
+      phone: $('#volPhone').value.trim(),
+      skills: skills,
+      joinDate: $('#volJoinDate').value,
+      note: $('#volNote').value.trim(),
+      serviceHours: 0,
+      activitiesCount: 0,
+      lastActivity: '',
+      createdAt: new Date().toISOString()
+    };
+
+    var existIdx = volunteerList.findIndex(function(v) { return v.id === id; });
+    if (existIdx >= 0) {
+      volData.serviceHours = volunteerList[existIdx].serviceHours;
+      volData.activitiesCount = volunteerList[existIdx].activitiesCount;
+      volData.lastActivity = volunteerList[existIdx].lastActivity;
+      volData.createdAt = volunteerList[existIdx].createdAt;
+      volunteerList[existIdx] = volData;
+    } else {
+      volunteerList.push(volData);
+    }
+
+    localStorage.setItem(VOL_KEY, JSON.stringify(volunteerList));
+    $('#volModal').classList.remove('open');
+    renderVolTable();
+    updateVolunteerStats();
+    alert('✅ 志愿者信息已保存！');
+  }
+
+  function exportVolunteersExcel() {
+    if (typeof XLSX === 'undefined') { alert('xlsx 库加载失败，请检查网络连接。'); return; }
+
+    var rows = [];
+    rows.push(['序号', '姓名', '专业', '年级', '联系电话', '技能标签', '服务时长', '参与活动', '入职日期']);
+    
+    volunteerList.forEach(function(v, i) {
+      rows.push([
+        i + 1,
+        v.name,
+        v.major,
+        v.grade || '',
+        v.phone || '',
+        (v.skills || []).join(', '),
+        (v.serviceHours || 0) + 'h',
+        (v.activitiesCount || 0) + '次',
+        v.joinDate || ''
+      ]);
+    });
+
+    var ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = [{ wch: 6 }, { wch: 12 }, { wch: 16 }, { wch: 8 }, { wch: 14 }, { wch: 20 }, { wch: 10 }, { wch: 10 }, { wch: 12 }];
+
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, '志愿者花名册');
+
+    var filename = '水韵农青志愿者花名册_' + new Date().toISOString().slice(0,10) + '.xlsx';
+    XLSX.writeFile(wb, filename);
+  }
+
+  // 志愿者事件绑定
+  $('#btnAddVolunteer').addEventListener('click', function() { openVolModal(null); });
+  $('#volModalClose').addEventListener('click', function() { $('#volModal').classList.remove('open'); });
+  $('#btnCancelVol').addEventListener('click', function() { $('#volModal').classList.remove('open'); });
+  $('#btnSaveVol').addEventListener('click', saveVolunteer);
+  $('#btnExportVolunteers').addEventListener('click', exportVolunteersExcel);
+  
+  $('#volTableBody').addEventListener('click', function(e) {
+    var eb = e.target.closest('.edit-vol');
+    if (eb) {
+      var vol = volunteerList.find(function(v) { return v.id === eb.dataset.id; });
+      if (vol) openVolModal(vol);
+      return;
+    }
+    var db = e.target.closest('.del-vol');
+    if (db && confirm('确定删除此志愿者？')) {
+      volunteerList = volunteerList.filter(function(v) { return v.id !== db.dataset.id; });
+      localStorage.setItem(VOL_KEY, JSON.stringify(volunteerList));
+      renderVolTable();
+      updateVolunteerStats();
+    }
+  });
+
+  $('#volFilterSearch').addEventListener('input', renderVolTable);
+  $('#volFilterSkill').addEventListener('change', renderVolTable);
+
+  /* ========== 排班管理 ========== */
+  var SCH_KEY = 'water_youth_schedules';
+  var scheduleList = [];
+
+  function loadScheduleData() {
+    scheduleList = JSON.parse(localStorage.getItem(SCH_KEY) || '[]');
+    renderSchTable();
+  }
+
+  function renderSchTable() {
+    var kw = $('#schFilterSearch') ? $('#schFilterSearch').value.trim().toLowerCase() : '';
+    var status = $('#schFilterStatus') ? $('#schFilterStatus').value : '';
+    var date = $('#schFilterDate') ? $('#schFilterDate').value : '';
+    
+    var filtered = scheduleList.filter(function(s) {
+      if (status && s.status !== status) return false;
+      if (date && s.date !== date) return false;
+      if (kw) {
+        var str = (s.activity + ' ' + s.leader + ' ' + (s.volunteers || []).join(' ')).toLowerCase();
+        if (str.indexOf(kw) === -1) return false;
+      }
+      return true;
+    });
+
+    var tbody = $('#schTableBody');
+    var em = $('#schEmpty');
+    
+    if (!filtered.length) {
+      tbody.innerHTML = '';
+      em.style.display = 'block';
+      return;
+    }
+    
+    em.style.display = 'none';
+    tbody.innerHTML = filtered.map(function(s, i) {
+      var statusMap = {
+        'pending': '<span class="badge" style="background:#fefcbf;color:#d69e2e;">待执行</span>',
+        'ongoing': '<span class="badge" style="background:#e0f7fa;color:#019aaa;">进行中</span>',
+        'completed': '<span class="badge" style="background:#c6f6d5;color:#38a169;">已完成</span>',
+        'cancelled': '<span class="badge" style="background:#fed7d7;color:#e53e3e;">已取消</span>'
+      };
+      
+      var volNames = (s.volunteers || []).map(function(vid) {
+        var vol = volunteerList.find(function(v) { return v.id === vid; });
+        return vol ? vol.name : vid;
+      }).join(', ');
+      
+      return '<tr>'
+        + '<td>' + (i+1) + '</td>'
+        + '<td><b>' + s.activity + '</b></td>'
+        + '<td>' + s.date + '</td>'
+        + '<td>' + s.startTime + '-' + s.endTime + '</td>'
+        + '<td>' + (s.location || '-') + '</td>'
+        + '<td>' + (s.leader || '-') + '</td>'
+        + '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (volNames || '-') + '</td>'
+        + '<td>' + (statusMap[s.status] || s.status) + '</td>'
+        + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
+        + '<button class="btn btn-sm btn-primary edit-sch" data-id="' + s.id + '">✏️</button>'
+        + '<button class="btn btn-sm btn-danger del-sch" data-id="' + s.id + '">🗑</button>'
+        + '</div></td></tr>';
+    }).join('');
+  }
+
+  function openSchModal(sch) {
+    // 渲染志愿者多选框
+    var checkboxesHtml = volunteerList.map(function(v) {
+      return '<label style="display:block; padding:4px 0; cursor:pointer;">'
+        + '<input type="checkbox" class="sch-vol-cb" value="' + v.id + '"> '
+        + v.name + ' (' + v.major + ')</label>';
+    }).join('');
+    $('#schVolunteersCheckboxes').innerHTML = checkboxesHtml || '<p style="color:var(--ink-3);">暂无志愿者数据</p>';
+
+    if (sch) {
+      $('#schModalTitle').textContent = '编辑排班';
+      $('#schId').value = sch.id;
+      $('#schActivity').value = sch.activity;
+      $('#schDate').value = sch.date;
+      $('#schStartTime').value = sch.startTime;
+      $('#schEndTime').value = sch.endTime;
+      $('#schLocation').value = sch.location || '';
+      $('#schLeader').value = sch.leader || '';
+      $('#schNote').value = sch.note || '';
+      
+      // 勾选已选志愿者
+      (sch.volunteers || []).forEach(function(vid) {
+        var cb = $('#schVolunteersCheckboxes input[value="' + vid + '"]');
+        if (cb) cb.checked = true;
+      });
+    } else {
+      $('#schModalTitle').textContent = '新建排班';
+      $('#schId').value = 'sch-' + Date.now().toString(36);
+      $('#schActivity').value = '';
+      $('#schDate').value = new Date().toISOString().slice(0, 10);
+      $('#schStartTime').value = '09:00';
+      $('#schEndTime').value = '17:00';
+      $('#schLocation').value = '';
+      $('#schLeader').value = '';
+      $('#schNote').value = '';
+    }
+    $('#schModal').classList.add('open');
+  }
+
+  function checkScheduleConflict(date, startTime, endTime, excludeId) {
+    return scheduleList.find(function(s) {
+      if (s.id === excludeId) return false;
+      if (s.date !== date) return false;
+      if (s.status === 'cancelled') return false;
+      
+      // 时间重叠检测
+      var sStart = startTime.replace(':', '');
+      var sEnd = endTime.replace(':', '');
+      var eStart = s.startTime.replace(':', '');
+      var eEnd = s.endTime.replace(':', '');
+      
+      return (sStart < eEnd && sEnd > eStart);
+    });
+  }
+
+  function saveSchedule() {
+    var activity = $('#schActivity').value.trim();
+    var date = $('#schDate').value;
+    var startTime = $('#schStartTime').value;
+    var endTime = $('#schEndTime').value;
+    
+    if (!activity || !date || !startTime || !endTime) {
+      alert('请填写完整信息！');
+      return;
+    }
+
+    // 检查时间冲突
+    var id = $('#schId').value;
+    var conflict = checkScheduleConflict(date, startTime, endTime, id);
+    if (conflict) {
+      if (!confirm('⚠️ 与排班「' + conflict.activity + '」时间冲突，是否继续？')) {
+        return;
+      }
+    }
+
+    // 获取选中的志愿者
+    var selectedVols = [];
+    $$('#schVolunteersCheckboxes input:checked').forEach(function(cb) {
+      selectedVols.push(cb.value);
+    });
+
+    var schData = {
+      id: id,
+      activity: activity,
+      date: date,
+      startTime: startTime,
+      endTime: endTime,
+      location: $('#schLocation').value.trim(),
+      leader: $('#schLeader').value.trim(),
+      volunteers: selectedVols,
+      note: $('#schNote').value.trim(),
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    };
+
+    var existIdx = scheduleList.findIndex(function(s) { return s.id === id; });
+    if (existIdx >= 0) {
+      schData.status = scheduleList[existIdx].status;
+      schData.createdAt = scheduleList[existIdx].createdAt;
+      scheduleList[existIdx] = schData;
+    } else {
+      scheduleList.push(schData);
+    }
+
+    localStorage.setItem(SCH_KEY, JSON.stringify(scheduleList));
+    $('#schModal').classList.remove('open');
+    renderSchTable();
+    alert('✅ 排班已保存！');
+  }
+
+  // 排班事件绑定
+  $('#btnAddSchedule').addEventListener('click', function() { openSchModal(null); });
+  $('#schModalClose').addEventListener('click', function() { $('#schModal').classList.remove('open'); });
+  $('#btnCancelSch').addEventListener('click', function() { $('#schModal').classList.remove('open'); });
+  $('#btnSaveSch').addEventListener('click', saveSchedule);
+  
+  $('#schTableBody').addEventListener('click', function(e) {
+    var eb = e.target.closest('.edit-sch');
+    if (eb) {
+      var sch = scheduleList.find(function(s) { return s.id === eb.dataset.id; });
+      if (sch) openSchModal(sch);
+      return;
+    }
+    var db = e.target.closest('.del-sch');
+    if (db && confirm('确定删除此排班？')) {
+      scheduleList = scheduleList.filter(function(s) { return s.id !== db.dataset.id; });
+      localStorage.setItem(SCH_KEY, JSON.stringify(scheduleList));
+      renderSchTable();
+    }
+  });
+
+  $('#schFilterSearch').addEventListener('input', renderSchTable);
+  $('#schFilterStatus').addEventListener('change', renderSchTable);
+  $('#schFilterDate').addEventListener('change', renderSchTable);
+
+  /* ========== 数据大屏 ========== */
+  function loadDashboardData() {
+    var totalVol = volunteerList.length;
+    var totalAct = actList.length;
+    var totalHours = volunteerList.reduce(function(s, v) { return s + (v.serviceHours || 0); }, 0);
+    var totalPartner = 7; // 合作单位数量
+
+    $('#dashTotalVol').textContent = totalVol;
+    $('#dashTotalAct').textContent = totalAct;
+    $('#dashTotalHours').textContent = totalHours + 'h';
+    $('#dashTotalPartner').textContent = totalPartner;
+
+    renderActivityTrend();
+    renderServiceTypeChart();
+    renderVolRanking();
+    renderRecentActivities();
+    renderSkillDistribution();
+  }
+
+  function renderActivityTrend() {
+    var canvas = $('#dashActivityTrend');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var width = canvas.width = canvas.parentElement.offsetWidth;
+    var height = canvas.height = 220;
+    ctx.clearRect(0, 0, width, height);
+
+    var months = {};
+    for (var m = 1; m <= 12; m++) months[m] = 0;
+    
+    actList.forEach(function(a) {
+      if (a.createdAt) {
+        var month = new Date(a.createdAt).getMonth() + 1;
+        months[month]++;
+      }
+    });
+
+    var vals = Object.values(months);
+    var maxVal = Math.max.apply(null, vals) || 1;
+    var startX = 40;
+    var endX = width - 20;
+    var stepX = (endX - startX) / 11;
+    var chartHeight = height - 60;
+
+    // 绘制网格
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 1;
+    for (var i = 0; i <= 4; i++) {
+      var y = 30 + (chartHeight / 4) * i;
+      ctx.beginPath();
+      ctx.moveTo(startX, y);
+      ctx.lineTo(endX, y);
+      ctx.stroke();
+    }
+
+    // 绘制柱状图
+    var barWidth = Math.min(30, stepX - 10);
+    for (var m = 1; m <= 12; m++) {
+      var x = startX + (m-1) * stepX;
+      var barHeight = (months[m] / maxVal) * chartHeight;
+      var y = 30 + chartHeight - barHeight;
+
+      ctx.fillStyle = '#019aaa';
+      ctx.fillRect(x - barWidth/2, y, barWidth, barHeight);
+
+      ctx.fillStyle = '#4a5568';
+      ctx.font = '10px Noto Sans SC';
+      ctx.textAlign = 'center';
+      ctx.fillText(m + '月', x, height - 10);
+      
+      if (months[m] > 0) {
+        ctx.fillStyle = '#1a1a2e';
+        ctx.fillText(months[m], x, y - 5);
+      }
+    }
+  }
+
+  function renderServiceTypeChart() {
+    var canvas = $('#dashServiceType');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var width = canvas.width = canvas.parentElement.offsetWidth;
+    var height = canvas.height = 220;
+    ctx.clearRect(0, 0, width, height);
+
+    var types = { '篇章活动': 0, '菜单课程': 0 };
+    actList.forEach(function(a) {
+      if (a.type === 'chapter') types['篇章活动']++;
+      else types['菜单课程']++;
+    });
+
+    var cats = Object.keys(types);
+    var total = cats.reduce(function(s, c) { return s + types[c]; }, 0) || 1;
+    var colors = ['#019aaa', '#38a169'];
+    var centerX = width / 2;
+    var centerY = height / 2;
+    var radius = Math.min(width, height) / 2 - 30;
+
+    var startAngle = -Math.PI / 2;
+    cats.forEach(function(cat, i) {
+      var sliceAngle = (types[cat] / total) * Math.PI * 2;
+      
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+      ctx.fillStyle = colors[i];
+      ctx.fill();
+
+      // 标签
+      var midAngle = startAngle + sliceAngle / 2;
+      var labelX = centerX + Math.cos(midAngle) * (radius * 0.6);
+      var labelY = centerY + Math.sin(midAngle) * (radius * 0.6);
+      
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 12px Noto Sans SC';
+      ctx.textAlign = 'center';
+      ctx.fillText(types[cat], labelX, labelY);
+      
+      ctx.fillStyle = '#4a5568';
+      ctx.font = '11px Noto Sans SC';
+      ctx.fillText(cat, labelX, labelY + 15);
+
+      startAngle += sliceAngle;
+    });
+  }
+
+  function renderVolRanking() {
+    var container = $('#dashVolRanking');
+    if (!container) return;
+
+    var sorted = volunteerList.slice().sort(function(a, b) {
+      return (b.serviceHours || 0) - (a.serviceHours || 0);
+    }).slice(0, 10);
+
+    if (!sorted.length) {
+      container.innerHTML = '<p style="text-align:center;color:var(--ink-3);padding:20px;">暂无数据</p>';
+      return;
+    }
+
+    container.innerHTML = sorted.map(function(v, i) {
+      var medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
+      return '<div style="display:flex;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;">'
+        + '<span style="width:24px;font-size:14px;">' + medal + '</span>'
+        + '<span style="flex:1;font-weight:500;">' + v.name + '</span>'
+        + '<span style="color:var(--leaf);font-weight:600;">' + (v.serviceHours || 0) + 'h</span>'
+        + '</div>';
+    }).join('');
+  }
+
+  function renderRecentActivities() {
+    var container = $('#dashRecentActivities');
+    if (!container) return;
+
+    var sorted = actList.slice().sort(function(a, b) {
+      return (b.createdAt || '').localeCompare(a.createdAt || '');
+    }).slice(0, 5);
+
+    if (!sorted.length) {
+      container.innerHTML = '<p style="text-align:center;color:var(--ink-3);padding:20px;">暂无数据</p>';
+      return;
+    }
+
+    container.innerHTML = sorted.map(function(a) {
+      return '<div style="padding:8px 0;border-bottom:1px solid #f0f0f0;">'
+        + '<div style="font-weight:500;font-size:13px;">' + a.title + '</div>'
+        + '<div style="font-size:11px;color:var(--ink-3);">' + (a.category || '') + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  function renderSkillDistribution() {
+    var canvas = $('#dashSkillDist');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var width = canvas.width = canvas.parentElement.offsetWidth;
+    var height = canvas.height = 200;
+    ctx.clearRect(0, 0, width, height);
+
+    var skillCount = {};
+    volunteerList.forEach(function(v) {
+      (v.skills || []).forEach(function(s) {
+        skillCount[s] = (skillCount[s] || 0) + 1;
+      });
+    });
+
+    var skills = Object.keys(skillCount);
+    if (!skills.length) {
+      ctx.fillStyle = '#a0aec0';
+      ctx.font = '14px Noto Sans SC';
+      ctx.textAlign = 'center';
+      ctx.fillText('暂无技能数据', width/2, height/2);
+      return;
+    }
+
+    var maxVal = Math.max.apply(null, skills.map(function(s) { return skillCount[s]; }));
+    var barHeight = Math.min(25, (height - 20) / skills.length - 5);
+    var startY = 10;
+
+    skills.forEach(function(skill, i) {
+      var y = startY + i * (barHeight + 5);
+      var barWidth = (skillCount[skill] / maxVal) * (width - 100);
+
+      ctx.fillStyle = '#019aaa';
+      ctx.fillRect(80, y, barWidth, barHeight);
+
+      ctx.fillStyle = '#4a5568';
+      ctx.font = '11px Noto Sans SC';
+      ctx.textAlign = 'right';
+      ctx.fillText(skill, 75, y + barHeight/2 + 4);
+
+      ctx.fillStyle = '#1a1a2e';
+      ctx.textAlign = 'left';
+      ctx.fillText(skillCount[skill], barWidth + 85, y + barHeight/2 + 4);
+    });
+  }
+
+  $('#dashTimeRange').addEventListener('change', loadDashboardData);
+
+  /* ========== 初始化 ========== */
+  loadData();
+  loadApplyData();
+  loadBookingData();
+  loadBudgetFromStorage();
+  loadReimbursementData();
+  loadExpenseData();
+  loadFinanceStats();
+  loadVolunteerData();
+  loadScheduleData();
+  loadDashboardData();
 })();
 </script>
 </body>
