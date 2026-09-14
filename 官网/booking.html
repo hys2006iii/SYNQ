@@ -132,6 +132,20 @@
       margin-top: 16px; padding: 8px 24px; background: var(--teal-accent);
       color: #fff; border: none; border-radius: 6px; cursor: pointer;
     }
+    @media (max-width: 600px) {
+      .page-header { padding: 32px 16px; }
+      .page-header h1 { font-size: 24px; }
+      .form-container { padding: 0 16px 32px; }
+      .form-card { padding: 20px; }
+      .nav-wrap { padding: 0 16px; }
+      .brand .word { font-size: 20px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 380px) {
+      .form-card { padding: 16px; }
+      .form-group label { font-size: 13px; }
+      .form-group input, .form-group select, .form-group textarea { font-size: 13px; padding: 8px 12px; }
+    }
   </style>
 </head>
 <body>
