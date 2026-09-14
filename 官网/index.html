@@ -873,13 +873,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .ending-thanks-box p:last-child { margin-bottom: 0; }
 
-@media (max-width: 900px) {
+/* ============================================================
+   手机端适配 (Mobile Responsive)
+   ============================================================ */
+
+/* 平板和大屏手机 (max-width: 1024px) */
+@media (max-width: 1024px) {
   .fp-nav { display: none; }
   .hero-box, .origin-layout-rich, .serv-stage, .join-layout-rich, .pf-coop-grid, .ending-hero {
     grid-template-columns: 1fr; gap: 14px;
   }
   .menu-cards-grid { grid-template-columns: 1fr 1fr; }
-  .honors-row, .metrics-row, .vision-row-dark, .coop-types-grid, .join-roles-grid { grid-template-columns: 1fr; }
+  .honors-row, .metrics-row, .vision-row-dark, .coop-types-grid, .join-roles-grid { 
+    grid-template-columns: 1fr; 
+  }
   .nav-links { display: none; }
   .nav-toggle { display: block; }
   .nav-links.open {
@@ -906,12 +913,363 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .join-roles-grid { gap: 12px; }
   .join-role-box { padding: 16px; }
   .pf-coop-grid { gap: 12px; }
+  
+  /* 手机端卡片优化 */
+  .real-card { padding: 16px; }
+  .sec-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .sec-head .lead { text-align: left; max-width: 100%; }
+  
+  /* 手机端导航栏优化 */
+  .hdr { height: auto; }
+  .nav-wrap { height: 60px; padding: 0 16px; }
+  .brand .word { font-size: 22px; }
+  .brand img { height: 36px; }
+  
+  /* 手机端滚动提示优化 */
+  .scroll-hint-bar { bottom: 12px; }
+  .fp-section:not(#top):not(#ending) .scroll-hint-bar { 
+    left: 12px; bottom: 50%; 
+  }
+  .fp-section:not(#top):not(#ending) .scroll-hint-bar span:last-child { 
+    writing-mode: horizontal-tb; 
+  }
 }
+
+/* 中等屏幕手机 (max-width: 768px) */
+@media (max-width: 768px) {
+  .hero-title { font-size: clamp(45px, 14vw, 90px); }
+  .hero-slogan { font-size: clamp(14px, 3.5vw, 20px); letter-spacing: 0.1em; }
+  .hero-desc { font-size: 13px; line-height: 1.6; }
+  .hero-kicker { font-size: 13px; letter-spacing: 0.1em; }
+  
+  /* 卡片内容折叠优化 */
+  .origin-list-rich li { font-size: 13px; padding: 6px 10px; }
+  .origin-tags-rich span { font-size: 11px; padding: 2px 8px; }
+  .origin-quote-box { font-size: 12px; padding: 8px 12px; }
+  
+  /* 服务篇章优化 */
+  .chap-tab-pills { gap: 6px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+  .chap-pill { font-size: 12px; padding: 6px 12px; white-space: nowrap; }
+  .serv-spotlight { padding: 16px; }
+  .serv-spotlight h3 { font-size: 20px; }
+  .serv-spotlight .desc { font-size: 13px; }
+  .serv-acts-deck { grid-template-columns: 1fr; }
+  .serv-act-item { padding: 12px; }
+  
+  /* 创新理念卡片优化 */
+  .innov-grid-dark { grid-template-columns: 1fr; }
+  .innov-card-item { padding: 16px; }
+  .innov-card-item h3 { font-size: 17px; }
+  .innov-card-item p { font-size: 13px; }
+  .innov-pill-row span { font-size: 10px; padding: 2px 6px; }
+  
+  /* 发展成效优化 */
+  .honors-row { grid-template-columns: 1fr; }
+  .honor-gold-card { padding: 14px; }
+  .honor-gold-card h4 { font-size: 15px; }
+  .metrics-row { grid-template-columns: repeat(2, 1fr); }
+  .metric-box { padding: 14px 10px; }
+  .metric-box .m-num { font-size: clamp(24px, 3vw, 32px); }
+  .metric-box .m-title { font-size: 13px; }
+  .efforts-strip-gallery { grid-template-columns: 1fr 1fr; }
+  .eff-snap-card { padding: 8px; }
+  .eff-snap-card img { width: 36px; height: 36px; }
+  .eff-snap-text h5 { font-size: 12px; }
+  .eff-snap-text p { font-size: 10px; }
+  .partner-band-dark { flex-direction: column; align-items: flex-start; }
+  
+  /* 愿景规划优化 */
+  .vision-row-dark { grid-template-columns: 1fr; }
+  .vision-col-box { padding: 16px; }
+  .vision-col-box .v-no { font-size: 24px; }
+  .vision-col-box h3 { font-size: 17px; }
+  .vision-col-box .lead-p { font-size: 12px; }
+  .vision-col-box ul li { font-size: 11px; }
+  
+  /* 加入我们优化 */
+  .join-layout-rich { grid-template-columns: 1fr; }
+  .join-main-card { padding: 16px; }
+  .join-main-card h3 { font-size: 18px; }
+  .join-main-card .sub { font-size: 13px; }
+  .join-role-box { padding: 12px; }
+  .join-role-box h4 { font-size: 13px; }
+  .join-role-box p { font-size: 11px; }
+  .join-contact-strip { flex-direction: column; gap: 12px; }
+  .join-contact-left { flex-direction: column; align-items: stretch; }
+  .join-side-card { padding: 16px; }
+  .join-step-row div b { font-size: 13px; }
+  .join-step-row div p { font-size: 11px; }
+  .join-rewards-list { font-size: 12px; padding: 10px 12px; }
+  
+  /* 单位合作优化 */
+  .pf-coop-grid { grid-template-columns: 1fr; }
+  .pf-coop-main { padding: 16px; }
+  .pf-coop-main h3 { font-size: 18px; }
+  .pf-coop-main .sub { font-size: 12px; }
+  .coop-types-grid { grid-template-columns: 1fr; }
+  .coop-type-card { padding: 10px; }
+  .coop-type-card b { font-size: 12px; }
+  .coop-type-card span { font-size: 10px; }
+  .coop-deliver-strip { flex-direction: column; gap: 8px; text-align: center; }
+  .pf-coop-side { padding: 16px; }
+  .coop-workflow-rows { grid-template-columns: 1fr; }
+  .coop-contact-box { flex-direction: column; gap: 12px; }
+  
+  /* 尾页优化 */
+  .ending-hero { grid-template-columns: 1fr; }
+  .ending-hero-content { padding: 0 8px; }
+  .ending-thanks-box { padding: 16px; }
+  .ending-thanks-box h3 { font-size: 18px; }
+  .ending-thanks-box p { font-size: 12px; }
+  
+  /* 底部导航优化 */
+  .pf-footer-bar { padding: 12px 16px; }
+  .footer-nav-tags { gap: 10px; }
+  .footer-nav-tags a { font-size: 12px; }
+  .footer-copy-bar { flex-direction: column; gap: 8px; text-align: center; }
+}
+
+/* 小屏手机 (max-width: 480px) */
 @media (max-width: 480px) {
-  .hero-title { font-size: clamp(40px, 14vw, 70px); }
-  .hero-kicker { font-size: 13px; }
-  .menu-cards-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: clamp(40px, 16vw, 80px); }
+  .hero-kicker { font-size: 12px; letter-spacing: 0.08em; }
+  .hero-slogan { font-size: clamp(13px, 3vw, 18px); }
+  .hero-desc { font-size: 12px; line-height: 1.5; }
+  .hero-actions a { padding: 8px 16px; font-size: 14px; }
+  
+  /* 导航栏优化 */
   .nav-act-btn { display: none; }
+  .brand .word { font-size: 20px; }
+  .nav-links.open { padding: 12px 16px; }
+  .nav-links.open a { padding: 10px; font-size: 14px; }
+  
+  /* 卡片内容进一步折叠 */
+  .real-card { padding: 12px; }
+  .origin-card-rich { padding: 12px; }
+  .origin-card-rich h3 { font-size: 16px; }
+  .origin-list-rich li { font-size: 12px; }
+  .origin-list-rich li b { font-size: 13px; }
+  .origin-tags-rich { gap: 6px; }
+  .origin-tags-rich span { font-size: 10px; }
+  .origin-quote-box { font-size: 11px; padding: 6px 10px; }
+  .origin-bottom-traits { grid-template-columns: 1fr; }
+  .trait-box { padding: 10px 12px; }
+  .trait-text h4 { font-size: 14px; }
+  .trait-text p { font-size: 11px; }
+  
+  /* 服务篇章进一步优化 */
+  .chap-tab-pills { gap: 4px; }
+  .chap-pill { font-size: 11px; padding: 5px 10px; }
+  .serv-spotlight { padding: 12px; }
+  .serv-spotlight h3 { font-size: 18px; }
+  .serv-spotlight .desc { font-size: 12px; }
+  .serv-side-card { padding: 12px; }
+  .serv-photo-showcase { aspect-ratio: 16/9; }
+  
+  /* 创新理念进一步优化 */
+  .innov-card-item { padding: 12px; }
+  .innov-card-item h3 { font-size: 16px; }
+  .innov-card-item p { font-size: 12px; }
+  .innov-pill-row span { font-size: 9px; }
+  
+  /* 发展成效进一步优化 */
+  .honor-gold-card { padding: 12px; }
+  .honor-gold-card h4 { font-size: 14px; }
+  .honor-gold-card .badge { font-size: 10px; }
+  .metrics-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .metric-box { padding: 12px 8px; }
+  .metric-box .m-num { font-size: clamp(22px, 2.8vw, 30px); }
+  .metric-box .m-title { font-size: 12px; }
+  .metric-box .m-sub { font-size: 10px; }
+  .efforts-strip-gallery { grid-template-columns: 1fr; }
+  .eff-snap-card { padding: 8px; gap: 8px; }
+  .eff-snap-card img { width: 32px; height: 32px; }
+  .eff-snap-text h5 { font-size: 11px; }
+  .eff-snap-text p { font-size: 9px; }
+  .partner-band-dark { padding: 10px 14px; }
+  .partner-band-dark h5 { font-size: 13px; }
+  .partner-tags-deck span { font-size: 10px; padding: 2px 8px; }
+  
+  /* 愿景规划进一步优化 */
+  .vision-col-box { padding: 12px; }
+  .vision-col-box .v-no { font-size: 20px; }
+  .vision-col-box h3 { font-size: 16px; }
+  .vision-col-box .lead-p { font-size: 11px; }
+  .vision-col-box ul { gap: 6px; padding-top: 8px; }
+  .vision-col-box ul li { font-size: 10px; gap: 6px; }
+  
+  /* 加入我们进一步优化 */
+  .join-main-card { padding: 12px; }
+  .join-main-card h3 { font-size: 16px; }
+  .join-main-card .sub { font-size: 12px; }
+  .join-role-box { padding: 10px; }
+  .join-role-box h4 { font-size: 12px; }
+  .join-role-box p { font-size: 10px; }
+  .join-role-box .tag { font-size: 9px; }
+  .join-contact-strip { padding: 10px 14px; }
+  .join-qq-badge { font-size: 12px; }
+  .join-qq-badge b { font-size: 13px; }
+  .join-side-card { padding: 12px; }
+  .join-side-card h4 { font-size: 15px; }
+  .join-step-list { gap: 8px; }
+  .join-step-row { gap: 8px; }
+  .join-step-row .num { width: 20px; height: 20px; font-size: 10px; }
+  .join-step-row div b { font-size: 12px; }
+  .join-step-row div p { font-size: 10px; }
+  .join-rewards-list { font-size: 11px; padding: 8px 10px; }
+  
+  /* 单位合作进一步优化 */
+  .pf-coop-main { padding: 12px; }
+  .pf-coop-main h3 { font-size: 16px; }
+  .pf-coop-main .sub { font-size: 11px; }
+  .coop-types-grid { gap: 8px; }
+  .coop-type-card { padding: 8px; }
+  .coop-type-card b { font-size: 11px; }
+  .coop-type-card span { font-size: 9px; }
+  .coop-deliver-strip { padding: 8px 12px; }
+  .coop-deliver-strip span { font-size: 11px; }
+  .pf-coop-side { padding: 12px; }
+  .pf-coop-side h4 { font-size: 14px; }
+  .workflow-item { padding: 6px 8px; }
+  .workflow-item b { font-size: 11px; }
+  .workflow-item p { font-size: 9px; }
+  
+  /* 尾页进一步优化 */
+  .ending-hero-content { padding: 0 4px; }
+  .ending-kicker { font-size: 12px; }
+  .ending-title { font-size: clamp(40px, 12vw, 70px); }
+  .ending-slogan { font-size: clamp(11px, 2.5vw, 15px); letter-spacing: 0.15em; }
+  .ending-desc { font-size: 11px; line-height: 1.6; }
+  .ending-actions a { padding: 8px 16px; font-size: 13px; }
+  .ending-tags { gap: 8px; }
+  .ending-tags span { font-size: 11px; padding: 4px 10px; }
+  .ending-thanks-box { padding: 12px; }
+  .ending-thanks-box h3 { font-size: 16px; margin-bottom: 12px; }
+  .ending-thanks-box p { font-size: 11px; line-height: 1.6; }
+  
+  /* 底部导航进一步优化 */
+  .pf-footer-bar { padding: 10px 12px; }
+  .footer-nav-tags { gap: 8px; }
+  .footer-nav-tags a { font-size: 11px; }
+  .footer-copy-bar { font-size: 10px; }
+  .footer-copy-bar .motto { font-size: 11px; }
+  .back-top-btn { padding: 3px 10px; font-size: 10px; }
+  
+  /* 管理端登录弹窗优化 */
+  #adminLoginModal > div { padding: 24px; margin: 16px; }
+  #adminLoginModal h3 { font-size: 18px; }
+  #adminLoginModal input { padding: 8px 12px; font-size: 13px; }
+  #adminLoginModal button { padding: 8px; font-size: 13px; }
+  
+  /* 开发中弹窗优化 */
+  .dev-modal-box { padding: 24px 30px; margin: 16px; }
+  .dev-modal-box h3 { font-size: 1.2rem; }
+  .dev-modal-box p { font-size: 0.9rem; }
+}
+
+/* 超小屏手机 (max-width: 360px) */
+@media (max-width: 360px) {
+  .hero-title { font-size: clamp(36px, 18vw, 72px); }
+  .hero-kicker { font-size: 11px; }
+  .hero-slogan { font-size: clamp(12px, 2.8vw, 16px); }
+  .hero-desc { font-size: 11px; }
+  .hero-actions a { padding: 7px 14px; font-size: 13px; }
+  
+  /* 导航栏进一步优化 */
+  .brand .word { font-size: 18px; }
+  .brand img { height: 32px; }
+  .nav-wrap { height: 56px; }
+  
+  /* 卡片内容极致折叠 */
+  .real-card { padding: 10px; }
+  .origin-card-rich { padding: 10px; }
+  .origin-card-rich h3 { font-size: 15px; }
+  .origin-list-rich li { font-size: 11px; padding: 5px 8px; }
+  .origin-list-rich li b { font-size: 12px; }
+  .origin-tags-rich { gap: 4px; }
+  .origin-tags-rich span { font-size: 9px; padding: 1px 6px; }
+  .origin-quote-box { font-size: 10px; padding: 5px 8px; }
+  .origin-bottom-traits { gap: 8px; }
+  .trait-box { padding: 8px 10px; }
+  .trait-mark { width: 36px; height: 36px; font-size: 18px; }
+  .trait-text h4 { font-size: 13px; }
+  .trait-text p { font-size: 10px; }
+  
+  /* 服务篇章极致优化 */
+  .chap-pill { font-size: 10px; padding: 4px 8px; }
+  .serv-spotlight { padding: 10px; }
+  .serv-spotlight h3 { font-size: 16px; }
+  .serv-spotlight .desc { font-size: 11px; }
+  .serv-act-item { padding: 10px; }
+  .serv-act-item h5 { font-size: 13px; }
+  .serv-act-item p { font-size: 10px; }
+  
+  /* 创新理念极致优化 */
+  .innov-card-item { padding: 10px; }
+  .innov-card-item h3 { font-size: 15px; }
+  .innov-card-item p { font-size: 11px; }
+  .innov-pill-row { gap: 4px; }
+  .innov-pill-row span { font-size: 8px; padding: 1px 4px; }
+  
+  /* 发展成效极致优化 */
+  .honor-gold-card { padding: 10px; }
+  .honor-gold-card h4 { font-size: 13px; }
+  .honor-gold-card .yr { font-size: 10px; }
+  .honor-gold-card .badge { font-size: 9px; }
+  .metric-box { padding: 10px 6px; }
+  .metric-box .m-num { font-size: clamp(20px, 2.5vw, 28px); }
+  .metric-box .m-title { font-size: 11px; }
+  .metric-box .m-sub { font-size: 9px; }
+  .eff-snap-card { padding: 6px; gap: 6px; }
+  .eff-snap-card img { width: 28px; height: 28px; }
+  .eff-snap-text h5 { font-size: 10px; }
+  .eff-snap-text p { font-size: 8px; }
+  
+  /* 愿景规划极致优化 */
+  .vision-col-box { padding: 10px; }
+  .vision-col-box .v-no { font-size: 18px; }
+  .vision-col-box h3 { font-size: 15px; }
+  .vision-col-box .lead-p { font-size: 10px; }
+  .vision-col-box ul li { font-size: 9px; }
+  
+  /* 加入我们极致优化 */
+  .join-main-card { padding: 10px; }
+  .join-main-card h3 { font-size: 15px; }
+  .join-main-card .sub { font-size: 11px; }
+  .join-role-box { padding: 8px; }
+  .join-role-box h4 { font-size: 11px; }
+  .join-role-box p { font-size: 9px; }
+  .join-step-row .num { width: 18px; height: 18px; font-size: 9px; }
+  .join-step-row div b { font-size: 11px; }
+  .join-step-row div p { font-size: 9px; }
+  
+  /* 单位合作极致优化 */
+  .pf-coop-main { padding: 10px; }
+  .pf-coop-main h3 { font-size: 15px; }
+  .pf-coop-main .sub { font-size: 10px; }
+  .coop-type-card { padding: 6px; }
+  .coop-type-card b { font-size: 10px; }
+  .coop-type-card span { font-size: 8px; }
+  .workflow-item { padding: 5px 6px; }
+  .workflow-item b { font-size: 10px; }
+  .workflow-item p { font-size: 8px; }
+  
+  /* 尾页极致优化 */
+  .ending-kicker { font-size: 11px; }
+  .ending-title { font-size: clamp(36px, 14vw, 64px); }
+  .ending-slogan { font-size: clamp(10px, 2.2vw, 14px); }
+  .ending-desc { font-size: 10px; }
+  .ending-tags span { font-size: 10px; padding: 3px 8px; }
+  .ending-thanks-box { padding: 10px; }
+  .ending-thanks-box h3 { font-size: 15px; }
+  .ending-thanks-box p { font-size: 10px; }
+  
+  /* 底部导航极致优化 */
+  .pf-footer-bar { padding: 8px 10px; }
+  .footer-nav-tags { gap: 6px; }
+  .footer-nav-tags a { font-size: 10px; }
+  .footer-copy-bar { font-size: 9px; }
+  .footer-copy-bar .motto { font-size: 10px; }
 }
 
 /* 开发中弹窗 */
