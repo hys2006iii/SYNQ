@@ -878,6 +878,42 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .menu-cards-grid { grid-template-columns: 1fr 1fr; }
   .honors-row, .metrics-row, .vision-row-dark, .coop-types-grid, .join-roles-grid { grid-template-columns: 1fr; }
 }
+
+/* 开发中弹窗 */
+.dev-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+.dev-modal-overlay.active { display: flex; }
+.dev-modal-box {
+  background: #1e4d4a;
+  color: #fff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn { from { transform: scale(0.8); opacity: 0; } }
+.dev-modal-box h3 { font-size: 1.5rem; margin-bottom: 12px; }
+.dev-modal-box p { font-size: 1rem; color: #b2dfdb; margin-bottom: 20px; }
+.dev-modal-box .btn-modal-close {
+  background: #1fb892;
+  color: #fff;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.dev-modal-box .btn-modal-close:hover { background: #17a07d; }
 </style>
 </head>
 <body>
@@ -942,7 +978,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
               以<em>农工为特色</em>，以<em>创新为底色</em>。把高校实验室里的前沿科研成果，转译为中小学生听得懂、摸得着的科学探索课堂。
             </p>
             <div class="hero-actions anim-el d-4">
-              <a class="btn-green-fill" href="activities/index.html" target="_blank">探索服务菜单</a>
+              <a class="btn-green-fill" href="javascript:void(0)" onclick="showDevModal()">探索服务菜单</a>
               <a class="btn-line-white" href="#join" data-fp-target="6">加入团队</a>
               <a class="btn-line-white" href="#partner" data-fp-target="7">单位合作</a>
             </div>
@@ -2347,6 +2383,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
   initHash();
 })();
+</script>
+
+<!-- 开发中弹窗 -->
+<div class="dev-modal-overlay" id="devModal">
+  <div class="dev-modal-box">
+    <h3>🚧 开发中，敬请期待</h3>
+    <p>活动大厅正在升级优化中，敬请期待！</p>
+    <button class="btn-modal-close" onclick="closeDevModal()">我知道了</button>
+  </div>
+</div>
+<script>
+function showDevModal() {
+  document.getElementById('devModal').classList.add('active');
+}
+function closeDevModal() {
+  document.getElementById('devModal').classList.remove('active');
+}
+document.getElementById('devModal').addEventListener('click', function(e) {
+  if (e.target === this) closeDevModal();
+});
 </script>
 </body>
 </html>
