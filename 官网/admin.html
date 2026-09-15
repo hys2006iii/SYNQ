@@ -1150,6 +1150,15 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           <label>关联预算单号</label>
           <input type="text" class="form-control" id="reimbBudgetId" placeholder="可选">
         </div>
+        <div class="form-group">
+          <label>审批状态</label>
+          <select class="form-control" id="reimbStatus">
+            <option value="pending">待审批</option>
+            <option value="approved">已批准</option>
+            <option value="rejected">已驳回</option>
+            <option value="reimbursed">已报销</option>
+          </select>
+        </div>
       </div>
       
       <h4 style="margin: 16px 0 12px; font-size: 14px; color: var(--ink-2);">报销项目</h4>
@@ -1844,6 +1853,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       $('#reimbDate').value = reimb.date;
       $('#reimbCategory').value = reimb.category;
       $('#reimbBudgetId').value = reimb.budgetId || '';
+      $('#reimbStatus').value = reimb.status || 'pending';
       currentReimbItems = JSON.parse(JSON.stringify(reimb.items || []));
     } else {
       $('#reimbModalTitle').textContent = '新建报销单';
@@ -1852,6 +1862,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       $('#reimbDate').value = new Date().toISOString().slice(0, 10);
       $('#reimbCategory').value = '活动物资';
       $('#reimbBudgetId').value = '';
+      $('#reimbStatus').value = 'pending';
       currentReimbItems = [{ name: '', amount: '', date: '', description: '', receipt: '' }];
     }
     renderReimbItems();
@@ -1906,14 +1917,13 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       budgetId: $('#reimbBudgetId').value.trim(),
       items: currentReimbItems,
       totalAmount: total,
-      status: 'pending',
+      status: $('#reimbStatus').value,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
 
     var existIdx = reimbList.findIndex(function(r) { return r.id === id; });
     if (existIdx >= 0) {
-      reimbData.status = reimbList[existIdx].status;
       reimbData.createdAt = reimbList[existIdx].createdAt;
       reimbList[existIdx] = reimbData;
     } else {
