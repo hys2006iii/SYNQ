@@ -5,6 +5,7 @@ import os
 import sys
 import logging
 import signal
+import subprocess
 from datetime import datetime
 
 # 配置日志
@@ -31,10 +32,51 @@ def get_ip():
         s.close()
     return ip
 
+def kill_port(port):
+    """尝试释放被占用的端口"""
+    try:
+        result = subprocess.run(
+            ['netstat', '-ano'],
+            capture_output=True, text=True, timeout=10
+        )
+        for line in result.stdout.split('\n'):
+            if f':{port}' in line and 'LISTENING' in line:
+                parts = line.split()
+                if parts:
+                    pid = parts[-1]
+                    try:
+                        subprocess.run(['taskkill', '/F', '/PID', pid], capture_output=True, timeout=5)
+                        logger.info(f"已释放端口 {port} (PID: {pid})")
+                        return True
+                    except Exception:
+                        pass
+    except Exception as e:
+        logger.warning(f"端口释放失败: {e}")
+    return False
+
 os.chdir(DIR)
 
 class SecureHTTPHandler(http.server.SimpleHTTPRequestHandler):
     """增强安全性的HTTP请求处理器"""
+
+    # 安全头
+    def end_headers(self):
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('X-Frame-Options', 'SAMEORIGIN')
+        self.send_header('X-XSS-Protection', '1; mode=block')
+        self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+        self.send_header('Pragma', 'no-cache')
+        super().end_headers()
+
+    # 限制HTTP方法
+    def do_POST(self):
+        self.send_error(405, '不支持POST方法')
+    def do_PUT(self):
+        self.send_error(405, '不支持PUT方法')
+    def do_DELETE(self):
+        self.send_error(405, '不支持DELETE方法')
+    def do_PATCH(self):
+        self.send_error(405, '不支持PATCH方法')
     
     # 忽略某些常见的无害错误
     suppress_logs = [
