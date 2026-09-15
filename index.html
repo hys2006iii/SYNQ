@@ -875,401 +875,257 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ============================================================
    手机端适配 (Mobile Responsive)
+   设计原则：单列布局、隐藏冗余、保持翻页体验
    ============================================================ */
 
-/* 平板和大屏手机 (max-width: 1024px) */
+/* 平板 (max-width: 1024px) — 单列+汉堡菜单 */
 @media (max-width: 1024px) {
   .fp-nav { display: none; }
-  .hero-box, .origin-layout-rich, .serv-stage, .join-layout-rich, .pf-coop-grid, .ending-hero {
-    grid-template-columns: 1fr; gap: 14px;
-  }
-  .menu-cards-grid { grid-template-columns: 1fr 1fr; }
-  .honors-row, .metrics-row, .vision-row-dark, .coop-types-grid, .join-roles-grid { 
-    grid-template-columns: 1fr; 
-  }
   .nav-links { display: none; }
   .nav-toggle { display: block; }
   .nav-links.open {
     display: flex; flex-direction: column; position: fixed;
-    top: 68px; left: 0; right: 0; background: rgba(22,53,53,0.98);
-    padding: 16px 24px; gap: 8px; border-bottom: 1px solid var(--border-card);
+    top: 60px; left: 0; right: 0; background: rgba(22,53,53,0.98);
+    padding: 12px 20px; gap: 4px; border-bottom: 1px solid var(--border-card);
     backdrop-filter: blur(12px); z-index: 999;
   }
-  .nav-links.open a { padding: 12px; font-size: 16px; }
-  .hero-title { font-size: clamp(50px, 12vw, 100px); }
-  .hero-slogan { font-size: clamp(16px, 4vw, 24px); letter-spacing: 0.12em; }
-  .hero-desc { font-size: 14px; }
-  .hero-actions { flex-direction: column; align-items: stretch; }
-  .hero-actions a { text-align: center; }
-  .hero-photo-slide { width: 180px; height: 240px; }
-  .hero-marquee-card { display: none; }
-  .ending-title { font-size: clamp(44px, 10vw, 80px); }
-  .ending-slogan { font-size: clamp(12px, 3vw, 18px); letter-spacing: 0.2em; }
-  .ending-desc { font-size: 13px; }
-  .ending-actions { flex-direction: column; align-items: stretch; }
-  .ending-actions a { text-align: center; }
-  .ending-thanks-box { padding: 16px; }
-  .wrap-box { padding: 0 16px; }
-  .join-roles-grid { gap: 12px; }
-  .join-role-box { padding: 16px; }
-  .pf-coop-grid { gap: 12px; }
-  
-  /* 手机端卡片优化 */
-  .real-card { padding: 16px; }
-  .sec-head { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .sec-head .lead { text-align: left; max-width: 100%; }
-  
-  /* 手机端导航栏优化 */
+  .nav-links.open a { padding: 10px 12px; font-size: 15px; }
   .hdr { height: auto; }
-  .nav-wrap { height: 60px; padding: 0 16px; }
-  .brand .word { font-size: 22px; }
-  .brand img { height: 36px; }
-  
-  /* 手机端滚动提示优化 */
-  .scroll-hint-bar { bottom: 12px; }
-  .fp-section:not(#top):not(#ending) .scroll-hint-bar { 
-    left: 12px; bottom: 50%; 
-  }
-  .fp-section:not(#top):not(#ending) .scroll-hint-bar span:last-child { 
-    writing-mode: horizontal-tb; 
-  }
-}
-
-/* 中等屏幕手机 (max-width: 768px) */
-@media (max-width: 768px) {
-  .hero-title { font-size: clamp(45px, 14vw, 90px); }
-  .hero-slogan { font-size: clamp(14px, 3.5vw, 20px); letter-spacing: 0.1em; }
-  .hero-desc { font-size: 13px; line-height: 1.6; }
-  .hero-kicker { font-size: 13px; letter-spacing: 0.1em; }
-  
-  /* 卡片内容折叠优化 */
-  .origin-list-rich li { font-size: 13px; padding: 6px 10px; }
-  .origin-tags-rich span { font-size: 11px; padding: 2px 8px; }
-  .origin-quote-box { font-size: 12px; padding: 8px 12px; }
-  
-  /* 服务篇章优化 */
-  .chap-tab-pills { gap: 6px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
-  .chap-pill { font-size: 12px; padding: 6px 12px; white-space: nowrap; }
-  .serv-spotlight { padding: 16px; }
-  .serv-spotlight h3 { font-size: 20px; }
-  .serv-spotlight .desc { font-size: 13px; }
-  .serv-acts-deck { grid-template-columns: 1fr; }
-  .serv-act-item { padding: 12px; }
-  
-  /* 创新理念卡片优化 */
-  .innov-grid-dark { grid-template-columns: 1fr; }
-  .innov-card-item { padding: 16px; }
-  .innov-card-item h3 { font-size: 17px; }
-  .innov-card-item p { font-size: 13px; }
-  .innov-pill-row span { font-size: 10px; padding: 2px 6px; }
-  
-  /* 发展成效优化 */
-  .honors-row { grid-template-columns: 1fr; }
-  .honor-gold-card { padding: 14px; }
-  .honor-gold-card h4 { font-size: 15px; }
-  .metrics-row { grid-template-columns: repeat(2, 1fr); }
-  .metric-box { padding: 14px 10px; }
-  .metric-box .m-num { font-size: clamp(24px, 3vw, 32px); }
-  .metric-box .m-title { font-size: 13px; }
-  .efforts-strip-gallery { grid-template-columns: 1fr 1fr; }
-  .eff-snap-card { padding: 8px; }
-  .eff-snap-card img { width: 36px; height: 36px; }
-  .eff-snap-text h5 { font-size: 12px; }
-  .eff-snap-text p { font-size: 10px; }
-  .partner-band-dark { flex-direction: column; align-items: flex-start; }
-  
-  /* 愿景规划优化 */
-  .vision-row-dark { grid-template-columns: 1fr; }
-  .vision-col-box { padding: 16px; }
-  .vision-col-box .v-no { font-size: 24px; }
-  .vision-col-box h3 { font-size: 17px; }
-  .vision-col-box .lead-p { font-size: 12px; }
-  .vision-col-box ul li { font-size: 11px; }
-  
-  /* 加入我们优化 */
-  .join-layout-rich { grid-template-columns: 1fr; }
-  .join-main-card { padding: 16px; }
-  .join-main-card h3 { font-size: 18px; }
-  .join-main-card .sub { font-size: 13px; }
-  .join-role-box { padding: 12px; }
-  .join-role-box h4 { font-size: 13px; }
-  .join-role-box p { font-size: 11px; }
-  .join-contact-strip { flex-direction: column; gap: 12px; }
-  .join-contact-left { flex-direction: column; align-items: stretch; }
-  .join-side-card { padding: 16px; }
-  .join-step-row div b { font-size: 13px; }
-  .join-step-row div p { font-size: 11px; }
-  .join-rewards-list { font-size: 12px; padding: 10px 12px; }
-  
-  /* 单位合作优化 */
-  .pf-coop-grid { grid-template-columns: 1fr; }
-  .pf-coop-main { padding: 16px; }
-  .pf-coop-main h3 { font-size: 18px; }
-  .pf-coop-main .sub { font-size: 12px; }
-  .coop-types-grid { grid-template-columns: 1fr; }
-  .coop-type-card { padding: 10px; }
-  .coop-type-card b { font-size: 12px; }
-  .coop-type-card span { font-size: 10px; }
-  .coop-deliver-strip { flex-direction: column; gap: 8px; text-align: center; }
-  .pf-coop-side { padding: 16px; }
-  .coop-workflow-rows { grid-template-columns: 1fr; }
-  .coop-contact-box { flex-direction: column; gap: 12px; }
-  
-  /* 尾页优化 */
-  .ending-hero { grid-template-columns: 1fr; }
-  .ending-hero-content { padding: 0 8px; }
-  .ending-thanks-box { padding: 16px; }
-  .ending-thanks-box h3 { font-size: 18px; }
-  .ending-thanks-box p { font-size: 12px; }
-  
-  /* 底部导航优化 */
-  .pf-footer-bar { padding: 12px 16px; }
-  .footer-nav-tags { gap: 10px; }
-  .footer-nav-tags a { font-size: 12px; }
-  .footer-copy-bar { flex-direction: column; gap: 8px; text-align: center; }
-}
-
-/* 小屏手机 (max-width: 480px) */
-@media (max-width: 480px) {
-  .hero-title { font-size: clamp(40px, 16vw, 80px); }
-  .hero-kicker { font-size: 12px; letter-spacing: 0.08em; }
-  .hero-slogan { font-size: clamp(13px, 3vw, 18px); }
-  .hero-desc { font-size: 12px; line-height: 1.5; }
-  .hero-actions a { padding: 8px 16px; font-size: 14px; }
-  
-  /* 导航栏优化 */
-  .nav-act-btn { display: none; }
+  .nav-wrap { height: 56px; padding: 0 14px; }
   .brand .word { font-size: 20px; }
-  .nav-links.open { padding: 12px 16px; }
-  .nav-links.open a { padding: 10px; font-size: 14px; }
-  
-  /* 卡片内容进一步折叠 */
-  .real-card { padding: 12px; }
-  .origin-card-rich { padding: 12px; }
-  .origin-card-rich h3 { font-size: 16px; }
-  .origin-list-rich li { font-size: 12px; }
-  .origin-list-rich li b { font-size: 13px; }
-  .origin-tags-rich { gap: 6px; }
-  .origin-tags-rich span { font-size: 10px; }
-  .origin-quote-box { font-size: 11px; padding: 6px 10px; }
-  .origin-bottom-traits { grid-template-columns: 1fr; }
-  .trait-box { padding: 10px 12px; }
-  .trait-text h4 { font-size: 14px; }
-  .trait-text p { font-size: 11px; }
-  
-  /* 服务篇章进一步优化 */
-  .chap-tab-pills { gap: 4px; }
-  .chap-pill { font-size: 11px; padding: 5px 10px; }
-  .serv-spotlight { padding: 12px; }
-  .serv-spotlight h3 { font-size: 18px; }
-  .serv-spotlight .desc { font-size: 12px; }
-  .serv-side-card { padding: 12px; }
-  .serv-photo-showcase { aspect-ratio: 16/9; }
-  
-  /* 创新理念进一步优化 */
-  .innov-card-item { padding: 12px; }
-  .innov-card-item h3 { font-size: 16px; }
-  .innov-card-item p { font-size: 12px; }
-  .innov-pill-row span { font-size: 9px; }
-  
-  /* 发展成效进一步优化 */
-  .honor-gold-card { padding: 12px; }
-  .honor-gold-card h4 { font-size: 14px; }
-  .honor-gold-card .badge { font-size: 10px; }
-  .metrics-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .metric-box { padding: 12px 8px; }
-  .metric-box .m-num { font-size: clamp(22px, 2.8vw, 30px); }
-  .metric-box .m-title { font-size: 12px; }
-  .metric-box .m-sub { font-size: 10px; }
-  .efforts-strip-gallery { grid-template-columns: 1fr; }
-  .eff-snap-card { padding: 8px; gap: 8px; }
-  .eff-snap-card img { width: 32px; height: 32px; }
-  .eff-snap-text h5 { font-size: 11px; }
-  .eff-snap-text p { font-size: 9px; }
-  .partner-band-dark { padding: 10px 14px; }
-  .partner-band-dark h5 { font-size: 13px; }
-  .partner-tags-deck span { font-size: 10px; padding: 2px 8px; }
-  
-  /* 愿景规划进一步优化 */
-  .vision-col-box { padding: 12px; }
-  .vision-col-box .v-no { font-size: 20px; }
-  .vision-col-box h3 { font-size: 16px; }
-  .vision-col-box .lead-p { font-size: 11px; }
-  .vision-col-box ul { gap: 6px; padding-top: 8px; }
-  .vision-col-box ul li { font-size: 10px; gap: 6px; }
-  
-  /* 加入我们进一步优化 */
-  .join-main-card { padding: 12px; }
-  .join-main-card h3 { font-size: 16px; }
-  .join-main-card .sub { font-size: 12px; }
-  .join-role-box { padding: 10px; }
-  .join-role-box h4 { font-size: 12px; }
-  .join-role-box p { font-size: 10px; }
-  .join-role-box .tag { font-size: 9px; }
-  .join-contact-strip { padding: 10px 14px; }
-  .join-qq-badge { font-size: 12px; }
-  .join-qq-badge b { font-size: 13px; }
-  .join-side-card { padding: 12px; }
-  .join-side-card h4 { font-size: 15px; }
-  .join-step-list { gap: 8px; }
-  .join-step-row { gap: 8px; }
-  .join-step-row .num { width: 20px; height: 20px; font-size: 10px; }
-  .join-step-row div b { font-size: 12px; }
-  .join-step-row div p { font-size: 10px; }
-  .join-rewards-list { font-size: 11px; padding: 8px 10px; }
-  
-  /* 单位合作进一步优化 */
-  .pf-coop-main { padding: 12px; }
-  .pf-coop-main h3 { font-size: 16px; }
-  .pf-coop-main .sub { font-size: 11px; }
-  .coop-types-grid { gap: 8px; }
-  .coop-type-card { padding: 8px; }
-  .coop-type-card b { font-size: 11px; }
-  .coop-type-card span { font-size: 9px; }
-  .coop-deliver-strip { padding: 8px 12px; }
-  .coop-deliver-strip span { font-size: 11px; }
-  .pf-coop-side { padding: 12px; }
-  .pf-coop-side h4 { font-size: 14px; }
-  .workflow-item { padding: 6px 8px; }
-  .workflow-item b { font-size: 11px; }
-  .workflow-item p { font-size: 9px; }
-  
-  /* 尾页进一步优化 */
-  .ending-hero-content { padding: 0 4px; }
-  .ending-kicker { font-size: 12px; }
-  .ending-title { font-size: clamp(40px, 12vw, 70px); }
-  .ending-slogan { font-size: clamp(11px, 2.5vw, 15px); letter-spacing: 0.15em; }
-  .ending-desc { font-size: 11px; line-height: 1.6; }
-  .ending-actions a { padding: 8px 16px; font-size: 13px; }
-  .ending-tags { gap: 8px; }
-  .ending-tags span { font-size: 11px; padding: 4px 10px; }
-  .ending-thanks-box { padding: 12px; }
-  .ending-thanks-box h3 { font-size: 16px; margin-bottom: 12px; }
-  .ending-thanks-box p { font-size: 11px; line-height: 1.6; }
-  
-  /* 底部导航进一步优化 */
-  .pf-footer-bar { padding: 10px 12px; }
-  .footer-nav-tags { gap: 8px; }
-  .footer-nav-tags a { font-size: 11px; }
-  .footer-copy-bar { font-size: 10px; }
-  .footer-copy-bar .motto { font-size: 11px; }
-  .back-top-btn { padding: 3px 10px; font-size: 10px; }
-  
-  /* 管理端登录弹窗优化 */
-  #adminLoginModal > div { padding: 24px; margin: 16px; }
-  #adminLoginModal h3 { font-size: 18px; }
-  #adminLoginModal input { padding: 8px 12px; font-size: 13px; }
-  #adminLoginModal button { padding: 8px; font-size: 13px; }
-  
-  /* 开发中弹窗优化 */
-  .dev-modal-box { padding: 24px 30px; margin: 16px; }
-  .dev-modal-box h3 { font-size: 1.2rem; }
-  .dev-modal-box p { font-size: 0.9rem; }
+  .brand img { height: 34px; }
+  .hero-marquee-card { display: none; }
+  .hero-photo-slide { width: 160px; height: 220px; }
+  .wrap-box { padding: 0 14px; }
 }
 
-/* 超小屏手机 (max-width: 360px) */
-@media (max-width: 360px) {
-  .hero-title { font-size: clamp(36px, 18vw, 72px); }
-  .hero-kicker { font-size: 11px; }
-  .hero-slogan { font-size: clamp(12px, 2.8vw, 16px); }
-  .hero-desc { font-size: 11px; }
-  .hero-actions a { padding: 7px 14px; font-size: 13px; }
-  
-  /* 导航栏进一步优化 */
+/* 手机 (max-width: 768px) — 核心适配 */
+@media (max-width: 768px) {
+  /* —— 通用：单列网格 —— */
+  .hero-box, .origin-layout-rich, .serv-stage, .join-layout-rich,
+  .pf-coop-grid, .ending-hero { grid-template-columns: 1fr; gap: 12px; }
+  .honors-row, .metrics-row, .vision-row-dark, .coop-types-grid,
+  .join-roles-grid, .origin-bottom-traits { grid-template-columns: 1fr; }
+  .menu-cards-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* —— 首页 Hero —— */
+  .hero-title { font-size: clamp(48px, 13vw, 90px); }
+  .hero-slogan { font-size: clamp(15px, 3.8vw, 22px); letter-spacing: 0.1em; }
+  .hero-desc { font-size: 13px; line-height: 1.6; max-width: 100%; }
+  .hero-kicker { font-size: 13px; letter-spacing: 0.1em; }
+  .hero-actions { flex-direction: column; align-items: stretch; gap: 10px; }
+  .hero-actions a { text-align: center; padding: 10px; }
+
+  /* —— 标题头 —— */
+  .sec-head { flex-direction: column; align-items: flex-start; gap: 6px; padding-bottom: 8px; margin-bottom: 10px; }
+  .sec-head .lead { text-align: left; max-width: 100%; font-size: 12px; }
+  .sec-head .num { font-size: 26px; }
+  .sec-head h2 { font-size: 20px; }
+
+  /* —— 卡片通用 —— */
+  .real-card { padding: 14px; }
+
+  /* —— 01 项目缘起 —— */
+  .origin-card-rich { padding: 12px; }
+  .origin-card-rich h3 { font-size: 16px; margin-bottom: 6px; }
+  .origin-list-rich li { font-size: 12px; padding: 6px 10px; gap: 8px; }
+  .origin-list-rich li b { font-size: 13px; }
+  .origin-idea-rich p { font-size: 12px; }
+  .origin-tags-rich span { font-size: 10px; padding: 2px 7px; }
+  .origin-quote-box { font-size: 11px; padding: 8px 10px; }
+  .origin-bottom-traits { display: none; } /* 手机端隐藏：底部三个特征卡冗余 */
+
+  /* —— 02 发展成效 —— */
+  .honor-gold-card { padding: 12px; }
+  .honor-gold-card h4 { font-size: 14px; line-height: 1.4; }
+  .honor-gold-card .yr { font-size: 11px; }
+  .honor-gold-card .badge { font-size: 10px; }
+  .metrics-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .metric-box { padding: 12px 8px; }
+  .metric-box .m-num { font-size: clamp(22px, 3vw, 30px); }
+  .metric-box .m-title { font-size: 12px; }
+  .metric-box .m-sub { font-size: 10px; display: none; } /* 手机端隐藏副标题 */
+  .efforts-strip-gallery { display: none; } /* 手机端隐藏：四宫格图片条冗余 */
+  .partner-band-dark { flex-direction: column; align-items: flex-start; gap: 8px; padding: 10px 14px; }
+  .partner-band-dark h5 { font-size: 13px; white-space: normal; }
+  .partner-tags-deck span { font-size: 10px; padding: 2px 8px; }
+
+  /* —— 03 核心服务 —— */
+  .chap-tab-pills { gap: 6px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+  .chap-pill { font-size: 12px; padding: 6px 12px; white-space: nowrap; flex-shrink: 0; }
+  .serv-spotlight { padding: 14px; }
+  .serv-spotlight h3 { font-size: 18px; margin-bottom: 6px; }
+  .serv-spotlight .desc { font-size: 12px; line-height: 1.6; }
+  .serv-acts-deck { grid-template-columns: 1fr; gap: 10px; }
+  .serv-act-item { padding: 10px; }
+  .serv-act-item h5 { font-size: 14px; }
+  .serv-act-item p { font-size: 11px; }
+  .serv-side-card { display: none; } /* 手机端隐藏：右侧照片卡，节省空间 */
+
+  /* —— 04 创新理念 —— */
+  .innov-grid-dark { grid-template-columns: 1fr; gap: 12px; }
+  .innov-card-item { padding: 14px; }
+  .innov-card-item h3 { font-size: 16px; margin-bottom: 6px; }
+  .innov-card-item p { font-size: 12px; line-height: 1.65; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .innov-pill-row span { font-size: 10px; padding: 2px 6px; }
+
+  /* —— 05 愿景规划 —— */
+  .vision-col-box { padding: 14px; }
+  .vision-col-box .v-no { font-size: 22px; }
+  .vision-col-box h3 { font-size: 16px; margin-bottom: 6px; }
+  .vision-col-box .lead-p { font-size: 12px; line-height: 1.6; }
+  .vision-col-box ul { gap: 6px; padding-top: 8px; }
+  .vision-col-box ul li { font-size: 11px; gap: 6px; }
+
+  /* —— 06 加入我们 —— */
+  .join-main-card { padding: 14px; }
+  .join-main-card h3 { font-size: 17px; }
+  .join-main-card .sub { font-size: 12px; line-height: 1.6; }
+  .join-contact-strip { flex-direction: column; gap: 10px; padding: 10px 14px; }
+  .join-contact-left { flex-direction: column; align-items: stretch; }
+  .join-roles-grid { gap: 10px; }
+  .join-role-box { padding: 10px; }
+  .join-role-box h4 { font-size: 13px; }
+  .join-role-box p { font-size: 11px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .join-role-box .tag { font-size: 10px; }
+  .join-side-card { display: none; } /* 手机端隐藏：右侧成长阶梯+激励，节省空间 */
+  .join-rewards-list { font-size: 11px; padding: 10px 12px; line-height: 1.6; }
+
+  /* —— 07 单位合作 —— */
+  .pf-coop-main { padding: 14px; }
+  .pf-coop-main h3 { font-size: 17px; }
+  .pf-coop-main .sub { font-size: 11px; line-height: 1.5; }
+  .coop-types-grid { grid-template-columns: 1fr; gap: 8px; }
+  .coop-type-card { padding: 8px 10px; }
+  .coop-type-card b { font-size: 12px; }
+  .coop-type-card span { font-size: 10px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .coop-deliver-strip { flex-direction: column; gap: 8px; text-align: center; padding: 10px; }
+  .coop-deliver-strip span { font-size: 11px; }
+  .pf-coop-side { display: none; } /* 手机端隐藏：右侧流程+联系方式，底部footer已有 */
+
+  /* —— 08 尾页 —— */
+  .ending-hero { grid-template-columns: 1fr; }
+  .ending-hero-content { padding: 0; }
+  .ending-kicker { font-size: 12px; margin-bottom: 8px; }
+  .ending-title { font-size: clamp(42px, 11vw, 76px); }
+  .ending-slogan { font-size: clamp(12px, 2.8vw, 16px); letter-spacing: 0.15em; margin-bottom: 10px; }
+  .ending-desc { font-size: 12px; line-height: 1.6; margin-bottom: 16px; }
+  .ending-actions { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 16px; }
+  .ending-actions a { text-align: center; padding: 10px; }
+  .ending-tags { gap: 8px; margin-bottom: 16px; }
+  .ending-tags span { font-size: 11px; padding: 4px 10px; }
+  .ending-thanks-box { padding: 14px; }
+  .ending-thanks-box h3 { font-size: 17px; margin-bottom: 10px; }
+  .ending-thanks-box p { font-size: 11px; line-height: 1.65; }
+
+  /* —— 底部栏 —— */
+  .pf-footer-bar { padding: 10px 14px; }
+  .footer-nav-tags { gap: 10px; flex-wrap: wrap; }
+  .footer-nav-tags a { font-size: 12px; }
+  .footer-copy-bar { flex-direction: column; gap: 6px; text-align: center; }
+  .footer-copy-bar .motto { font-size: 12px; }
+
+  /* —— 滚动提示 —— */
+  .scroll-hint-bar { bottom: 10px; }
+  .fp-section:not(#top):not(#ending) .scroll-hint-bar { left: 10px; bottom: 50%; }
+  .fp-section:not(#top):not(#ending) .scroll-hint-bar span:last-child { writing-mode: horizontal-tb; }
+}
+
+/* 小屏手机 (max-width: 480px) — 紧凑模式 */
+@media (max-width: 480px) {
+  .nav-act-btn { display: none; }
   .brand .word { font-size: 18px; }
-  .brand img { height: 32px; }
-  .nav-wrap { height: 56px; }
-  
-  /* 卡片内容极致折叠 */
+  .nav-links.open { padding: 8px 14px; }
+  .nav-links.open a { padding: 8px 10px; font-size: 14px; }
+  .wrap-box { padding: 0 10px; }
+
+  /* 首页 */
+  .hero-title { font-size: clamp(40px, 15vw, 72px); }
+  .hero-kicker { font-size: 11px; }
+  .hero-slogan { font-size: clamp(13px, 3.2vw, 18px); }
+  .hero-desc { font-size: 12px; }
+  .hero-actions a { padding: 9px; font-size: 13px; }
+
+  /* 标题头 */
+  .sec-head .num { font-size: 22px; }
+  .sec-head h2 { font-size: 18px; }
+
+  /* 卡片 */
   .real-card { padding: 10px; }
+
+  /* 项目缘起 */
   .origin-card-rich { padding: 10px; }
   .origin-card-rich h3 { font-size: 15px; }
   .origin-list-rich li { font-size: 11px; padding: 5px 8px; }
   .origin-list-rich li b { font-size: 12px; }
-  .origin-tags-rich { gap: 4px; }
-  .origin-tags-rich span { font-size: 9px; padding: 1px 6px; }
-  .origin-quote-box { font-size: 10px; padding: 5px 8px; }
-  .origin-bottom-traits { gap: 8px; }
-  .trait-box { padding: 8px 10px; }
-  .trait-mark { width: 36px; height: 36px; font-size: 18px; }
-  .trait-text h4 { font-size: 13px; }
-  .trait-text p { font-size: 10px; }
-  
-  /* 服务篇章极致优化 */
-  .chap-pill { font-size: 10px; padding: 4px 8px; }
+  .origin-tags-rich span { font-size: 9px; padding: 1px 5px; }
+  .origin-quote-box { font-size: 10px; padding: 6px 8px; }
+
+  /* 发展成效 */
+  .honors-row { gap: 8px; }
+  .honor-gold-card { padding: 10px; }
+  .honor-gold-card h4 { font-size: 13px; }
+  .metrics-row { gap: 8px; }
+  .metric-box { padding: 10px 6px; }
+  .metric-box .m-num { font-size: clamp(20px, 2.8vw, 28px); }
+  .metric-box .m-title { font-size: 11px; }
+
+  /* 核心服务 */
+  .chap-pill { font-size: 11px; padding: 5px 10px; }
   .serv-spotlight { padding: 10px; }
   .serv-spotlight h3 { font-size: 16px; }
   .serv-spotlight .desc { font-size: 11px; }
-  .serv-act-item { padding: 10px; }
+  .serv-act-item { padding: 8px; }
   .serv-act-item h5 { font-size: 13px; }
-  .serv-act-item p { font-size: 10px; }
-  
-  /* 创新理念极致优化 */
+
+  /* 创新理念 */
   .innov-card-item { padding: 10px; }
   .innov-card-item h3 { font-size: 15px; }
-  .innov-card-item p { font-size: 11px; }
-  .innov-pill-row { gap: 4px; }
-  .innov-pill-row span { font-size: 8px; padding: 1px 4px; }
-  
-  /* 发展成效极致优化 */
-  .honor-gold-card { padding: 10px; }
-  .honor-gold-card h4 { font-size: 13px; }
-  .honor-gold-card .yr { font-size: 10px; }
-  .honor-gold-card .badge { font-size: 9px; }
-  .metric-box { padding: 10px 6px; }
-  .metric-box .m-num { font-size: clamp(20px, 2.5vw, 28px); }
-  .metric-box .m-title { font-size: 11px; }
-  .metric-box .m-sub { font-size: 9px; }
-  .eff-snap-card { padding: 6px; gap: 6px; }
-  .eff-snap-card img { width: 28px; height: 28px; }
-  .eff-snap-text h5 { font-size: 10px; }
-  .eff-snap-text p { font-size: 8px; }
-  
-  /* 愿景规划极致优化 */
+  .innov-card-item p { font-size: 11px; -webkit-line-clamp: 3; }
+  .innov-pill-row span { font-size: 9px; padding: 1px 5px; }
+
+  /* 愿景规划 */
   .vision-col-box { padding: 10px; }
   .vision-col-box .v-no { font-size: 18px; }
   .vision-col-box h3 { font-size: 15px; }
-  .vision-col-box .lead-p { font-size: 10px; }
-  .vision-col-box ul li { font-size: 9px; }
-  
-  /* 加入我们极致优化 */
+  .vision-col-box .lead-p { font-size: 11px; }
+  .vision-col-box ul li { font-size: 10px; }
+
+  /* 加入我们 */
   .join-main-card { padding: 10px; }
   .join-main-card h3 { font-size: 15px; }
-  .join-main-card .sub { font-size: 11px; }
   .join-role-box { padding: 8px; }
-  .join-role-box h4 { font-size: 11px; }
-  .join-role-box p { font-size: 9px; }
-  .join-step-row .num { width: 18px; height: 18px; font-size: 9px; }
-  .join-step-row div b { font-size: 11px; }
-  .join-step-row div p { font-size: 9px; }
-  
-  /* 单位合作极致优化 */
+  .join-role-box h4 { font-size: 12px; }
+  .join-role-box p { font-size: 10px; -webkit-line-clamp: 2; }
+  .join-qq-badge { font-size: 12px; }
+
+  /* 单位合作 */
   .pf-coop-main { padding: 10px; }
   .pf-coop-main h3 { font-size: 15px; }
-  .pf-coop-main .sub { font-size: 10px; }
-  .coop-type-card { padding: 6px; }
-  .coop-type-card b { font-size: 10px; }
-  .coop-type-card span { font-size: 8px; }
-  .workflow-item { padding: 5px 6px; }
-  .workflow-item b { font-size: 10px; }
-  .workflow-item p { font-size: 8px; }
-  
-  /* 尾页极致优化 */
-  .ending-kicker { font-size: 11px; }
-  .ending-title { font-size: clamp(36px, 14vw, 64px); }
-  .ending-slogan { font-size: clamp(10px, 2.2vw, 14px); }
-  .ending-desc { font-size: 10px; }
+  .coop-type-card { padding: 6px 8px; }
+  .coop-type-card b { font-size: 11px; }
+  .coop-type-card span { font-size: 9px; }
+
+  /* 尾页 */
+  .ending-title { font-size: clamp(36px, 13vw, 64px); }
+  .ending-slogan { font-size: clamp(11px, 2.5vw, 14px); }
+  .ending-desc { font-size: 11px; }
   .ending-tags span { font-size: 10px; padding: 3px 8px; }
   .ending-thanks-box { padding: 10px; }
-  .ending-thanks-box h3 { font-size: 15px; }
   .ending-thanks-box p { font-size: 10px; }
-  
-  /* 底部导航极致优化 */
+
+  /* 底部 */
   .pf-footer-bar { padding: 8px 10px; }
-  .footer-nav-tags { gap: 6px; }
-  .footer-nav-tags a { font-size: 10px; }
-  .footer-copy-bar { font-size: 9px; }
-  .footer-copy-bar .motto { font-size: 10px; }
+  .footer-nav-tags a { font-size: 11px; }
+  .footer-copy-bar { font-size: 10px; }
+  .footer-copy-bar .motto { font-size: 11px; }
+  .back-top-btn { padding: 3px 10px; font-size: 10px; }
+
+  /* 弹窗 */
+  #adminLoginModal > div { padding: 20px; margin: 12px; }
+  .dev-modal-box { padding: 20px 24px; margin: 12px; }
+  .dev-modal-box h3 { font-size: 1.1rem; }
+  .dev-modal-box p { font-size: 0.85rem; }
 }
 
 /* 开发中弹窗 */
@@ -1307,9 +1163,110 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transition: background 0.2s;
 }
 .dev-modal-box .btn-modal-close:hover { background: #17a07d; }
+
+/* ============================================================
+   加载动画 (Loading Overlay)
+   ============================================================ */
+.page-loader {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #143232;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.page-loader.hide {
+  opacity: 0; visibility: hidden; pointer-events: none;
+}
+.loader-logo {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(1, 154, 170, 0.15);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px;
+  animation: loaderPulse 1.8s ease-in-out infinite;
+}
+.loader-logo img { width: 50px; height: 50px; }
+@keyframes loaderPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(1,154,170,0.4); }
+  50% { transform: scale(1.08); box-shadow: 0 0 0 20px rgba(1,154,170,0); }
+}
+.loader-text {
+  font-family: var(--font-kai);
+  font-size: 24px; color: var(--text-pure);
+  letter-spacing: 0.15em; margin-bottom: 20px;
+}
+.loader-bar-track {
+  width: 180px; height: 3px; border-radius: 2px;
+  background: rgba(255,255,255,0.12); overflow: hidden;
+}
+.loader-bar-fill {
+  height: 100%; width: 0%; border-radius: 2px;
+  background: linear-gradient(90deg, var(--teal-accent), var(--leaf));
+  transition: width 0.3s ease;
+  animation: loaderProgress 2s ease-in-out forwards;
+}
+@keyframes loaderProgress {
+  0% { width: 0%; }
+  40% { width: 60%; }
+  80% { width: 85%; }
+  100% { width: 100%; }
+}
 </style>
 </head>
 <body>
+
+<!-- ============ 加载动画 ============ -->
+<div class="page-loader" id="pageLoader">
+  <div class="loader-logo"><img src="logo-mark.png" alt=""></div>
+  <div class="loader-text">水韵农青</div>
+  <div class="loader-bar-track"><div class="loader-bar-fill" id="loaderBar"></div></div>
+</div>
+
+<!-- ============ 访问统计脚本 ============ -->
+<script>
+(function(){
+  var KEY = 'water_youth_analytics';
+  function get(){ try{return JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){return {};} }
+  function set(d){ localStorage.setItem(KEY, JSON.stringify(d)); }
+
+  var data = get();
+  if(!data.logs) data.logs = [];
+  if(!data.sectionHits) data.sectionHits = {};
+  if(!data.dailyHits) data.dailyHits = {};
+
+  // 生成/读取访客ID
+  var vid = sessionStorage.getItem('wq_vid');
+  if(!vid){ vid = 'v_' + Date.now() + '_' + Math.random().toString(36).slice(2,8); sessionStorage.setItem('wq_vid', vid); }
+
+  var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  var today = new Date().toISOString().slice(0,10);
+  var now = new Date().toISOString();
+
+  // 记录首页访问
+  var section = window.location.hash.replace('#','') || 'top';
+  data.logs.push({ time: now, section: section, referrer: document.referrer || '', isMobile: isMobile, visitorId: vid });
+  if(data.logs.length > 500) data.logs = data.logs.slice(-500);
+
+  data.sectionHits[section] = (data.sectionHits[section]||0) + 1;
+  data.dailyHits[today] = (data.dailyHits[today]||0) + 1;
+  set(data);
+
+  // 监听翻页，记录每个板块的浏览
+  var lastSection = section;
+  setInterval(function(){
+    var cur = window.location.hash.replace('#','') || 'top';
+    if(cur !== lastSection){
+      lastSection = cur;
+      var d = get();
+      var t = new Date().toISOString();
+      d.logs.push({ time: t, section: cur, referrer: '', isMobile: isMobile, visitorId: vid });
+      if(d.logs.length > 500) d.logs = d.logs.slice(-500);
+      d.sectionHits[cur] = (d.sectionHits[cur]||0) + 1;
+      var td = new Date().toISOString().slice(0,10);
+      d.dailyHits[td] = (d.dailyHits[td]||0) + 1;
+      set(d);
+    }
+  }, 1500);
+})();
+</script>
 
 <!-- ============ 顶部固定导航 ============ -->
 <header class="hdr" id="hdr">
@@ -2639,6 +2596,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   }
 
   function renderMenuCategory(midx) {
+    if (!menuCardsGrid || !menuCatsBar) return;
     currentMenuFilter = midx;
     var catButtons = menuCatsBar.querySelectorAll('.m-cat-btn');
     catButtons.forEach(function (b, i) { b.classList.toggle('active', i === midx); });
@@ -2711,13 +2669,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }).join('');
   }
 
-  var catBtns = menuCatsBar.querySelectorAll('.m-cat-btn');
-  catBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var idx = parseInt(btn.getAttribute('data-midx'), 10);
-      renderMenuCategory(idx);
+  if (menuCatsBar) {
+    var catBtns = menuCatsBar.querySelectorAll('.m-cat-btn');
+    catBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = parseInt(btn.getAttribute('data-midx'), 10);
+        renderMenuCategory(idx);
+      });
     });
-  });
+  }
 
   // 搜索功能
   if (menuSearchBtn) {
@@ -2775,6 +2735,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   }
 
   initHash();
+
+  // 隐藏加载动画
+  function hideLoader() {
+    var loader = document.getElementById('pageLoader');
+    if (loader) { loader.classList.add('hide'); setTimeout(function(){ loader.remove(); }, 600); }
+  }
+  if (document.readyState === 'complete') { hideLoader(); }
+  else { window.addEventListener('load', hideLoader); }
+  setTimeout(hideLoader, 4000);
 })();
 </script>
 
