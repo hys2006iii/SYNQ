@@ -368,6 +368,9 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     <div class="nav-item" data-panel="dashboard">
       <span class="icon">📈</span><span class="nav-text">数据大屏</span>
     </div>
+    <div class="nav-item" data-panel="analytics">
+      <span class="icon">🔍</span><span class="nav-text">访问统计</span>
+    </div>
   </nav>
   <div class="sidebar-footer">
     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -935,6 +938,70 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           <div class="card-header"><h3>技能分布</h3></div>
           <div class="card-body">
             <canvas id="dashSkillDist" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== 访问统计面板 ====== -->
+  <div class="panel" id="panel-analytics">
+    <div class="page-header">
+      <h2>🔍 访问统计</h2>
+      <div class="actions">
+        <button class="btn btn-danger" id="btnClearAnalytics">🗑 清空统计</button>
+      </div>
+    </div>
+    <div class="content-area">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon c1">👁</div>
+          <div class="stat-info"><h3 id="anaTotalPV">0</h3><p>总浏览量</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c2">👤</div>
+          <div class="stat-info"><h3 id="anaTotalUV">0</h3><p>访客数(估)</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c3">📄</div>
+          <div class="stat-info"><h3 id="anaTodayPV">0</h3><p>今日浏览</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon c4">🔥</div>
+          <div class="stat-info"><h3 id="anaMaxSection">-</h3><p>最热板块</p></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header"><h3>板块浏览排行</h3></div>
+        <div class="card-body">
+          <canvas id="anaSectionChart" height="260"></canvas>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header"><h3>近7日浏览趋势</h3></div>
+        <div class="card-body">
+          <canvas id="anaDailyChart" height="200"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>访问明细记录</h3></div>
+        <div class="card-body" style="max-height:400px; overflow-y:auto;">
+          <table style="width:100%; border-collapse:collapse; font-size:13px;">
+            <thead>
+              <tr style="border-bottom:2px solid var(--border); text-align:left;">
+                <th style="padding:8px 6px;">时间</th>
+                <th style="padding:8px 6px;">板块</th>
+                <th style="padding:8px 6px;">来源</th>
+                <th style="padding:8px 6px;">设备</th>
+              </tr>
+            </thead>
+            <tbody id="anaLogBody"></tbody>
+          </table>
+          <div id="anaEmptyState" style="text-align:center; padding:30px; color:var(--ink-3);">
+            暂无访问数据，请先访问官网首页
           </div>
         </div>
       </div>
@@ -2941,6 +3008,197 @@ textarea.form-control { resize: vertical; min-height: 72px; }
 
   $('#dashTimeRange').addEventListener('change', loadDashboardData);
 
+  /* ========== 访问统计 ========== */
+  var SECTION_NAMES = {
+    'top': '首页', 'origin': '项目缘起', 'efforts': '发展成效',
+    'services': '核心服务', 'innov': '创新理念', 'vision': '愿景规划',
+    'join': '加入我们', 'partner': '单位合作', 'ending': '尾页'
+  };
+
+  function getAnalytics() {
+    try { return JSON.parse(localStorage.getItem('water_youth_analytics') || '{}'); }
+    catch(e) { return {}; }
+  }
+
+  function loadAnalytics() {
+    var data = getAnalytics();
+    var logs = data.logs || [];
+    var sectionHits = data.sectionHits || {};
+    var dailyHits = data.dailyHits || {};
+
+    // 统计概览
+    var totalPV = logs.length;
+    var uvSet = {};
+    logs.forEach(function(l) { if(l.visitorId) uvSet[l.visitorId] = 1; });
+    var totalUV = Object.keys(uvSet).length;
+    var today = new Date().toISOString().slice(0, 10);
+    var todayPV = logs.filter(function(l) { return l.time && l.time.indexOf(today) === 0; }).length;
+
+    // 最热板块
+    var maxSection = '-';
+    var maxHits = 0;
+    Object.keys(sectionHits).forEach(function(k) {
+      if (sectionHits[k] > maxHits) { maxHits = sectionHits[k]; maxSection = SECTION_NAMES[k] || k; }
+    });
+
+    $('#anaTotalPV').textContent = totalPV;
+    $('#anaTotalUV').textContent = totalUV || (totalPV > 0 ? '1' : '0');
+    $('#anaTodayPV').textContent = todayPV;
+    $('#anaMaxSection').textContent = maxSection;
+
+    // 板块排行柱状图
+    renderSectionChart(sectionHits);
+
+    // 近7日趋势
+    renderDailyChart(dailyHits);
+
+    // 明细表格
+    var tbody = $('#anaLogBody');
+    var emptyState = $('#anaEmptyState');
+    if (!logs.length) {
+      tbody.innerHTML = '';
+      emptyState.style.display = 'block';
+    } else {
+      emptyState.style.display = 'none';
+      var recent = logs.slice(-50).reverse();
+      tbody.innerHTML = recent.map(function(l) {
+        var time = l.time ? l.time.replace('T', ' ').slice(0, 19) : '-';
+        var section = SECTION_NAMES[l.section] || l.section || '-';
+        var device = l.isMobile ? '📱 手机' : '💻 电脑';
+        var referrer = l.referrer || '直接访问';
+        if (referrer.length > 30) referrer = referrer.slice(0, 27) + '...';
+        return '<tr style="border-bottom:1px solid var(--border);">'
+          + '<td style="padding:6px; font-size:12px; color:var(--ink-3);">' + time + '</td>'
+          + '<td style="padding:6px;"><span class="badge badge-chapter">' + section + '</span></td>'
+          + '<td style="padding:6px; font-size:12px; color:var(--ink-3);">' + referrer + '</td>'
+          + '<td style="padding:6px; font-size:12px;">' + device + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+  }
+
+  function renderSectionChart(hits) {
+    var canvas = $('#anaSectionChart');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width = canvas.parentElement.clientWidth;
+    var H = canvas.height = 260;
+    ctx.clearRect(0, 0, W, H);
+
+    var entries = Object.keys(hits).map(function(k) { return { name: SECTION_NAMES[k] || k, val: hits[k] }; });
+    entries.sort(function(a, b) { return b.val - a.val; });
+    if (!entries.length) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '14px Noto Sans SC';
+      ctx.textAlign = 'center';
+      ctx.fillText('暂无数据', W/2, H/2);
+      return;
+    }
+
+    var maxVal = Math.max.apply(null, entries.map(function(e) { return e.val; })) || 1;
+    var barW = Math.min(50, (W - 60) / entries.length - 8);
+    var chartH = H - 60;
+    var colors = ['#019aaa', '#4ade80', '#fbbf24', '#f87171', '#a78bfa', '#38bdf8', '#fb923c', '#e879f9', '#34d399'];
+
+    entries.forEach(function(e, i) {
+      var x = 40 + i * (barW + 8);
+      var barH = (e.val / maxVal) * chartH;
+      var y = chartH - barH + 20;
+
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.beginPath();
+      ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
+      ctx.fill();
+
+      ctx.fillStyle = '#1a1a2e';
+      ctx.font = 'bold 12px Noto Sans SC';
+      ctx.textAlign = 'center';
+      ctx.fillText(e.val, x + barW/2, y - 6);
+
+      ctx.save();
+      ctx.translate(x + barW/2, chartH + 32);
+      ctx.rotate(-0.4);
+      ctx.fillStyle = '#4a5568';
+      ctx.font = '11px Noto Sans SC';
+      ctx.textAlign = 'right';
+      ctx.fillText(e.name, 0, 0);
+      ctx.restore();
+    });
+  }
+
+  function renderDailyChart(hits) {
+    var canvas = $('#anaDailyChart');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width = canvas.parentElement.clientWidth;
+    var H = canvas.height = 200;
+    ctx.clearRect(0, 0, W, H);
+
+    // 最近7天
+    var days = [];
+    for (var i = 6; i >= 0; i--) {
+      var d = new Date();
+      d.setDate(d.getDate() - i);
+      days.push(d.toISOString().slice(0, 10));
+    }
+
+    var values = days.map(function(d) { return hits[d] || 0; });
+    var maxVal = Math.max.apply(null, values) || 1;
+    var chartW = W - 80;
+    var chartH = H - 50;
+    var stepX = chartW / (days.length - 1 || 1);
+
+    // 网格
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 1;
+    for (var g = 0; g <= 4; g++) {
+      var gy = 20 + (chartH / 4) * g;
+      ctx.beginPath(); ctx.moveTo(50, gy); ctx.lineTo(W - 20, gy); ctx.stroke();
+      ctx.fillStyle = '#94a3b8'; ctx.font = '10px Noto Sans SC'; ctx.textAlign = 'right';
+      ctx.fillText(Math.round(maxVal * (4-g)/4), 45, gy + 3);
+    }
+
+    // 折线
+    ctx.strokeStyle = '#019aaa'; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    values.forEach(function(v, i) {
+      var x = 50 + i * stepX;
+      var y = 20 + chartH - (v / maxVal) * chartH;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // 面积
+    ctx.globalAlpha = 0.15;
+    ctx.fillStyle = '#019aaa';
+    ctx.lineTo(50 + (values.length-1) * stepX, 20 + chartH);
+    ctx.lineTo(50, 20 + chartH);
+    ctx.closePath(); ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // 数据点
+    values.forEach(function(v, i) {
+      var x = 50 + i * stepX;
+      var y = 20 + chartH - (v / maxVal) * chartH;
+      ctx.fillStyle = '#019aaa';
+      ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(x, y, 2, 0, Math.PI*2); ctx.fill();
+
+      ctx.fillStyle = '#1a1a2e'; ctx.font = 'bold 11px Noto Sans SC'; ctx.textAlign = 'center';
+      if (v > 0) ctx.fillText(v, x, y - 10);
+
+      ctx.fillStyle = '#94a3b8'; ctx.font = '10px Noto Sans SC';
+      ctx.fillText(days[i].slice(5), x, chartH + 38);
+    });
+  }
+
+  $('#btnClearAnalytics').addEventListener('click', function() {
+    if (!confirm('确定要清空所有访问统计数据吗？此操作不可恢复。')) return;
+    localStorage.removeItem('water_youth_analytics');
+    loadAnalytics();
+  });
+
   /* ========== 初始化 ========== */
   loadData();
   loadApplyData();
@@ -2952,6 +3210,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   loadVolunteerData();
   loadScheduleData();
   loadDashboardData();
+  loadAnalytics();
 })();
 </script>
 </body>
