@@ -262,23 +262,6 @@ textarea.form-control { resize: vertical; min-height: 72px; }
 .budget-total-bar .amount { font-size: 22px; font-weight: 700; color: #4ade80; }
 
 /* === 财务统计 === */
-.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-.stat-card {
-  background: var(--white); border-radius: var(--radius); padding: 20px;
-  border: var(--line); box-shadow: var(--shadow); display: flex; align-items: center; gap: 16px;
-  transition: transform .2s, box-shadow .2s;
-}
-.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-.stat-icon {
-  width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center;
-  justify-content: center; font-size: 22px; flex-shrink: 0;
-}
-.stat-icon.c1 { background: var(--primary-light); color: var(--primary); }
-.stat-icon.c2 { background: var(--leaf-light); color: var(--leaf); }
-.stat-icon.c3 { background: var(--amber-light); color: var(--amber); }
-.stat-icon.c4 { background: var(--purple-light); color: var(--purple); }
-.stat-info h3 { font-size: 24px; font-weight: 700; line-height: 1.2; }
-.stat-info p { font-size: 12.5px; color: var(--ink-3); margin-top: 2px; }
 
 /* === 状态标签 === */
 .badge-pending { background: #fefcbf; color: #d69e2e; }
@@ -1324,6 +1307,17 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   function $(s) { return document.querySelector(s); }
   function $$(s) { return Array.prototype.slice.call(document.querySelectorAll(s)); }
 
+  /* ========== 工具函数 ========== */
+  function esc(s) { return String(s===null||s===undefined?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  function safeParse(key, fallback) {
+    try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+    catch(e) { return fallback; }
+  }
+  function safeSet(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+    catch(e) { alert('存储空间已满，请删除部分数据后重试。'); return false; }
+  }
+
   /* ========== 侧边栏导航 ========== */
   var navItems = $$('.nav-item');
   var panels = $$('.panel');
@@ -1360,7 +1354,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     actList.forEach(function(x){ if(x.category) cats[x.category]=1; });
     var sel = $('#filterCat');
     var v = sel.value;
-    sel.innerHTML = '<option value="">全部分类</option>' + Object.keys(cats).map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
+    sel.innerHTML = '<option value="">全部分类</option>' + Object.keys(cats).map(function(c){ return '<option value="'+esc(c)+'">'+esc(c)+'</option>'; }).join('');
     sel.value = v;
   }
 
@@ -1383,22 +1377,26 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       var pc = (a.photos&&a.photos.length)||0;
       var tc = (a.tweets&&a.tweets.length)||0;
       var cs = a.cover || 'photos/IMG_5612.JPG';
-      return '<tr><td><img src="'+cs+'" style="width:56px;height:38px;object-fit:cover;border-radius:4px;background:#eee;"></td>'
-        + '<td><code style="font-size:11px;color:var(--primary);">'+a.id+'</code></td>'
-        + '<td><b>'+a.title+'</b><br><span style="font-size:12px;color:var(--ink-3);">'+(a.subtitle||'')+'</span></td>'
+      return '<tr><td><img src="'+esc(cs)+'" style="width:56px;height:38px;object-fit:cover;border-radius:4px;background:#eee;"></td>'
+        + '<td><code style="font-size:11px;color:var(--primary);">'+esc(a.id)+'</code></td>'
+        + '<td><b>'+esc(a.title)+'</b><br><span style="font-size:12px;color:var(--ink-3);">'+esc(a.subtitle||'')+'</span></td>'
         + '<td>'+(a.type==='chapter'?'<span class="badge badge-chapter">篇章</span>':'<span class="badge badge-menu">菜单</span>')+'</td>'
-        + '<td>'+(a.category||'-')+'</td>'
-        + '<td style="font-size:12px;">'+(a.targetAge||'全龄')+'</td>'
-        + '<td style="font-size:12px;color:var(--ink-3);">🖼'+pc+' 📰'+tc+'</td>'
+        + '<td>'+esc(a.category||'-')+'</td>'
+        + '<td style="font-size:12px;">'+esc(a.targetAge||'全龄')+'</td>'
+        + '<td style="font-size:12px;color:var(--ink-3);">'+pc+' '+tc+'</td>'
         + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
-        + '<a class="btn btn-sm btn-outline" href="activity.html?id='+a.id+'" target="_blank">👁</a>'
-        + '<button class="btn btn-sm btn-primary edit-btn" data-id="'+a.id+'">✏️</button>'
-        + '<button class="btn btn-sm btn-danger del-btn" data-id="'+a.id+'">🗑</button>'
+        + '<a class="btn btn-sm btn-outline" href="activity.html?id='+esc(a.id)+'" target="_blank">👁</a>'
+        + '<button class="btn btn-sm btn-primary edit-btn" data-id="'+esc(a.id)+'">✏️</button>'
+        + '<button class="btn btn-sm btn-danger del-btn" data-id="'+esc(a.id)+'">🗑</button>'
         + '</div></td></tr>';
     }).join('');
   }
 
-  $('#filterSearch').addEventListener('input', renderTable);
+  var renderTableTimer = null;
+  $('#filterSearch').addEventListener('input', function() {
+    clearTimeout(renderTableTimer);
+    renderTableTimer = setTimeout(renderTable, 150);
+  });
   $('#filterType').addEventListener('change', renderTable);
   $('#filterCat').addEventListener('change', renderTable);
 
@@ -1559,35 +1557,60 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   });
 
   /* ========== 申请数据 ========== */
-  function fmtDate(s) { if(!s) return '-'; var d=new Date(s); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+  function fmtDate(s) { if(!s) return '-'; var d=new Date(s); if(isNaN(d.getTime())) return '-'; return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
   function loadApplyData() {
-    var data = JSON.parse(localStorage.getItem('water_youth_apply_submissions')||'[]');
+    var data = safeParse('water_youth_apply_submissions', []);
+    if (!$('#navApplyCount')) return;
     $('#navApplyCount').textContent = data.length;
     var tb = $('#applyTableBody'), em = $('#applyEmpty');
     if(!data.length){ tb.innerHTML=''; em.style.display='block'; return; }
     em.style.display='none';
     tb.innerHTML = data.map(function(d,i) {
-      return '<tr><td>'+(i+1)+'</td><td><b>'+(d.name||'-')+'</b></td><td>'+(d.major||'-')+'</td><td>'+(d.grade||'-')+'</td><td>'+(d.className||'-')+'</td>'
-        + '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(d.selfIntro||'-')+'</td>'
-        + '<td>'+(d.hasAttachment?'📎 '+(d.attachmentName||'有'):'无')+'</td><td>'+fmtDate(d.timestamp)+'</td>'
-        + '<td style="text-align:right;"><button class="btn btn-danger btn-sm" onclick="deleteApply('+i+')">删除</button></td></tr>';
+      return '<tr><td>'+(i+1)+'</td><td><b>'+esc(d.name||'-')+'</b></td><td>'+esc(d.major||'-')+'</td><td>'+esc(d.grade||'-')+'</td><td>'+esc(d.className||'-')+'</td>'
+        + '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(d.selfIntro||'')+'">'+esc(d.selfIntro||'-')+'</td>'
+        + '<td>'+(d.hasAttachment?'📎 '+esc(d.attachmentName||'有'):'无')+'</td><td>'+fmtDate(d.timestamp)+'</td>'
+        + '<td style="text-align:right;"><button class="btn btn-danger btn-sm" data-action="delete-apply" data-index="'+i+'">删除</button></td></tr>';
     }).join('');
   }
   function loadBookingData() {
-    var data = JSON.parse(localStorage.getItem('water_youth_booking_submissions')||'[]');
+    var data = safeParse('water_youth_booking_submissions', []);
+    if (!$('#navBookingCount')) return;
     $('#navBookingCount').textContent = data.length;
     var tb = $('#bookingTableBody'), em = $('#bookingEmpty');
     if(!data.length){ tb.innerHTML=''; em.style.display='block'; return; }
     em.style.display='none';
     tb.innerHTML = data.map(function(d,i) {
-      return '<tr><td>'+(i+1)+'</td><td><b>'+(d.course||'-')+'</b></td><td>'+(d.org||'-')+'</td><td>'+(d.contact||'-')+'</td>'
-        + '<td>'+(d.audience||'-')+'</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(d.requirements||'-')+'</td>'
+      return '<tr><td>'+(i+1)+'</td><td><b>'+esc(d.course||'-')+'</b></td><td>'+esc(d.org||'-')+'</td><td>'+esc(d.contact||'-')+'</td>'
+        + '<td>'+esc(d.audience||'-')+'</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(d.requirements||'')+'">'+esc(d.requirements||'-')+'</td>'
         + '<td>'+fmtDate(d.timestamp)+'</td>'
-        + '<td style="text-align:right;"><button class="btn btn-danger btn-sm" onclick="deleteBooking('+i+')">删除</button></td></tr>';
+        + '<td style="text-align:right;"><button class="btn btn-danger btn-sm" data-action="delete-booking" data-index="'+i+'">删除</button></td></tr>';
     }).join('');
   }
-  window.deleteApply = function(i) { if(!confirm('确定删除？'))return; var d=JSON.parse(localStorage.getItem('water_youth_apply_submissions')||'[]'); d.splice(i,1); localStorage.setItem('water_youth_apply_submissions',JSON.stringify(d)); loadApplyData(); };
-  window.deleteBooking = function(i) { if(!confirm('确定删除？'))return; var d=JSON.parse(localStorage.getItem('water_youth_booking_submissions')||'[]'); d.splice(i,1); localStorage.setItem('water_youth_booking_submissions',JSON.stringify(d)); loadBookingData(); };
+  // 使用事件委托替代内联 onclick
+  (function(){
+    var applyBody = $('#applyTableBody');
+    if (applyBody) applyBody.addEventListener('click', function(e){
+      var btn = e.target.closest('[data-action="delete-apply"]');
+      if (!btn) return;
+      if (!confirm('确定删除？')) return;
+      var i = parseInt(btn.getAttribute('data-index'), 10);
+      var d = safeParse('water_youth_apply_submissions', []);
+      d.splice(i, 1);
+      safeSet('water_youth_apply_submissions', d);
+      loadApplyData();
+    });
+    var bookingBody = $('#bookingTableBody');
+    if (bookingBody) bookingBody.addEventListener('click', function(e){
+      var btn = e.target.closest('[data-action="delete-booking"]');
+      if (!btn) return;
+      if (!confirm('确定删除？')) return;
+      var i = parseInt(btn.getAttribute('data-index'), 10);
+      var d = safeParse('water_youth_booking_submissions', []);
+      d.splice(i, 1);
+      safeSet('water_youth_booking_submissions', d);
+      loadBookingData();
+    });
+  })();
 
   /* ========== 预算表 ========== */
   var BUDGET_KEY = 'water_youth_budget_data';
@@ -1642,15 +1665,12 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   }
 
   function loadBudgetFromStorage() {
-    var saved = localStorage.getItem(BUDGET_KEY);
+    var saved = safeParse(BUDGET_KEY, null);
     if (saved) {
-      try {
-        var parsed = JSON.parse(saved);
-        if (parsed.applicant) $('#budgetApplicant').value = parsed.applicant;
-        if (parsed.date) $('#budgetDate').value = parsed.date;
-        if (parsed.items && parsed.items.length) budgetItems = parsed.items;
-        else budgetItems = defaultBudgetItems();
-      } catch(e) { budgetItems = defaultBudgetItems(); }
+      if (saved.applicant) $('#budgetApplicant').value = saved.applicant;
+      if (saved.date) $('#budgetDate').value = saved.date;
+      if (saved.items && saved.items.length) budgetItems = saved.items;
+      else budgetItems = defaultBudgetItems();
     } else {
       budgetItems = defaultBudgetItems();
       $('#budgetDate').value = new Date().toISOString().slice(0,10);
@@ -1659,17 +1679,6 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   }
 
   $('#budgetTableBody').addEventListener('input', function(e) {
-    var idx = +e.target.dataset.idx;
-    var field = e.target.dataset.field;
-    if (budgetItems[idx] !== undefined) {
-      budgetItems[idx][field] = e.target.value;
-      if (field === 'qty' || field === 'price') {
-        renderBudgetTable();
-      }
-    }
-  });
-
-  $('#budgetTableBody').addEventListener('change', function(e) {
     var idx = +e.target.dataset.idx;
     var field = e.target.dataset.field;
     if (budgetItems[idx] !== undefined) {
@@ -1699,7 +1708,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       date: $('#budgetDate').value,
       items: budgetItems
     };
-    localStorage.setItem(BUDGET_KEY, JSON.stringify(data));
+    safeSet(BUDGET_KEY, data);
     alert('✅ 预算数据已暂存！');
   });
 
@@ -1796,7 +1805,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   var currentReimbItems = [];
 
   function loadReimbursementData() {
-    reimbList = JSON.parse(localStorage.getItem(REIMB_KEY) || '[]');
+    reimbList = safeParse(REIMB_KEY, []);
     renderReimbTable();
   }
 
@@ -1832,15 +1841,15 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       };
       return '<tr>'
         + '<td>' + (i+1) + '</td>'
-        + '<td><code style="font-size:11px;color:var(--primary);">' + r.id + '</code></td>'
-        + '<td><b>' + r.applicant + '</b></td>'
-        + '<td>' + r.date + '</td>'
+        + '<td><code style="font-size:11px;color:var(--primary);">' + esc(r.id) + '</code></td>'
+        + '<td><b>' + esc(r.applicant) + '</b></td>'
+        + '<td>' + esc(r.date) + '</td>'
         + '<td style="font-weight:600;color:var(--leaf);">¥' + (r.totalAmount || 0).toFixed(2) + '</td>'
-        + '<td>' + (statusMap[r.status] || r.status) + '</td>'
-        + '<td>' + (r.budgetId || '-') + '</td>'
+        + '<td>' + (statusMap[r.status] || esc(r.status)) + '</td>'
+        + '<td>' + esc(r.budgetId || '-') + '</td>'
         + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
-        + '<button class="btn btn-sm btn-primary edit-reimb" data-id="' + r.id + '">✏️</button>'
-        + '<button class="btn btn-sm btn-danger del-reimb" data-id="' + r.id + '">🗑</button>'
+        + '<button class="btn btn-sm btn-primary edit-reimb" data-id="' + esc(r.id) + '">✏️</button>'
+        + '<button class="btn btn-sm btn-danger del-reimb" data-id="' + esc(r.id) + '">🗑</button>'
         + '</div></td></tr>';
     }).join('');
   }
@@ -1930,7 +1939,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       reimbList.push(reimbData);
     }
 
-    localStorage.setItem(REIMB_KEY, JSON.stringify(reimbList));
+    safeSet(REIMB_KEY, reimbList);
     $('#reimbModal').classList.remove('open');
     renderReimbTable();
     alert('✅ 报销单已保存！');
@@ -1952,7 +1961,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     var db = e.target.closest('.del-reimb');
     if (db && confirm('确定删除此报销单？')) {
       reimbList = reimbList.filter(function(r) { return r.id !== db.dataset.id; });
-      localStorage.setItem(REIMB_KEY, JSON.stringify(reimbList));
+      safeSet(REIMB_KEY, reimbList);
       renderReimbTable();
     }
   });
@@ -1987,7 +1996,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   var expenseList = [];
 
   function loadExpenseData() {
-    expenseList = JSON.parse(localStorage.getItem(EXPENSE_KEY) || '[]');
+    expenseList = safeParse(EXPENSE_KEY, []);
     renderExpenseTable();
   }
 
@@ -2019,15 +2028,15 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     tbody.innerHTML = filtered.map(function(e, i) {
       return '<tr>'
         + '<td>' + (i+1) + '</td>'
-        + '<td>' + e.date + '</td>'
-        + '<td><span class="badge badge-chapter">' + e.category + '</span></td>'
+        + '<td>' + esc(e.date) + '</td>'
+        + '<td><span class="badge badge-chapter">' + esc(e.category) + '</span></td>'
         + '<td style="font-weight:600;color:var(--leaf);">¥' + (e.amount || 0).toFixed(2) + '</td>'
-        + '<td>' + e.description + '</td>'
-        + '<td>' + e.payer + '</td>'
+        + '<td>' + esc(e.description) + '</td>'
+        + '<td>' + esc(e.payer) + '</td>'
         + '<td>' + (e.receipt ? '📎' : '-') + '</td>'
         + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
-        + '<button class="btn btn-sm btn-primary edit-expense" data-id="' + e.id + '">✏️</button>'
-        + '<button class="btn btn-sm btn-danger del-expense" data-id="' + e.id + '">🗑</button>'
+        + '<button class="btn btn-sm btn-primary edit-expense" data-id="' + esc(e.id) + '">✏️</button>'
+        + '<button class="btn btn-sm btn-danger del-expense" data-id="' + esc(e.id) + '">🗑</button>'
         + '</div></td></tr>';
     }).join('');
   }
@@ -2061,8 +2070,8 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     var payer = $('#expensePayer').value.trim();
     var desc = $('#expenseDesc').value.trim();
     
-    if (!date || !amount || !payer || !desc) {
-      alert('请填写完整信息！');
+    if (!date || !amount || amount <= 0 || !payer || !desc) {
+      alert('请填写完整信息！金额必须大于0。');
       return;
     }
 
@@ -2086,7 +2095,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       expenseList.push(expenseData);
     }
 
-    localStorage.setItem(EXPENSE_KEY, JSON.stringify(expenseList));
+    safeSet(EXPENSE_KEY, expenseList);
     $('#expenseModal').classList.remove('open');
     renderExpenseTable();
     loadFinanceStats();
@@ -2133,7 +2142,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     var db = e.target.closest('.del-expense');
     if (db && confirm('确定删除此消费记录？')) {
       expenseList = expenseList.filter(function(e) { return e.id !== db.dataset.id; });
-      localStorage.setItem(EXPENSE_KEY, JSON.stringify(expenseList));
+      safeSet(EXPENSE_KEY, expenseList);
       renderExpenseTable();
       loadFinanceStats();
     }
@@ -2348,7 +2357,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   var SESSION_TIMEOUT = 30 * 60 * 1000; // 30分钟
   
   function checkLoginStatus() {
-    var loginData = JSON.parse(localStorage.getItem(LOGIN_KEY));
+    var loginData = safeParse(LOGIN_KEY, null);
     if (!loginData || !loginData.isLoggedIn) {
       redirectToLogin();
       return false;
@@ -2357,7 +2366,6 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     var now = Date.now();
     var lastActivity = loginData.lastActivity || loginData.loginTime;
     
-    // 检查是否超过30分钟无操作
     if (now - lastActivity > SESSION_TIMEOUT) {
       alert('⚠️ 登录已过期（30分钟无操作），请重新登录。');
       localStorage.removeItem(LOGIN_KEY);
@@ -2365,9 +2373,8 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       return false;
     }
     
-    // 更新最后活动时间
     loginData.lastActivity = now;
-    localStorage.setItem(LOGIN_KEY, JSON.stringify(loginData));
+    safeSet(LOGIN_KEY, loginData);
     return true;
   }
   
@@ -2377,10 +2384,10 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   }
   
   function updateActivity() {
-    var loginData = JSON.parse(localStorage.getItem(LOGIN_KEY));
+    var loginData = safeParse(LOGIN_KEY, null);
     if (loginData && loginData.isLoggedIn) {
       loginData.lastActivity = Date.now();
-      localStorage.setItem(LOGIN_KEY, JSON.stringify(loginData));
+      safeSet(LOGIN_KEY, loginData);
     }
   }
   
@@ -2394,10 +2401,17 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     return;
   }
   
-  // 监听用户活动，更新最后活动时间
-  var activityEvents = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+  // 监听用户活动（节流：30秒更新一次，降低 localStorage 写入频率）
+  var lastActivityUpdate = 0;
+  function throttledActivity() {
+    var now = Date.now();
+    if (now - lastActivityUpdate < 30000) return; // 30秒节流
+    lastActivityUpdate = now;
+    updateActivity();
+  }
+  var activityEvents = ['mousedown', 'keypress', 'scroll', 'touchstart'];
   activityEvents.forEach(function(event) {
-    document.addEventListener(event, updateActivity, { passive: true });
+    document.addEventListener(event, throttledActivity, { passive: true });
   });
   
   // 定期检查登录状态
@@ -2410,7 +2424,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   var volunteerList = [];
 
   function loadVolunteerData() {
-    volunteerList = JSON.parse(localStorage.getItem(VOL_KEY) || '[]');
+    volunteerList = safeParse(VOL_KEY, []);
     renderVolTable();
     updateVolunteerStats();
   }
@@ -2440,21 +2454,21 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     em.style.display = 'none';
     tbody.innerHTML = filtered.map(function(v, i) {
       var skillsHtml = (v.skills || []).map(function(s) {
-        return '<span class="badge badge-chapter" style="margin-right:4px;">' + s + '</span>';
+        return '<span class="badge badge-chapter" style="margin-right:4px;">' + esc(s) + '</span>';
       }).join('');
       
       return '<tr>'
         + '<td>' + (i+1) + '</td>'
-        + '<td><b>' + v.name + '</b></td>'
-        + '<td>' + v.major + '</td>'
-        + '<td>' + (v.grade || '-') + '</td>'
+        + '<td><b>' + esc(v.name) + '</b></td>'
+        + '<td>' + esc(v.major) + '</td>'
+        + '<td>' + esc(v.grade || '-') + '</td>'
         + '<td>' + (skillsHtml || '-') + '</td>'
         + '<td style="font-weight:600;color:var(--leaf);">' + (v.serviceHours || 0) + 'h</td>'
         + '<td>' + (v.activitiesCount || 0) + '次</td>'
-        + '<td>' + (v.joinDate || '-') + '</td>'
+        + '<td>' + esc(v.joinDate || '-') + '</td>'
         + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
-        + '<button class="btn btn-sm btn-primary edit-vol" data-id="' + v.id + '">✏️</button>'
-        + '<button class="btn btn-sm btn-danger del-vol" data-id="' + v.id + '">🗑</button>'
+        + '<button class="btn btn-sm btn-primary edit-vol" data-id="' + esc(v.id) + '">✏️</button>'
+        + '<button class="btn btn-sm btn-danger del-vol" data-id="' + esc(v.id) + '">🗑</button>'
         + '</div></td></tr>';
     }).join('');
   }
@@ -2471,7 +2485,8 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     }).length;
     $('#volActiveCount').textContent = activeCount;
     
-    var maxHours = Math.max.apply(null, volunteerList.map(function(v) { return v.serviceHours || 0; }));
+    var hoursArr = volunteerList.map(function(v) { return v.serviceHours || 0; });
+    var maxHours = hoursArr.length ? Math.max.apply(null, hoursArr) : 0;
     $('#volTopHours').textContent = maxHours;
     
     $('#navVolunteerCount').textContent = volunteerList.length;
@@ -2539,7 +2554,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       volunteerList.push(volData);
     }
 
-    localStorage.setItem(VOL_KEY, JSON.stringify(volunteerList));
+    safeSet(VOL_KEY, volunteerList);
     $('#volModal').classList.remove('open');
     renderVolTable();
     updateVolunteerStats();
@@ -2593,7 +2608,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     var db = e.target.closest('.del-vol');
     if (db && confirm('确定删除此志愿者？')) {
       volunteerList = volunteerList.filter(function(v) { return v.id !== db.dataset.id; });
-      localStorage.setItem(VOL_KEY, JSON.stringify(volunteerList));
+      safeSet(VOL_KEY, volunteerList);
       renderVolTable();
       updateVolunteerStats();
     }
@@ -2607,7 +2622,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   var scheduleList = [];
 
   function loadScheduleData() {
-    scheduleList = JSON.parse(localStorage.getItem(SCH_KEY) || '[]');
+    scheduleList = safeParse(SCH_KEY, []);
     renderSchTable();
   }
 
@@ -2646,21 +2661,21 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       
       var volNames = (s.volunteers || []).map(function(vid) {
         var vol = volunteerList.find(function(v) { return v.id === vid; });
-        return vol ? vol.name : vid;
+        return vol ? esc(vol.name) : esc(vid);
       }).join(', ');
-      
+
       return '<tr>'
         + '<td>' + (i+1) + '</td>'
-        + '<td><b>' + s.activity + '</b></td>'
-        + '<td>' + s.date + '</td>'
-        + '<td>' + s.startTime + '-' + s.endTime + '</td>'
-        + '<td>' + (s.location || '-') + '</td>'
-        + '<td>' + (s.leader || '-') + '</td>'
-        + '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (volNames || '-') + '</td>'
-        + '<td>' + (statusMap[s.status] || s.status) + '</td>'
+        + '<td><b>' + esc(s.activity) + '</b></td>'
+        + '<td>' + esc(s.date) + '</td>'
+        + '<td>' + esc(s.startTime) + '-' + esc(s.endTime) + '</td>'
+        + '<td>' + esc(s.location || '-') + '</td>'
+        + '<td>' + esc(s.leader || '-') + '</td>'
+        + '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + volNames + '">' + (volNames || '-') + '</td>'
+        + '<td>' + (statusMap[s.status] || esc(s.status)) + '</td>'
         + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
-        + '<button class="btn btn-sm btn-primary edit-sch" data-id="' + s.id + '">✏️</button>'
-        + '<button class="btn btn-sm btn-danger del-sch" data-id="' + s.id + '">🗑</button>'
+        + '<button class="btn btn-sm btn-primary edit-sch" data-id="' + esc(s.id) + '">✏️</button>'
+        + '<button class="btn btn-sm btn-danger del-sch" data-id="' + esc(s.id) + '">🗑</button>'
         + '</div></td></tr>';
     }).join('');
   }
@@ -2769,7 +2784,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       scheduleList.push(schData);
     }
 
-    localStorage.setItem(SCH_KEY, JSON.stringify(scheduleList));
+    safeSet(SCH_KEY, scheduleList);
     $('#schModal').classList.remove('open');
     renderSchTable();
     alert('✅ 排班已保存！');
@@ -2791,7 +2806,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     var db = e.target.closest('.del-sch');
     if (db && confirm('确定删除此排班？')) {
       scheduleList = scheduleList.filter(function(s) { return s.id !== db.dataset.id; });
-      localStorage.setItem(SCH_KEY, JSON.stringify(scheduleList));
+      safeSet(SCH_KEY, scheduleList);
       renderSchTable();
     }
   });
@@ -2943,7 +2958,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       var medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
       return '<div style="display:flex;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;">'
         + '<span style="width:24px;font-size:14px;">' + medal + '</span>'
-        + '<span style="flex:1;font-weight:500;">' + v.name + '</span>'
+        + '<span style="flex:1;font-weight:500;">' + esc(v.name) + '</span>'
         + '<span style="color:var(--leaf);font-weight:600;">' + (v.serviceHours || 0) + 'h</span>'
         + '</div>';
     }).join('');
@@ -2964,8 +2979,8 @@ textarea.form-control { resize: vertical; min-height: 72px; }
 
     container.innerHTML = sorted.map(function(a) {
       return '<div style="padding:8px 0;border-bottom:1px solid #f0f0f0;">'
-        + '<div style="font-weight:500;font-size:13px;">' + a.title + '</div>'
-        + '<div style="font-size:11px;color:var(--ink-3);">' + (a.category || '') + '</div>'
+        + '<div style="font-weight:500;font-size:13px;">' + esc(a.title) + '</div>'
+        + '<div style="font-size:11px;color:var(--ink-3);">' + esc(a.category || '') + '</div>'
         + '</div>';
     }).join('');
   }
@@ -3026,7 +3041,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   };
 
   function getAnalytics() {
-    try { return JSON.parse(localStorage.getItem('water_youth_analytics') || '{}'); }
+    return safeParse('water_youth_analytics', {});
     catch(e) { return {}; }
   }
 
