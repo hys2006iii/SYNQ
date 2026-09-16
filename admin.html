@@ -1474,9 +1474,9 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     if (!currentEditingPhotos.length) { c.innerHTML = '<p style="text-align:center;padding:20px;color:var(--ink-3);font-size:13px;">暂无照片</p>'; return; }
     c.innerHTML = currentEditingPhotos.map(function(p,i) {
       return '<div class="item-card"><div class="item-card-head"><b>照片 #'+(i+1)+'</b><button type="button" class="item-del-btn del-photo" data-idx="'+i+'">删除</button></div>'
-        + '<div class="form-grid"><div class="form-group" style="margin-bottom:0;"><label>URL</label><input type="text" class="form-control ph-url" data-idx="'+i+'" value="'+(p.url||'')+'"></div>'
-        + '<div class="form-group" style="margin-bottom:0;"><label>标题</label><input type="text" class="form-control ph-title" data-idx="'+i+'" value="'+(p.title||'')+'"></div></div>'
-        + '<div class="form-group" style="margin-bottom:0;"><label>图说</label><input type="text" class="form-control ph-desc" data-idx="'+i+'" value="'+(p.desc||'')+'"></div></div>';
+        + '<div class="form-grid"><div class="form-group" style="margin-bottom:0;"><label>URL</label><input type="text" class="form-control ph-url" data-idx="'+i+'" value="'+esc(p.url||'')+'"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>标题</label><input type="text" class="form-control ph-title" data-idx="'+i+'" value="'+esc(p.title||'')+'"></div></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>图说</label><input type="text" class="form-control ph-desc" data-idx="'+i+'" value="'+esc(p.desc||'')+'"></div></div>';
     }).join('');
   }
   $('#btnAddPhoto').addEventListener('click', function() { currentEditingPhotos.push({url:'photos/IMG_5614.JPG',title:'',desc:''}); renderPhotosManager(); });
@@ -1494,11 +1494,11 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     if (!currentEditingTweets.length) { c.innerHTML = '<p style="text-align:center;padding:20px;color:var(--ink-3);font-size:13px;">暂无推文</p>'; return; }
     c.innerHTML = currentEditingTweets.map(function(t,i) {
       return '<div class="item-card"><div class="item-card-head"><b>推文 #'+(i+1)+'</b><button type="button" class="item-del-btn del-tweet" data-idx="'+i+'">删除</button></div>'
-        + '<div class="form-group"><label>标题</label><input type="text" class="form-control tw-title" data-idx="'+i+'" value="'+(t.title||'')+'"></div>'
-        + '<div class="form-grid"><div class="form-group" style="margin-bottom:0;"><label>平台</label><input type="text" class="form-control tw-plat" data-idx="'+i+'" value="'+(t.platform||'')+'"></div>'
-        + '<div class="form-group" style="margin-bottom:0;"><label>日期</label><input type="text" class="form-control tw-date" data-idx="'+i+'" value="'+(t.date||'')+'"></div></div>'
-        + '<div class="form-group" style="margin-top:8px;"><label>链接</label><input type="text" class="form-control tw-url" data-idx="'+i+'" value="'+(t.url||'')+'"></div>'
-        + '<div class="form-group" style="margin-bottom:0;"><label>摘要</label><input type="text" class="form-control tw-sum" data-idx="'+i+'" value="'+(t.summary||'')+'"></div></div>';
+        + '<div class="form-group"><label>标题</label><input type="text" class="form-control tw-title" data-idx="'+i+'" value="'+esc(t.title||'')+'"></div>'
+        + '<div class="form-grid"><div class="form-group" style="margin-bottom:0;"><label>平台</label><input type="text" class="form-control tw-plat" data-idx="'+i+'" value="'+esc(t.platform||'')+'"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>日期</label><input type="text" class="form-control tw-date" data-idx="'+i+'" value="'+esc(t.date||'')+'"></div></div>'
+        + '<div class="form-group" style="margin-top:8px;"><label>链接</label><input type="text" class="form-control tw-url" data-idx="'+i+'" value="'+esc(t.url||'')+'"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>摘要</label><input type="text" class="form-control tw-sum" data-idx="'+i+'" value="'+esc(t.summary||'')+'"></div></div>';
     }).join('');
   }
   $('#btnAddTweet').addEventListener('click', function() { currentEditingTweets.push({title:'',platform:'河海水韵农青公众号',date:new Date().toISOString().slice(0,10),url:'',summary:''}); renderTweetsManager(); });
@@ -1516,8 +1516,8 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     var c = $('#stepsListContainer');
     c.innerHTML = currentEditingSteps.map(function(s,i) {
       return '<div class="item-card"><div class="item-card-head"><b>环节 '+(i+1)+'</b><button type="button" class="item-del-btn del-step" data-idx="'+i+'">删除</button></div>'
-        + '<div class="form-group"><label>标题</label><input type="text" class="form-control step-title" data-idx="'+i+'" value="'+(s.title||'')+'"></div>'
-        + '<div class="form-group" style="margin-bottom:0;"><label>内容</label><input type="text" class="form-control step-cnt" data-idx="'+i+'" value="'+(s.content||'')+'"></div></div>';
+        + '<div class="form-group"><label>标题</label><input type="text" class="form-control step-title" data-idx="'+i+'" value="'+esc(s.title||'')+'"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>内容</label><input type="text" class="form-control step-cnt" data-idx="'+i+'" value="'+esc(s.content||'')+'"></div></div>';
     }).join('');
   }
   $('#btnAddStep').addEventListener('click', function() { currentEditingSteps.push({step:String(currentEditingSteps.length+1),title:'',content:''}); renderStepsManager(); });
@@ -1643,15 +1643,15 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       var totalStr = rowTotal > 0 ? rowTotal.toFixed(2) : '';
       return '<tr>'
         + '<td class="row-num">' + (i+1) + '</td>'
-        + '<td class="col-name"><input type="text" value="'+item.name+'" data-idx="'+i+'" data-field="name" placeholder="物品名称"></td>'
-        + '<td class="col-num"><input type="number" value="'+item.qty+'" data-idx="'+i+'" data-field="qty" min="0" step="1" placeholder="0"></td>'
-        + '<td class="col-price"><input type="number" value="'+item.price+'" data-idx="'+i+'" data-field="price" min="0" step="0.01" placeholder="0.00"></td>'
+        + '<td class="col-name"><input type="text" value="'+esc(item.name)+'" data-idx="'+i+'" data-field="name" placeholder="物品名称"></td>'
+        + '<td class="col-num"><input type="number" value="'+(item.qty||'')+'" data-idx="'+i+'" data-field="qty" min="0" step="1" placeholder="0"></td>'
+        + '<td class="col-price"><input type="number" value="'+(item.price||'')+'" data-idx="'+i+'" data-field="price" min="0" step="0.01" placeholder="0.00"></td>'
         + '<td class="col-total" style="text-align:center;color:var(--leaf);font-weight:600;">' + totalStr + '</td>'
-        + '<td class="col-usage"><input type="text" value="'+item.usage+'" data-idx="'+i+'" data-field="usage" placeholder="用途说明"></td>'
-        + '<td class="col-place"><input type="text" value="'+item.place+'" data-idx="'+i+'" data-field="place" placeholder="采购地点"></td>'
-        + '<td class="col-buyer"><input type="text" value="'+item.buyer+'" data-idx="'+i+'" data-field="buyer" placeholder="采购人"></td>'
-        + '<td class="col-sign"><input type="text" value="'+item.dept+'" data-idx="'+i+'" data-field="dept" placeholder="签字"></td>'
-        + '<td class="col-sign"><input type="text" value="'+item.leader+'" data-idx="'+i+'" data-field="leader" placeholder="签字"></td>'
+        + '<td class="col-usage"><input type="text" value="'+esc(item.usage)+'" data-idx="'+i+'" data-field="usage" placeholder="用途说明"></td>'
+        + '<td class="col-place"><input type="text" value="'+esc(item.place)+'" data-idx="'+i+'" data-field="place" placeholder="采购地点"></td>'
+        + '<td class="col-buyer"><input type="text" value="'+esc(item.buyer)+'" data-idx="'+i+'" data-field="buyer" placeholder="采购人"></td>'
+        + '<td class="col-sign"><input type="text" value="'+esc(item.dept)+'" data-idx="'+i+'" data-field="dept" placeholder="签字"></td>'
+        + '<td class="col-sign"><input type="text" value="'+esc(item.leader)+'" data-idx="'+i+'" data-field="leader" placeholder="签字"></td>'
         + '<td><button class="del-row" data-idx="'+i+'" title="删除此行">&times;</button></td>'
         + '</tr>';
     }).join('');
@@ -1884,12 +1884,12 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       return '<div class="item-card">'
         + '<div class="item-card-head"><b>报销项目 #' + (i+1) + '</b><button type="button" class="item-del-btn del-reimb-item" data-idx="' + i + '">删除</button></div>'
         + '<div class="form-grid">'
-        + '<div class="form-group" style="margin-bottom:0;"><label>项目名称</label><input type="text" class="form-control reimb-item-name" data-idx="' + i + '" value="' + (item.name || '') + '"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>项目名称</label><input type="text" class="form-control reimb-item-name" data-idx="' + i + '" value="' + esc(item.name || '') + '"></div>'
         + '<div class="form-group" style="margin-bottom:0;"><label>金额(元)</label><input type="number" class="form-control reimb-item-amount" data-idx="' + i + '" value="' + (item.amount || '') + '" min="0" step="0.01"></div>'
         + '</div>'
         + '<div class="form-grid">'
-        + '<div class="form-group" style="margin-bottom:0;"><label>日期</label><input type="date" class="form-control reimb-item-date" data-idx="' + i + '" value="' + (item.date || '') + '"></div>'
-        + '<div class="form-group" style="margin-bottom:0;"><label>说明</label><input type="text" class="form-control reimb-item-desc" data-idx="' + i + '" value="' + (item.description || '') + '"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>日期</label><input type="date" class="form-control reimb-item-date" data-idx="' + i + '" value="' + esc(item.date || '') + '"></div>'
+        + '<div class="form-group" style="margin-bottom:0;"><label>说明</label><input type="text" class="form-control reimb-item-desc" data-idx="' + i + '" value="' + esc(item.description || '') + '"></div>'
         + '</div>'
         + '</div>';
     }).join('');
@@ -2362,19 +2362,14 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       redirectToLogin();
       return false;
     }
-    
     var now = Date.now();
     var lastActivity = loginData.lastActivity || loginData.loginTime;
-    
     if (now - lastActivity > SESSION_TIMEOUT) {
-      alert('⚠️ 登录已过期（30分钟无操作），请重新登录。');
+      alert('登录已过期（30分钟无操作），请重新登录。');
       localStorage.removeItem(LOGIN_KEY);
       redirectToLogin();
       return false;
     }
-    
-    loginData.lastActivity = now;
-    safeSet(LOGIN_KEY, loginData);
     return true;
   }
   
@@ -2414,10 +2409,20 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     document.addEventListener(event, throttledActivity, { passive: true });
   });
   
-  // 定期检查登录状态
+  // 定期检查登录状态（不更新活动时间，仅检查过期）
   setInterval(function() {
-    checkLoginStatus();
-  }, 60000); // 每分钟检查一次
+    var loginData = safeParse(LOGIN_KEY, null);
+    if (!loginData || !loginData.isLoggedIn) {
+      redirectToLogin();
+      return;
+    }
+    var now = Date.now();
+    var lastActivity = loginData.lastActivity || loginData.loginTime;
+    if (now - lastActivity > SESSION_TIMEOUT) {
+      localStorage.removeItem(LOGIN_KEY);
+      redirectToLogin();
+    }
+  }, 60000);
 
   /* ========== 志愿者管理 ========== */
   var VOL_KEY = 'water_youth_volunteers';
@@ -2684,8 +2689,8 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     // 渲染志愿者多选框
     var checkboxesHtml = volunteerList.map(function(v) {
       return '<label style="display:block; padding:4px 0; cursor:pointer;">'
-        + '<input type="checkbox" class="sch-vol-cb" value="' + v.id + '"> '
-        + v.name + ' (' + v.major + ')</label>';
+        + '<input type="checkbox" class="sch-vol-cb" value="' + esc(v.id) + '"> '
+        + esc(v.name) + ' (' + esc(v.major) + ')</label>';
     }).join('');
     $('#schVolunteersCheckboxes').innerHTML = checkboxesHtml || '<p style="color:var(--ink-3);">暂无志愿者数据</p>';
 
