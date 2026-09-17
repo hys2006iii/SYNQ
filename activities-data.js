@@ -977,6 +977,9 @@
 
     save: function (item) {
       if (!item || !item.id) return false;
+      if (!item.visibleSections) {
+        item.visibleSections = { photos: true, video: true, tweets: true, curriculum: true };
+      }
       var all = this.getAll();
       var found = false;
       for (var i = 0; i < all.length; i++) {

@@ -1231,6 +1231,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
         <button class="tab-btn" data-tab="tabVideo" type="button">视频</button>
         <button class="tab-btn" data-tab="tabTweets" type="button">推文 (<span id="tabTweetCount">0</span>)</button>
         <button class="tab-btn" data-tab="tabSteps" type="button">教学流程</button>
+        <button class="tab-btn" data-tab="tabDisplay" type="button">板块显隐</button>
       </nav>
     </div>
     <form class="modal-body" id="actForm">
@@ -1275,6 +1276,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       <div class="tab-pane" id="tabVideo">
         <div class="form-group"><label>视频标题</label><input type="text" class="form-control" id="fVideoTitle"></div>
         <div class="form-group"><label>嵌入代码或直链</label><textarea class="form-control" id="fVideoEmbed" placeholder="Bilibili iframe 代码或 MP4 链接"></textarea></div>
+        <div class="form-group"><label>视频提示语</label><input type="text" class="form-control" id="fVideoTip" placeholder="如：点击查看活动精彩视频"></div>
       </div>
       <div class="tab-pane" id="tabTweets">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -1290,6 +1292,25 @@ textarea.form-control { resize: vertical; min-height: 72px; }
         </div>
         <div id="stepsListContainer"></div>
         <div class="form-group" style="margin-top:14px;"><label>配套物资 (逗号分隔)</label><input type="text" class="form-control" id="fMaterials"></div>
+      </div>
+      <div class="tab-pane" id="tabDisplay">
+        <div style="padding:12px 16px; background:#f7fafc; border:1px solid #e2e8f0; border-radius:8px;">
+          <h4 style="margin:0 0 12px; font-size:14px; color:var(--ink-2);">板块显隐</h4>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px 16px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:13.5px;">
+              <input type="checkbox" id="fVisPhotos" checked> 显示照片板块
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:13.5px;">
+              <input type="checkbox" id="fVisVideo" checked> 显示视频板块
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:13.5px;">
+              <input type="checkbox" id="fVisTweets" checked> 显示通讯稿
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:13.5px;">
+              <input type="checkbox" id="fVisCurriculum" checked> 显示教学流程
+            </label>
+          </div>
+        </div>
       </div>
     </form>
     <div class="modal-foot">
@@ -1419,6 +1440,12 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       $('#fDesc').value = act.desc || '';
       $('#fVideoTitle').value = (act.video&&act.video.title)||'';
       $('#fVideoEmbed').value = (act.video&&(act.video.embed||act.video.url))||'';
+      $('#fVideoTip').value = (act.video&&act.video.tip)||'';
+      var vs = act.visibleSections || {};
+      $('#fVisPhotos').checked = vs.photos !== false;
+      $('#fVisVideo').checked = vs.video !== false;
+      $('#fVisTweets').checked = vs.tweets !== false;
+      $('#fVisCurriculum').checked = vs.curriculum !== false;
       $('#fMaterials').value = (act.materials||[]).join(', ');
       currentEditingPhotos = JSON.parse(JSON.stringify(act.photos||[]));
       currentEditingTweets = JSON.parse(JSON.stringify(act.tweets||[]));
@@ -1438,6 +1465,11 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       $('#fDesc').value = '';
       $('#fVideoTitle').value = '';
       $('#fVideoEmbed').value = '';
+      $('#fVideoTip').value = '';
+      $('#fVisPhotos').checked = true;
+      $('#fVisVideo').checked = true;
+      $('#fVisTweets').checked = true;
+      $('#fVisCurriculum').checked = true;
       $('#fMaterials').value = '';
       currentEditingPhotos = [{url:'photos/IMG_5612.JPG',title:'活动照片',desc:''}];
       currentEditingTweets = [];
@@ -1540,9 +1572,15 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       stats: $('#fStats').value.trim(), cover: $('#fCover').value.trim(), desc: $('#fDesc').value.trim(),
       highlights: hl ? hl.split(/[,，\s]+/).filter(Boolean) : [],
       photos: currentEditingPhotos,
-      video: { title: $('#fVideoTitle').value.trim()||'', embed: ve.indexOf('<iframe')!==-1?ve:'', url: ve.indexOf('<iframe')===-1?ve:'', tip:'' },
+      video: { title: $('#fVideoTitle').value.trim()||'', embed: ve.indexOf('<iframe')!==-1?ve:'', url: ve.indexOf('<iframe')===-1?ve:'', tip: $('#fVideoTip').value.trim() },
       tweets: currentEditingTweets, curriculum: currentEditingSteps,
-      materials: mat ? mat.split(/[,，]+/).filter(Boolean) : []
+      materials: mat ? mat.split(/[,，]+/).filter(Boolean) : [],
+      visibleSections: {
+        photos: $('#fVisPhotos').checked,
+        video: $('#fVisVideo').checked,
+        tweets: $('#fVisTweets').checked,
+        curriculum: $('#fVisCurriculum').checked
+      }
     });
     alert('✅ 活动数据已保存！');
     closeModal(); loadData();
