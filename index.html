@@ -94,6 +94,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   justify-content: center;
   align-items: center;
   padding: 66px 24px 16px;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 100vh;
+  contain-intrinsic-size: 0 100dvh;
 }
 
 /* 典雅细致水印暗纹 (人文纸墨肌理) */
@@ -111,7 +114,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-  will-change: opacity, transform;
+}
+.anim-el,
+.real-card,
+.btn-green-fill,
+.btn-line-white,
+.nav-links a,
+.nav-act-btn,
+.nav-join-btn,
+.fp-dot-circle,
+.fp-tooltip,
+.menu-search-input,
+.menu-search-btn,
+.menu-clear-btn,
+.m-cat-btn,
+.course-card,
+.menu-action-btn,
+.back-top-btn {
+  will-change: transform, opacity;
 }
 .fp-section.active .anim-el {
   opacity: 1;
@@ -275,7 +295,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border: 1px solid var(--border-card);
   border-radius: 10px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-  transition: transform var(--dur) ease, border-color var(--dur) ease, background var(--dur) ease;
+  transition: transform var(--dur) ease, border-color var(--dur) ease, background-color var(--dur) ease;
+  transform: translateZ(0);
 }
 .real-card:hover {
   background: rgba(36, 82, 80, 0.9);
@@ -332,7 +353,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border: 1px solid var(--border-card); position: relative; overflow: hidden;
 }
 .hero-marquee-wrap { display: flex; gap: 14px; overflow: hidden; position: relative; width: 100%; border-radius: 8px; }
-.hero-marquee-track { display: flex; gap: 14px; width: max-content; animation: marqueePhoto 24s linear infinite; }
+.hero-marquee-track { display: flex; gap: 14px; width: max-content; animation: marqueePhoto 24s linear infinite; transform: translateZ(0); }
 .hero-marquee-track:hover { animation-play-state: paused; }
 @keyframes marqueePhoto {
   0% { transform: translateX(0); }
@@ -1306,6 +1327,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .join-role-box p { font-size: 9px; }
 }
 
+/* 尊重用户减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .anim-el {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .hero-marquee-track { animation: none !important; }
+  .mouse-dot { animation: none !important; opacity: 1; }
+  .loader-logo { animation: none !important; }
+  .loader-bar-fill { animation: none !important; width: 100%; }
+  .fp-wrapper { transition-duration: 0ms !important; }
+}
+
 /* 开发中弹窗 */
 .dev-modal-overlay {
   display: none;
@@ -1393,48 +1428,56 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 <!-- ============ 加载动画 ============ -->
 <div class="page-loader" id="pageLoader">
-  <div class="loader-logo"><img src="logo-mark.png" alt=""></div>
+  <div class="loader-logo"><img src="logo-mark.png" alt="" loading="eager"></div>
   <div class="loader-text">水韵农青</div>
   <div class="loader-bar-track"><div class="loader-bar-fill" id="loaderBar"></div></div>
 </div>
 
-<!-- ============ 访问统计脚本 ============ -->
+<!-- ============ 访问统计脚本 (deferred) ============ -->
 <script>
 (function(){
-  var KEY = 'water_youth_analytics';
-  function get(){ try{return JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){return {};} }
-  function set(d){ try{localStorage.setItem(KEY, JSON.stringify(d));}catch(e){} }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(function(){
+      runAnalytics();
+    }, {timeout: 2000});
+  } else {
+    setTimeout(runAnalytics, 1000);
+  }
+  function runAnalytics(){
+    var KEY = 'water_youth_analytics';
+    function get(){ try{return JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){return {};} }
+    function set(d){ try{localStorage.setItem(KEY, JSON.stringify(d));}catch(e){} }
 
-  var data = get();
-  if(!data.logs) data.logs = [];
-  if(!data.sectionHits) data.sectionHits = {};
-  if(!data.dailyHits) data.dailyHits = {};
+    var data = get();
+    if(!data.logs) data.logs = [];
+    if(!data.sectionHits) data.sectionHits = {};
+    if(!data.dailyHits) data.dailyHits = {};
 
-  var vid = sessionStorage.getItem('wq_vid');
-  if(!vid){ vid = 'v_' + Date.now() + '_' + Math.random().toString(36).slice(2,8); sessionStorage.setItem('wq_vid', vid); }
+    var vid = sessionStorage.getItem('wq_vid');
+    if(!vid){ vid = 'v_' + Date.now() + '_' + Math.random().toString(36).slice(2,8); sessionStorage.setItem('wq_vid', vid); }
 
-  var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
-  var today = new Date().toISOString().slice(0,10);
-  var now = new Date().toISOString();
+    var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    var today = new Date().toISOString().slice(0,10);
+    var now = new Date().toISOString();
 
-  var section = window.location.hash.replace('#','') || 'top';
-  data.logs.push({ time: now, section: section, isMobile: isMobile, visitorId: vid });
-  if(data.logs.length > 500) data.logs = data.logs.slice(-500);
+    var section = window.location.hash.replace('#','') || 'top';
+    data.logs.push({ time: now, section: section, isMobile: isMobile, visitorId: vid });
+    if(data.logs.length > 500) data.logs = data.logs.slice(-500);
 
-  data.sectionHits[section] = (data.sectionHits[section]||0) + 1;
-  data.dailyHits[today] = (data.dailyHits[today]||0) + 1;
-  set(data);
+    data.sectionHits[section] = (data.sectionHits[section]||0) + 1;
+    data.dailyHits[today] = (data.dailyHits[today]||0) + 1;
+    set(data);
 
-  // 使用 hashchange 事件代替轮询，减少性能开销
-  window.addEventListener('hashchange', function(){
-    var cur = window.location.hash.replace('#','') || 'top';
-    var d = get();
-    d.logs.push({ time: new Date().toISOString(), section: cur, isMobile: isMobile, visitorId: vid });
-    if(d.logs.length > 500) d.logs = d.logs.slice(-500);
-    d.sectionHits[cur] = (d.sectionHits[cur]||0) + 1;
-    d.dailyHits[new Date().toISOString().slice(0,10)] = (d.dailyHits[new Date().toISOString().slice(0,10)]||0) + 1;
-    set(d);
-  });
+    window.addEventListener('hashchange', function(){
+      var cur = window.location.hash.replace('#','') || 'top';
+      var d = get();
+      d.logs.push({ time: new Date().toISOString(), section: cur, isMobile: isMobile, visitorId: vid });
+      if(d.logs.length > 500) d.logs = d.logs.slice(-500);
+      d.sectionHits[cur] = (d.sectionHits[cur]||0) + 1;
+      d.dailyHits[new Date().toISOString().slice(0,10)] = (d.dailyHits[new Date().toISOString().slice(0,10)]||0) + 1;
+      set(d);
+    });
+  }
 })();
 </script>
 
@@ -1442,7 +1485,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <header class="hdr" id="hdr">
   <div class="nav-wrap">
     <a class="brand" href="#top" data-fp-target="0" id="brandLogo" title="双击或快捷键进入后台">
-      <img src="logo-mark.png" alt="水韵农青标志">
+      <img src="logo-mark.png" alt="水韵农青标志" loading="eager">
       <span class="word">水韵<b>农</b>青</span>
     </a>
     <ul class="nav-links" id="navLinks">
@@ -1510,35 +1553,35 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <div class="hero-marquee-wrap">
               <div class="hero-marquee-track">
                 <div class="hero-photo-slide">
-                  <img src="photos/IMG_5612.JPG" alt="土壤医生低碳科普">
+                  <img src="photos/IMG_5612.JPG" alt="土壤医生低碳科普" loading="lazy">
                   <div class="hero-photo-overlay">
                     <h5>「土壤医生」低碳课堂</h5>
                     <p>国家级二等奖科研成果进小学课堂</p>
                   </div>
                 </div>
                 <div class="hero-photo-slide">
-                  <img src="photos/IMG_5614.JPG" alt="土壤酸碱度检测实验">
+                  <img src="photos/IMG_5614.JPG" alt="土壤酸碱度检测实验" loading="lazy">
                   <div class="hero-photo-overlay">
                     <h5>动手实验：土壤诊断</h5>
                     <p>学生亲手使用检测试剂观察酸碱颜色变化</p>
                   </div>
                 </div>
                 <div class="hero-photo-slide">
-                  <img src="photos/IMG_5616.JPG" alt="植物拓印研学营">
+                  <img src="photos/IMG_5616.JPG" alt="植物拓印研学营" loading="lazy">
                   <div class="hero-photo-overlay">
                     <h5>非遗植物拓印研学</h5>
                     <p>古林公园35组家庭在花叶敲击中感悟生命</p>
                   </div>
                 </div>
                 <div class="hero-photo-slide">
-                  <img src="photos/IMG_5619.JPG" alt="清源讲堂土壤微塑料">
+                  <img src="photos/IMG_5619.JPG" alt="清源讲堂土壤微塑料" loading="lazy">
                   <div class="hero-photo-overlay">
                     <h5>清源讲堂：土壤微塑料</h5>
                     <p>赴金陵图书馆7天系统解读微塑料迁移风险</p>
                   </div>
                 </div>
                 <div class="hero-photo-slide">
-                  <img src="photos/IMG_5621.JPG" alt="现代农场蔬菜市集">
+                  <img src="photos/IMG_5621.JPG" alt="现代农场蔬菜市集" loading="lazy">
                   <div class="hero-photo-overlay">
                     <h5>现代农场菜园奇遇记</h5>
                     <p>五感体验串联智慧滴灌与农耕文化</p>
@@ -1546,14 +1589,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 </div>
                 <!-- 循环无缝拼接 -->
                 <div class="hero-photo-slide">
-                  <img src="photos/IMG_5612.JPG" alt="土壤医生低碳科普">
+                  <img src="photos/IMG_5612.JPG" alt="土壤医生低碳科普" loading="lazy">
                   <div class="hero-photo-overlay">
                     <h5>「土壤医生」低碳课堂</h5>
                     <p>国家级二等奖科研成果进小学课堂</p>
                   </div>
                 </div>
                 <div class="hero-photo-slide">
-                  <img src="photos/IMG_5614.JPG" alt="土壤酸碱度检测实验">
+                  <img src="photos/IMG_5614.JPG" alt="土壤酸碱度检测实验" loading="lazy">
                   <div class="hero-photo-overlay">
                     <h5>动手实验：土壤诊断</h5>
                     <p>学生亲手使用检测试剂观察酸碱颜色变化</p>
@@ -1720,28 +1763,28 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
           <div class="efforts-strip-gallery anim-el d-3">
             <div class="eff-snap-card">
-              <img src="photos/IMG_5612.JPG" alt="土壤医生">
+              <img src="photos/IMG_5612.JPG" alt="土壤医生" loading="lazy">
               <div class="eff-snap-text">
                 <h5>科研反哺教学</h5>
                 <p>自研土壤装置进小学课堂</p>
               </div>
             </div>
             <div class="eff-snap-card">
-              <img src="photos/IMG_5616.JPG" alt="非遗拓印">
+              <img src="photos/IMG_5616.JPG" alt="非遗拓印" loading="lazy">
               <div class="eff-snap-text">
                 <h5>非遗自然疗愈</h5>
                 <p>35组家庭敲打植物脉络</p>
               </div>
             </div>
             <div class="eff-snap-card">
-              <img src="photos/IMG_5619.JPG" alt="废弃农作物">
+              <img src="photos/IMG_5619.JPG" alt="废弃农作物" loading="lazy">
               <div class="eff-snap-text">
                 <h5>秸秆变废为宝</h5>
                 <p>全龄大闯关体验循环农业</p>
               </div>
             </div>
             <div class="eff-snap-card">
-              <img src="photos/IMG_5621.JPG" alt="农场探秘">
+              <img src="photos/IMG_5621.JPG" alt="农场探秘" loading="lazy">
               <div class="eff-snap-text">
                 <h5>沉浸式菜园</h5>
                 <p>五感体验联通科技与农耕</p>
@@ -1823,7 +1866,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
             <div class="serv-side-card real-card anim-el d-3">
               <div class="serv-photo-showcase">
-                <img id="chapPhoto" src="photos/IMG_5612.JPG" alt="篇章现场">
+                <img id="chapPhoto" src="photos/IMG_5612.JPG" alt="篇章现场" loading="lazy">
               </div>
             </div>
           </div>
@@ -2112,11 +2155,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
               <div style="display:flex; gap:8px;">
                 <div style="text-align:center;">
                   <div style="font-size:11px; color:var(--text-dim); margin-bottom:4px;">公众号</div>
-                  <img src="recruitment/公众号.jpg" alt="水韵农青公众号" style="width:70px; height:70px; border-radius:6px; object-fit:cover;">
+                  <img src="recruitment/公众号.jpg" alt="水韵农青公众号" loading="lazy" style="width:70px; height:70px; border-radius:6px; object-fit:cover;">
                 </div>
                 <div style="text-align:center;">
                   <div style="font-size:11px; color:var(--text-dim); margin-bottom:4px;">招新群</div>
-                  <img src="recruitment/招新群.jpg" alt="招新QQ群" style="width:70px; height:70px; border-radius:6px; object-fit:cover;">
+                  <img src="recruitment/招新群.jpg" alt="招新QQ群" loading="lazy" style="width:70px; height:70px; border-radius:6px; object-fit:cover;">
                 </div>
               </div>
             </div>
@@ -2216,7 +2259,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                   <div style="font-size:14.5px; font-weight:600; color:#fde047;">synq666@163.com</div>
                   <div style="margin-top:8px;">
                     <div style="font-size:12px; color:var(--text-dim);">微信公众号：水韵农青</div>
-                    <img src="recruitment/公众号.jpg" alt="水韵农青公众号二维码" style="width:80px; height:80px; border-radius:6px; margin-top:4px; object-fit:cover;">
+                    <img src="recruitment/公众号.jpg" alt="水韵农青公众号二维码" loading="lazy" style="width:80px; height:80px; border-radius:6px; margin-top:4px; object-fit:cover;">
                   </div>
                 </div>
                 <div style="font-size:12px; color:var(--text-dim); text-align:right;">
@@ -2271,7 +2314,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           <div class="footer-row-main">
             <div style="display:flex; align-items:center; gap:12px;">
               <a class="brand" href="#top" data-fp-target="0">
-                <img src="logo-mark.png" alt="水韵农青" style="height:32px;">
+                <img src="logo-mark.png" alt="水韵农青" loading="lazy" style="height:32px;">
                 <span class="word" style="font-size:22px;">水韵<b>农</b>青</span>
               </a>
             </div>
@@ -2335,15 +2378,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     var translateY = -currentIndex * 100;
     wrapper.style.transform = 'translate3d(0, ' + translateY + '%, 0)';
 
+    var currentId = '';
+    var targetHash = '';
+    if (sections[index]) {
+      currentId = sections[index].id;
+      targetHash = '#' + currentId;
+    }
+
+    var effortsSection = document.getElementById('efforts');
+
     sections.forEach(function (sec, idx) {
       if (idx === currentIndex) {
         sec.classList.add('active');
-        if (sec.id === 'efforts') {
+        if (sec === effortsSection) {
           runCountAnimation(sec);
         }
       } else {
         sec.classList.remove('active');
-        if (sec.id === 'efforts') {
+        if (sec === effortsSection) {
           resetCountAnimation(sec);
         }
       }
@@ -2358,8 +2410,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       link.classList.toggle('active', tIdx === currentIndex);
     });
 
-    if (sections[currentIndex]) {
-      history.replaceState(null, '', '#' + sections[currentIndex].id);
+    if (targetHash) {
+      history.replaceState(null, '', targetHash);
     }
   }
 
@@ -2853,7 +2905,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       return '<div class="course-card">' +
         '<div>' +
           '<div class="course-card-thumb">' +
-            '<img src="' + esc(c.cover) + '" alt="' + esc(c.title) + '">' +
+            '<img src="' + esc(c.cover) + '" alt="' + esc(c.title) + '" loading="lazy">' +
             '<span class="course-age-tag">' + esc(c.age) + '</span>' +
           '</div>' +
           '<div class="course-card-info">' +

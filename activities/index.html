@@ -331,6 +331,12 @@ img { max-width: 100%; display: block; }
     return map[ext] || '📄';
   }
 
+  function escHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(String(s===null||s===undefined?'':s)));
+    return d.innerHTML;
+  }
+
   function render() {
     var kw = document.getElementById('searchInput').value.trim().toLowerCase();
     var list = document.getElementById('themeList');
@@ -366,10 +372,10 @@ img { max-width: 100%; display: block; }
       var matCount = theme.materials.length;
 
       html += '<div class="theme-card' + (isOpen ? ' open' : '') + '">';
-      html += '<div class="theme-header" onclick="toggleTheme(\'' + theme.id + '\')">';
+      html += '<div class="theme-header" onclick="toggleTheme(\'' + escHtml(theme.id) + '\')">';
       html += '<span class="theme-num">' + (idx + 1) + '</span>';
       html += '<div class="theme-info">';
-      html += '<div class="theme-title">' + theme.name + '</div>';
+      html += '<div class="theme-title">' + escHtml(theme.name) + '</div>';
       html += '<div class="theme-meta">' + (matCount > 0 ? matCount + ' 份资料' : '暂无资料，待补充') + '</div>';
       html += '</div>';
       if (matCount > 0) {
@@ -382,8 +388,8 @@ img { max-width: 100%; display: block; }
         theme.materials.forEach(function(m) {
           html += '<div class="material-item">';
           html += '<span class="material-icon">' + getFileIcon(m.name) + '</span>';
-          html += '<span class="material-name">' + m.name + '</span>';
-          html += '<span class="material-type">' + m.type + '</span>';
+          html += '<span class="material-name">' + escHtml(m.name) + '</span>';
+          html += '<span class="material-type">' + escHtml(m.type) + '</span>';
           html += '</div>';
         });
         html += '</div>';
