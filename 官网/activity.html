@@ -588,6 +588,8 @@ button { font-family: inherit; cursor: pointer; border: none; }
     return;
   }
 
+  function esc(s) { return String(s===null||s===undefined?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
   // 1. 渲染页面基础信息
   document.title = act.title + ' · 水韵农青活动详情';
   document.getElementById('crumbCat').textContent = act.category || '服务活动';
@@ -598,7 +600,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   document.getElementById('heroBadgeAge').textContent = act.targetAge || '全龄适合';
   document.getElementById('heroTitle').textContent = act.title;
   document.getElementById('heroSub').textContent = act.subtitle || '';
-  document.getElementById('heroStats').innerHTML = '<span>✦ ' + (act.stats || '精品打磨课程 · 随时开放点单') + '</span>';
+  document.getElementById('heroStats').innerHTML = '<span>✦ ' + esc(act.stats || '精品打磨课程 · 随时开放点单') + '</span>';
 
   // 侧边栏属性
   document.getElementById('sideType').textContent = act.type === 'chapter' ? '服务篇章活动' : '特色菜单课程';
@@ -609,7 +611,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   var hlBox = document.getElementById('hlTags');
   if (act.highlights && act.highlights.length) {
     hlBox.innerHTML = act.highlights.map(function (h) {
-      return '<span class="hl-tag">🏷 ' + h + '</span>';
+      return '<span class="hl-tag">🏷 ' + esc(h) + '</span>';
     }).join('');
   } else {
     hlBox.style.display = 'none';
@@ -618,9 +620,9 @@ button { font-family: inherit; cursor: pointer; border: none; }
   var descBox = document.getElementById('actDesc');
   var paragraphs = (act.desc || '').split('\n').filter(function (p) { return p.trim().length > 0; });
   if (paragraphs.length) {
-    descBox.innerHTML = paragraphs.map(function (p) { return '<p>' + p + '</p>'; }).join('');
+    descBox.innerHTML = paragraphs.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
   } else {
-    descBox.innerHTML = '<p>' + (act.desc || '暂无详细介绍') + '</p>';
+    descBox.innerHTML = '<p>' + esc(act.desc || '暂无详细介绍') + '</p>';
   }
 
   // 3. 照片画廊
@@ -630,16 +632,16 @@ button { font-family: inherit; cursor: pointer; border: none; }
   if (photos.length > 0) {
     galleryBox.innerHTML = photos.map(function (ph, idx) {
       return '<div class="photo-item" data-idx="' + idx + '">' +
-        '<img src="' + (ph.url || act.cover || 'photos/IMG_5612.JPG') + '" alt="' + (ph.title || act.title) + '" loading="lazy">' +
-        '<div class="photo-overlay"><p class="pt">' + (ph.title || '活动现场实拍') + '</p>' +
-        (ph.desc ? ('<p class="pd">' + ph.desc + '</p>') : '') + '</div>' +
+        '<img src="' + esc(ph.url || act.cover || 'photos/IMG_5612.JPG') + '" alt="' + esc(ph.title || act.title) + '" loading="lazy">' +
+        '<div class="photo-overlay"><p class="pt">' + esc(ph.title || '活动现场实拍') + '</p>' +
+        (ph.desc ? ('<p class="pd">' + esc(ph.desc) + '</p>') : '') + '</div>' +
         '<div class="photo-zoom-hint">🔍</div>' +
         '</div>';
     }).join('');
   } else if (act.cover) {
     galleryBox.innerHTML = '<div class="photo-item" data-idx="0">' +
-      '<img src="' + act.cover + '" alt="' + act.title + '">' +
-      '<div class="photo-overlay"><p class="pt">' + act.title + '</p></div>' +
+      '<img src="' + esc(act.cover) + '" alt="' + esc(act.title) + '">' +
+      '<div class="photo-overlay"><p class="pt">' + esc(act.title) + '</p></div>' +
       '<div class="photo-zoom-hint">🔍</div></div>';
     photos = [{ url: act.cover, title: act.title, desc: '活动封面展示' }];
   } else {
@@ -695,14 +697,14 @@ button { font-family: inherit; cursor: pointer; border: none; }
   var vBox = document.getElementById('videoContainer');
   var secVideo = document.getElementById('secVideo');
   if (act.video && act.video.embed) {
-    vBox.innerHTML = act.video.embed;
+    vBox.innerHTML = esc(act.video.embed);
     if (act.video.title) {
-      document.querySelector('#secVideo .sec-title').innerHTML = '活动实录视频：<span style="font-size:16px; font-weight:500; color:var(--ink-2);">' + act.video.title + '</span>';
+      document.querySelector('#secVideo .sec-title').innerHTML = '活动实录视频：<span style="font-size:16px; font-weight:500; color:var(--ink-2);">' + esc(act.video.title) + '</span>';
     }
   } else if (act.video && act.video.url) {
     var vTitle = act.video.title || '活动现场实录视频';
-    document.querySelector('#secVideo .sec-title').innerHTML = '现场视频记录：<span style="font-size:16px; font-weight:600; color:var(--sea-ink);">' + vTitle + '</span>';
-    vBox.innerHTML = '<video controls preload="metadata" poster="' + (act.cover || '') + '" style="width:100%; height:100%; border-radius:6px; background:#000;"><source src="' + act.video.url + '" type="video/mp4">您的浏览器不支持视频播放，请升级浏览器后观看。</video>';
+    document.querySelector('#secVideo .sec-title').innerHTML = '现场视频记录：<span style="font-size:16px; font-weight:600; color:var(--sea-ink);">' + esc(vTitle) + '</span>';
+    vBox.innerHTML = '<video controls preload="metadata" poster="' + esc(act.cover || '') + '" style="width:100%; height:100%; border-radius:6px; background:#000;"><source src="' + esc(act.video.url) + '" type="video/mp4">您的浏览器不支持视频播放，请升级浏览器后观看。</video>';
   } else {
     secVideo.style.display = 'none';
   }
@@ -714,12 +716,12 @@ button { font-family: inherit; cursor: pointer; border: none; }
   if (tweets.length > 0) {
     tweetsList.innerHTML = tweets.map(function (tw) {
       return '<article class="tweet-card">' +
-        '<div class="tweet-thumb"><img src="' + (tw.cover || act.cover || 'photos/IMG_5614.JPG') + '" alt="' + tw.title + '"></div>' +
+        '<div class="tweet-thumb"><img src="' + esc(tw.cover || act.cover || 'photos/IMG_5614.JPG') + '" alt="' + esc(tw.title) + '"></div>' +
         '<div class="tweet-info">' +
-          '<div class="tweet-meta"><span class="platform">📰 ' + (tw.platform || '河海水韵农青') + '</span><span>' + (tw.date || '官方报道') + '</span></div>' +
-          '<h3 class="tweet-title">' + tw.title + '</h3>' +
-          '<p class="tweet-desc">' + (tw.summary || '') + '</p>' +
-          '<a class="tweet-act" href="' + (tw.url || '#') + '" target="_blank" rel="noopener">阅读推文原文 ↗</a>' +
+          '<div class="tweet-meta"><span class="platform">📰 ' + esc(tw.platform || '河海水韵农青') + '</span><span>' + esc(tw.date || '官方报道') + '</span></div>' +
+          '<h3 class="tweet-title">' + esc(tw.title) + '</h3>' +
+          '<p class="tweet-desc">' + esc(tw.summary || '') + '</p>' +
+          '<a class="tweet-act" href="' + esc(tw.url || '#') + '" target="_blank" rel="noopener">阅读推文原文 ↗</a>' +
         '</div>' +
         '</article>';
     }).join('');
@@ -735,15 +737,15 @@ button { font-family: inherit; cursor: pointer; border: none; }
   if (curr.length > 0) {
     stepsList.innerHTML = curr.map(function (c, i) {
       return '<div class="step-item">' +
-        '<div class="step-no">' + (c.step || (i + 1)) + '</div>' +
-        '<div class="step-text"><h4>' + c.title + '</h4><p>' + c.content + '</p></div>' +
+        '<div class="step-no">' + esc(c.step || (i + 1)) + '</div>' +
+        '<div class="step-text"><h4>' + esc(c.title) + '</h4><p>' + esc(c.content) + '</p></div>' +
         '</div>';
     }).join('');
   } else {
     stepsList.innerHTML = '<p style="color:var(--ink-3); font-size:13.5px;">标准三段式授课法：现象引入与微观解密 → 动手实操与实验探究 → 总结分享与拓展作业。</p>';
   }
   if (act.materials && act.materials.length) {
-    matBox.innerHTML = '<b>📦 配套教具与物资清单：</b><span>' + act.materials.join(' · ') + '</span>';
+    matBox.innerHTML = '<b>📦 配套教具与物资清单：</b><span>' + esc(act.materials.join(' · ')) + '</span>';
   } else {
     matBox.style.display = 'none';
   }
@@ -756,13 +758,13 @@ button { font-family: inherit; cursor: pointer; border: none; }
     var prevAct = allActs[(actIdx - 1 + allActs.length) % allActs.length];
     var nextAct = allActs[(actIdx + 1) % allActs.length];
     navBox.innerHTML =
-      '<a class="nav-act-link" href="activity.html?id=' + prevAct.id + '">' +
-        '<span class="dir">← 上一个活动 (' + (prevAct.category || '') + ')</span>' +
-        '<div class="title">' + prevAct.title + '</div>' +
+      '<a class="nav-act-link" href="activity.html?id=' + esc(prevAct.id) + '">' +
+        '<span class="dir">← 上一个活动 (' + esc(prevAct.category || '') + ')</span>' +
+        '<div class="title">' + esc(prevAct.title) + '</div>' +
       '</a>' +
-      '<a class="nav-act-link" href="activity.html?id=' + nextAct.id + '">' +
-        '<span class="dir">下一个活动 (' + (nextAct.category || '') + ') →</span>' +
-        '<div class="title">' + nextAct.title + '</div>' +
+      '<a class="nav-act-link" href="activity.html?id=' + esc(nextAct.id) + '">' +
+        '<span class="dir">下一个活动 (' + esc(nextAct.category || '') + ') →</span>' +
+        '<div class="title">' + esc(nextAct.title) + '</div>' +
       '</a>';
   }
 

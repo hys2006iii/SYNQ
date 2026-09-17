@@ -368,6 +368,12 @@
     let searchKeyword = '';
     let chapterActivities = [];
 
+    function escHtml(s) {
+      var d = document.createElement('div');
+      d.appendChild(document.createTextNode(String(s===null||s===undefined?'':s)));
+      return d.innerHTML;
+    }
+
     // 从数据 API 加载篇章活动并构建分类按钮
     function initData() {
       var all = WaterYouthData.getAll();
@@ -389,7 +395,7 @@
 
       var html = '<button class="filter-btn active" data-category="all">全部</button>';
       categories.forEach(function(cat) {
-        html += '<button class="filter-btn" data-category="' + cat + '">' + cat + '</button>';
+        html += '<button class="filter-btn" data-category="' + escHtml(cat) + '">' + escHtml(cat) + '</button>';
       });
       container.innerHTML = html;
 
@@ -442,16 +448,20 @@
 
       grid.innerHTML = filtered.map(function(activity) {
         var cover = activity.cover ? '../' + activity.cover : '';
-        return '<a class="activity-card" href="template.html?id=' + activity.id + '">' +
+        var t = escHtml(activity.title || '');
+        var s = escHtml(activity.subtitle || '');
+        var ta = escHtml(activity.targetAge || '');
+        var ca = escHtml(activity.category || '');
+        return '<a class="activity-card" href="template.html?id=' + escHtml(activity.id) + '">' +
           '<div class="cover">' +
-            '<img src="' + cover + '" alt="' + activity.title + '">' +
+            '<img src="' + cover + '" alt="' + t + '">' +
           '</div>' +
           '<div class="info">' +
-            '<h3>' + activity.title + '</h3>' +
-            '<div class="subtitle">' + (activity.subtitle || '') + '</div>' +
+            '<h3>' + t + '</h3>' +
+            '<div class="subtitle">' + s + '</div>' +
             '<div class="meta">' +
-              '<span class="meta-tag">' + (activity.targetAge || '') + '</span>' +
-              '<span class="meta-tag">' + (activity.category || '') + '</span>' +
+              '<span class="meta-tag">' + ta + '</span>' +
+              '<span class="meta-tag">' + ca + '</span>' +
             '</div>' +
           '</div>' +
         '</a>';
