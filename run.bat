@@ -18,6 +18,7 @@ for /f "tokens=5" %%P in ('netstat -ano ^| findstr :8080 ^| findstr LISTENING 2^
 
 echo [INFO] Starting server on http://localhost:8080
 echo.
+cd /d "%~dp0"
 python server.py
 
 pause
