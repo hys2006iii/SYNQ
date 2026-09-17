@@ -8,8 +8,8 @@
 
   var STORAGE_KEY = 'water_youth_activities_v1';
 
-    var DEFAULT_ACTIVITIES = (function() {
-      var acts = [
+  var DEFAULT_ACTIVITIES = (function () {
+    var acts = [
 /* ============================================================
        01 服务篇章活动 (10 项) · 深度结合实拍照片与真实视频
        ============================================================ */
@@ -940,15 +940,18 @@
       tweets: [{ title: '【童心探秘】水韵农青走进幼儿园：播撒第一颗科学种子', platform: '河海水韵农青', date: '2024-04-10', url: 'https://mp.weixin.qq.com/', summary: '生动有趣的幼儿启蒙微课堂。', cover: 'photos/photos_safe_1.jpeg' }],
       curriculum: [{ step: '1', title: '安全自护大口诀', content: '不推不挤，双手护头避险动作演练。' }, { step: '2', title: '气球火箭放飞', content: '体验充气反冲的科学小魔法。' }],
       materials: ['安全自护卡通图卡', '气球火箭材料包', '奖励小红花']
-      acts.forEach(function(a) {
-        if (!a.visibleSections) {
-          a.visibleSections = { photos: true, video: true, tweets: true, curriculum: true };
-        }
-      });
-      return acts;
-    })();
+    }
+    ];
 
-    /* ---------------- 数据存取 API ---------------- */
+    acts.forEach(function(a) {
+      if (!a.visibleSections) {
+        a.visibleSections = { photos: true, video: true, tweets: true, curriculum: true };
+      }
+    });
+    return acts;
+  })();
+
+  /* ---------------- 数据存取 API ---------------- */
   var WaterYouthData = {
     getAll: function () {
       try {
