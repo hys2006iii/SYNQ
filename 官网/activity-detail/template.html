@@ -567,6 +567,11 @@
 
       function isEmpty(arr) { return !arr || !Array.isArray(arr) || arr.length === 0; }
 
+      function fixPath(p) {
+        if (!p) return p;
+        return p.replace(/^((?!\/|https?:\/\/|data:).*)$/, '../$1');
+      }
+
       function renderTabs() {
         var tabsWrap = document.querySelector('.tabs');
         if (!tabsWrap) return;
@@ -609,7 +614,7 @@
         var hd = document.getElementById('heroDesc');
         if (hd) hd.textContent = activity.desc || '';
         var hc = document.getElementById('heroCover');
-        if (hc && activity.cover) hc.src = activity.cover;
+        if (hc && activity.cover) hc.src = fixPath(activity.cover);
 
         var meta = document.getElementById('heroMeta');
         if (meta) {
@@ -641,7 +646,7 @@
           var item = document.createElement('div');
           item.className = 'gallery-item';
           var img = document.createElement('img');
-          img.src = p.url;
+          img.src = fixPath(p.url);
           img.alt = p.title || '';
           img.loading = 'lazy';
           item.appendChild(img);
@@ -672,7 +677,7 @@
           html += '<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin-bottom:12px;"><iframe src="' + escHtml(v.embed) + '" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe></div>';
         }
         if (v.url) {
-          html += '<div style="border-radius:8px;overflow:hidden;margin-bottom:12px;"><video controls style="width:100%;display:block;"><source src="' + escHtml(v.url) + '" type="video/mp4">您的浏览器不支持视频播放。</video></div>';
+          html += '<div style="border-radius:8px;overflow:hidden;margin-bottom:12px;"><video controls style="width:100%;display:block;"><source src="' + escHtml(fixPath(v.url)) + '" type="video/mp4">您的浏览器不支持视频播放。</video></div>';
         }
         if (v.tip) {
           html += '<p style="font-size:13px;color:var(--text-dim);margin-top:8px;">💡 ' + escHtml(v.tip) + '</p>';
@@ -692,7 +697,7 @@
           var card = document.createElement('div');
           card.className = 'tweet-card';
           var inner = '';
-          if (t.cover) inner += '<img class="tweet-cover" src="' + escHtml(t.cover) + '" alt="" loading="lazy">';
+          if (t.cover) inner += '<img class="tweet-cover" src="' + escHtml(fixPath(t.cover)) + '" alt="" loading="lazy">';
           inner += '<h4>' + escHtml(t.title) + '</h4>';
           var metaParts = [];
           if (t.platform) metaParts.push(t.platform);
