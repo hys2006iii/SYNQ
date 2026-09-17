@@ -365,6 +365,61 @@
       font-size: 14px;
     }
 
+    /* 教学流程时间线 */
+    .timeline-item {
+      position: relative; padding: 16px 0 16px 28px;
+      border-bottom: 1px solid var(--border-card);
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: 0; top: 22px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--teal-accent); border: 2px solid var(--teal-mid);
+    }
+    .timeline-item h4 {
+      font-size: 15px; font-weight: 600; color: var(--text-pure); margin-bottom: 4px;
+    }
+    .timeline-item p { font-size: 14px; color: var(--text-sub); line-height: 1.6; }
+    .timeline-item .step {
+      display: inline-block; padding: 2px 8px; background: var(--teal-accent);
+      color: #fff; border-radius: 4px; font-size: 11px; font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    /* 物料清单 */
+    .material-list {
+      list-style: none; padding: 0; margin: 0;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px;
+    }
+    .material-list li {
+      padding: 10px 16px; background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-card); border-radius: 6px;
+      font-size: 14px; color: var(--text-sub);
+    }
+
+    /* 通讯稿卡片 */
+    .tweet-card {
+      padding: 16px; margin-bottom: 16px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border-card);
+      border-radius: 8px; transition: all var(--dur) ease;
+    }
+    .tweet-card:last-child { margin-bottom: 0; }
+    .tweet-card:hover { border-color: var(--teal-accent); }
+    .tweet-card h4 { font-size: 15px; font-weight: 600; color: var(--text-pure); margin-bottom: 6px; }
+    .tweet-card .tweet-meta { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; }
+    .tweet-card .tweet-meta span { margin-right: 16px; }
+    .tweet-card p { font-size: 14px; color: var(--text-sub); line-height: 1.7; }
+    .tweet-card .tweet-cover { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; margin-bottom: 12px; }
+    .tweet-card a { color: var(--teal-accent); text-decoration: underline; font-size: 13px; }
+
+    /* 高亮标签 */
+    .highlights { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .highlight-tag {
+      padding: 4px 12px; background: rgba(1,154,170,0.2); border: 1px solid rgba(1,154,170,0.3);
+      border-radius: 4px; font-size: 12px; color: var(--leaf-soft);
+    }
+    .stats-text { margin-top: 16px; font-size: 14px; color: var(--amber); font-weight: 600; }
+
     /* 响应式 */
     @media (max-width: 768px) {
       .hero-inner {
@@ -443,22 +498,14 @@
     <div class="content">
       <a class="back-btn" href="index.html">← 返回活动列表</a>
 
-      <!-- 选项卡导航 -->
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="tab-plan">策划书</button>
-        <button class="tab-btn" data-tab="tab-photos">照片</button>
-        <button class="tab-btn" data-tab="tab-video">视频</button>
-        <button class="tab-btn" data-tab="tab-news">通讯稿</button>
-        <button class="tab-btn" data-tab="tab-other">其他资料</button>
-      </div>
+      <!-- 选项卡导航 — 由 JS 动态生成 -->
+      <div class="tabs"></div>
 
-      <!-- 策划书内容 -->
+      <!-- 活动概览（原策划书 Tab） -->
       <div class="tab-content active" id="tab-plan">
         <div class="card">
-          <h3>📋 活动策划书</h3>
-          <div id="planContent">
-            <p>策划书内容加载中...</p>
-          </div>
+          <h3>📋 活动概览</h3>
+          <div id="planContent"></div>
         </div>
       </div>
 
@@ -466,9 +513,7 @@
       <div class="tab-content" id="tab-photos">
         <div class="card">
           <h3>📸 活动照片</h3>
-          <div class="gallery" id="photoGallery">
-            <!-- 照片将通过JavaScript动态加载 -->
-          </div>
+          <div class="gallery" id="photoGallery"></div>
         </div>
       </div>
 
@@ -476,333 +521,291 @@
       <div class="tab-content" id="tab-video">
         <div class="card">
           <h3>🎬 活动视频</h3>
-          <div id="videoContainer">
-            <!-- 视频将通过JavaScript动态加载 -->
-          </div>
+          <div id="videoContainer"></div>
         </div>
       </div>
 
       <!-- 通讯稿内容 -->
-      <div class="tab-content" id="tab-news">
+      <div class="tab-content" id="tab-tweets">
         <div class="card">
-          <h3>📰 通讯稿</h3>
-          <div id="newsContent">
-            <p>通讯稿内容加载中...</p>
-          </div>
+          <h3>📰 活动通讯</h3>
+          <div id="tweetsContent"></div>
         </div>
       </div>
 
-      <!-- 其他资料 -->
-      <div class="tab-content" id="tab-other">
+      <!-- 教学流程 -->
+      <div class="tab-content" id="tab-curriculum">
         <div class="card">
-          <h3>📁 其他资料</h3>
-          <div class="doc-list" id="otherDocs">
-            <!-- 其他资料将通过JavaScript动态加载 -->
-          </div>
+          <h3>📋 教学流程</h3>
+          <div id="curriculumContent"></div>
+        </div>
+      </div>
+
+      <!-- 物料清单 -->
+      <div class="tab-content" id="tab-materials">
+        <div class="card">
+          <h3>📦 物料清单</h3>
+          <div id="materialsContent"></div>
         </div>
       </div>
     </div>
   </main>
 
+  <script src="../activities-data.js"></script>
   <script>
-    // 获取URL参数中的活动ID
-    const urlParams = new URLSearchParams(window.location.search);
-    const activityId = urlParams.get('id');
+    (function () {
+      var urlParams = new URLSearchParams(window.location.search);
+      var activityId = urlParams.get('id');
+      var activity = null;
+      var visibleSections = null;
 
-    // 活动数据
-    const activities = {
-      'soil-doctor': {
-        title: '「土壤医生」低碳科普',
-        subtitle: '科研项目进课堂 · 重金属土壤治理',
-        age: '适合 8-12 岁',
-        type: '科研绘科普',
-        desc: '以获「CLEER杯」双碳创新与创意大赛全国二等奖的《土壤医生——农田土壤污染修复装置暨"双碳"助力者》项目为原型，把科研一线带进中小学课堂。',
-        cover: '../photos/IMG_5612.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5612.JPG', '../photos/IMG_5614.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'soaring-wings': {
-        title: '「翱翔之翼，飞young想象」航天科普',
-        subtitle: '气球火箭 · 物理启蒙',
-        age: '适合 4-12 岁',
-        type: '实践出真知',
-        desc: '亲手放飞气球火箭，在欢呼中感受作用力与反作用力——让抽象的物理定律在指尖被真实地"看懂"。',
-        cover: '../photos/IMG_5632.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5632.JPG', '../photos/IMG_5635.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'garden-adventure': {
-        title: '「菜园奇遇记」现代农场探秘',
-        subtitle: '科技与农耕深度结合 · 五感体验',
-        age: '适合 幼儿园大班 / 小学 1-4 年级',
-        type: '未来启新篇',
-        desc: '把课堂搬进现代农场，以五感体验式教育串联科技与农耕，让每一次"奇遇"都成为认知世界的起点。',
-        cover: '../photos/photos_garden_1.png',
-        plan: '活动策划书内容...',
-        photos: ['../photos/photos_garden_1.png', '../photos/photos_garden_2.png'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'seedling-market': {
-        title: '「青苗『当』家」蔬菜市集体验营',
-        subtitle: '真实场景沉浸式职业体验',
-        age: '适合 小学 2-6 年级 / 亲子家庭',
-        type: '未来启新篇',
-        desc: '孩子亲手"当家"——在蔬菜市集里完成真实场景的职业体验，交易、协作与表达在生活里自然生长。',
-        cover: '../photos/IMG_5625.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5625.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'carbon-trace': {
-        title: '「峰回路转 · 共碳未来」碳迹迷踪',
-        subtitle: '碳达峰 · 碳中和 · 垃圾分类团战',
-        age: '适合 4-8 岁',
-        type: '绿色未来',
-        desc: '画环保小树、晒节能妙招，再分组玩垃圾分类大作战，让低碳的种子生根发芽。',
-        cover: '../photos/IMG_5621.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5621.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'plant-stamp': {
-        title: '「寻觅自然疗愈，倾听生命脉络」植物拓印',
-        subtitle: '站团 + 游学双模式 · 非遗传承',
-        age: '适合 全龄家庭',
-        type: '实践出真知',
-        desc: '结合农工专业知识，把非遗植物拓印变成一场亲近自然的疗愈之旅，让35组家庭与流动社区成员在敲打之间读懂生命脉络。',
-        cover: '../photos/IMG_5622.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5622.JPG', '../photos/IMG_5624.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'great-water': {
-        title: '「大国水利」水利枢纽工程科普',
-        subtitle: '纪录片 + 实物模型 + 抢答 + 绘制',
-        age: '适合 10-15 岁',
-        type: '水润江河',
-        desc: '重点介绍小浪底与葛洲坝，带孩子看懂大国重器如何安澜一方水土，并把心中的枢纽画出来。',
-        cover: '../photos/IMG_5834.PNG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5834.PNG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'straw-rebirth': {
-        title: '废弃农作固体物「焕新生」',
-        subtitle: '视频 + 互动立体式科普',
-        age: '适合 全龄中小学 / 亲子社区',
-        type: '躬行致真知',
-        desc: '7场活动、累计300组家庭——从原理讲解到手工创意实践，让废弃农作固体物在手中"焕新生"，循环农业由此可感。',
-        cover: '../photos/photos_straw_jiuzhong_1.jpg',
-        plan: '活动策划书内容...',
-        photos: ['../photos/photos_straw_jiuzhong_1.jpg'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'rice-creative': {
-        title: '「三农」科普 · 水稻创意指尖生趣',
-        subtitle: '一粒米的奇妙旅程',
-        age: '适合 亲子家庭 / 5-10 岁',
-        type: '躬行致真知',
-        desc: '从一粒米说起，转动「水稻的一生」时间转盘，在指尖趣味中读懂"谁知盘中餐"背后的土地逻辑。',
-        cover: '../photos/IMG_5835.PNG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5835.PNG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'inch-green': {
-        title: '「咫尺青绿——清源讲堂」土壤微塑料科普',
-        subtitle: '学科前沿 · 研究热点',
-        age: '适合 中学生 / 高年级小学',
-        type: '科研绘科普',
-        desc: '7天系列课程深度讲解，聚焦土壤微塑料与碳汇等前沿话题，让科研的种子在课堂上生根发芽。',
-        cover: '../photos/IMG_5619.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5619.JPG', '../photos/IMG_5621.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'physics-experiment': {
-        title: '「水运」物理系列科普实验',
-        subtitle: '大气压 · 流体压强 · 伯努利浮球',
-        age: '适合 1-3 年级',
-        type: '趣玩实验',
-        desc: '水下喷发、火焰吸水……主讲演示+亲自动手，用安全有趣的小实验开启物理启蒙。',
-        cover: '../photos/IMG_5632.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5632.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'kindergarten': {
-        title: '幼儿启蒙定制系列',
-        subtitle: '防踩踏安全课 · 气球火箭 · 小水滴绘本',
-        age: '适合 幼儿园大班',
-        type: '场馆联展 · 专属定制',
-        desc: '为幼儿园大班量身组合的手工与实验小课包，难度、时长、材料按班设计，已与河海大学幼儿园对接。',
-        cover: '../photos/photos_safe_1.jpeg',
-        plan: '活动策划书内容...',
-        photos: ['../photos/photos_safe_1.jpeg'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'pi-shihang': {
-        title: '「人间天河淠史杭」精神传承与历史展演',
-        subtitle: '历史情境剧《佛子岭大学》· 河海校友汪胡桢治水事迹',
-        age: '适合 全龄学生 / 党团组织',
-        type: '想法无极限',
-        desc: '由农工院暑期实践团队在安徽六安深入走访15天孵化而成的历史情境剧《佛子岭大学》，生动再现了新中国治水巨擘、河海知名校友汪胡桢先生在极为艰难的环境下，带领工程技术人员和治水军民修建新中国第一座钢筋混凝土连拱坝——佛子岭水库的壮阔历程。',
-        cover: '../photos/IMG_5833.PNG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5833.PNG', '../photos/IMG_5834.PNG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'water-youth': {
-        title: '「水韵农青」大学生科技志愿服务队',
-        subtitle: '志愿服务团队介绍',
-        age: '大学生',
-        type: '团队介绍',
-        desc: '「水韵农青」大学生科技志愿服务队——胸怀青衿志，科普水韵行。以农工为特色、以创新为底色，欢迎志愿者加入，期待单位合作。',
-        cover: '../photos/IMG_5612.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5612.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'otnpw': {
-        title: '「OTNPW」核污水知识地图寻物解密',
-        subtitle: '剧本导向 · 寓教于乐',
-        age: '适合 校内外试点',
-        type: '想法无极限',
-        desc: '以剧本驱动解密任务，在校园地图寻物中传递核污水与环保知识——把"要学的"变成"想玩的"。',
-        cover: '../photos/IMG_5831(20240526-230008).JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5831(20240526-230008).JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'water-day': {
-        title: '「中国水周 · 世界水日」系列',
-        subtitle: '手抄报征集 + 水知识竞赛',
-        age: '适合 高校校园',
-        type: '水润江河',
-        desc: '3月22日世界水日前后，以手抄报与知识竞赛的形式，把节水意识种进校园。',
-        cover: '../photos/IMG_5616.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5616.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      '2024-showcase': {
-        title: '2024年风采展',
-        subtitle: '年度活动成果展示',
-        age: '全龄',
-        type: '风采展示',
-        desc: '展示2024年度水韵农青志愿服务队的各项活动成果与团队风采。',
-        cover: '../photos/IMG_5612.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5612.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      },
-      'other-activities': {
-        title: '菜单外的其他活动',
-        subtitle: '志愿服务队其他特色活动',
-        age: '全龄',
-        type: '其他活动',
-        desc: '水韵农青志愿服务队开展的其他特色志愿服务活动。',
-        cover: '../photos/IMG_5612.JPG',
-        plan: '活动策划书内容...',
-        photos: ['../photos/IMG_5612.JPG'],
-        videos: [],
-        news: '通讯稿内容...'
-      }
-    };
-
-    // 初始化页面
-    function initPage() {
-      const activity = activities[activityId];
-      if (!activity) {
-        document.title = '活动未找到 · 水韵农青';
-        return;
+      function escHtml(text) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(text || ''));
+        return div.innerHTML;
       }
 
-      // 更新页面标题
-      document.title = activity.title + ' · 水韵农青';
-      document.getElementById('breadcrumbTitle').textContent = activity.title;
-      document.getElementById('heroTitle').textContent = activity.title;
-      document.getElementById('heroSubtitle').textContent = activity.subtitle;
-      document.getElementById('heroDesc').textContent = activity.desc;
-      document.getElementById('heroCover').src = activity.cover;
+      function isEmpty(arr) { return !arr || !Array.isArray(arr) || arr.length === 0; }
 
-      // 更新元数据
-      const metaHtml = `
-        <span class="meta-tag">${activity.age}</span>
-        <span class="meta-tag">${activity.type}</span>
-      `;
-      document.getElementById('heroMeta').innerHTML = metaHtml;
+      function renderTabs() {
+        var tabsWrap = document.querySelector('.tabs');
+        if (!tabsWrap) return;
+        var visible = visibleSections || {};
+        var sections = [];
+        if (visible.photos !== false) sections.push({ id: 'tab-photos', label: '📸 活动照片' });
+        if (visible.video !== false) sections.push({ id: 'tab-video', label: '🎬 活动视频' });
+        if (visible.tweets !== false) sections.push({ id: 'tab-tweets', label: '📰 活动通讯' });
+        if (visible.curriculum !== false) sections.push({ id: 'tab-curriculum', label: '📋 教学流程' });
+        if (activity.materials && activity.materials.length > 0) sections.push({ id: 'tab-materials', label: '📦 物料清单' });
 
-      // 更新策划书内容
-      document.getElementById('planContent').innerHTML = `<p>${activity.plan}</p>`;
+        tabsWrap.innerHTML = '';
+        if (isEmpty(sections)) {
+          tabsWrap.style.display = 'none';
+          return;
+        }
+        tabsWrap.style.display = '';
+        sections.forEach(function (s, i) {
+          var btn = document.createElement('button');
+          btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+          btn.textContent = s.label;
+          btn.dataset.tab = s.id;
+          tabsWrap.appendChild(btn);
+        });
 
-      // 更新照片画廊
-      const photoHtml = activity.photos.map(photo => `
-        <div class="gallery-item">
-          <img src="${photo}" alt="活动照片">
-        </div>
-      `).join('');
-      document.getElementById('photoGallery').innerHTML = photoHtml;
-
-      // 更新视频内容
-      if (activity.videos.length > 0) {
-        const videoHtml = activity.videos.map(video => `
-          <div class="video-container">
-            <video controls>
-              <source src="${video}" type="video/mp4">
-              您的浏览器不支持视频播放。
-            </video>
-          </div>
-        `).join('');
-        document.getElementById('videoContainer').innerHTML = videoHtml;
-      } else {
-        document.getElementById('videoContainer').innerHTML = `
-          <div class="empty-state">
-            <div class="icon">🎬</div>
-            <h4>暂无视频</h4>
-            <p>该活动暂未上传视频资料</p>
-          </div>
-        `;
+        var planTab = document.getElementById('tab-plan');
+        if (planTab) planTab.classList.remove('active');
+        var firstContent = document.getElementById(sections[0].id);
+        if (firstContent) firstContent.classList.add('active');
       }
 
-      // 更新通讯稿内容
-      document.getElementById('newsContent').innerHTML = `<p>${activity.news}</p>`;
-    }
+      function renderHero() {
+        document.title = (activity.title || '') + ' · 水韵农青';
+        var bt = document.getElementById('breadcrumbTitle');
+        if (bt) bt.textContent = activity.title || '活动详情';
+        var ht = document.getElementById('heroTitle');
+        if (ht) ht.textContent = activity.title || '';
+        var hs = document.getElementById('heroSubtitle');
+        if (hs) hs.textContent = activity.subtitle || '';
+        var hd = document.getElementById('heroDesc');
+        if (hd) hd.textContent = activity.desc || '';
+        var hc = document.getElementById('heroCover');
+        if (hc && activity.cover) hc.src = activity.cover;
 
-    // 选项卡切换
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        // 移除所有active类
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        var meta = document.getElementById('heroMeta');
+        if (meta) {
+          meta.innerHTML = '';
+          if (activity.targetAge) {
+            var s = document.createElement('span');
+            s.className = 'meta-tag';
+            s.textContent = activity.targetAge;
+            meta.appendChild(s);
+          }
+          if (activity.category) {
+            var s2 = document.createElement('span');
+            s2.className = 'meta-tag';
+            s2.textContent = activity.category;
+            meta.appendChild(s2);
+          }
+        }
+      }
 
-        // 添加active类
-        btn.classList.add('active');
-        document.getElementById(btn.dataset.tab).classList.add('active');
-      });
-    });
+      function renderPhotos() {
+        var gallery = document.getElementById('photoGallery');
+        if (!gallery) return;
+        if (isEmpty(activity.photos)) {
+          gallery.innerHTML = '<p style="color:var(--text-dim);text-align:center;padding:32px 0;">暂无活动照片</p>';
+          return;
+        }
+        gallery.innerHTML = '';
+        activity.photos.forEach(function (p) {
+          var item = document.createElement('div');
+          item.className = 'gallery-item';
+          var img = document.createElement('img');
+          img.src = p.url;
+          img.alt = p.title || '';
+          img.loading = 'lazy';
+          item.appendChild(img);
 
-    // 初始化
-    initPage();
+          if (p.title || p.desc) {
+            var cap = document.createElement('div');
+            cap.style.cssText = 'padding:8px 4px;font-size:13px;color:var(--text-sub);text-align:center;';
+            var parts = [];
+            if (p.title) parts.push(escHtml(p.title));
+            if (p.desc) parts.push(escHtml(p.desc));
+            cap.textContent = parts.join(' — ');
+            item.appendChild(cap);
+          }
+          gallery.appendChild(item);
+        });
+      }
+
+      function renderVideos() {
+        var container = document.getElementById('videoContainer');
+        if (!container) return;
+        var v = activity.video;
+        if (!v || (!v.url && !v.embed)) {
+          container.innerHTML = '<p style="color:var(--text-dim);text-align:center;padding:32px 0;">暂无视频资料' + (v && v.tip ? ' · ' + escHtml(v.tip) : '') + '</p>';
+          return;
+        }
+        var html = '';
+        if (v.embed) {
+          html += '<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin-bottom:12px;"><iframe src="' + escHtml(v.embed) + '" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe></div>';
+        }
+        if (v.url) {
+          html += '<div style="border-radius:8px;overflow:hidden;margin-bottom:12px;"><video controls style="width:100%;display:block;"><source src="' + escHtml(v.url) + '" type="video/mp4">您的浏览器不支持视频播放。</video></div>';
+        }
+        if (v.tip) {
+          html += '<p style="font-size:13px;color:var(--text-dim);margin-top:8px;">💡 ' + escHtml(v.tip) + '</p>';
+        }
+        container.innerHTML = html;
+      }
+
+      function renderTweets() {
+        var container = document.getElementById('tweetsContent');
+        if (!container) return;
+        if (isEmpty(activity.tweets)) {
+          container.innerHTML = '<p style="color:var(--text-dim);text-align:center;padding:32px 0;">暂无通讯稿</p>';
+          return;
+        }
+        container.innerHTML = '';
+        activity.tweets.forEach(function (t) {
+          var card = document.createElement('div');
+          card.className = 'tweet-card';
+          var inner = '';
+          if (t.cover) inner += '<img class="tweet-cover" src="' + escHtml(t.cover) + '" alt="" loading="lazy">';
+          inner += '<h4>' + escHtml(t.title) + '</h4>';
+          var metaParts = [];
+          if (t.platform) metaParts.push(t.platform);
+          if (t.date) metaParts.push(t.date);
+          if (metaParts.length) {
+            inner += '<div class="tweet-meta">' + metaParts.map(function (m) { return '<span>' + escHtml(m) + '</span>'; }).join('') + '</div>';
+          }
+          if (t.summary) inner += '<p>' + escHtml(t.summary) + '</p>';
+          if (t.url) inner += '<a href="' + escHtml(t.url) + '" target="_blank" rel="noopener">阅读全文 →</a>';
+          card.innerHTML = inner;
+          container.appendChild(card);
+        });
+      }
+
+      function renderCurriculum() {
+        var container = document.getElementById('curriculumContent');
+        if (!container) return;
+        if (isEmpty(activity.curriculum)) {
+          container.innerHTML = '<p style="color:var(--text-dim);text-align:center;padding:32px 0;">暂无教学流程</p>';
+          return;
+        }
+        container.innerHTML = '';
+        activity.curriculum.forEach(function (c) {
+          var item = document.createElement('div');
+          item.className = 'timeline-item';
+          var html = '';
+          if (c.step) html += '<span class="step">Step ' + escHtml(c.step) + '</span>';
+          if (c.title) html += '<h4>' + escHtml(c.title) + '</h4>';
+          if (c.content) html += '<p>' + escHtml(c.content) + '</p>';
+          item.innerHTML = html;
+          container.appendChild(item);
+        });
+      }
+
+      function renderMaterials() {
+        var container = document.getElementById('materialsContent');
+        if (!container) return;
+        if (isEmpty(activity.materials)) {
+          container.innerHTML = '<p style="color:var(--text-dim);text-align:center;padding:32px 0;">暂无物料清单</p>';
+          return;
+        }
+        container.innerHTML = '';
+        var list = document.createElement('ul');
+        list.className = 'material-list';
+        activity.materials.forEach(function (m) {
+          var li = document.createElement('li');
+          li.textContent = m;
+          list.appendChild(li);
+        });
+        container.appendChild(list);
+      }
+
+      function renderPlan() {
+        var container = document.getElementById('planContent');
+        if (!container) return;
+        var parts = [];
+        if (activity.stats) parts.push(activity.stats);
+        if (activity.highlights && activity.highlights.length > 0) {
+          parts.push('亮点：' + activity.highlights.join(' · '));
+        }
+        if (parts.length > 0) {
+          container.innerHTML = '';
+          parts.forEach(function (p) {
+            var para = document.createElement('p');
+            para.textContent = p;
+            container.appendChild(para);
+          });
+        } else {
+          container.innerHTML = '<p style="color:var(--text-dim);text-align:center;padding:32px 0;">暂无策划信息</p>';
+        }
+      }
+
+      function setupTabs() {
+        var tabsWrap = document.querySelector('.tabs');
+        if (!tabsWrap) return;
+        tabsWrap.addEventListener('click', function (e) {
+          var btn = e.target.closest('.tab-btn');
+          if (!btn) return;
+          tabsWrap.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+          document.querySelectorAll('.tab-content').forEach(function (c) { c.classList.remove('active'); });
+          btn.classList.add('active');
+          var target = document.getElementById(btn.dataset.tab);
+          if (target) target.classList.add('active');
+        });
+      }
+
+      function init() {
+        if (!activityId) {
+          document.getElementById('heroTitle').textContent = '参数错误';
+          document.getElementById('heroDesc').textContent = '缺少活动 ID 参数，请使用 ?id=xxx 访问。';
+          return;
+        }
+        activity = WaterYouthData.getById(activityId);
+        if (!activity) {
+          document.title = '活动未找到 · 水韵农青';
+          document.getElementById('heroTitle').textContent = '活动未找到';
+          document.getElementById('heroDesc').textContent = 'ID「' + escHtml(activityId) + '」对应的活动不存在。';
+          return;
+        }
+        visibleSections = activity.visibleSections || { photos: true, video: true, tweets: true, curriculum: true };
+        renderHero();
+        renderTabs();
+        renderPlan();
+        renderPhotos();
+        renderVideos();
+        renderTweets();
+        renderCurriculum();
+        renderMaterials();
+        setupTabs();
+      }
+
+      init();
+    })();
   </script>
 </body>
 </html>
