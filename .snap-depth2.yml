@@ -1,0 +1,15 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]
+  - navigation "全屏分页导航" [ref=e24]:
+    - list [ref=e25]
+  - generic [ref=e45]:
+    - generic [ref=e47]
+    - generic [ref=e104]
+    - generic [ref=e165]
+    - generic [ref=e239]
+    - generic [ref=e279]
+    - generic [ref=e336]
+    - generic [ref=e379]
+    - generic [ref=e462]
+    - generic [ref=e526]

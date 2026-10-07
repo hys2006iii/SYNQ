@@ -1,0 +1,577 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "水韵农青标志 水韵农青" [ref=e4] [cursor=pointer]:
+        - /url: "#top"
+        - img "水韵农青标志" [ref=e5]
+        - generic [ref=e6]: 水韵农青
+      - list [ref=e7]:
+        - listitem [ref=e8]:
+          - link "项目缘起" [ref=e9] [cursor=pointer]:
+            - /url: "#origin"
+        - listitem [ref=e10]:
+          - link "发展成效" [ref=e11] [cursor=pointer]:
+            - /url: "#efforts"
+        - listitem [ref=e12]:
+          - link "核心服务" [ref=e13] [cursor=pointer]:
+            - /url: "#services"
+        - listitem [ref=e14]:
+          - link "创新理念" [ref=e15] [cursor=pointer]:
+            - /url: "#innov"
+        - listitem [ref=e16]:
+          - link "愿景规划" [ref=e17] [cursor=pointer]:
+            - /url: "#vision"
+        - listitem [ref=e18]:
+          - link "加入我们" [ref=e19] [cursor=pointer]:
+            - /url: "#join"
+        - listitem [ref=e20]:
+          - link "单位合作" [ref=e21] [cursor=pointer]:
+            - /url: "#partner"
+      - link "活动大厅 ↗" [ref=e23] [cursor=pointer]:
+        - /url: javascript:void(0)
+  - navigation "全屏分页导航" [ref=e24]:
+    - list [ref=e25]:
+      - button "首页" [ref=e26] [cursor=pointer]
+      - button "01 项目缘起" [ref=e28] [cursor=pointer]:
+        - generic: 01 · 项目缘起
+      - button "02 发展成效" [ref=e30] [cursor=pointer]:
+        - generic: 02 · 发展成效
+      - button "03 核心服务" [ref=e32] [cursor=pointer]:
+        - generic: 03 · 核心服务
+      - button "04 创新理念" [ref=e34] [cursor=pointer]:
+        - generic: 04 · 创新理念
+      - button "05 愿景规划" [ref=e36] [cursor=pointer]:
+        - generic: 05 · 愿景规划
+      - button "06 加入我们" [ref=e38] [cursor=pointer]:
+        - generic: 06 · 加入我们
+      - button "07 单位合作" [ref=e40] [cursor=pointer]:
+        - generic: 07 · 单位合作
+      - button "尾页" [ref=e42] [cursor=pointer]
+  - generic [ref=e45]:
+    - generic [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - generic [ref=e50]: 全 国 3 0 0 强 志 愿 队
+          - heading "水韵农青" [level=1] [ref=e51]
+          - paragraph [ref=e52]: 胸怀青衿志 · 科普水韵行
+          - paragraph [ref=e53]:
+            - text: 以
+            - emphasis [ref=e54]: 农工为特色
+            - text: ，以
+            - emphasis [ref=e55]: 创新为底色
+            - text: 。把高校实验室里的前沿科研成果，转译为中小学生听得懂、摸得着的科学探索课堂。
+          - generic [ref=e56]:
+            - link "探索服务菜单" [ref=e57] [cursor=pointer]:
+              - /url: javascript:void(0)
+            - link "加入团队" [ref=e58] [cursor=pointer]:
+              - /url: "#join"
+            - link "单位合作" [ref=e59] [cursor=pointer]:
+              - /url: "#partner"
+        - generic [ref=e60]:
+          - generic [ref=e61]: 实践纪实
+          - generic [ref=e63]:
+            - generic [ref=e64]:
+              - img "土壤医生低碳科普" [ref=e65]
+              - generic [ref=e66]:
+                - heading "「土壤医生」低碳课堂" [level=5] [ref=e67]
+                - paragraph [ref=e68]: 国家级二等奖科研成果进小学课堂
+            - generic [ref=e69]:
+              - img "土壤酸碱度检测实验" [ref=e70]
+              - generic [ref=e71]:
+                - heading "动手实验：土壤诊断" [level=5] [ref=e72]
+                - paragraph [ref=e73]: 学生亲手使用检测试剂观察酸碱颜色变化
+            - generic [ref=e74]:
+              - img "植物拓印研学营" [ref=e75]
+              - generic [ref=e76]:
+                - heading "非遗植物拓印研学" [level=5] [ref=e77]
+                - paragraph [ref=e78]: 古林公园35组家庭在花叶敲击中感悟生命
+            - generic [ref=e79]:
+              - img "清源讲堂土壤微塑料" [ref=e80]
+              - generic [ref=e81]:
+                - heading "清源讲堂：土壤微塑料" [level=5] [ref=e82]
+                - paragraph [ref=e83]: 赴金陵图书馆7天系统解读微塑料迁移风险
+            - generic [ref=e84]:
+              - img "现代农场蔬菜市集" [ref=e85]
+              - generic [ref=e86]:
+                - heading "现代农场菜园奇遇记" [level=5] [ref=e87]
+                - paragraph [ref=e88]: 五感体验串联智慧滴灌与农耕文化
+            - generic [ref=e89]:
+              - img "土壤医生低碳科普" [ref=e90]
+              - generic [ref=e91]:
+                - heading "「土壤医生」低碳课堂" [level=5] [ref=e92]
+                - paragraph [ref=e93]: 国家级二等奖科研成果进小学课堂
+            - generic [ref=e94]:
+              - img "土壤酸碱度检测实验" [ref=e95]
+              - generic [ref=e96]:
+                - heading "动手实验：土壤诊断" [level=5] [ref=e97]
+                - paragraph [ref=e98]: 学生亲手使用检测试剂观察酸碱颜色变化
+      - button "向下滑动滚轮翻页" [ref=e99] [cursor=pointer]
+    - generic [ref=e104]:
+      - generic [ref=e105]:
+        - generic [ref=e106]:
+          - generic [ref=e107]: "01"
+          - generic [ref=e108]:
+            - heading "项目缘起" [level=2] [ref=e109]
+            - text: ORIGIN & PURPOSE
+        - paragraph [ref=e110]: 怀揣青衿之志，我们想把大学前沿知识，变成孩子们听得懂、摸得着的科学体验。
+      - generic [ref=e111]:
+        - generic [ref=e112]:
+          - generic [ref=e113]:
+            - heading "我们看见的现实痛点 PROBLEMS" [level=3] [ref=e114]:
+              - text: 我们看见的现实痛点
+              - generic [ref=e115]: PROBLEMS
+            - list [ref=e116]:
+              - listitem [ref=e117]:
+                - generic [ref=e118]: 青少年实践教育渴望强烈：
+                - generic [ref=e119]: 课本理论之外，孩子们对大自然充满好奇，却常因缺乏专业指导而无法深入感知农水与生态奥秘。
+              - listitem [ref=e120]:
+                - generic [ref=e121]: 基层基地供给专业度不足：
+                - generic [ref=e122]: 社区与科技馆具备场地，但缺乏结合最新科研成果的深层知识转化，科普往往流于一次性表层讲座。
+              - listitem [ref=e123]:
+                - generic [ref=e124]: 社会对“农工”存在固有偏见：
+                - generic [ref=e125]: 大众常将农业误解为落后低效。急需向公众展示现代智慧农机、低碳固碳、高标准农田与节水灌溉前沿。
+          - generic [ref=e126]:
+            - text: 💡
+            - emphasis [ref=e127]: “用专业反哺社会，在耕读文化中消除对‘农’的偏见，让大国粮安与水韵生态深植少年心间。”
+        - generic [ref=e128]:
+          - generic [ref=e129]:
+            - heading "我们的解题思路 OUR IDEA" [level=3] [ref=e130]:
+              - text: 我们的解题思路
+              - generic [ref=e131]: OUR IDEA
+            - paragraph [ref=e132]:
+              - text: 由青年学生自发组织、成功实现党团深度共建。我们紧扣
+              - strong [ref=e133]: “三农与水利”国家战略
+              - text: ，将高校实验室的科研课题（如土壤重金属吸附、微塑料分析、水肥一体化）转译为生活化语言与动手套件，打造全流程教案。
+            - generic [ref=e134]:
+              - generic [ref=e135]: 理论与实践深度结合
+              - generic [ref=e136]: 农工机电交叉特色
+              - generic [ref=e137]: 全链条自研实验包
+              - generic [ref=e138]: 党团共建 · 实践育人
+              - generic [ref=e139]: PBL 探索式教学
+              - generic [ref=e140]: 常态化驻馆讲师制
+          - generic [ref=e141]:
+            - generic [ref=e142]: 已建立常态共建实践校馆：10+ 家
+            - link "了解五大服务篇章 →" [ref=e143] [cursor=pointer]:
+              - /url: "#services"
+      - generic [ref=e144]:
+        - generic [ref=e145]:
+          - generic [ref=e146]: 青
+          - generic [ref=e147]:
+            - heading "青年自发 · 纯粹热爱" [level=4] [ref=e148]
+            - paragraph [ref=e149]: 骨干同学主动挑梁，没有功利心，每一次备课试讲皆由热爱驱动。
+        - generic [ref=e150]:
+          - generic [ref=e151]: 党
+          - generic [ref=e152]:
+            - heading "党团共建 · 培根铸魂" [level=4] [ref=e153]
+            - paragraph [ref=e154]: 党日与团日同频共振，把大国水利工匠精神融入青少年科普课堂。
+        - generic [ref=e155]:
+          - generic [ref=e156]: 志
+          - generic [ref=e157]:
+            - heading "专业反哺 · 扎根乡土" [level=4] [ref=e158]
+            - paragraph [ref=e159]: 发挥河海大学农水特色，把实验仪器与水稻转盘送进校园与社区。
+      - button "向下滑动滚轮翻页" [ref=e160] [cursor=pointer]
+    - generic [ref=e165]:
+      - generic [ref=e166]:
+        - generic [ref=e167]:
+          - generic [ref=e168]: "02"
+          - generic [ref=e169]:
+            - heading "发展成效" [level=2] [ref=e170]
+            - text: IMPACT & HONORS
+        - paragraph [ref=e171]: 扎根育人田，润泽新生代——从校园试点到全国示范，一步一个脚印。
+      - generic [ref=e172]:
+        - generic [ref=e173]:
+          - generic [ref=e174]:
+            - generic [ref=e175]: 2022 年
+            - heading "全国大学生科技志愿服务示范团队" [level=4] [ref=e176]
+            - generic [ref=e177]: 团中央重点推介 · 全国三百强
+          - generic [ref=e178]:
+            - generic [ref=e179]: 联盟成员
+            - heading "南京市鼓楼区「一馆多校」科技志愿服务联盟" [level=4] [ref=e180]
+            - generic [ref=e181]: 常态化驻馆服务主力队
+          - generic [ref=e182]:
+            - generic [ref=e183]: 案例收录
+            - heading "全国大学生科技志愿服务优秀案例集汇编" [level=4] [ref=e184]
+            - generic [ref=e185]: 全国精选优秀实践案例
+        - generic [ref=e186]:
+          - generic [ref=e187]:
+            - generic [ref=e188]: "0"
+            - generic [ref=e189]: 精品打磨课程
+            - generic [ref=e190]: 多轮讲师试讲打磨出品
+          - generic [ref=e191]:
+            - generic [ref=e192]: "0"
+            - generic [ref=e193]: 特色点单菜单
+            - generic [ref=e194]: 向合作校馆全量开放点单
+          - generic [ref=e195]:
+            - generic [ref=e196]: "0"
+            - generic [ref=e197]: 场馆讲解时长
+            - generic [ref=e198]: 江苏科技馆常设展厅服务
+          - generic [ref=e199]:
+            - generic [ref=e200]: 全国一等
+            - generic [ref=e201]: 科普脱口秀
+            - generic [ref=e202]: 丁志楠《AI 浪潮下的我们》
+        - generic [ref=e203]:
+          - generic [ref=e204]:
+            - img "土壤医生" [ref=e205]
+            - generic [ref=e206]:
+              - heading "科研反哺教学" [level=5] [ref=e207]
+              - paragraph [ref=e208]: 自研土壤装置进小学课堂
+          - generic [ref=e209]:
+            - img "非遗拓印" [ref=e210]
+            - generic [ref=e211]:
+              - heading "非遗自然疗愈" [level=5] [ref=e212]
+              - paragraph [ref=e213]: 35组家庭敲打植物脉络
+          - generic [ref=e214]:
+            - img "废弃农作物" [ref=e215]
+            - generic [ref=e216]:
+              - heading "秸秆变废为宝" [level=5] [ref=e217]
+              - paragraph [ref=e218]: 全龄大闯关体验循环农业
+          - generic [ref=e219]:
+            - img "农场探秘" [ref=e220]
+            - generic [ref=e221]:
+              - heading "沉浸式菜园" [level=5] [ref=e222]
+              - paragraph [ref=e223]: 五感体验联通科技与农耕
+        - generic [ref=e224]:
+          - heading "多方长期合作共建单位：" [level=5] [ref=e225]
+          - generic [ref=e226]:
+            - generic [ref=e227]: 江苏省科学技术馆
+            - generic [ref=e228]: 南京市金陵图书馆
+            - generic [ref=e229]: 南京晨报小记者团
+            - generic [ref=e230]: 南京市白云园小学
+            - generic [ref=e231]: 诚信小学 · 流动儿童社区
+            - generic [ref=e232]: 南京市第九中学
+            - generic [ref=e233]: 期待更多伙伴携手
+      - button "向下滑动滚轮翻页" [ref=e234] [cursor=pointer]
+    - generic [ref=e239]:
+      - generic [ref=e240]:
+        - generic [ref=e241]:
+          - generic [ref=e242]: "03"
+          - generic [ref=e243]:
+            - heading "核心服务" [level=2] [ref=e244]
+            - text: WHAT WE DO
+        - paragraph [ref=e245]: 水土共核心，「涟」动多学科。五大篇章层层递进，把科研、实践与土地串成科普主线。
+      - generic [ref=e246]:
+        - generic [ref=e247]:
+          - button "壹 · 科研绘科普" [ref=e248] [cursor=pointer]
+          - button "贰 · 实践出真知" [ref=e249] [cursor=pointer]
+          - button "叁 · 想法无极限" [ref=e250] [cursor=pointer]
+          - button "肆 · 躬行致真知" [ref=e251] [cursor=pointer]
+          - button "伍 · 未来启新篇" [ref=e252] [cursor=pointer]
+          - button "陆 · 水润江河" [ref=e253] [cursor=pointer]
+          - button "柒 · 趣玩实验" [ref=e254] [cursor=pointer]
+          - button "捌 · 绿色未来" [ref=e255] [cursor=pointer]
+        - generic [ref=e256]:
+          - generic [ref=e257]:
+            - generic [ref=e258]:
+              - text: RESEARCH INTO CLASSROOM · 01
+              - heading "壹 · 科研绘科普" [level=3] [ref=e259]
+              - paragraph [ref=e260]: 以获「CLEER杯」双碳创新赛全国二等奖的《土壤医生——农田土壤污染修复装置暨"双碳"助力者》项目为原型，把科研一线带进中小学课堂。
+            - generic [ref=e262]:
+              - generic [ref=e263]:
+                - heading "「土壤医生」低碳科普" [level=5] [ref=e264]
+                - paragraph [ref=e265]: 科研项目进课堂 · 重金属土壤治理
+                - link "查看专属活动页 ↗" [ref=e266] [cursor=pointer]:
+                  - /url: activity-detail/template.html?id=soil-doctor
+              - generic [ref=e267]:
+                - heading "「咫尺青绿」土壤微塑料科普" [level=5] [ref=e268]
+                - paragraph [ref=e269]: 学科前沿 · 研究热点
+                - link "查看专属活动页 ↗" [ref=e270] [cursor=pointer]:
+                  - /url: activity-detail/template.html?id=inch-green
+          - img "篇章现场" [ref=e273]
+      - button "向下滑动滚轮翻页" [ref=e274] [cursor=pointer]
+    - generic [ref=e279]:
+      - generic [ref=e280]:
+        - generic [ref=e281]:
+          - generic [ref=e282]: "04"
+          - generic [ref=e283]:
+            - heading "创新理念" [level=2] [ref=e284]
+            - text: HOW WE INNOVATE
+        - paragraph [ref=e285]: 志愿勇创新，科学焕真知——把事情做成体系，把课程做成产品。
+      - generic [ref=e286]:
+        - generic [ref=e287]:
+          - generic [ref=e288]:
+            - text: FOUNDATION · 01
+            - heading "筑造「党团」共建" [level=3] [ref=e289]
+            - paragraph [ref=e290]: 党建带团建，融合促发展。团日活动与党日活动协同开展，由党团组织共同锻造新一代科普课堂，让志愿服务的底色更红、方向更明。通过党团共建机制，确保志愿服务始终沿着正确方向前进，培养学生的社会责任感和使命感。
+          - generic [ref=e291]:
+            - generic [ref=e292]: 党支部骨干牵头
+            - generic [ref=e293]: 团支部统筹执行
+            - generic [ref=e294]: 思政育人融合
+            - generic [ref=e295]: 标杆示范引领
+            - generic [ref=e296]: 党团活动协同
+            - generic [ref=e297]: 志愿服务方向把控
+        - generic [ref=e298]:
+          - generic [ref=e299]:
+            - text: IDENTITY · 02
+            - heading "彰显「农工」特色" [level=3] [ref=e300]
+            - paragraph [ref=e301]: 围绕水土核心学科深耕农与工，把学科科研前沿转译成青少年听得懂的科普语言，建立从实验室到课桌的直通桥梁。依托河海大学农业科学与工程学院的学科优势，将专业的水利、农学知识转化为生动有趣的科普课程。
+          - generic [ref=e302]:
+            - generic [ref=e303]: 双碳与绿色农业
+            - generic [ref=e304]: 节水与跨流域调水
+            - generic [ref=e305]: 无人机智能农水
+            - generic [ref=e306]: 生态微塑料前沿
+            - generic [ref=e307]: 土壤修复技术
+            - generic [ref=e308]: 智慧灌溉系统
+        - generic [ref=e309]:
+          - generic [ref=e310]:
+            - text: PRODUCT · 03
+            - heading "贯彻「产品」思维" [level=3] [ref=e311]
+            - paragraph [ref=e312]: 将单次志愿服务标准化为系列课程包与教具产品。支持点单、拼盘与定制，让每一堂课都具备可复用、可传播的生命力。通过产品化思维，确保志愿服务的质量和效果，让更多学生受益。
+          - generic [ref=e313]:
+            - generic [ref=e314]: 标准课件PPT
+            - generic [ref=e315]: 微型自研实验盒
+            - generic [ref=e316]: 授课逐字脚本
+            - generic [ref=e317]: 随堂反馈手册
+            - generic [ref=e318]: 课程包标准化
+            - generic [ref=e319]: 教具产品化
+        - generic [ref=e320]:
+          - generic [ref=e321]:
+            - text: LOOP · 04
+            - heading "构建「多维」闭环" [level=3] [ref=e322]
+            - paragraph [ref=e323]: 讲师培养、课程研发、课堂交付、反馈复盘形成四位一体持续优化机制。建立老带新智库，让志愿团队生生不息。通过闭环管理，不断优化课程内容和教学方法，提升志愿服务质量。
+          - generic [ref=e324]:
+            - generic [ref=e325]: 传帮带师徒制
+            - generic [ref=e326]: 课后学情复盘
+            - generic [ref=e327]: 星级讲师考核
+            - generic [ref=e328]: 课程智库沉淀
+            - generic [ref=e329]: 持续改进机制
+            - generic [ref=e330]: 质量监控体系
+      - button "向下滑动滚轮翻页" [ref=e331] [cursor=pointer]
+    - generic [ref=e336]:
+      - generic [ref=e337]:
+        - generic [ref=e338]:
+          - generic [ref=e339]: "05"
+          - generic [ref=e340]:
+            - heading "愿景规划" [level=2] [ref=e341]
+            - text: VISION & FUTURE
+        - paragraph [ref=e342]: 初心绘蓝图，智驱未来愿——让科普的力量走向更远的地方。
+      - generic [ref=e343]:
+        - generic [ref=e344]:
+          - generic [ref=e345]:
+            - generic [ref=e346]: 壹
+            - heading "开拓实践教育基地" [level=3] [ref=e347]
+            - paragraph [ref=e348]: 深化校地与馆校合作，与更多小学、科技馆、流动社区结对，共建稳定阵地。
+          - list [ref=e349]:
+            - listitem [ref=e350]: — 基地提供探索场地，团队输出成套定制课程
+            - listitem [ref=e351]: — 建立馆校合作长效机制，实现优势互补
+            - listitem [ref=e352]: — 拓展更多乡村小学点位，推动教育资源普惠
+            - listitem [ref=e353]: — 联合举办节气农事体验与校园科技节
+        - generic [ref=e354]:
+          - generic [ref=e355]:
+            - generic [ref=e356]: 贰
+            - heading "培养方案规模化" [level=3] [ref=e357]
+            - paragraph [ref=e358]: 让每一份热爱都被系统训练，锻造优秀讲师梯队，形成可持续的人才孵化体系。
+          - list [ref=e359]:
+            - listitem [ref=e360]: — “一对多、老带新”导师制，让新人快速融入上讲台
+            - listitem [ref=e361]: — 依托「水韵智库」，定期开展教研磨课与模拟演练
+            - listitem [ref=e362]: — 建立课堂演练评估机制与星级主讲认证体系
+            - listitem [ref=e363]: — 建立优秀队员评优推荐与社会实践评奖支持
+        - generic [ref=e364]:
+          - generic [ref=e365]:
+            - generic [ref=e366]: 叁
+            - heading "体系精品化 · 系列化" [level=3] [ref=e367]
+            - paragraph [ref=e368]: 以问题驱动探究，打造青少年 PBL 科学探索工坊，打磨经得起检验的科普金课。
+          - list [ref=e369]:
+            - listitem [ref=e370]: — 深化 PBL 模式，从生活真实问题出发引导动手探索
+            - listitem [ref=e371]: — 发挥农工机电交叉学科优势，自主研发专属教具包
+            - listitem [ref=e372]: — 沉淀数字化微课视频库，拓展线上云端科普课堂
+            - listitem [ref=e373]: — 把“水韵农青”打造成具有全国辨识度的志愿服务品牌
+      - button "向下滑动滚轮翻页" [ref=e374] [cursor=pointer]
+    - generic [ref=e379]:
+      - generic [ref=e380]:
+        - generic [ref=e381]:
+          - generic [ref=e382]: "06"
+          - generic [ref=e383]:
+            - heading "加入我们" [level=2] [ref=e384]
+            - text: JOIN US
+        - paragraph [ref=e385]: 一起，把科学带进更多孩子的生活——无论你擅长讲台、教具还是镜头，这里都有你的舞台。
+      - generic [ref=e386]:
+        - generic [ref=e388]:
+          - heading "这里没有旁观席 把所学知识种进田野与讲台" [level=3] [ref=e389]: 这里没有旁观席把所学知识种进田野与讲台
+          - paragraph [ref=e390]: 我们是一支由河海大学农业科学与工程学院青年骨干自发组建的科技志愿服务团队，入选全国三百强大学生科技志愿服务示范队。不看年级资历，只看纯粹的热爱与担当。
+          - generic [ref=e392]:
+            - link "志愿者加入申请" [ref=e393] [cursor=pointer]:
+              - /url: apply.html
+            - generic [ref=e394]: 招新 QQ 群：1108743305
+          - paragraph [ref=e395]: 三个核心方向正在期待你的加入：
+          - generic [ref=e396]:
+            - generic [ref=e397]:
+              - generic [ref=e398]:
+                - heading "展品科普讲解员" [level=4] [ref=e399]
+                - generic [ref=e400]: 7名
+              - paragraph [ref=e401]: 以水韵队员身份推荐进入江苏省科技馆讲解队，负责科技馆展品的讲解工作。表现优异者有机会代表江苏省科技馆参加江苏省科普讲解大赛；被选拔进入水韵农青"主讲智库"，担任科普主讲人，表现突出者将有机会加入雨花台烈士精神高校宣讲团，参与宣讲活动。
+              - paragraph [ref=e402]: 🎯 每学期至少参与1次科普主讲活动
+            - generic [ref=e403]:
+              - generic [ref=e404]:
+                - heading "科普活动总负责人" [level=4] [ref=e405]
+                - generic [ref=e406]: 7名
+              - paragraph [ref=e407]: 科普活动领军人物，带领团队执行活动，志愿队的核心成员之一。全面锻炼个人的综合素养和解决问题的能力。要求具备组织协调能力、时间管理、人员分配、应对突发事件、监督活动总结复盘及收集整理活动资料等能力。
+              - paragraph [ref=e408]: 🎯 每学期至少负责1次科普主讲活动带队
+            - generic [ref=e409]:
+              - generic [ref=e410]:
+                - heading "课程内容总策划师" [level=4] [ref=e411]
+                - generic [ref=e412]: 6名
+              - paragraph [ref=e413]: 鼓励大三/大四/研究生同学，或对农业知识有深入了解及具备专业素养者参与。负责"三农系列"精品课程的主题设定与结构规划，完成知识点的深入解析（主要以文本形式）；同时负责准备理论演示所需的图片、视频等多媒体素材。
+              - paragraph [ref=e414]: 🎯 全权负责一节精品课程的内容策划
+        - generic [ref=e415]:
+          - generic [ref=e416]:
+            - heading "新队员成长四阶梯" [level=4] [ref=e417]
+            - generic [ref=e418]:
+              - generic [ref=e419]:
+                - generic [ref=e420]: "1"
+                - generic [ref=e421]:
+                  - generic [ref=e422]: 初见 · 意向交流
+                  - paragraph [ref=e423]: 进群交流，了解团队项目，匹配最适合你的岗位方向。
+              - generic [ref=e424]:
+                - generic [ref=e425]: "2"
+                - generic [ref=e426]:
+                  - generic [ref=e427]: 磨课 · 导师带教
+                  - paragraph [ref=e428]: 骨干老队员一对一辅助磨课试讲，提供现成教案与话术指导。
+              - generic [ref=e429]:
+                - generic [ref=e430]: "3"
+                - generic [ref=e431]:
+                  - generic [ref=e432]: 实战 · 讲台首秀
+                  - paragraph [ref=e433]: 作为助教走进真实校馆现场，逐步过渡到独立登台开讲。
+              - generic [ref=e434]:
+                - generic [ref=e435]: "4"
+                - generic [ref=e436]:
+                  - generic [ref=e437]: 领衔 · 独当一面
+                  - paragraph [ref=e438]: 带领新课程攻关，成为项目骨干，收获无可替代的成长。
+          - generic [ref=e439]:
+            - generic [ref=e440]: 🏆 队伍实力
+            - generic [ref=e441]: • 南京市鼓楼区"一馆多校"大学生科技志愿服务联盟成员 • 入选全国大学生科技志愿服务优秀案例集汇编 • 河海大学青年志愿服务项目大赛优秀奖
+          - generic [ref=e442]: 专属激励与收获： 服务满五次可申领江苏省科技馆志愿证书，优秀者颁发江苏省科技馆"优秀志愿者"奖状，国家级志愿项目骨干成员；每次活动志愿PU学时导入。快速锻炼即兴演讲力、统筹规划力、社会责任感、农水土治专业知识。
+          - generic [ref=e443]:
+            - generic [ref=e444]:
+              - generic [ref=e445]: 📱 联系我们
+              - generic [ref=e446]:
+                - paragraph [ref=e447]: 📞 18475136044
+                - paragraph [ref=e448]: 📧 synq666@163.com
+                - paragraph [ref=e449]: 💬 QQ群：1108743305
+            - generic [ref=e450]:
+              - generic [ref=e451]:
+                - generic [ref=e452]: 公众号
+                - img "水韵农青公众号" [ref=e453]
+              - generic [ref=e454]:
+                - generic [ref=e455]: 招新群
+                - img "招新QQ群" [ref=e456]
+      - button "向下滑动滚轮翻页" [ref=e457] [cursor=pointer]
+    - generic [ref=e462]:
+      - generic [ref=e463]:
+        - generic [ref=e464]:
+          - generic [ref=e465]: "07"
+          - generic [ref=e466]:
+            - heading "单位合作" [level=2] [ref=e467]
+            - text: PARTNERSHIP
+        - paragraph [ref=e468]: 让优质科学课走进更多校园、展馆与社区——我们提供完整的公益授课与共建方案。
+      - generic [ref=e470]:
+        - generic [ref=e471]:
+          - generic [ref=e472]:
+            - heading "期待与贵单位携手共建长效科普阵地" [level=3] [ref=e473]
+            - paragraph [ref=e474]: 水韵农青已与江苏省科技馆、金陵图书馆、南京晨报及多所中小学建立了成熟的合作机制。无论是常规课后延时服务、特色科技节展演，还是寒暑假专题营地，我们均能根据学段需求灵活适配。
+            - generic [ref=e475]:
+              - generic [ref=e476]:
+                - generic [ref=e477]: ① 菜单点单进校
+                - generic [ref=e478]: 18门成熟课程自由组合，含PPT、教具套件与主讲团队全套交付。支持单次体验或学期定制。
+              - generic [ref=e479]:
+                - generic [ref=e480]: ② 馆校定制专场
+                - generic [ref=e481]: 围绕科技馆、图书馆展厅主题深度定制，结合微型实验开展沉浸式展教互动。已与江苏省科技馆、金陵图书馆建立常态化合作。
+              - generic [ref=e482]:
+                - generic [ref=e483]: ③ 社区实践基地
+                - generic [ref=e484]: 针对社区亲子家庭或乡村小学，开展植物拓印、农学大闯关、碳迹迷踪等活动，推动教育资源普惠。
+              - generic [ref=e485]:
+                - generic [ref=e486]: ④ 校园科技节
+                - generic [ref=e487]: 为学校科技节、游园会提供定制化科普展位与互动实验，涵盖水土检测、无人机巡河、物理趣味实验等。
+              - generic [ref=e488]:
+                - generic [ref=e489]: ⑤ 寒暑假专题营地
+                - generic [ref=e490]: 5-7天沉浸式科学探索营，包含实地研学、动手实验、成果展示等环节，适合夏令营与冬令营。
+              - generic [ref=e491]:
+                - generic [ref=e492]: ⑥ 课程研发合作
+                - generic [ref=e493]: 与学校/馆方联合开发特色校本课程，提供从课程设计到教具量产的全链条支持。
+          - generic [ref=e494]:
+            - generic [ref=e495]: 承诺交付物：完整教学案 + 实验耗材清单 + 资深讲师团队 + 现场摄影记录
+            - link "预约合作通道" [ref=e496] [cursor=pointer]:
+              - /url: booking.html
+        - generic [ref=e497]:
+          - generic [ref=e498]:
+            - heading "合作对接四步流程" [level=4] [ref=e499]
+            - generic [ref=e500]:
+              - generic [ref=e501]:
+                - generic [ref=e502]: "1"
+                - text: 意向接洽
+                - paragraph [ref=e503]: 邮件/微信沟通学段与课时需求
+              - generic [ref=e504]:
+                - generic [ref=e505]: "2"
+                - text: 方案对齐
+                - paragraph [ref=e506]: 确定课程主题、场地与人数
+              - generic [ref=e507]:
+                - generic [ref=e508]: "3"
+                - text: 课前准备
+                - paragraph [ref=e509]: 讲师预讲、教具打包与安全确认
+              - generic [ref=e510]:
+                - generic [ref=e511]: "4"
+                - text: 授课复盘
+                - paragraph [ref=e512]: 现场授课、活动反馈与新闻报道
+          - generic [ref=e513]:
+            - generic [ref=e514]:
+              - generic [ref=e515]: 官方联络邮箱：
+              - generic [ref=e516]: synq666@163.com
+              - generic [ref=e517]:
+                - generic [ref=e518]: 微信公众号：水韵农青
+                - img "水韵农青公众号二维码" [ref=e519]
+            - generic [ref=e520]: 联系电话：18475136044请注明单位名称与活动意向
+      - button "向下滑动滚轮翻页" [ref=e521] [cursor=pointer]
+    - generic [ref=e526]:
+      - generic [ref=e527]:
+        - generic [ref=e528]:
+          - generic [ref=e529]: 全 国 3 0 0 强 志 愿 队
+          - heading "水韵农青" [level=1] [ref=e530]
+          - paragraph [ref=e531]: 胸怀青衿志 · 科普水韵行
+          - paragraph [ref=e532]:
+            - text: 以
+            - emphasis [ref=e533]: 农工为特色
+            - text: ，以
+            - emphasis [ref=e534]: 创新为底色
+            - text: 。把高校实验室里的前沿科研成果，转译为中小学生听得懂、摸得着的科学探索课堂。
+          - generic [ref=e535]:
+            - link "加入我们" [ref=e536] [cursor=pointer]:
+              - /url: apply.html
+            - link "单位合作" [ref=e537] [cursor=pointer]:
+              - /url: "#partner"
+          - generic [ref=e538]:
+            - generic [ref=e539]: 全国示范团队
+            - generic [ref=e540]: 18门精品课程
+            - generic [ref=e541]: 650+小时场馆服务
+            - generic [ref=e542]: 10+合作校馆
+        - generic [ref=e543]:
+          - heading "致谢" [level=3] [ref=e544]
+          - paragraph [ref=e545]: 感谢江苏省科学技术馆、南京市金陵图书馆、南京晨报小记者团、南京市白云园小学、诚信小学、南京市第九中学等合作单位的长期支持与信任。
+          - paragraph [ref=e546]: 感谢河海大学农业科学与工程学院、机电工程学院、河海大学青年志愿者协会的指导与帮助。
+          - paragraph [ref=e547]: 感谢每一位参与志愿服务的队员和关注我们的社会人士。
+      - generic [ref=e548]:
+        - generic [ref=e549]:
+          - link "水韵农青 水韵农青" [ref=e551] [cursor=pointer]:
+            - /url: "#top"
+            - img "水韵农青" [ref=e552]
+            - generic [ref=e553]: 水韵农青
+          - generic [ref=e554]:
+            - link "项目缘起" [ref=e555] [cursor=pointer]:
+              - /url: "#origin"
+            - link "发展成效" [ref=e556] [cursor=pointer]:
+              - /url: "#efforts"
+            - link "核心服务" [ref=e557] [cursor=pointer]:
+              - /url: "#services"
+            - link "创新理念" [ref=e558] [cursor=pointer]:
+              - /url: "#innov"
+            - link "愿景规划" [ref=e559] [cursor=pointer]:
+              - /url: "#vision"
+            - link "加入我们" [ref=e560] [cursor=pointer]:
+              - /url: "#join"
+            - link "单位合作" [ref=e561] [cursor=pointer]:
+              - /url: "#partner"
+            - link "全览活动大厅 ↗" [ref=e562] [cursor=pointer]:
+              - /url: javascript:void(0)
+        - generic [ref=e563]:
+          - generic [ref=e564]: © 2026 「水韵农青」大学生科技志愿服务队
+          - generic "双击进入管理后台" [ref=e565] [cursor=pointer]: 胸怀青衿志 · 科普水韵行
+          - generic "点击进入管理后台" [ref=e566] [cursor=pointer]: 管理端
+          - button "返回顶部 ↑" [ref=e567] [cursor=pointer]
