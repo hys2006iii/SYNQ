@@ -1,45 +1,66 @@
-# 水韵农青 GitHub Pages 部署指南
+# 水韵农青 · GitHub Pages 部署说明
 
-## 方式一：GitHub CLI（推荐，一行命令完成）
+## 线上地址
 
-1. 安装 GitHub CLI：https://cli.github.com/
-2. 登录后在终端执行：
+**https://hys2006iii.github.io/SYNQ/**
 
-```bash
-gh auth login  # 浏览器授权登录
-gh repo create SYNQ --public --source=. --push  # 创建并推送
-gh variable set PAGES_BUILD_DEPLOYMENT_BRANCH main  # 如需要
-gh api repos/{用户名}/SYNQ/pages --method POST --field source[branch]=main --field source[path]/官网  # 开启 Pages
+| 页面 | 地址 |
+|------|------|
+| 首页 | https://hys2006iii.github.io/SYNQ/ |
+| 活动大厅 | https://hys2006iii.github.io/SYNQ/activities/index.html |
+| 活动列表 | https://hys2006iii.github.io/SYNQ/activity.html |
+| 加入申请 | https://hys2006iii.github.io/SYNQ/apply.html |
+| 合作预约 | https://hys2006iii.github.io/SYNQ/booking.html |
+| 管理后台 | https://hys2006iii.github.io/SYNQ/admin.html |
+
+仓库：https://github.com/hys2006iii/SYNQ
+
+## 部署架构
+
+```
+master 分支   ← 源码（官网/、活动资料、文档等）
+gh-pages 分支 ← 由 官网/ 目录自动抽取，作为站点根，GitHub Pages 从这里发布
 ```
 
-## 方式二：Git + Token（手动 3 步）
+- Pages 源：`gh-pages` 分支，路径 `/`，`build_type: legacy`
+- 站点根 = `官网/` 目录内容，因此页面里所有相对路径（`photos/`、`logo-mark.png`、`activities/`）都能直接工作
+- 图片总计约 116MB，最大单文件 8.4MB，均在 GitHub 限制内
 
-### 第一步：创建 Personal Access Token
-- 访问：https://github.com/settings/personal-access-tokens/new
-- 名称：`SYNQ deploy`
-- 勾选权限：`repo`（全部仓库权限）
-- 生成后复制 token（格式 `ghp_xxxxx`）
+## 更新网站（推荐）
 
-### 第二步：执行以下命令（替换 `<用户名>` 和 `<token>`）
+在项目根目录运行：
+
+```powershell
+.\deploy.ps1
+```
+
+脚本会自动：提交改动 → 推 master → 从 `官网/` 抽取 `gh-pages-deploy` 分支 → 强推到 `gh-pages`。约 1 分钟生效。
+
+只改了内容不想写提交信息时：
+
+```powershell
+.\deploy.ps1 -NoCommit
+```
+
+## 更新网站（手动）
 
 ```powershell
 cd "D:\AI\水韵农青"
-git remote add origin https://<token>@github.com/<用户名>/SYNQ.git
-git push -u origin master
+git add -A
+git commit -m "更新内容"
+git push origin master
+git branch -D gh-pages-deploy 2>$null
+git subtree split --prefix=官网 -b gh-pages-deploy
+git push origin gh-pages-deploy:gh-pages --force
 ```
 
-### 第三步：开启 Pages
-- 访问：https://github.com/<用户名>/SYNQ/settings/pages
-- **Source**: `GitHub Actions`
-- **Branch**: `master` / `官网` 目录
-- 保存后约 1-3 分钟生效
+## 注意事项
 
-## 部署后的访问地址
-`https://<用户名>.github.io/SYNQ/官网/`
-
----
-
-## 我已完成的准备工作
-- ✅ 修改 `.gitignore` 允许 `官网/photos/` 和 `官网/recruitment/` 目录
-- ✅ 将 53 张图片（~116MB）加入 Git 追踪并提交
-- ✅ 代码已就绪，等待推送到 GitHub
+1. **Git 走了本地代理** `http://127.0.0.1:7897`（已写入仓库 `.git/config`）。若代理端口变了，执行：
+   `git config http.proxy http://127.0.0.1:<新端口>`
+2. **Token 已内嵌在 `.git/config` 的 remote URL 中**，方便直接推送。出于安全，建议：
+   - 日常使用后到 https://github.com/settings/tokens 撤销旧 token 并换新
+   - 或改用 GitHub CLI 登录：`gh auth login`
+3. Token 目前**没有 `workflow` 权限**，所以不能用 GitHub Actions 发布，当前用分支发布方式绕过。
+4. `.gitignore` 已放行 `官网/photos/` 与 `官网/recruitment/`，新增图片会自动纳入 Git；其他活动资料（docx/pptx/zip/视频）仍被忽略，不会推上去。
+5. 管理后台数据存在浏览器 localStorage，**各设备之间不共享**（静态站限制，非 bug）。
