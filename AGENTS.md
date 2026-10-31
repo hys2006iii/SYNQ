@@ -1,4 +1,4 @@
-﻿# 水韵农青 — 项目移交文档
+# 水韵农青 — 项目移交文档
 
 > 最后更新：2026-09-12 21:30 (commit `42285ca`)
 
@@ -219,3 +219,49 @@ bd069d9 refactor: 将全屏翻页版本重命名为index.html
 - [ ] 财务管理系统：报销申请表单填写和状态管理
 - [ ] 财务管理系统：消费记录录入和分类筛选
 - [ ] 财务管理系统：财务统计数据准确性
+
+---
+
+## 表单数据收集（FormSubmit 邮件后端，2026-10-31 接入）
+
+### 架构
+
+```
+apply.html / booking.html
+  └─ <script src="form-sender.js">  →  window.synqSendForm(payload, subject)
+        └─ POST https://formsubmit.co/ajax/synq666@163.com   (JSON, Accept: application/json)
+              └─ 163 邮箱收到表格邮件
+admin.html
+  └─ GET https://formsubmit.co/api/get-submissions/<apikey>  → 云端近 30 天记录
+```
+
+- 选型理由：站点是 GitHub Pages 纯静态托管，没有服务器；FormSubmit 免注册、免密钥、免费，提交即转发邮件（官方宣称无限表单/无限提交）。
+- `官网/form-sender.js`：`CONFIG.endpoint` = `https://formsubmit.co/ajax/synq666@163.com`，超时 18s（AbortController），自动附 `_subject`/`_captcha:'false'`/`_template:'table'`，返回 `{ok, data}` / `{ok:false, error}`，并把 FormSubmit 英文报错转成中文提示。
+- 两个表单页提交成功后**才**写 localStorage，失败保留表单值并显示重试提示（含邮箱/电话），避免"以为交上了其实没交"。
+- 字段映射（邮件里是中文字段名，后台再映射回内部 key）：加入申请 `表单类型/姓名/专业/年级/班级/QQ/手机号/自我介绍/其他说明`；合作预约 `表单类型/意向课程/合作单位/联系人/受众学段/需求说明`。`admin.html` 的 `classifyCloud()` 按 `表单类型` 分流，`mapCloudRecord()` 反查回 name/major/grade/className/selfIntro/qq/phone/otherInfo 与 course/org/contact/audience/requirements。
+- 防垃圾：两表单各有一个隐藏蜜罐输入 `id="honeyField" name="_honey"`，有值时才随 payload 发送，FormSubmit 会判为垃圾丢弃。
+
+### 后台云端同步
+
+- `admin.html` 在「加入申请 / 合作预约」两个面板顶部注入 `.cloud-bar`（`injectCloudBars()`，初始化时调用）：按钮「☁️ 从云端同步」`[data-cloud-sync]`、「更换密钥」`[data-cloud-key]`、状态文字 `[data-cloud-status]`。
+- 密钥存在 `localStorage.water_youth_formsubmit_apikey`；云端结果缓存在 `localStorage.water_youth_cloud_cache`（`{fetchedAt, apply, booking}`），所以刷新后不用重新拉云端。
+- 云端行渲染为 `☁️` 首列 + 末列「云端」，无删除按钮；本地行保留删除按钮和下标。
+- **限制**：FormSubmit 归档 API 每天最多 5 次调用、云端只保留 30 天。
+
+### 一次性激活（部署后必做）
+
+首次提交时 FormSubmit 往 `synq666@163.com` 发主题含 **Activate Form** 的邮件；点里面的激活链接后提交才会成功。未激活时页面提示「表单服务尚未激活」。
+
+### 本地自检工具
+
+- `check-js.js`：`node check-js.js 官网\index.html ...` 编译页面内联脚本，抓语法错误（用 `new Function` 编译，不执行）。
+- `smoke.ps1`：`powershell -NoProfile -ExecutionPolicy Bypass -File .\smoke.ps1` —— 把文本文件复制到临时目录、起 python http 服务、无头 Chrome 打开首页/后台/两个表单页，检查 JS 真实执行的痕迹（首页 loader 被移除、跑马灯 4 条、后台 2 个 `.cloud-bar`、云端行与本地行都在）并收集控制台错误。
+
+### 已修的隐藏 bug
+
+`官网/index.html` 第 3401 行 `if (feedbackBtn) {` 少了收尾的 `}`（原文件 3414 行 `});` 之后直接接下一段注释），导致该 `<script>`（约 750 行：滚动引擎、计数器、新闻跑马灯、主题切换、意见反馈）整个语法错误、页面全失效。已补齐 `}`。改完用 `check-js.js` + `smoke.ps1` 验证通过。
+
+### 走查时注意
+
+- 本地双击打开 HTML 提交会失败：FormSubmit 要求页面来自 http(s)，会返回「Make sure you open this page through a web server」。
+- FormSubmit 的跨域响应头是 `Access-Control-Allow-Origin: *`，所以后台能直接在浏览器里读归档 API。

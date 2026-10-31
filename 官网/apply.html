@@ -115,6 +115,19 @@
       border-radius: 8px; cursor: pointer; transition: background 260ms ease;
     }
     .submit-btn:hover { background: #01bcc8; }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .submit-hint {
+      display: none; margin-top: 14px; padding: 12px 14px;
+      border-radius: 8px; font-size: 13px; line-height: 1.7;
+    }
+    .submit-hint.loading {
+      display: block; background: rgba(1, 154, 170, 0.16);
+      border: 1px solid rgba(1, 154, 170, 0.45); color: var(--text-sub);
+    }
+    .submit-hint.error {
+      display: block; background: rgba(248, 113, 113, 0.14);
+      border: 1px solid rgba(248, 113, 113, 0.5); color: #fecaca;
+    }
     .contact-info {
       margin-top: 24px; padding: 16px; background: rgba(20, 50, 49, 0.8);
       border: 1px solid var(--border-card); border-radius: 8px;
@@ -173,6 +186,8 @@
     <div class="form-container">
       <div class="form-card">
         <form id="applyForm">
+          <input type="text" id="honeyField" name="_honey" tabindex="-1" autocomplete="off"
+                 aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
           <div class="form-row">
             <div class="form-group">
               <label>专业 <span class="required">*</span></label>
@@ -230,6 +245,7 @@
 
 
           <button type="submit" class="submit-btn">提交申请</button>
+          <div class="submit-hint" id="submitHint" role="status" aria-live="polite"></div>
         </form>
 
         <div class="contact-info">
@@ -254,29 +270,82 @@
     </div>
   </div>
 
+  <script src="form-sender.js"></script>
   <script>
-    document.getElementById('applyForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var submission = {
-        id: Date.now(),
-        major: document.getElementById('major').value,
-        grade: document.getElementById('grade').value,
-        className: document.getElementById('className').value,
-        name: document.getElementById('fullName').value,
-        selfIntro: document.getElementById('selfIntro').value,
-        otherInfo: document.getElementById('otherInfo').value,
-        qq: document.getElementById('qqNumber').value,
-        phone: document.getElementById('phone').value,
-        timestamp: new Date().toISOString()
-      };
+    (function () {
+      var form = document.getElementById('applyForm');
+      var btn = form.querySelector('button[type="submit"]');
+      var hint = document.getElementById('submitHint');
+      var btnLabel = btn.textContent;
 
-      var existing = JSON.parse(localStorage.getItem('water_youth_apply_submissions') || '[]');
-      existing.push(submission);
-      localStorage.setItem('water_youth_apply_submissions', JSON.stringify(existing));
+      function setHint(kind, text) {
+        hint.className = 'submit-hint' + (kind ? ' ' + kind : '');
+        hint.textContent = text || '';
+      }
 
-      document.getElementById('successModal').classList.add('show');
-      document.getElementById('applyForm').reset();
-    });
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (btn.disabled) return;
+
+        var submission = {
+          id: Date.now(),
+          major: document.getElementById('major').value.trim(),
+          grade: document.getElementById('grade').value,
+          className: document.getElementById('className').value.trim(),
+          name: document.getElementById('fullName').value.trim(),
+          selfIntro: document.getElementById('selfIntro').value.trim(),
+          otherInfo: document.getElementById('otherInfo').value.trim(),
+          qq: document.getElementById('qqNumber').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          timestamp: new Date().toISOString()
+        };
+
+        btn.disabled = true;
+        btn.textContent = '提交中…';
+        setHint('loading', '正在提交，请稍候…');
+
+        var subject = '【水韵农青】加入申请 · ' + (submission.name || '未填姓名')
+          + '（' + (submission.grade || '-') + ' · ' + (submission.major || '-') + '）';
+
+        var payload = {
+          '表单类型': '志愿者加入申请',
+          '姓名': submission.name,
+          '专业': submission.major,
+          '年级': submission.grade,
+          '班级': submission.className,
+          'QQ': submission.qq,
+          '手机号': submission.phone,
+          '自我介绍': submission.selfIntro,
+          '其他说明': submission.otherInfo || '无',
+          '提交时间': new Date().toLocaleString('zh-CN', { hour12: false })
+        };
+        // 蜜罐字段：真人看不到也填不到，被自动脚本填上就让 FormSubmit 直接丢弃
+        var honey = document.getElementById('honeyField');
+        if (honey && honey.value) payload._honey = honey.value;
+
+        window.synqSendForm(payload, subject).then(function (result) {
+          btn.disabled = false;
+          btn.textContent = btnLabel;
+
+          if (!result.ok) {
+            setHint('error', '提交未成功：' + result.error
+              + '。请点击「提交申请」重试，或直接联系邮箱 synq666@163.com / 电话 18475136044。');
+            return;
+          }
+
+          // 成功后再写本地留档：管理员在同一台浏览器打开后台时能看到
+          try {
+            var existing = JSON.parse(localStorage.getItem('water_youth_apply_submissions') || '[]');
+            existing.push(submission);
+            localStorage.setItem('water_youth_apply_submissions', JSON.stringify(existing));
+          } catch (err) { /* 隐私模式下可能写不进去，不影响邮件已送达 */ }
+
+          setHint('', '');
+          document.getElementById('successModal').classList.add('show');
+          form.reset();
+        });
+      });
+    })();
   </script>
 </body>
 </html>
