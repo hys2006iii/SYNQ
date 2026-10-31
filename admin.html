@@ -298,6 +298,22 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   .budget-form-card { padding: 16px; }
   .budget-row { grid-template-columns: 1fr; gap: 8px; }
 }
+
+/* 云端收件箱卡片 */
+.cloud-bar {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  justify-content: space-between;
+  background: rgba(56, 189, 248, 0.10);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 10px; padding: 14px 18px; margin-bottom: 16px;
+  font-size: 13px; line-height: 1.7;
+}
+.cloud-bar-text { flex: 1 1 340px; min-width: 220px; }
+.cloud-bar-text b { color: #7dd3fc; }
+.cloud-bar-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.cloud-status { font-size: 12px; opacity: .75; }
+.cloud-status.is-error { color: #fca5a5; opacity: 1; }
+td.cloud-cell { text-align: right; font-size: 12px; opacity: .65; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -1656,31 +1672,58 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   function fmtDate(s) { if(!s) return '-'; var d=new Date(s); if(isNaN(d.getTime())) return '-'; return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
   function loadApplyData() {
     var data = safeParse('water_youth_apply_submissions', []);
+    var cloud = getCloudBucket('apply');
     if (!$('#navApplyCount')) return;
-    $('#navApplyCount').textContent = data.length;
+    $('#navApplyCount').textContent = (data.length + cloud.length);
     var tb = $('#applyTableBody'), em = $('#applyEmpty');
-    if(!data.length){ tb.innerHTML=''; em.style.display='block'; return; }
+    if(!data.length && !cloud.length){ tb.innerHTML=''; em.style.display='block'; return; }
     em.style.display='none';
-    tb.innerHTML = data.map(function(d,i) {
+
+    var cloudRows = cloud.map(function(d) {
+      return '<tr><td>☁️</td>'
+        + '<td><b>'+esc(d.name||'-')+'</b><br><span style="font-size:11px;opacity:.65;">'+esc('QQ '+ (d.qq||'-') +' / '+(d.phone||'-'))+'</span></td>'
+        + '<td>'+esc(d.major||'-')+'</td><td>'+esc(d.grade||'-')+'</td><td>'+esc(d.className||'-')+'</td>'
+        + '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(d.selfIntro||'')+'">'+esc(d.selfIntro||'-')+'</td>'
+        + '<td>无</td><td>'+fmtDate(d.timestamp)+'</td>'
+        + '<td class="cloud-cell">云端</td></tr>';
+    });
+
+    var localRows = data.map(function(d,i) {
+      var attach = d.hasAttachment ? ('附件 ' + (d.attachmentName || '有')) : '无';
       return '<tr><td>'+(i+1)+'</td><td><b>'+esc(d.name||'-')+'</b></td><td>'+esc(d.major||'-')+'</td><td>'+esc(d.grade||'-')+'</td><td>'+esc(d.className||'-')+'</td>'
         + '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(d.selfIntro||'')+'">'+esc(d.selfIntro||'-')+'</td>'
-        + '<td>'+(d.hasAttachment?'附件 +esc(d.attachmentName||'有'):'无')+'</td><td>'+fmtDate(d.timestamp)+'</td>'
+        + '<td>'+attach+'</td><td>'+fmtDate(d.timestamp)+'</td>'
         + '<td style="text-align:right;"><button class="btn btn-danger btn-sm" data-action="delete-apply" data-index="'+i+'">删除</button></td></tr>';
-    }).join('');
+    });
+
+    tb.innerHTML = cloudRows.concat(localRows).join('');
   }
   function loadBookingData() {
     var data = safeParse('water_youth_booking_submissions', []);
+    var cloud = getCloudBucket('booking');
     if (!$('#navBookingCount')) return;
-    $('#navBookingCount').textContent = data.length;
+    $('#navBookingCount').textContent = (data.length + cloud.length);
     var tb = $('#bookingTableBody'), em = $('#bookingEmpty');
-    if(!data.length){ tb.innerHTML=''; em.style.display='block'; return; }
+    if(!data.length && !cloud.length){ tb.innerHTML=''; em.style.display='block'; return; }
     em.style.display='none';
-    tb.innerHTML = data.map(function(d,i) {
+
+    var cloudRows = cloud.map(function(d) {
+      return '<tr><td>☁️</td>'
+        + '<td><b>'+esc(d.course||'-')+'</b></td><td>'+esc(d.org||'-')+'</td><td>'+esc(d.contact||'-')+'</td>'
+        + '<td>'+esc(d.audience||'-')+'</td>'
+        + '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(d.requirements||'')+'">'+esc(d.requirements||'-')+'</td>'
+        + '<td>'+fmtDate(d.timestamp)+'</td>'
+        + '<td class="cloud-cell">云端</td></tr>';
+    });
+
+    var localRows = data.map(function(d,i) {
       return '<tr><td>'+(i+1)+'</td><td><b>'+esc(d.course||'-')+'</b></td><td>'+esc(d.org||'-')+'</td><td>'+esc(d.contact||'-')+'</td>'
         + '<td>'+esc(d.audience||'-')+'</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(d.requirements||'')+'">'+esc(d.requirements||'-')+'</td>'
         + '<td>'+fmtDate(d.timestamp)+'</td>'
         + '<td style="text-align:right;"><button class="btn btn-danger btn-sm" data-action="delete-booking" data-index="'+i+'">删除</button></td></tr>';
-    }).join('');
+    });
+
+    tb.innerHTML = cloudRows.concat(localRows).join('');
   }
   // 使用事件委托替代内联 onclick
   (function(){
@@ -1707,6 +1750,133 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       loadBookingData();
     });
   })();
+
+  /* ========== 云端收件箱（FormSubmit） ========== */
+  var CLOUD_API = 'https://formsubmit.co/api/get-submissions/';
+  var CLOUD_KEY_STORE = 'water_youth_formsubmit_apikey';
+  var CLOUD_CACHE_STORE = 'water_youth_cloud_cache';
+
+  function getCloudCache() {
+    var cache = safeParse(CLOUD_CACHE_STORE, null);
+    return (cache && typeof cache === 'object') ? cache : null;
+  }
+  function getCloudBucket(kind) {
+    var cache = getCloudCache();
+    if (!cache || !cache[kind] || !cache[kind].length) return [];
+    return cache[kind];
+  }
+  function cloudTime(item) {
+    var stamp = item && item.submitted_at;
+    if (!stamp || !stamp.date) return '';
+    var d = new Date(String(stamp.date).replace(' ', 'T').replace(/\.\d+$/, 'Z'));
+    return isNaN(d.getTime()) ? '' : d.toISOString();
+  }
+  function classifyCloud(item) {
+    var d = (item && item.form_data) || {};
+    var type = String(d['表单类型'] || '');
+    if (!type) {
+      var subject = String(d['_subject'] || '');
+      type = (subject.indexOf('合作') !== -1 || subject.indexOf('预约') !== -1) ? '单位合作预约' : '志愿者加入申请';
+    }
+    if (type.indexOf('激活') !== -1 || type.indexOf('测试') !== -1) return null;
+    return (type.indexOf('合作') !== -1 || type.indexOf('预约') !== -1) ? 'booking' : 'apply';
+  }
+  function mapCloudRecord(kind, item) {
+    var d = (item && item.form_data) || {};
+    if (kind === 'booking') {
+      return {
+        course: d['意向课程'] || d.course || '-',
+        org: d['合作单位'] || d.org || '-',
+        contact: d['联系人'] || d.contact || '-',
+        audience: d['受众学段'] || d.audience || '-',
+        requirements: d['需求说明'] || d.requirements || '-',
+        timestamp: cloudTime(item) || d['提交时间'] || ''
+      };
+    }
+    return {
+      name: d['姓名'] || d.name || '-',
+      major: d['专业'] || d.major || '-',
+      grade: d['年级'] || d.grade || '-',
+      className: d['班级'] || d.className || '-',
+      selfIntro: d['自我介绍'] || d.selfIntro || '-',
+      qq: d['QQ'] || d.qq || '',
+      phone: d['手机号'] || d.phone || '',
+      otherInfo: d['其他说明'] || d.otherInfo || '',
+      timestamp: cloudTime(item) || d['提交时间'] || ''
+    };
+  }
+  function setCloudStatus(text, isError) {
+    $$('[data-cloud-status]').forEach(function(el) {
+      el.textContent = text || '';
+      el.classList.toggle('is-error', !!isError);
+    });
+  }
+  function syncCloud() {
+    var key = localStorage.getItem(CLOUD_KEY_STORE) || '';
+    if (!key) {
+      key = (window.prompt('请粘贴 FormSubmit API 密钥\n\n获取方法：在 163 邮箱里搜索 formsubmit，找到标题含 "API Key" 的邮件；'
+        + '没有的话打开 https://formsubmit.co/api/get-apikey/synq666@163.com 让它重新发一封。') || '').trim();
+      if (!key) return;
+      localStorage.setItem(CLOUD_KEY_STORE, key);
+    }
+    setCloudStatus('同步中…');
+    fetch(CLOUD_API + encodeURIComponent(key), { headers: { 'Accept': 'application/json' } })
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        var accepted = json && (json.success === true || json.success === 'true');
+        if (!accepted || !json.submissions) {
+          setCloudStatus('同步失败：' + ((json && json.message) || '密钥无效，或今日 5 次额度已用完'), true);
+          return;
+        }
+        var buckets = { apply: [], booking: [] };
+        json.submissions.forEach(function (item) {
+          var kind = classifyCloud(item);
+          if (kind) buckets[kind].push(mapCloudRecord(kind, item));
+        });
+        safeSet(CLOUD_CACHE_STORE, {
+          fetchedAt: new Date().toISOString(),
+          apply: buckets.apply,
+          booking: buckets.booking
+        });
+        loadApplyData();
+        loadBookingData();
+        setCloudStatus('已同步：加入申请 ' + buckets.apply.length + ' 条，合作预约 ' + buckets.booking.length
+          + ' 条（' + new Date().toLocaleTimeString('zh-CN', { hour12: false }) + '）');
+      })
+      .catch(function (err) {
+        setCloudStatus('同步失败：' + ((err && err.message) || '网络异常'), true);
+      });
+  }
+  function injectCloudBars() {
+    ['panel-apply', 'panel-booking'].forEach(function (panelId) {
+      var area = document.querySelector('#' + panelId + ' .content-area');
+      if (!area || area.querySelector('.cloud-bar')) return;
+      var bar = document.createElement('div');
+      bar.className = 'cloud-bar';
+      bar.innerHTML = '<div class="cloud-bar-text"><b>📮 云端收件箱</b>　访客提交的申请会同时发到邮箱 '
+        + 'synq666@163.com。点右侧按钮可把近 30 天的云端提交全部拉到本页（每天限 5 次，数据在云端保留 30 天）。</div>'
+        + '<div class="cloud-bar-actions">'
+        + '<button class="btn btn-primary" data-cloud-sync type="button">☁️ 从云端同步</button>'
+        + '<button class="btn btn-outline" data-cloud-key type="button">更换密钥</button>'
+        + '<span class="cloud-status" data-cloud-status></span>'
+        + '</div>';
+      area.insertBefore(bar, area.firstChild);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-cloud-sync]')) { e.preventDefault(); syncCloud(); return; }
+      if (e.target.closest('[data-cloud-key]')) {
+        e.preventDefault();
+        var key = (window.prompt('粘贴新的 FormSubmit API 密钥（留空取消）') || '').trim();
+        if (key) { localStorage.setItem(CLOUD_KEY_STORE, key); syncCloud(); }
+      }
+    });
+
+    var cache = getCloudCache();
+    if (cache && cache.fetchedAt) {
+      setCloudStatus('上次同步：' + new Date(cache.fetchedAt).toLocaleString('zh-CN', { hour12: false }));
+    }
+  }
 
   /* ========== 预算表 ========== */
   var BUDGET_KEY = 'water_youth_budget_data';
@@ -3442,10 +3612,15 @@ textarea.form-control { resize: vertical; min-height: 72px; }
 
   $('#newsSearch').addEventListener('input', renderNews);
 
-  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function esc(s) {
+    var d = document.createElement('div');
+    d.textContent = (s === null || s === undefined) ? '' : String(s);
+    return d.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
 
   /* ========== 初始化 ========== */
   loadData();
+  injectCloudBars();
   loadApplyData();
   loadBookingData();
   loadBudgetFromStorage();
