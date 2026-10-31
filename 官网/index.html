@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>水韵农青 · 大学生科技志愿服务队</title>
 <meta name="description" content="「水韵农青」大学生科技志愿服务队——河海大学全国300强志愿队。以农工为特色、以创新为底色，18门精品课程，650+小时科普服务。欢迎加入志愿者或单位合作。">
 <meta name="keywords" content="水韵农青,河海大学,大学生科技志愿服务,科普教育,农业科普,水利科普,志愿者招募,科普活动,科学实验,STEM教育">
@@ -1383,6 +1383,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .loader-logo { animation: none !important; }
   .loader-bar-fill { animation: none !important; width: 100%; }
   .fp-wrapper { transition-duration: 0ms !important; }
+}
+
+/* 移动端触摸优化 */
+@media (pointer: coarse) {
+  /* 禁用按钮触摸高亮 */
+  button, a, [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+  /* 增加按钮最小触摸区域 */
+  .btn, .btn-sm, .nav-links a, .customer-fab {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  /* 滚动提示在手机上隐藏 */
+  .scroll-hint-bar { display: none; }
+  /* 确保表单输入不触发 iOS 自动缩放 (font-size < 16px 会触发) */
+  input, select, textarea { font-size: 16px !important; }
 }
 
 /* ============================================================
@@ -3346,11 +3364,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     ];
     var news = [];
     try { news = JSON.parse(localStorage.getItem(NEWS_KEY) || '[]'); } catch(e) {}
-    if (!news.length) news = DEFAULT_NEWS;
+    if (!news.length || !Array.isArray(news)) news = DEFAULT_NEWS;
+    var labels = ['公告', '活动', '荣誉', '招新'];
     news.forEach(function (item, i) {
       var span = document.createElement('span');
       span.className = 'news-ticker-item' + (i === 0 ? ' active' : '');
-      span.textContent = item;
+      var text = typeof item === 'string' ? item : (item.title || '');
+      var cat = typeof item === 'object' ? (item.category || '') : '';
+      span.textContent = cat ? '[' + cat + '] ' + text : text;
       span.addEventListener('click', function () { window.open('admin.html', '_blank'); });
       track.appendChild(span);
     });
