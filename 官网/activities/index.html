@@ -329,11 +329,11 @@ img { max-width: 100%; display: block; }
   function getFileIcon(name) {
     var ext = name.split('.').pop().toLowerCase();
     var map = {
-      'docx': '📝', 'doc': '📝', 'pptx': '📊', 'pdf': '📕',
-      'xlsx': '📋', 'mp4': '🎬', 'jpeg': '🖼', 'jpg': '🖼',
-      'png': '🖼', 'zip': '📦', 'txt': '📄'
+      'docx': 'DOC', 'doc': 'DOC', 'pptx': 'PPT', 'pdf': 'PDF',
+      'xlsx': 'XLS', 'mp4': 'MP4', 'jpeg': 'IMG', 'jpg': 'IMG',
+      'png': 'IMG', 'zip': 'ZIP', 'txt': 'TXT'
     };
-    return map[ext] || '📄';
+    return map[ext] || 'FILE';
   }
 
   function escHtml(s) {

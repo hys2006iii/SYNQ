@@ -458,9 +458,9 @@ button { font-family: inherit; cursor: pointer; border: none; }
       <div class="info-row"><span class="k">开课状态</span><span class="v" style="color:var(--leaf); font-weight:700;">● 开放点单预约</span></div>
 
       <div class="side-cta">
-        <button class="btn-block btn-order" id="btnSideOrder" type="button">🛒 加入服务点单清单</button>
-        <button class="btn-block btn-reserve" id="btnSideReserve" type="button">📝 预约该课程 / 洽谈合作</button>
-        <button class="btn-block btn-share" id="btnSideShare" type="button">🔗 复制分享链接</button>
+        <button class="btn-block btn-order" id="btnSideOrder" type="button">加入服务点单清单</button>
+        <button class="btn-block btn-reserve" id="btnSideReserve" type="button">预约该课程 / 洽谈合作</button>
+        <button class="btn-block btn-share" id="btnSideShare" type="button">复制分享链接</button>
       </div>
     </div>
 
@@ -532,7 +532,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
     </form>
     
     <div class="contact-fast">
-      💡 提交后将自动为您复制意向单，请添加负责人 QQ 招新群 <b>1108743305</b> 发送，我们将第一时间为您排期对接！
+      提交后将自动为您复制意向单，请添加负责人 QQ 招新群 <b>1108743305</b> 发送，我们将第一时间为您排期对接！
     </div>
   </div>
 </div>
@@ -611,7 +611,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
   var hlBox = document.getElementById('hlTags');
   if (act.highlights && act.highlights.length) {
     hlBox.innerHTML = act.highlights.map(function (h) {
-      return '<span class="hl-tag">🏷 ' + esc(h) + '</span>';
+      return '<span class="hl-tag">【' + esc(h) + '</span>';
     }).join('');
   } else {
     hlBox.style.display = 'none';
@@ -635,14 +635,14 @@ button { font-family: inherit; cursor: pointer; border: none; }
         '<img src="' + esc(ph.url || act.cover || 'photos/IMG_5612.JPG') + '" alt="' + esc(ph.title || act.title) + '" loading="lazy">' +
         '<div class="photo-overlay"><p class="pt">' + esc(ph.title || '活动现场实拍') + '</p>' +
         (ph.desc ? ('<p class="pd">' + esc(ph.desc) + '</p>') : '') + '</div>' +
-        '<div class="photo-zoom-hint">🔍</div>' +
+        '<div class="photo-zoom-hint"></div>' +
         '</div>';
     }).join('');
   } else if (act.cover) {
     galleryBox.innerHTML = '<div class="photo-item" data-idx="0">' +
       '<img src="' + esc(act.cover) + '" alt="' + esc(act.title) + '">' +
       '<div class="photo-overlay"><p class="pt">' + esc(act.title) + '</p></div>' +
-      '<div class="photo-zoom-hint">🔍</div></div>';
+      '<div class="photo-zoom-hint"></div></div>';
     photos = [{ url: act.cover, title: act.title, desc: '活动封面展示' }];
   } else {
     secPhotos.style.display = 'none';
@@ -718,7 +718,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
       return '<article class="tweet-card">' +
         '<div class="tweet-thumb"><img src="' + esc(tw.cover || act.cover || 'photos/IMG_5614.JPG') + '" alt="' + esc(tw.title) + '"></div>' +
         '<div class="tweet-info">' +
-          '<div class="tweet-meta"><span class="platform">📰 ' + esc(tw.platform || '河海水韵农青') + '</span><span>' + esc(tw.date || '官方报道') + '</span></div>' +
+          '<div class="tweet-meta"><span class="platform">' + esc(tw.platform || '河海水韵农青') + '</span><span>' + esc(tw.date || '官方报道') + '</span></div>' +
           '<h3 class="tweet-title">' + esc(tw.title) + '</h3>' +
           '<p class="tweet-desc">' + esc(tw.summary || '') + '</p>' +
           '<a class="tweet-act" href="' + esc(tw.url || '#') + '" target="_blank" rel="noopener">阅读推文原文 ↗</a>' +
@@ -745,7 +745,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
     stepsList.innerHTML = '<p style="color:var(--ink-3); font-size:13.5px;">标准三段式授课法：现象引入与微观解密 → 动手实操与实验探究 → 总结分享与拓展作业。</p>';
   }
   if (act.materials && act.materials.length) {
-    matBox.innerHTML = '<b>📦 配套教具与物资清单：</b><span>' + esc(act.materials.join(' · ')) + '</span>';
+    matBox.innerHTML = '<b>配套教具与物资清单：</b><span>' + esc(act.materials.join(' · ')) + '</span>';
   } else {
     matBox.style.display = 'none';
   }
@@ -782,7 +782,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
       btnOrder.textContent = '✓ 已在待客清单中 (点击取消)';
       btnOrder.classList.add('picked');
     } else {
-      btnOrder.textContent = '🛒 加入服务点单清单';
+      btnOrder.textContent = '加入服务点单清单';
       btnOrder.classList.remove('picked');
     }
   }
@@ -831,7 +831,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function () {
-        alert('🎉 预约意向单已成功复制到剪贴板！\n请将内容发送至招新QQ群 1108743305 或与团队负责人对接。');
+        alert('预约意向单已成功复制到剪贴板！\n请将内容发送至招新QQ群 1108743305 或与团队负责人对接。');
         modal.classList.remove('open');
       });
     } else {
