@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -504,7 +504,7 @@
       <!-- 活动概览（原策划书 Tab） -->
       <div class="tab-content active" id="tab-plan">
         <div class="card">
-          <h3>📋 活动概览</h3>
+          <h3>活动概览</h3>
           <div id="planContent"></div>
         </div>
       </div>
@@ -512,7 +512,7 @@
       <!-- 照片内容 -->
       <div class="tab-content" id="tab-photos">
         <div class="card">
-          <h3>📸 活动照片</h3>
+          <h3>活动照片</h3>
           <div class="gallery" id="photoGallery"></div>
         </div>
       </div>
@@ -520,7 +520,7 @@
       <!-- 视频内容 -->
       <div class="tab-content" id="tab-video">
         <div class="card">
-          <h3>🎬 活动视频</h3>
+          <h3>活动视频</h3>
           <div id="videoContainer"></div>
         </div>
       </div>
@@ -528,7 +528,7 @@
       <!-- 通讯稿内容 -->
       <div class="tab-content" id="tab-tweets">
         <div class="card">
-          <h3>📰 活动通讯</h3>
+          <h3>活动通讯</h3>
           <div id="tweetsContent"></div>
         </div>
       </div>
@@ -536,7 +536,7 @@
       <!-- 教学流程 -->
       <div class="tab-content" id="tab-curriculum">
         <div class="card">
-          <h3>📋 教学流程</h3>
+          <h3>教学流程</h3>
           <div id="curriculumContent"></div>
         </div>
       </div>
@@ -544,7 +544,7 @@
       <!-- 物料清单 -->
       <div class="tab-content" id="tab-materials">
         <div class="card">
-          <h3>📦 物料清单</h3>
+          <h3>物料清单</h3>
           <div id="materialsContent"></div>
         </div>
       </div>
@@ -577,11 +577,11 @@
         if (!tabsWrap) return;
         var visible = visibleSections || {};
         var sections = [];
-        if (visible.photos !== false) sections.push({ id: 'tab-photos', label: '📸 活动照片' });
-        if (visible.video !== false) sections.push({ id: 'tab-video', label: '🎬 活动视频' });
-        if (visible.tweets !== false) sections.push({ id: 'tab-tweets', label: '📰 活动通讯' });
-        if (visible.curriculum !== false) sections.push({ id: 'tab-curriculum', label: '📋 教学流程' });
-        if (activity.materials && activity.materials.length > 0) sections.push({ id: 'tab-materials', label: '📦 物料清单' });
+        if (visible.photos !== false) sections.push({ id: 'tab-photos', label: '活动照片' });
+        if (visible.video !== false) sections.push({ id: 'tab-video', label: '活动视频' });
+        if (visible.tweets !== false) sections.push({ id: 'tab-tweets', label: '活动通讯' });
+        if (visible.curriculum !== false) sections.push({ id: 'tab-curriculum', label: '教学流程' });
+        if (activity.materials && activity.materials.length > 0) sections.push({ id: 'tab-materials', label: '物料清单' });
 
         tabsWrap.innerHTML = '';
         if (isEmpty(sections)) {
@@ -680,7 +680,7 @@
           html += '<div style="border-radius:8px;overflow:hidden;margin-bottom:12px;"><video controls style="width:100%;display:block;"><source src="' + escHtml(fixPath(v.url)) + '" type="video/mp4">您的浏览器不支持视频播放。</video></div>';
         }
         if (v.tip) {
-          html += '<p style="font-size:13px;color:var(--text-dim);margin-top:8px;">💡 ' + escHtml(v.tip) + '</p>';
+          html += '<p style="font-size:13px;color:var(--text-dim);margin-top:8px;">' + escHtml(v.tip) + '</p>';
         }
         container.innerHTML = html;
       }

@@ -312,53 +312,53 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <nav class="sidebar-nav">
     <div class="nav-section">主要功能</div>
     <div class="nav-item active" data-panel="overview">
-      <span class="icon">📊</span><span class="nav-text">数据概览</span>
+      <span class="icon"></span><span class="nav-text">数据概览</span>
     </div>
     <div class="nav-item" data-panel="activities">
-      <span class="icon">📋</span><span class="nav-text">活动管理</span>
+      <span class="icon"></span><span class="nav-text">活动管理</span>
     </div>
     <div class="nav-section">申请管理</div>
     <div class="nav-item" data-panel="apply">
-      <span class="icon">👥</span><span class="nav-text">加入申请</span>
+      <span class="icon"></span><span class="nav-text">加入申请</span>
       <span class="badge-count" id="navApplyCount">0</span>
     </div>
     <div class="nav-item" data-panel="booking">
-      <span class="icon">🤝</span><span class="nav-text">合作申请</span>
+      <span class="icon"></span><span class="nav-text">合作申请</span>
       <span class="badge-count" id="navBookingCount">0</span>
     </div>
     <div class="nav-section">志愿者管理</div>
     <div class="nav-item" data-panel="volunteers">
-      <span class="icon">👤</span><span class="nav-text">志愿者档案</span>
+      <span class="icon"></span><span class="nav-text">志愿者档案</span>
       <span class="badge-count" id="navVolunteerCount">0</span>
     </div>
     <div class="nav-item" data-panel="schedule">
-      <span class="icon">📅</span><span class="nav-text">排班管理</span>
+      <span class="icon"></span><span class="nav-text">排班管理</span>
     </div>
     <div class="nav-section">财务管理</div>
     <div class="nav-item" data-panel="budget">
-      <span class="icon">📋</span><span class="nav-text">预算申请</span>
+      <span class="icon"></span><span class="nav-text">预算申请</span>
     </div>
     <div class="nav-item" data-panel="reimbursement">
-      <span class="icon">💳</span><span class="nav-text">报销管理</span>
+      <span class="icon"></span><span class="nav-text">报销管理</span>
     </div>
     <div class="nav-item" data-panel="expense">
-      <span class="icon">🧾</span><span class="nav-text">消费记录</span>
+      <span class="icon"></span><span class="nav-text">消费记录</span>
     </div>
     <div class="nav-item" data-panel="finance-stats">
-      <span class="icon">📊</span><span class="nav-text">财务统计</span>
+      <span class="icon"></span><span class="nav-text">财务统计</span>
     </div>
     <div class="nav-section">数据展示</div>
     <div class="nav-item" data-panel="dashboard">
-      <span class="icon">📈</span><span class="nav-text">数据大屏</span>
+      <span class="icon"></span><span class="nav-text">数据大屏</span>
     </div>
     <div class="nav-item" data-panel="analytics">
-      <span class="icon">🔍</span><span class="nav-text">访问统计</span>
+      <span class="icon"></span><span class="nav-text">访问统计</span>
     </div>
   </nav>
   <div class="sidebar-footer">
     <div style="display:flex; justify-content:space-between; align-items:center;">
       <span>© 2026 水韵农青</span>
-      <button onclick="logout()" style="background:none; border:none; color:rgba(255,255,255,0.6); font-size:12px; cursor:pointer; padding:4px 8px; border-radius:4px; transition:all .2s;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'; this.style.background='none'">🚪 退出登录</button>
+      <button onclick="logout()" style="background:none; border:none; color:rgba(255,255,255,0.6); font-size:12px; cursor:pointer; padding:4px 8px; border-radius:4px; transition:all .2s;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'; this.style.background='none'">退出登录</button>
     </div>
   </div>
 </aside>
@@ -369,28 +369,28 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 数据概览面板 ====== -->
   <div class="panel active" id="panel-overview">
     <div class="page-header">
-      <h2>📊 数据概览</h2>
+      <h2>数据概览</h2>
       <div class="actions">
-        <a class="btn btn-outline" href="index.html" target="_blank">🌐 预览官网</a>
-        <a class="btn btn-outline" href="activities/index.html" target="_blank">📚 活动大厅</a>
+        <a class="btn btn-outline" href="index.html" target="_blank">预览官网</a>
+        <a class="btn btn-outline" href="activities/index.html" target="_blank">活动大厅</a>
       </div>
     </div>
     <div class="content-area">
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-icon c1">📊</div>
+          <div class="stat-icon c1"></div>
           <div class="stat-info"><h3 id="statTotal">0</h3><p>活动与课程总数</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c2">📖</div>
+          <div class="stat-icon c2"></div>
           <div class="stat-info"><h3 id="statChapters">0</h3><p>服务篇章活动</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c3">🥗</div>
+          <div class="stat-icon c3"></div>
           <div class="stat-info"><h3 id="statMenus">0</h3><p>特色菜单课程</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c4">📸</div>
+          <div class="stat-icon c4"></div>
           <div class="stat-info"><h3 id="statPhotos">0</h3><p>实拍照片收录</p></div>
         </div>
       </div>
@@ -398,10 +398,10 @@ textarea.form-control { resize: vertical; min-height: 72px; }
         <div class="card-header"><h3>快捷操作</h3></div>
         <div class="card-body" style="display:flex; gap:12px; flex-wrap:wrap;">
           <button class="btn btn-primary" onclick="switchPanel('activities')">➕ 新增活动</button>
-          <button class="btn btn-success" onclick="switchPanel('budget')">💰 制作预算表</button>
-          <button class="btn btn-outline" id="btnExport">💾 导出数据备份</button>
-          <button class="btn btn-outline" id="btnImport">📂 导入数据</button>
-          <button class="btn btn-danger" id="btnReset">🔄 恢复默认数据</button>
+          <button class="btn btn-success" onclick="switchPanel('budget')">制作预算表</button>
+          <button class="btn btn-outline" id="btnExport">导出数据备份</button>
+          <button class="btn btn-outline" id="btnImport">导入数据</button>
+          <button class="btn btn-danger" id="btnReset">恢复默认数据</button>
           <input type="file" id="importFileInput" accept=".json" style="display:none;">
         </div>
       </div>
@@ -411,7 +411,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 活动管理面板 ====== -->
   <div class="panel" id="panel-activities">
     <div class="page-header">
-      <h2>📋 活动管理</h2>
+      <h2>活动管理</h2>
       <div class="actions">
         <button class="btn btn-primary" id="btnAddNew">➕ 新增活动 / 课程</button>
       </div>
@@ -419,7 +419,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     <div class="content-area">
       <div class="filter-bar">
         <div class="search-box">
-          <span>🔍</span>
+          <span></span>
           <input type="text" id="filterSearch" placeholder="搜索活动标题 / 分类 / 亮点...">
         </div>
         <select class="filter-select" id="filterType">
@@ -455,7 +455,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
 
   <!-- ====== 加入申请面板 ====== -->
   <div class="panel" id="panel-apply">
-    <div class="page-header"><h2>👥 加入申请</h2></div>
+    <div class="page-header"><h2>加入申请</h2></div>
     <div class="content-area">
       <div class="card">
         <div class="table-wrap">
@@ -470,7 +470,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           </table>
         </div>
         <div id="applyEmpty" class="empty-state" style="display:none;">
-          <div class="icon">📭</div><p>暂无加入申请记录</p>
+          <div class="icon"></div><p>暂无加入申请记录</p>
         </div>
       </div>
     </div>
@@ -478,7 +478,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
 
   <!-- ====== 合作申请面板 ====== -->
   <div class="panel" id="panel-booking">
-    <div class="page-header"><h2>🤝 合作申请</h2></div>
+    <div class="page-header"><h2>合作申请</h2></div>
     <div class="content-area">
       <div class="card">
         <div class="table-wrap">
@@ -493,7 +493,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           </table>
         </div>
         <div id="bookingEmpty" class="empty-state" style="display:none;">
-          <div class="icon">📭</div><p>暂无合作申请记录</p>
+          <div class="icon"></div><p>暂无合作申请记录</p>
         </div>
       </div>
     </div>
@@ -502,10 +502,10 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 预算表面板 ====== -->
   <div class="panel" id="panel-budget">
     <div class="page-header">
-      <h2>📋 预算申请</h2>
+      <h2>预算申请</h2>
       <div class="actions">
-        <button class="btn btn-outline" id="btnBudgetClear">🗑 清空重填</button>
-        <button class="btn btn-success" id="btnBudgetExport">📥 导出 Excel</button>
+        <button class="btn btn-outline" id="btnBudgetClear">清空重填</button>
+        <button class="btn btn-success" id="btnBudgetExport">导出 Excel</button>
       </div>
     </div>
     <div class="content-area">
@@ -560,8 +560,8 @@ textarea.form-control { resize: vertical; min-height: 72px; }
               <div class="amount" id="budgetTotalBar">¥ 0.00</div>
             </div>
             <div style="display:flex; gap:10px;">
-              <button class="btn btn-outline" style="color:#fff; border-color:rgba(255,255,255,0.3);" id="btnBudgetSave">💾 暂存数据</button>
-              <button class="btn btn-success" id="btnBudgetExport2">📥 导出 Excel 文件</button>
+              <button class="btn btn-outline" style="color:#fff; border-color:rgba(255,255,255,0.3);" id="btnBudgetSave">暂存数据</button>
+              <button class="btn btn-success" id="btnBudgetExport2">导出 Excel 文件</button>
             </div>
           </div>
         </div>
@@ -572,7 +572,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 报销管理面板 ====== -->
   <div class="panel" id="panel-reimbursement">
     <div class="page-header">
-      <h2>💳 报销管理</h2>
+      <h2>报销管理</h2>
       <div class="actions">
         <button class="btn btn-primary" id="btnAddReimbursement">➕ 新建报销单</button>
       </div>
@@ -580,7 +580,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     <div class="content-area">
       <div class="filter-bar">
         <div class="search-box">
-          <span>🔍</span>
+          <span></span>
           <input type="text" id="reimbFilterSearch" placeholder="搜索报销单号、申请人...">
         </div>
         <select class="filter-select" id="reimbFilterStatus">
@@ -610,7 +610,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           </table>
         </div>
         <div id="reimbEmpty" class="empty-state" style="display:none;">
-          <div class="icon">📭</div><p>暂无报销记录</p>
+          <div class="icon"></div><p>暂无报销记录</p>
         </div>
       </div>
     </div>
@@ -619,16 +619,16 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 消费记录面板 ====== -->
   <div class="panel" id="panel-expense">
     <div class="page-header">
-      <h2>🧾 消费记录</h2>
+      <h2>消费记录</h2>
       <div class="actions">
         <button class="btn btn-primary" id="btnAddExpense">➕ 新增消费</button>
-        <button class="btn btn-success" id="btnExportExpense">📥 导出 Excel</button>
+        <button class="btn btn-success" id="btnExportExpense">导出 Excel</button>
       </div>
     </div>
     <div class="content-area">
       <div class="filter-bar">
         <div class="search-box">
-          <span>🔍</span>
+          <span></span>
           <input type="text" id="expenseFilterSearch" placeholder="搜索消费描述、付款人...">
         </div>
         <select class="filter-select" id="expenseFilterCategory">
@@ -661,7 +661,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           </table>
         </div>
         <div id="expenseEmpty" class="empty-state" style="display:none;">
-          <div class="icon">📭</div><p>暂无消费记录</p>
+          <div class="icon"></div><p>暂无消费记录</p>
         </div>
       </div>
     </div>
@@ -670,31 +670,31 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 财务统计面板 ====== -->
   <div class="panel" id="panel-finance-stats">
     <div class="page-header">
-      <h2>📊 财务统计</h2>
+      <h2>财务统计</h2>
       <div class="actions">
         <select class="filter-select" id="statsYear">
           <option value="2026">2026年</option>
           <option value="2025">2025年</option>
         </select>
-        <button class="btn btn-success" id="btnExportFinanceReport">📥 导出年度报表</button>
+        <button class="btn btn-success" id="btnExportFinanceReport">导出年度报表</button>
       </div>
     </div>
     <div class="content-area">
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-icon c1">💰</div>
+          <div class="stat-icon c1"></div>
           <div class="stat-info"><h3 id="statsTotalBudget">¥0</h3><p>预算总额</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c2">💳</div>
+          <div class="stat-icon c2"></div>
           <div class="stat-info"><h3 id="statsTotalReimbursed">¥0</h3><p>已报销金额</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c3">🧾</div>
+          <div class="stat-icon c3"></div>
           <div class="stat-info"><h3 id="statsTotalExpense">¥0</h3><p>消费总额</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c4">📈</div>
+          <div class="stat-icon c4"></div>
           <div class="stat-info"><h3 id="statsBudgetUsage">0%</h3><p>预算使用率</p></div>
         </div>
       </div>
@@ -740,16 +740,16 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 志愿者档案面板 ====== -->
   <div class="panel" id="panel-volunteers">
     <div class="page-header">
-      <h2>👤 志愿者档案</h2>
+      <h2>志愿者档案</h2>
       <div class="actions">
         <button class="btn btn-primary" id="btnAddVolunteer">➕ 新增志愿者</button>
-        <button class="btn btn-success" id="btnExportVolunteers">📥 导出花名册</button>
+        <button class="btn btn-success" id="btnExportVolunteers">导出花名册</button>
       </div>
     </div>
     <div class="content-area">
       <div class="filter-bar">
         <div class="search-box">
-          <span>🔍</span>
+          <span></span>
           <input type="text" id="volFilterSearch" placeholder="搜索姓名、专业、技能...">
         </div>
         <select class="filter-select" id="volFilterSkill">
@@ -764,7 +764,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       </div>
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-icon c1">👤</div>
+          <div class="stat-icon c1"></div>
           <div class="stat-info"><h3 id="volTotalCount">0</h3><p>志愿者总数</p></div>
         </div>
         <div class="stat-card">
@@ -772,11 +772,11 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           <div class="stat-info"><h3 id="volTotalHours">0</h3><p>总服务时长(小时)</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c3">🎯</div>
+          <div class="stat-icon c3"></div>
           <div class="stat-info"><h3 id="volActiveCount">0</h3><p>本月活跃</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c4">🏆</div>
+          <div class="stat-icon c4"></div>
           <div class="stat-info"><h3 id="volTopHours">0</h3><p>最高服务时长</p></div>
         </div>
       </div>
@@ -800,7 +800,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           </table>
         </div>
         <div id="volEmpty" class="empty-state" style="display:none;">
-          <div class="icon">📭</div><p>暂无志愿者数据</p>
+          <div class="icon"></div><p>暂无志愿者数据</p>
         </div>
       </div>
     </div>
@@ -809,16 +809,16 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 排班管理面板 ====== -->
   <div class="panel" id="panel-schedule">
     <div class="page-header">
-      <h2>📅 排班管理</h2>
+      <h2>排班管理</h2>
       <div class="actions">
         <button class="btn btn-primary" id="btnAddSchedule">➕ 新建排班</button>
-        <button class="btn btn-outline" id="btnScheduleWeek">📅 本周排班</button>
+        <button class="btn btn-outline" id="btnScheduleWeek">本周排班</button>
       </div>
     </div>
     <div class="content-area">
       <div class="filter-bar">
         <div class="search-box">
-          <span>🔍</span>
+          <span></span>
           <input type="text" id="schFilterSearch" placeholder="搜索活动名称、志愿者...">
         </div>
         <select class="filter-select" id="schFilterStatus">
@@ -850,7 +850,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           </table>
         </div>
         <div id="schEmpty" class="empty-state" style="display:none;">
-          <div class="icon">📭</div><p>暂无排班记录</p>
+          <div class="icon"></div><p>暂无排班记录</p>
         </div>
       </div>
     </div>
@@ -859,7 +859,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 数据大屏面板 ====== -->
   <div class="panel" id="panel-dashboard">
     <div class="page-header">
-      <h2>📈 数据大屏</h2>
+      <h2>数据大屏</h2>
       <div class="actions">
         <select class="filter-select" id="dashTimeRange">
           <option value="week">最近一周</option>
@@ -872,11 +872,11 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     <div class="content-area">
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-icon c1">👤</div>
+          <div class="stat-icon c1"></div>
           <div class="stat-info"><h3 id="dashTotalVol">0</h3><p>志愿者总数</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c2">📋</div>
+          <div class="stat-icon c2"></div>
           <div class="stat-info"><h3 id="dashTotalAct">0</h3><p>活动总数</p></div>
         </div>
         <div class="stat-card">
@@ -884,7 +884,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           <div class="stat-info"><h3 id="dashTotalHours">0</h3><p>总服务时长</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c4">🤝</div>
+          <div class="stat-icon c4"></div>
           <div class="stat-info"><h3 id="dashTotalPartner">0</h3><p>合作单位</p></div>
         </div>
       </div>
@@ -930,27 +930,27 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 访问统计面板 ====== -->
   <div class="panel" id="panel-analytics">
     <div class="page-header">
-      <h2>🔍 访问统计</h2>
+      <h2>访问统计</h2>
       <div class="actions">
-        <button class="btn btn-danger" id="btnClearAnalytics">🗑 清空统计</button>
+        <button class="btn btn-danger" id="btnClearAnalytics">清空统计</button>
       </div>
     </div>
     <div class="content-area">
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-icon c1">👁</div>
+          <div class="stat-icon c1"></div>
           <div class="stat-info"><h3 id="anaTotalPV">0</h3><p>总浏览量</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c2">👤</div>
+          <div class="stat-icon c2"></div>
           <div class="stat-info"><h3 id="anaTotalUV">0</h3><p>访客数(估)</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c3">📄</div>
+          <div class="stat-icon c3"></div>
           <div class="stat-info"><h3 id="anaTodayPV">0</h3><p>今日浏览</p></div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon c4">🔥</div>
+          <div class="stat-icon c4"></div>
           <div class="stat-info"><h3 id="anaMaxSection">-</h3><p>最热板块</p></div>
         </div>
       </div>
@@ -1041,7 +1041,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       </form>
       <div class="modal-foot">
         <button class="btn btn-outline" id="btnCancelVol" type="button">取消</button>
-        <button class="btn btn-primary" id="btnSaveVol" type="button">💾 保存</button>
+        <button class="btn btn-primary" id="btnSaveVol" type="button">保存</button>
       </div>
     </div>
   </div>
@@ -1094,7 +1094,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       </form>
       <div class="modal-foot">
         <button class="btn btn-outline" id="btnCancelSch" type="button">取消</button>
-        <button class="btn btn-primary" id="btnSaveSch" type="button">💾 保存</button>
+        <button class="btn btn-primary" id="btnSaveSch" type="button">保存</button>
       </div>
     </div>
   </div>
@@ -1159,7 +1159,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     </form>
     <div class="modal-foot">
       <button class="btn btn-outline" id="btnCancelReimb" type="button">取消</button>
-      <button class="btn btn-primary" id="btnSaveReimb" type="button">💾 保存</button>
+      <button class="btn btn-primary" id="btnSaveReimb" type="button">保存</button>
     </div>
   </div>
 </div>
@@ -1211,7 +1211,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     </form>
     <div class="modal-foot">
       <button class="btn btn-outline" id="btnCancelExpense" type="button">取消</button>
-      <button class="btn btn-primary" id="btnSaveExpense" type="button">💾 保存</button>
+      <button class="btn btn-primary" id="btnSaveExpense" type="button">保存</button>
     </div>
   </div>
 </div>
@@ -1315,7 +1315,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     </form>
     <div class="modal-foot">
       <button class="btn btn-outline" id="btnCancelEdit" type="button">取消</button>
-      <button class="btn btn-primary" id="btnSaveAct" type="button">💾 保存</button>
+      <button class="btn btn-primary" id="btnSaveAct" type="button">保存</button>
     </div>
   </div>
 </div>
@@ -1406,9 +1406,9 @@ textarea.form-control { resize: vertical; min-height: 72px; }
         + '<td style="font-size:12px;">'+esc(a.targetAge||'全龄')+'</td>'
         + '<td style="font-size:12px;color:var(--ink-3);">'+pc+' '+tc+'</td>'
         + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
-        + '<a class="btn btn-sm btn-outline" href="activity.html?id='+esc(a.id)+'" target="_blank">👁</a>'
+        + '<a class="btn btn-sm btn-outline" href="activity.html?id='+esc(a.id)+'" target="_blank"></a>'
         + '<button class="btn btn-sm btn-primary edit-btn" data-id="'+esc(a.id)+'">✏️</button>'
-        + '<button class="btn btn-sm btn-danger del-btn" data-id="'+esc(a.id)+'">🗑</button>'
+        + '<button class="btn btn-sm btn-danger del-btn" data-id="'+esc(a.id)+'"></button>'
         + '</div></td></tr>';
     }).join('');
   }
@@ -1606,7 +1606,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     tb.innerHTML = data.map(function(d,i) {
       return '<tr><td>'+(i+1)+'</td><td><b>'+esc(d.name||'-')+'</b></td><td>'+esc(d.major||'-')+'</td><td>'+esc(d.grade||'-')+'</td><td>'+esc(d.className||'-')+'</td>'
         + '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(d.selfIntro||'')+'">'+esc(d.selfIntro||'-')+'</td>'
-        + '<td>'+(d.hasAttachment?'📎 '+esc(d.attachmentName||'有'):'无')+'</td><td>'+fmtDate(d.timestamp)+'</td>'
+        + '<td>'+(d.hasAttachment?'附件 +esc(d.attachmentName||'有'):'无')+'</td><td>'+fmtDate(d.timestamp)+'</td>'
         + '<td style="text-align:right;"><button class="btn btn-danger btn-sm" data-action="delete-apply" data-index="'+i+'">删除</button></td></tr>';
     }).join('');
   }
@@ -1887,7 +1887,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
         + '<td>' + esc(r.budgetId || '-') + '</td>'
         + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
         + '<button class="btn btn-sm btn-primary edit-reimb" data-id="' + esc(r.id) + '">✏️</button>'
-        + '<button class="btn btn-sm btn-danger del-reimb" data-id="' + esc(r.id) + '">🗑</button>'
+        + '<button class="btn btn-sm btn-danger del-reimb" data-id="' + esc(r.id) + '"></button>'
         + '</div></td></tr>';
     }).join('');
   }
@@ -2071,10 +2071,10 @@ textarea.form-control { resize: vertical; min-height: 72px; }
         + '<td style="font-weight:600;color:var(--leaf);">¥' + (e.amount || 0).toFixed(2) + '</td>'
         + '<td>' + esc(e.description) + '</td>'
         + '<td>' + esc(e.payer) + '</td>'
-        + '<td>' + (e.receipt ? '📎' : '-') + '</td>'
+        + '<td>' + (e.receipt ? 附件 : '-') + '</td>'
         + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
         + '<button class="btn btn-sm btn-primary edit-expense" data-id="' + esc(e.id) + '">✏️</button>'
-        + '<button class="btn btn-sm btn-danger del-expense" data-id="' + esc(e.id) + '">🗑</button>'
+        + '<button class="btn btn-sm btn-danger del-expense" data-id="' + esc(e.id) + '"></button>'
         + '</div></td></tr>';
     }).join('');
   }
@@ -2388,7 +2388,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
 
   $('#statsYear').addEventListener('change', loadFinanceStats);
   $('#btnExportFinanceReport').addEventListener('click', function() {
-    alert('📊 年度财务报表导出功能开发中...');
+    alert('年度财务报表导出功能开发中...');
   });
   /* ========== 登录状态检测 ========== */
   var LOGIN_KEY = 'water_youth_admin_login';
@@ -2511,7 +2511,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
         + '<td>' + esc(v.joinDate || '-') + '</td>'
         + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
         + '<button class="btn btn-sm btn-primary edit-vol" data-id="' + esc(v.id) + '">✏️</button>'
-        + '<button class="btn btn-sm btn-danger del-vol" data-id="' + esc(v.id) + '">🗑</button>'
+        + '<button class="btn btn-sm btn-danger del-vol" data-id="' + esc(v.id) + '"></button>'
         + '</div></td></tr>';
     }).join('');
   }
@@ -2718,7 +2718,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
         + '<td>' + (statusMap[s.status] || esc(s.status)) + '</td>'
         + '<td style="text-align:right;"><div style="display:flex;gap:6px;justify-content:flex-end;">'
         + '<button class="btn btn-sm btn-primary edit-sch" data-id="' + esc(s.id) + '">✏️</button>'
-        + '<button class="btn btn-sm btn-danger del-sch" data-id="' + esc(s.id) + '">🗑</button>'
+        + '<button class="btn btn-sm btn-danger del-sch" data-id="' + esc(s.id) + '"></button>'
         + '</div></td></tr>';
     }).join('');
   }
@@ -2998,7 +2998,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     }
 
     container.innerHTML = sorted.map(function(v, i) {
-      var medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
+      var medal = i === 0 ? '①' : i === 1 ? '②' : i === 2 ? '③' : (i+1);
       return '<div style="display:flex;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;">'
         + '<span style="width:24px;font-size:14px;">' + medal + '</span>'
         + '<span style="flex:1;font-weight:500;">' + esc(v.name) + '</span>'
@@ -3132,7 +3132,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
       tbody.innerHTML = recent.map(function(l) {
         var time = l.time ? l.time.replace('T', ' ').slice(0, 19) : '-';
         var section = SECTION_NAMES[l.section] || l.section || '-';
-        var device = l.isMobile ? '📱 手机' : '💻 电脑';
+        var device = l.isMobile ? '手机' : '电脑';
         var referrer = l.referrer || '直接访问';
         if (referrer.length > 30) referrer = referrer.slice(0, 27) + '...';
         return '<tr style="border-bottom:1px solid var(--border);">'

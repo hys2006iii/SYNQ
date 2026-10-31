@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -1517,6 +1517,66 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 
 /* ============================================================
+   新闻速递组件 (Phase 4)
+   ============================================================ */
+.news-ticker-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border-card, rgba(255,255,255,.06));
+  border-radius: 10px;
+  margin-top: 16px;
+}
+.news-ticker-label {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--amber, #fbbf24);
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: .08em;
+}
+.news-ticker-track {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  height: 24px;
+}
+.news-ticker-item {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 13px;
+  color: var(--text-main, #d6f0eb);
+  opacity: 0;
+  transition: opacity .4s ease;
+  cursor: pointer;
+}
+.news-ticker-item.active {
+  opacity: 1;
+}
+.news-ticker-item:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.news-more-btn {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--teal-accent, #019aaa);
+  cursor: pointer;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background .15s;
+}
+.news-more-btn:hover {
+  background: rgba(255,255,255,.06);
+}
+
+
+/* ============================================================
    加载动画 (Loading Overlay)
    ============================================================ */
 .page-loader {
@@ -1677,7 +1737,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <h1 class="hero-title anim-el d-2">水韵<b>农</b>青</h1>
             <p class="hero-slogan anim-el d-2">胸怀青衿志&ensp;·&ensp;科普水韵行</p>
             <p class="hero-desc anim-el d-3">
-              以<em>农工为特色</em>，以<em>创新为底色</em>。把高校实验室里的前沿科研成果，转译为中小学生听得懂、摸得着的科学探索课堂。
+              以<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--leaf-soft)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px;flex-shrink:0"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15 9a5 5 0 00-10 0c0 2.7 2 4.8 3.2 6.3.5.6.8 1.2 1.3 1.7H15c.5-.5.8-1.1 1.3-1.7C17.5 13.8 19 11.7 19 9a5 5 0 00-4-5z"/></svg> <em>农工为特色</em>，以<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--leaf-soft)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px;flex-shrink:0"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15 9a5 5 0 00-10 0c0 2.7 2 4.8 3.2 6.3.5.6.8 1.2 1.3 1.7H15c.5-.5.8-1.1 1.3-1.7C17.5 13.8 19 11.7 19 9a5 5 0 00-4-5z"/></svg> <em>创新为底色</em>。把高校实验室里的前沿科研成果，转译为中小学生听得懂、摸得着的科学探索课堂。
             </p>
             <div class="hero-actions anim-el d-4">
               <a class="btn-green-fill" href="javascript:void(0)" onclick="showDevModal()">探索服务菜单</a>
@@ -1788,7 +1848,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
               </ul>
             </div>
             <div class="origin-quote-box" style="margin-top:10px;">
-              💡 <em>“用专业反哺社会，在耕读文化中消除对‘农’的偏见，让大国粮安与水韵生态深植少年心间。”</em>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--leaf-soft)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px;flex-shrink:0"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15 9a5 5 0 00-10 0c0 2.7 2 4.8 3.2 6.3.5.6.8 1.2 1.3 1.7H15c.5-.5.8-1.1 1.3-1.7C17.5 13.8 19 11.7 19 9a5 5 0 00-4-5z"/></svg> <em>“用专业反哺社会，在耕读文化中消除对‘农’的偏见，让大国粮安与水韵生态深植少年心间。”</em>
             </div>
           </div>
 
@@ -2010,7 +2070,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </div>
           </div>
         </div>
-        
+
+        <!-- 新闻速递 -->
+        <div class="news-ticker-wrap anim-el d-4" id="newsTicker">
+          <span class="news-ticker-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            动态
+          </span>
+          <div class="news-ticker-track" id="newsTickerTrack"></div>
+          <button class="news-more-btn" type="button" id="newsMoreBtn" title="在 admin.html 管理">更多 →</button>
+        </div>
+
         <div class="scroll-hint-bar anim-el d-4" data-fp-target="4" role="button" tabindex="0">
           <span class="mouse-ico"><span class="mouse-dot"></span></span>
           <span>向下滑动滚轮翻页</span>
@@ -2211,7 +2281,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     <span class="tag">7名</span>
                   </div>
                   <p>以水韵队员身份推荐进入江苏省科技馆讲解队，负责科技馆展品的讲解工作。表现优异者有机会代表江苏省科技馆参加江苏省科普讲解大赛；被选拔进入水韵农青"主讲智库"，担任科普主讲人，表现突出者将有机会加入雨花台烈士精神高校宣讲团，参与宣讲活动。</p>
-                  <p style="margin-top:6px; font-size:11.5px; color:var(--text-dim);">🎯 每学期至少参与1次科普主讲活动</p>
+                  <p style="margin-top:6px; font-size:11.5px; color:var(--text-dim);">● 每学期至少参与1次科普主讲活动</p>
                 </div>
                 <div class="join-role-box">
                   <div class="rt">
@@ -2219,7 +2289,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     <span class="tag">7名</span>
                   </div>
                   <p>科普活动领军人物，带领团队执行活动，志愿队的核心成员之一。全面锻炼个人的综合素养和解决问题的能力。要求具备组织协调能力、时间管理、人员分配、应对突发事件、监督活动总结复盘及收集整理活动资料等能力。</p>
-                  <p style="margin-top:6px; font-size:11.5px; color:var(--text-dim);">🎯 每学期至少负责1次科普主讲活动带队</p>
+                  <p style="margin-top:6px; font-size:11.5px; color:var(--text-dim);">● 每学期至少负责1次科普主讲活动带队</p>
                 </div>
                 <div class="join-role-box">
                   <div class="rt">
@@ -2227,7 +2297,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     <span class="tag">6名</span>
                   </div>
                   <p>鼓励大三/大四/研究生同学，或对农业知识有深入了解及具备专业素养者参与。负责"三农系列"精品课程的主题设定与结构规划，完成知识点的深入解析（主要以文本形式）；同时负责准备理论演示所需的图片、视频等多媒体素材。</p>
-                  <p style="margin-top:6px; font-size:11.5px; color:var(--text-dim);">🎯 全权负责一节精品课程的内容策划</p>
+                  <p style="margin-top:6px; font-size:11.5px; color:var(--text-dim);">● 全权负责一节精品课程的内容策划</p>
                 </div>
               </div>
             </div>
@@ -2269,7 +2339,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </div>
 
             <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border-card);">
-              <div style="font-size: 13px; color: var(--leaf-soft); font-weight: 600; margin-bottom: 8px;">🏆 队伍实力</div>
+              <div style="font-size: 13px; color: var(--leaf-soft); font-weight: 600; margin-bottom: 8px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.01C7.2 18.25 5 16 5 13V7.93h14v5.07c0 3-2.2 5.25-4.03 5.01-.5-.03-.97-.46-.97-1.01v-2.34"/></svg>
+                队伍实力
+              </div>
               <div style="font-size: 12px; color: var(--text-sub); line-height: 1.8;">
                 • 南京市鼓楼区"一馆多校"大学生科技志愿服务联盟成员<br>
                 • 入选全国大学生科技志愿服务优秀案例集汇编<br>
@@ -2284,11 +2357,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
             <div style="margin-top: 12px; display:flex; gap:16px; align-items:flex-start;">
               <div style="flex:1;">
-                <div style="font-size: 13px; color: var(--leaf-soft); font-weight: 600; margin-bottom: 6px;">📱 联系我们</div>
+                <div style="font-size: 13px; color: var(--leaf-soft); font-weight: 600; margin-bottom: 6px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                  联系我们
+                </div>
                 <div style="font-size: 12px; color: var(--text-sub); line-height: 1.8;">
-                  <p>📞 18475136044</p>
-                  <p>📧 synq666@163.com</p>
-                  <p>💬 QQ群：1108743305</p>
+                  <p>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px"><path d="M22 16.9v3a2 2 0 01-2.17 2 14 14 0 01-6.1-3l-2.5 1.5a16 16 0 01-10-10l1.5-2.5A14 14 0 015.3 2.17 2 2 0 017.3 0h3l3 3-3 3a12 12 0 006 6l3-3 3 3z"/></svg>
+                    18475136044
+                  </p>
+                  <p>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 7 10-7"/></svg>
+                    synq666@163.com
+                  </p>
+                  <p>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                    QQ群：1108743305
+                  </p>
                 </div>
               </div>
               <div style="display:flex; gap:8px;">
@@ -2426,7 +2511,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <h1 class="ending-title anim-el d-2">水韵<b>农</b>青</h1>
             <p class="ending-slogan anim-el d-2">胸怀青衿志&ensp;·&ensp;科普水韵行</p>
             <p class="ending-desc anim-el d-3">
-              以<em>农工为特色</em>，以<em>创新为底色</em>。把高校实验室里的前沿科研成果，转译为中小学生听得懂、摸得着的科学探索课堂。
+              以<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--leaf-soft)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px;flex-shrink:0"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15 9a5 5 0 00-10 0c0 2.7 2 4.8 3.2 6.3.5.6.8 1.2 1.3 1.7H15c.5-.5.8-1.1 1.3-1.7C17.5 13.8 19 11.7 19 9a5 5 0 00-4-5z"/></svg> <em>农工为特色</em>，以<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--leaf-soft)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px;flex-shrink:0"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15 9a5 5 0 00-10 0c0 2.7 2 4.8 3.2 6.3.5.6.8 1.2 1.3 1.7H15c.5-.5.8-1.1 1.3-1.7C17.5 13.8 19 11.7 19 9a5 5 0 00-4-5z"/></svg> <em>创新为底色</em>。把高校实验室里的前沿科研成果，转译为中小学生听得懂、摸得着的科学探索课堂。
             </p>
             <div class="ending-actions anim-el d-4">
               <a class="btn-green-fill" href="apply.html" target="_blank">加入我们</a>
@@ -2484,28 +2569,39 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 </div>
 
 <!-- 浮动客服 + 意见反馈组件 -->
-<button class="customer-fab" id="customerFab" title="联系我们" aria-label="联系我们" type="button">💬</button>
+<button class="customer-fab" id="customerFab" title="联系我们" aria-label="联系我们" type="button">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</button>
 <div class="customer-panel" id="customerPanel" role="dialog" aria-modal="false" aria-label="联系我们与意见反馈">
-  <div class="customer-panel-header">📞 联系我们</div>
+  <div class="customer-panel-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px"><path d="M22 16.9v3a2 2 0 01-2.17 2 14 14 0 01-6.1-3l-2.5 1.5a16 16 0 01-10-10l1.5-2.5A14 14 0 015.3 2.17 2 2 0 017.3 0h3l3 3-3 3a12 12 0 006 6l3-3 3 3z"/></svg>
+    联系我们
+  </div>
   <div class="customer-contact-list">
     <a href="mailto:synq666@163.com" class="customer-contact-item" target="_blank">
-      <span class="cc-icon">📧</span>
+      <span class="cc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 7 10-7"/></svg></span>
       <div><div class="cc-label">邮箱</div><div class="cc-value">synq666@163.com</div></div>
     </a>
     <a href="tel:18475136044" class="customer-contact-item">
-      <span class="cc-icon">📱</span>
+      <span class="cc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.17 2 14 14 0 01-6.1-3l-2.5 1.5a16 16 0 01-10-10l1.5-2.5A14 14 0 015.3 2.17 2 2 0 017.3 0h3l3 3-3 3a12 12 0 006 6l3-3 3 3z"/></svg></span>
       <div><div class="cc-label">电话</div><div class="cc-value">18475136044</div></div>
     </a>
     <a href="https://qm.qq.com/cgi-bin/qm/qr?k=你的群链接" class="customer-contact-item" target="_blank">
-      <span class="cc-icon">💬</span>
+      <span class="cc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
       <div><div class="cc-label">QQ 群</div><div class="cc-value">1108743305</div></div>
     </a>
   </div>
   <div class="customer-feedback">
-    <label for="feedbackText">💡 意见反馈</label>
+    <label for="feedbackText">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15 9a5 5 0 00-10 0c0 2.7 2 4.8 3.2 6.3.5.6.8 1.2 1.3 1.7H15c.5-.5.8-1.1 1.3-1.7C17.5 13.8 19 11.7 19 9a5 5 0 00-4-5z"/></svg>
+      意见反馈
+    </label>
     <textarea id="feedbackText" placeholder="留下你的建议或想法…"></textarea>
     <button type="button" id="feedbackSubmit">提交反馈</button>
-    <div class="feedback-toast" id="feedbackToast">✅ 已收到，感谢你的反馈！</div>
+    <div class="feedback-toast" id="feedbackToast">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px"><polyline points="20 6 9 17 4 12"/></svg>
+      已收到，感谢你的反馈！
+    </div>
   </div>
 </div>
 
@@ -3074,7 +3170,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
     if (filteredCourses.length === 0) {
       menuCardsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:40px; color:var(--text-dim);">' +
-        '<div style="font-size:48px; margin-bottom:16px;">🔍</div>' +
+        '<div style="margin-bottom:16px;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--leaf-soft)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>' +
         '<div style="font-size:16px;">未找到匹配的课程</div>' +
         '<div style="font-size:13px; margin-top:8px;">请尝试其他关键词或分类</div>' +
         '</div>';
@@ -3196,7 +3292,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   if (fab && panel) {
     fab.addEventListener('click', function () {
       panel.classList.toggle('open');
-      fab.textContent = panel.classList.contains('open') ? '✕' : '💬';
+      fab.textContent = panel.classList.contains('open') ? '✕' : '◉';
     });
   }
 
@@ -3214,7 +3310,41 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       feedbackToast.style.display = 'block';
       setTimeout(function () { feedbackToast.style.display = 'none'; }, 3000);
     });
-  }
+  // ---- 新闻速递跑马灯 (Phase 4) ----
+  (function () {
+    var track = document.getElementById('newsTickerTrack');
+    var moreBtn = document.getElementById('newsMoreBtn');
+    if (!track) return;
+    var NEWS_KEY = 'water_youth_news';
+    var DEFAULT_NEWS = [
+      '水韵农青获评全国高校300强志愿队',
+      '「土壤医生」项目走进南京金陵图书馆',
+      '「菜园奇遇记」现代农场体验营圆满结束',
+      '新学期志愿者招募启动，欢迎加入！'
+    ];
+    var news = [];
+    try { news = JSON.parse(localStorage.getItem(NEWS_KEY) || '[]'); } catch(e) {}
+    if (!news.length) news = DEFAULT_NEWS;
+    news.forEach(function (item, i) {
+      var span = document.createElement('span');
+      span.className = 'news-ticker-item' + (i === 0 ? ' active' : '');
+      span.textContent = item;
+      span.addEventListener('click', function () { window.open('admin.html', '_blank'); });
+      track.appendChild(span);
+    });
+    var items = track.querySelectorAll('.news-ticker-item');
+    if (items.length > 1) {
+      var cur = 0;
+      setInterval(function () {
+        items[cur].classList.remove('active');
+        cur = (cur + 1) % items.length;
+        items[cur].classList.add('active');
+      }, 3500);
+    }
+    if (moreBtn) {
+      moreBtn.addEventListener('click', function () { window.open('admin.html', '_blank'); });
+    }
+  })();
 })();
 </script>
 
