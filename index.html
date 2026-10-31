@@ -56,6 +56,14 @@ html, body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   touch-action: none;
+  overflow: hidden;
+}
+/* 尊重用户的减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  body {
+    touch-action: auto;
+    overflow: auto;
+  }
 }
 ::selection { background: var(--teal-accent); color: #fff; }
 img { max-width: 100%; display: block; }
@@ -1341,41 +1349,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .fp-wrapper { transition-duration: 0ms !important; }
 }
 
-/* 开发中弹窗 */
-.dev-modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
-}
-.dev-modal-overlay.active { display: flex; }
-.dev-modal-box {
-  background: #1e4d4a;
-  color: #fff;
-  padding: 40px 50px;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  animation: modalIn 0.3s ease;
-}
-@keyframes modalIn { from { transform: scale(0.8); opacity: 0; } }
-.dev-modal-box h3 { font-size: 1.5rem; margin-bottom: 12px; }
-.dev-modal-box p { font-size: 1rem; color: #b2dfdb; margin-bottom: 20px; }
-.dev-modal-box .btn-modal-close {
-  background: #1fb892;
-  color: #fff;
-  border: none;
-  padding: 10px 30px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.dev-modal-box .btn-modal-close:hover { background: #17a07d; }
 
 /* ============================================================
    加载动画 (Loading Overlay)
@@ -2327,7 +2300,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
               <a href="#vision" data-fp-target="5">愿景规划</a>
               <a href="#join" data-fp-target="6">加入我们</a>
               <a href="#partner" data-fp-target="7">单位合作</a>
-              <a href="javascript:void(0)" onclick="showDevModal()" style="color:#fde047; font-weight:600;">全览活动大厅 ↗</a>
+              <a href="activities/index.html" target="_blank" style="color:#fde047; font-weight:600;">全览活动大厅 ↗</a>
             </div>
           </div>
 
@@ -2345,11 +2318,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 </div>
 
 <!-- 管理端登录弹窗 -->
-<div id="adminLoginModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center;">
+<div id="adminLoginModal" role="dialog" aria-modal="true" aria-labelledby="adminLoginTitle" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center;">
   <div style="background:var(--teal-mid); border:1px solid var(--border-card); border-radius:12px; padding:32px; max-width:360px; width:90%; text-align:center;">
-    <h3 style="font-family:var(--font-song); color:var(--leaf-soft); margin-bottom:20px; font-size:20px;">管理端登录</h3>
-    <input type="text" id="modalAdminUser" placeholder="账号" style="width:100%; padding:10px 14px; margin-bottom:12px; font-size:14px; background:rgba(255,255,255,0.08); border:1px solid var(--border-card); border-radius:6px; color:#fff; outline:none;">
-    <input type="password" id="modalAdminPass" placeholder="密码" style="width:100%; padding:10px 14px; margin-bottom:20px; font-size:14px; background:rgba(255,255,255,0.08); border:1px solid var(--border-card); border-radius:6px; color:#fff; outline:none;">
+    <h3 id="adminLoginTitle" style="font-family:var(--font-song); color:var(--leaf-soft); margin-bottom:20px; font-size:20px;">管理端登录</h3>
+    <input type="text" id="modalAdminUser" placeholder="账号" autocomplete="username" style="width:100%; padding:10px 14px; margin-bottom:12px; font-size:14px; background:rgba(255,255,255,0.08); border:1px solid var(--border-card); border-radius:6px; color:#fff; outline:none;">
+    <input type="password" id="modalAdminPass" placeholder="密码" autocomplete="current-password" style="width:100%; padding:10px 14px; margin-bottom:20px; font-size:14px; background:rgba(255,255,255,0.08); border:1px solid var(--border-card); border-radius:6px; color:#fff; outline:none;">
     <div style="display:flex; gap:10px;">
       <button id="modalAdminLoginBtn" style="flex:1; padding:10px; font-size:14px; font-weight:600; background:var(--teal-accent); color:#fff; border:none; border-radius:6px; cursor:pointer;">登录</button>
       <button onclick="document.getElementById('adminLoginModal').style.display='none'" style="flex:1; padding:10px; font-size:14px; background:transparent; color:var(--text-sub); border:1px solid var(--border-card); border-radius:6px; cursor:pointer;">取消</button>
@@ -2486,6 +2459,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
   window.addEventListener('keydown', function (e) {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+    // 防止中文输入法组合过程中触发空格键翻页
+    if (e.key === ' ' && e.isComposing) return;
     if (['ArrowDown', 'PageDown', ' '].indexOf(e.key) !== -1) {
       if (currentIndex < total - 1) {
         e.preventDefault();
@@ -2499,6 +2474,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
       e.preventDefault();
       openAdmin();
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      goToSection(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      goToSection(total - 1);
     }
   });
 
@@ -2579,48 +2560,55 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   var errorDiv = document.getElementById('adminLoginError');
   
   if (loginBtn) {
-    loginBtn.addEventListener('click', function() {
+    var self = { modal: modal, errorDiv: errorDiv };
+    var loginFn = function() {
       var user = document.getElementById('modalAdminUser').value;
       var pass = document.getElementById('modalAdminPass').value;
-      var passHash = '';
-      try {
+
+      if (user !== 'admin' || !pass) {
+        self.errorDiv.textContent = '账号或密码错误';
+        self.errorDiv.style.display = 'block';
+        return;
+      }
+
+      // 使用 Web Crypto API 进行 SHA-256 哈希校验
+      if (crypto && crypto.subtle) {
         var encoder = new TextEncoder();
         var data = encoder.encode(pass);
-        var hashBuf = crypto.subtle.digest('SHA-256', data);
-        hashBuf.then(function(h) {
+        crypto.subtle.digest('SHA-256', data).then(function(h) {
           var hash = Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
-          // 使用简化哈希校验
-          if (user === 'admin' && hash === '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8') {
-            var loginData = {
-              isLoggedIn: true,
-              loginTime: Date.now(),
-              lastActivity: Date.now(),
-              username: user
-            };
-            localStorage.setItem('water_youth_admin_login', JSON.stringify(loginData));
-            modal.style.display = 'none';
-            window.open('admin.html', '_blank');
-          } else {
-            errorDiv.style.display = 'block';
-          }
+          doLoginCheck(user, hash, self);
         });
-      } catch(e) {
-        // Fallback for non-HTTPS environments
-        if (user === 'admin' && pass === 'password') {
-          var loginData = {
-            isLoggedIn: true,
-            loginTime: Date.now(),
-            lastActivity: Date.now(),
-            username: user
-          };
-          localStorage.setItem('water_youth_admin_login', JSON.stringify(loginData));
-          modal.style.display = 'none';
-          window.open('admin.html', '_blank');
-        } else {
-          errorDiv.style.display = 'block';
-        }
+      } else {
+        // crypto.subtle 不可用时（非 HTTPS 且非本地），不降级明文 — 提示用户
+        self.errorDiv.textContent = '请使用 HTTPS 或 localhost 访问';
+        self.errorDiv.style.display = 'block';
       }
-    });
+    };
+    loginBtn.addEventListener('click', loginFn);
+    // Enter 键也可提交登录
+    var modalUserInput = document.getElementById('modalAdminUser');
+    var modalPassInput = document.getElementById('modalAdminPass');
+    if (modalUserInput) modalUserInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') loginFn(); });
+    if (modalPassInput) modalPassInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') loginFn(); });
+  }
+
+  function doLoginCheck(user, hash, ctx) {
+    var HASH_ADMIN = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8';
+    if (user === 'admin' && hash === HASH_ADMIN) {
+      var loginData = {
+        isLoggedIn: true,
+        loginTime: Date.now(),
+        lastActivity: Date.now(),
+        username: user
+      };
+      localStorage.setItem('water_youth_admin_login', JSON.stringify(loginData));
+      ctx.modal.style.display = 'none';
+      window.open('admin.html', '_blank');
+    } else {
+      ctx.errorDiv.textContent = '账号或密码错误';
+      ctx.errorDiv.style.display = 'block';
+    }
   }
   
   if (modal) {
@@ -3008,24 +2996,5 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 })();
 </script>
 
-<!-- 开发中弹窗 -->
-<div class="dev-modal-overlay" id="devModal">
-  <div class="dev-modal-box">
-    <h3>🚧 开发中，敬请期待</h3>
-    <p>活动大厅正在升级优化中，敬请期待！</p>
-    <button class="btn-modal-close" onclick="closeDevModal()">我知道了</button>
-  </div>
-</div>
-<script>
-function showDevModal() {
-  document.getElementById('devModal').classList.add('active');
-}
-function closeDevModal() {
-  document.getElementById('devModal').classList.remove('active');
-}
-document.getElementById('devModal').addEventListener('click', function(e) {
-  if (e.target === this) closeDevModal();
-});
-</script>
 </body>
 </html>
