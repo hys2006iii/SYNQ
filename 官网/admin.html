@@ -354,6 +354,9 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     <div class="nav-item" data-panel="analytics">
       <span class="icon"></span><span class="nav-text">访问统计</span>
     </div>
+    <div class="nav-item" data-panel="news">
+      <span class="icon"></span><span class="nav-text">新闻管理</span>
+    </div>
   </nav>
   <div class="sidebar-footer">
     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -988,6 +991,61 @@ textarea.form-control { resize: vertical; min-height: 72px; }
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ====== 新闻管理面板 ====== -->
+  <div class="panel" id="panel-news">
+    <div class="page-header">
+      <h2>新闻管理</h2>
+      <div class="page-actions">
+        <button class="btn btn-primary" onclick="$('#newsTitle').focus(); openNewsModal();">+ 添加新闻</button>
+        <button class="btn" onclick="if(confirm('确定清空所有新闻？')){localStorage.removeItem('water_youth_news');renderNews();}">清空全部</button>
+      </div>
+    </div>
+    <div class="filter-bar">
+      <input type="text" class="search-input" id="newsSearch" placeholder="搜索新闻...">
+    </div>
+    <div id="newsList" style="padding:16px;"></div>
+  </div>
+
+  <!-- ====== 新闻编辑弹窗 ====== -->
+  <div class="modal-overlay" id="newsModal" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="newsModalTitle">添加新闻</h3>
+        <button class="close-btn" onclick="closeNewsModal()">×</button>
+      </div>
+      <form class="modal-body" id="newsForm">
+        <input type="hidden" id="newsIdx" value="-1">
+        <div class="form-grid" style="grid-template-columns:1fr;">
+          <div class="form-group">
+            <label>新闻标题 *</label>
+            <input type="text" class="form-control" id="newsTitle" required placeholder="例：新学期志愿者招募启动">
+          </div>
+          <div class="form-group">
+            <label>新闻分类</label>
+            <select class="form-control" id="newsCategory">
+              <option value="公告">公告</option>
+              <option value="活动">活动</option>
+              <option value="荣誉">荣誉</option>
+              <option value="招新">招新</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>发布日期</label>
+            <input type="date" class="form-control" id="newsDate">
+          </div>
+          <div class="form-group">
+            <label>备注</label>
+            <textarea class="form-control" id="newsNote" rows="2" placeholder="可选补充说明"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" onclick="closeNewsModal()">取消</button>
+          <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -3267,6 +3325,100 @@ textarea.form-control { resize: vertical; min-height: 72px; }
     loadAnalytics();
   });
 
+  /* ========== 新闻管理 ========== */
+  var NEWS_KEY = 'water_youth_news';
+  var defaultNews = [
+    { title: '水韵农青获评全国高校300强志愿队', category: '荣誉', date: '2026-09-01', note: '' },
+    { title: '「土壤医生」项目走进南京金陵图书馆', category: '活动', date: '2026-08-20', note: '' },
+    { title: '「菜园奇遇记」现代农场体验营圆满结束', category: '活动', date: '2026-08-10', note: '' },
+    { title: '新学期志愿者招募启动，欢迎加入！', category: '招新', date: '2026-09-12', note: '' }
+  ];
+
+  function getNews() {
+    try { var d = JSON.parse(localStorage.getItem(NEWS_KEY) || '[]'); return Array.isArray(d) ? d : []; } catch(e) {}
+    return JSON.parse(JSON.stringify(defaultNews));
+  }
+  function saveNews(arr) { localStorage.setItem(NEWS_KEY, JSON.stringify(arr)); }
+
+  function renderNews() {
+    var container = $('#newsList');
+    var search = ($('#newsSearch') || {}).value || '';
+    var news = getNews();
+    if (!news.length) { container.innerHTML = '<div style="padding:24px;text-align:center;opacity:.5;">暂无新闻，点击上方"添加新闻"开始</div>'; return; }
+    var filtered = search ? news.filter(function(n) { return n.title.toLowerCase().indexOf(search.toLowerCase()) !== -1; }) : news;
+    var catColors = { '公告': '#019aaa', '活动': '#4ade80', '荣誉': '#fbbf24', '招新': '#f472b6' };
+    container.innerHTML = filtered.map(function(n, i) {
+      var realIdx = news.indexOf(n);
+      var color = catColors[n.category] || '#019aaa';
+      return '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;">'
+        + '<span style="flex-shrink:0;width:28px;height:28px;border-radius:6px;background:' + color + ';color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">' + n.category[0] + '</span>'
+        + '<div style="flex:1;min-width:0;">'
+          + '<div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(n.title) + '</div>'
+          + '<div style="font-size:11px;color:#94a3b8;margin-top:2px;">' + (n.date || '') + (n.note ? ' · ' + esc(n.note) : '') + '</div>'
+        + '</div>'
+        + '<button class="btn-sm" onclick="editNews(' + realIdx + ')" style="margin-right:4px;">编辑</button>'
+        + '<button class="btn-sm" onclick="deleteNews(' + realIdx + ')" style="color:#ef4444;">删除</button>'
+      + '</div>';
+    }).join('');
+  }
+
+  function openNewsModal(idx) {
+    var modal = $('#newsModal');
+    var form = $('#newsForm');
+    $('#newsIdx').value = idx !== undefined ? idx : -1;
+    $('#newsModalTitle').textContent = idx !== undefined ? '编辑新闻' : '添加新闻';
+    if (idx !== undefined) {
+      var n = getNews()[idx];
+      $('#newsTitle').value = n.title;
+      $('#newsCategory').value = n.category || '公告';
+      $('#newsDate').value = n.date || '';
+      $('#newsNote').value = n.note || '';
+    } else {
+      form.reset();
+      $('#newsIdx').value = -1;
+      $('#newsDate').value = new Date().toISOString().slice(0,10);
+    }
+    modal.style.display = 'flex';
+  }
+  function closeNewsModal() { $('#newsModal').style.display = 'none'; }
+  window.openNewsModal = function(idx) { openNewsModal(idx); };
+
+  function editNews(i) { openNewsModal(i); }
+  window.editNews = editNews;
+
+  function deleteNews(i) {
+    if (!confirm('确定删除这条新闻？')) return;
+    var news = getNews();
+    news.splice(i, 1);
+    saveNews(news);
+    renderNews();
+  }
+  window.deleteNews = deleteNews;
+
+  $('#newsForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var idx = parseInt($('#newsIdx').value);
+    var item = {
+      title: $('#newsTitle').value.trim(),
+      category: $('#newsCategory').value,
+      date: $('#newsDate').value,
+      note: $('#newsNote').value.trim()
+    };
+    if (!item.title) return;
+    var news = getNews();
+    if (idx >= 0) { news[idx] = item; }
+    else { news.push(item); }
+    // Sort by date desc
+    news.sort(function(a,b) { return (b.date||'').localeCompare(a.date||''); });
+    saveNews(news);
+    closeNewsModal();
+    renderNews();
+  });
+
+  $('#newsSearch').addEventListener('input', renderNews);
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
   /* ========== 初始化 ========== */
   loadData();
   loadApplyData();
@@ -3279,6 +3431,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   loadScheduleData();
   loadDashboardData();
   loadAnalytics();
+  renderNews();
 })();
 </script>
 </body>
