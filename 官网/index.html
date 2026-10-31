@@ -76,6 +76,40 @@
   --dur: 260ms;
 }
 
+/* 亮色主题变量覆盖 */
+[data-theme="light"] {
+  --teal-deep:    #f0f7f7;
+  --teal-mid:     #e0f0f0;
+  --teal-card:    #d5eae9;
+  --teal-accent:  #019aaa;
+  --leaf:         #16a34a;
+  --leaf-soft:    #22c55e;
+  --amber:        #d97706;
+  --seal:         #dc2626;
+
+  --text-pure:    #0f172a;
+  --text-main:    #1e293b;
+  --text-sub:     #475569;
+  --text-dim:     #64748b;
+
+  --border-card:  rgba(0, 0, 0, 0.1);
+  --border-light: rgba(0, 0, 0, 0.08);
+  --border-gold:  rgba(217, 119, 6, 0.4);
+}
+[data-theme="light"] body { background: #f0f7f7; }
+[data-theme="light"] .hdr { background: rgba(240,247,247,.92); border-bottom-color: rgba(0,0,0,.06); }
+[data-theme="light"] .brand .word { color: var(--text-pure); }
+[data-theme="light"] .brand .word b { color: var(--teal-accent); }
+[data-theme="light"] .nav-act-btn { background: rgba(1,154,170,.1); color: var(--text-main); }
+[data-theme="light"] .nav-act-btn:hover { background: var(--teal-accent); color: #fff; }
+[data-theme="light"] .theme-switch-btn { background: rgba(0,0,0,.06); border-color: rgba(0,0,0,.08); color: var(--text-sub); }
+[data-theme="light"] .theme-switch-btn:hover { background: rgba(0,0,0,.1); color: var(--text-pure); }
+[data-theme="light"] .nav-toggle span { background: var(--text-main); }
+[data-theme="light"] .fp-section { background: var(--teal-deep); }
+[data-theme="light"] .real-card { background: var(--teal-card); }
+[data-theme="light"] .fp-dot-circle { background: var(--teal-accent); }
+[data-theme="light"] .fp-tooltip { background: var(--teal-card); color: var(--text-main); }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
@@ -260,6 +294,30 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: var(--teal-accent);
   box-shadow: 0 2px 10px rgba(1, 154, 170, 0.4);
 }
+.theme-switch-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 8px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  color: var(--text-sub); cursor: pointer;
+  transition: background .2s, color .2s;
+  position: relative;
+  overflow: hidden;
+}
+.theme-switch-btn:hover {
+  background: rgba(255,255,255,.14);
+  color: var(--text-pure);
+}
+.theme-switch-btn .theme-icon-light,
+.theme-switch-btn .theme-icon-dark {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity .25s, transform .25s;
+}
+.theme-switch-btn .theme-icon-light { opacity: 1; }
+.theme-switch-btn .theme-icon-dark { opacity: 0; transform: translate(-50%, -50%) scale(.6); }
+[data-theme="light"] .theme-switch-btn .theme-icon-light { opacity: 0; transform: translate(-50%, -50%) scale(.6); }
+[data-theme="light"] .theme-switch-btn .theme-icon-dark { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 .nav-join-btn {
   padding: 6px 18px;
   border-radius: 6px;
@@ -1737,6 +1795,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <li><a href="#partner" data-fp-target="7">单位合作</a></li>
     </ul>
     <div class="nav-right-actions">
+      <button class="theme-switch-btn" id="themeSwitchBtn" type="button" aria-label="切换主题" title="切换亮/暗色主题">
+        <svg class="theme-icon-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="theme-icon-dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
       <a class="nav-act-btn" href="javascript:void(0)" onclick="showDevModal()">活动大厅 ↗</a>
       <button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -3388,6 +3450,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       moreBtn.addEventListener('click', function () { window.open('admin.html', '_blank'); });
     }
   })();
+
+  // ---- 主题切换 (Phase 5) ----
+  var themeBtn = document.getElementById('themeSwitchBtn');
+  if (themeBtn) {
+    var saved = localStorage.getItem('water_youth_theme');
+    if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    themeBtn.addEventListener('click', function () {
+      var current = document.documentElement.getAttribute('data-theme');
+      if (current === 'light') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.removeItem('water_youth_theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('water_youth_theme', 'light');
+      }
+    });
+  }
 })();
 </script>
 
