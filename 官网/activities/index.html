@@ -367,13 +367,15 @@ img { max-width: 100%; display: block; }
     }
 
     var html = '';
-    filtered.forEach(function(theme, idx) {
+    filtered.forEach(function(theme) {
       var isOpen = expandedThemes[theme.id];
       var matCount = theme.materials.length;
+      // 使用原始索引作为编号，避免搜索后编号跳动
+      var origNum = themes.indexOf(theme) + 1;
 
       html += '<div class="theme-card' + (isOpen ? ' open' : '') + '">';
       html += '<div class="theme-header" onclick="toggleTheme(\'' + escHtml(theme.id) + '\')">';
-      html += '<span class="theme-num">' + (idx + 1) + '</span>';
+      html += '<span class="theme-num">' + origNum + '</span>';
       html += '<div class="theme-info">';
       html += '<div class="theme-title">' + escHtml(theme.name) + '</div>';
       html += '<div class="theme-meta">' + (matCount > 0 ? matCount + ' 份资料' : '暂无资料，待补充') + '</div>';
