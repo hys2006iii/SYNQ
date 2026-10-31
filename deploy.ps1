@@ -24,7 +24,8 @@ Write-Host "`n[1/3] 推送 master ..." -ForegroundColor Cyan
 git push origin master
 
 Write-Host "`n[2/3] 从 官网/ 生成发布分支 ..." -ForegroundColor Cyan
-git branch -D gh-pages-deploy 2>$null | Out-Null
+$old = git branch --list "gh-pages-deploy"
+if ($old) { git branch -D gh-pages-deploy | Out-Null }
 git subtree split --prefix=官网 -b gh-pages-deploy
 
 Write-Host "`n[3/3] 发布到 gh-pages ..." -ForegroundColor Cyan
