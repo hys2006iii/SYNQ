@@ -862,7 +862,7 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   <!-- ====== 数据大屏面板 ====== -->
   <div class="panel" id="panel-dashboard">
     <div class="page-header">
-      <h2>数据大屏</h2>
+      <h2>数据大屏 <span id="dashClock" style="font-size:13px;font-weight:400;color:#94a3b8;margin-left:8px;"></span></h2>
       <div class="actions">
         <select class="filter-select" id="dashTimeRange">
           <option value="week">最近一周</option>
@@ -2917,22 +2917,47 @@ textarea.form-control { resize: vertical; min-height: 72px; }
   $('#schFilterDate').addEventListener('change', renderSchTable);
 
   /* ========== 数据大屏 ========== */
+  function animateNumber(id, target, suffix) {
+    var el = $('#' + id);
+    if (!el) return;
+    var duration = 800;
+    var start = performance.now();
+    function tick(now) {
+      var t = Math.min((now - start) / duration, 1);
+      // easeOutExpo
+      t = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+      el.textContent = Math.round(target * t) + (suffix || '');
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
   function loadDashboardData() {
     var totalVol = volunteerList.length;
     var totalAct = actList.length;
     var totalHours = volunteerList.reduce(function(s, v) { return s + (v.serviceHours || 0); }, 0);
     var totalPartner = 7; // 合作单位数量
 
-    $('#dashTotalVol').textContent = totalVol;
-    $('#dashTotalAct').textContent = totalAct;
-    $('#dashTotalHours').textContent = totalHours + 'h';
-    $('#dashTotalPartner').textContent = totalPartner;
+    animateNumber('dashTotalVol', totalVol, '');
+    animateNumber('dashTotalAct', totalAct, '');
+    animateNumber('dashTotalHours', totalHours, 'h');
+    animateNumber('dashTotalPartner', totalPartner, '');
 
     renderActivityTrend();
     renderServiceTypeChart();
     renderVolRanking();
     renderRecentActivities();
     renderSkillDistribution();
+
+    // 实时时钟
+    (function tickClock() {
+      var el = $('#dashClock');
+      if (!el) return;
+      var now = new Date();
+      el.textContent = now.toLocaleDateString('zh-CN', { year:'numeric', month:'2-digit', day:'2-digit' })
+        + ' ' + now.toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+      setTimeout(tickClock, 1000);
+    })();
   }
 
   function renderActivityTrend() {
